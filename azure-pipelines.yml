@@ -23,7 +23,7 @@ steps:
   displayName: 'npm install and build Fouly-pwa'
 - task: ArchiveFiles@2
   inputs:
-    rootFolderOrFile: '$(Build.BinariesDirectory)/dist/apps/fouly/pwa'
+    rootFolderOrFile: 'dist/apps/fouly/pwa'
     includeRootFolder: false
     archiveType: 'zip'
     archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
