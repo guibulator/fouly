@@ -1,0 +1,49 @@
+{
+  "npmScope": "i-skare",
+  "implicitDependencies": {
+    "angular.json": "*",
+    "package.json": {
+      "dependencies": "*",
+      "devDependencies": "*"
+    },
+    "tsconfig.json": "*",
+    "tslint.json": "*",
+    "nx.json": "*"
+  },
+  "tasksRunnerOptions": {
+    "default": {
+      "runner": "@nrwl/workspace/tasks-runners/default",
+      "options": {
+        "cacheableOperations": ["build", "lint", "test", "e2e"]
+      }
+    }
+  },
+  "projects": {
+    "shared-authentication": {
+      "tags": []
+    },
+    "fouly-pwa": {
+      "tags": []
+    },
+    "fouly-webfront": {
+      "tags": []
+    },
+    "fouly-webfront-e2e": {
+      "tags": [],
+      "implicitDependencies": ["fouly-webfront"]
+    },
+    "fouly-pwa-e2e": {
+      "tags": [],
+      "implicitDependencies": ["fouly-pwa"]
+    },
+    "fouly-backend": {
+      "tags": ["backend"]
+    },
+    "fouly-ui": {
+      "tags": ["ui"]
+    },
+    "fouly-data": {
+      "tags": []
+    }
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es2015",
+    "module": "esnext",
+    "typeRoots": ["node_modules/@types"],
+    "lib": ["es2017", "dom"],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@i-skare/shared/authentication": [
+        "libs/shared/authentication/src/index.ts"
+      ],
+      "@i-skare/fouly/ui": ["libs/fouly/ui/src/index.ts"],
+      "@i-skare/fouly/data": ["libs/fouly/data/src/index.ts"]
+    }
+  },
+  "exclude": ["node_modules", "tmp"]
+}
