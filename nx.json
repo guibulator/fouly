@@ -1,5 +1,5 @@
 {
-  "npmScope": "i-skare",
+  "npmScope": "skare",
   "implicitDependencies": {
     "angular.json": "*",
     "package.json": {
@@ -46,6 +46,18 @@
       "tags": []
     },
     "fouly-shared-styles": {
+      "tags": []
+    },
+    "fouly-pwa-pages-introduction": {
+      "tags": []
+    },
+    "fouly-pwa-pages-map": {
+      "tags": []
+    },
+    "fouly-pwa-pages-my-places": {
+      "tags": []
+    },
+    "fouly-pwa-pages-support": {
       "tags": []
     }
   }

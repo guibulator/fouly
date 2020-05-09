@@ -474,13 +474,150 @@
       "projectType": "library",
       "root": "libs/fouly/shared/styles",
       "sourceRoot": "libs/fouly/shared/styles/src",
-      "prefix": "i-skare",
+      "prefix": "skare",
       "architect": {
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": ["libs/fouly/shared/styles/tsconfig.lib.json"],
             "exclude": ["**/node_modules/**", "!libs/fouly/shared/styles/**"]
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/angular:component": {
+          "style": "scss"
+        }
+      }
+    },
+    "fouly-pwa-pages-introduction": {
+      "projectType": "library",
+      "root": "libs/fouly/pwa/pages/introduction",
+      "sourceRoot": "libs/fouly/pwa/pages/introduction/src",
+      "prefix": "fouly",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/fouly/pwa/pages/introduction/tsconfig.lib.json",
+              "libs/fouly/pwa/pages/introduction/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!libs/fouly/pwa/pages/introduction/**"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/fouly/pwa/pages/introduction/jest.config.js",
+            "tsConfig": "libs/fouly/pwa/pages/introduction/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "libs/fouly/pwa/pages/introduction/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/angular:component": {
+          "style": "scss"
+        }
+      }
+    },
+    "fouly-pwa-pages-map": {
+      "projectType": "library",
+      "root": "libs/fouly/pwa/pages/map",
+      "sourceRoot": "libs/fouly/pwa/pages/map/src",
+      "prefix": "fouly",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/fouly/pwa/pages/map/tsconfig.lib.json",
+              "libs/fouly/pwa/pages/map/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/fouly/pwa/pages/map/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/fouly/pwa/pages/map/jest.config.js",
+            "tsConfig": "libs/fouly/pwa/pages/map/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "libs/fouly/pwa/pages/map/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/angular:component": {
+          "style": "scss"
+        }
+      }
+    },
+    "fouly-pwa-pages-my-places": {
+      "projectType": "library",
+      "root": "libs/fouly/pwa/pages/my-places",
+      "sourceRoot": "libs/fouly/pwa/pages/my-places/src",
+      "prefix": "fouly",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/fouly/pwa/pages/my-places/tsconfig.lib.json",
+              "libs/fouly/pwa/pages/my-places/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!libs/fouly/pwa/pages/my-places/**"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/fouly/pwa/pages/my-places/jest.config.js",
+            "tsConfig": "libs/fouly/pwa/pages/my-places/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "libs/fouly/pwa/pages/my-places/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/angular:component": {
+          "style": "scss"
+        }
+      }
+    },
+    "fouly-pwa-pages-support": {
+      "projectType": "library",
+      "root": "libs/fouly/pwa/pages/support",
+      "sourceRoot": "libs/fouly/pwa/pages/support/src",
+      "prefix": "fouly",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/fouly/pwa/pages/support/tsconfig.lib.json",
+              "libs/fouly/pwa/pages/support/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!libs/fouly/pwa/pages/support/**"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/fouly/pwa/pages/support/jest.config.js",
+            "tsConfig": "libs/fouly/pwa/pages/support/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "libs/fouly/pwa/pages/support/src/test-setup.ts"
           }
         }
       },

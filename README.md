@@ -1,4 +1,4 @@
-# I-Skare monorepo
+# skare monorepo
 
 
 ## Quick Start & Documentation
@@ -14,7 +14,7 @@
 Run `ng g @nrwl/angular:lib my-lib` to generate a library.
 
 
-Libraries are sharable across libraries and applications. They can be imported from `@i-skare/mylib`.
+Libraries are sharable across libraries and applications. They can be imported from `@skare/mylib`.
 
 ## Development server
 

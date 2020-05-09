@@ -1,5 +1,5 @@
 {
-  "name": "@i-skare/shared-authentication",
+  "name": "@skare/shared-authentication",
   "version": "0.0.1",
   "peerDependencies": {
     "@angular/common": "^9.1.4",
