@@ -37,6 +37,7 @@
     "@angular/platform-browser": "^9.1.0",
     "@angular/platform-browser-dynamic": "^9.1.0",
     "@angular/router": "^9.1.0",
+    "@angular/service-worker": "^9.1.0",
     "@azure/ng-deploy": "^0.2.3",
     "@nestjs/common": "^6.8.3",
     "@nestjs/core": "^6.8.3",

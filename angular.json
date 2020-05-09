@@ -75,7 +75,8 @@
                 "glob": "**/*.svg",
                 "input": "node_modules/ionicons/dist/ionicons/svg",
                 "output": "./svg"
-              }
+              },
+              "apps/fouly/pwa/src/manifest.webmanifest"
             ],
             "styles": [
               "apps/fouly/pwa/src/styles.scss",
@@ -139,7 +140,9 @@
                   "maximumWarning": "6kb",
                   "maximumError": "10kb"
                 }
-              ]
+              ],
+              "serviceWorker": true,
+              "ngswConfigPath": "apps/fouly/pwa/ngsw-config.json"
             }
           }
         },
