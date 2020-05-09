@@ -20,7 +20,8 @@
         "libs/shared/authentication/src/index.ts"
       ],
       "@i-skare/fouly/ui": ["libs/fouly/ui/src/index.ts"],
-      "@i-skare/fouly/data": ["libs/fouly/data/src/index.ts"]
+      "@i-skare/fouly/data": ["libs/fouly/data/src/index.ts"],
+      "@i-skare/fouly/shared/styles": ["libs/fouly/shared/styles/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
