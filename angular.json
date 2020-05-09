@@ -26,7 +26,10 @@
               "libs/shared/authentication/tsconfig.lib.json",
               "libs/shared/authentication/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!libs/shared/authentication/**"]
+            "exclude": [
+              "**/node_modules/**",
+              "!libs/shared/authentication/**"
+            ]
           }
         },
         "test": {
@@ -67,9 +70,46 @@
             "aot": true,
             "assets": [
               "apps/fouly/pwa/src/favicon.ico",
-              "apps/fouly/pwa/src/assets"
+              "apps/fouly/pwa/src/assets",
+              {
+                "glob": "**/*.svg",
+                "input": "node_modules/ionicons/dist/ionicons/svg",
+                "output": "./svg"
+              }
             ],
-            "styles": ["apps/fouly/pwa/src/styles.scss"],
+            "styles": [
+              "apps/fouly/pwa/src/styles.scss",
+              {
+                "input": "node_modules/@ionic/angular/css/normalize.css"
+              },
+              {
+                "input": "node_modules/@ionic/angular/css/structure.css"
+              },
+              {
+                "input": "node_modules/@ionic/angular/css/typography.css"
+              },
+              {
+                "input": "node_modules/@ionic/angular/css/core.css"
+              },
+              {
+                "input": "node_modules/@ionic/angular/css/padding.css"
+              },
+              {
+                "input": "node_modules/@ionic/angular/css/float-elements.css"
+              },
+              {
+                "input": "node_modules/@ionic/angular/css/text-alignment.css"
+              },
+              {
+                "input": "node_modules/@ionic/angular/css/text-transformation.css"
+              },
+              {
+                "input": "node_modules/@ionic/angular/css/flex-utils.css"
+              },
+              {
+                "input": "apps/fouly/pwa/src/theme/variables.css"
+              }
+            ],
             "scripts": []
           },
           "configurations": {
@@ -128,7 +168,10 @@
               "apps/fouly/pwa/tsconfig.app.json",
               "apps/fouly/pwa/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!apps/fouly/pwa/**"]
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/fouly/pwa/**"
+            ]
           }
         },
         "test": {
@@ -138,6 +181,30 @@
             "tsConfig": "apps/fouly/pwa/tsconfig.spec.json",
             "passWithNoTests": true,
             "setupFile": "apps/fouly/pwa/src/test-setup.ts"
+          }
+        },
+        "ionic-cordova-serve": {
+          "builder": "@ionic/angular-toolkit:cordova-serve",
+          "options": {
+            "cordovaBuildTarget": "fouly-pwa:ionic-cordova-build",
+            "devServerTarget": "fouly-pwa:serve"
+          },
+          "configurations": {
+            "production": {
+              "cordovaBuildTarget": "fouly-pwa:ionic-cordova-build:production",
+              "devServerTarget": "fouly-pwa:serve:production"
+            }
+          }
+        },
+        "ionic-cordova-build": {
+          "builder": "@ionic/angular-toolkit:cordova-build",
+          "options": {
+            "browserTarget": "fouly-pwa:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "fouly-pwa:build:production"
+            }
           }
         }
       }
@@ -166,7 +233,9 @@
               "apps/fouly/webfront/src/favicon.ico",
               "apps/fouly/webfront/src/assets"
             ],
-            "styles": ["apps/fouly/webfront/src/styles.scss"],
+            "styles": [
+              "apps/fouly/webfront/src/styles.scss"
+            ],
             "scripts": []
           },
           "configurations": {
@@ -225,7 +294,10 @@
               "apps/fouly/webfront/tsconfig.app.json",
               "apps/fouly/webfront/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!apps/fouly/webfront/**"]
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/fouly/webfront/**"
+            ]
           }
         },
         "test": {
@@ -260,8 +332,13 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": ["apps/fouly/webfront-e2e/tsconfig.e2e.json"],
-            "exclude": ["**/node_modules/**", "!apps/fouly/webfront-e2e/**"]
+            "tsConfig": [
+              "apps/fouly/webfront-e2e/tsconfig.e2e.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/fouly/webfront-e2e/**"
+            ]
           }
         }
       }
@@ -287,8 +364,13 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": ["apps/fouly/pwa-e2e/tsconfig.e2e.json"],
-            "exclude": ["**/node_modules/**", "!apps/fouly/pwa-e2e/**"]
+            "tsConfig": [
+              "apps/fouly/pwa-e2e/tsconfig.e2e.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/fouly/pwa-e2e/**"
+            ]
           }
         }
       }
@@ -306,7 +388,9 @@
             "outputPath": "dist/apps/fouly/backend",
             "main": "apps/fouly/backend/src/main.ts",
             "tsConfig": "apps/fouly/backend/tsconfig.app.json",
-            "assets": ["apps/fouly/backend/src/assets"]
+            "assets": [
+              "apps/fouly/backend/src/assets"
+            ]
           },
           "configurations": {
             "production": {
@@ -335,7 +419,10 @@
               "apps/fouly/backend/tsconfig.app.json",
               "apps/fouly/backend/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!apps/fouly/backend/**"]
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/fouly/backend/**"
+            ]
           }
         },
         "test": {
@@ -361,7 +448,10 @@
               "libs/fouly/ui/tsconfig.lib.json",
               "libs/fouly/ui/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!libs/fouly/ui/**"]
+            "exclude": [
+              "**/node_modules/**",
+              "!libs/fouly/ui/**"
+            ]
           }
         },
         "test": {
@@ -393,7 +483,10 @@
               "libs/fouly/data/tsconfig.lib.json",
               "libs/fouly/data/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!libs/fouly/data/**"]
+            "exclude": [
+              "**/node_modules/**",
+              "!libs/fouly/data/**"
+            ]
           }
         },
         "test": {
