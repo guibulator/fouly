@@ -1,14 +1,19 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { IntroductionComponentPage } from './introduction/introduction.component';
+import { IonicModule } from '@ionic/angular';
+import { IntroductionRoutingModule } from './introduction-routing.module';
+import { IonicStorageModule } from '@ionic/storage';
 
 @NgModule({
   imports: [
     CommonModule,
-
-    RouterModule.forChild([
-      /* {path: '', pathMatch: 'full', component: InsertYourComponentHere} */
-    ])
+    IonicModule,
+    IonicStorageModule,
+    IntroductionRoutingModule
+  ],
+  declarations:[
+    IntroductionComponentPage
   ]
 })
 export class IntroductionModule {}

@@ -1,7 +1,2 @@
 # shared-authentication
-
-This library was generated with [Nx](https://nx.dev).
-
-## Running unit tests
-
-Run `nx test shared-authentication` to execute the unit tests.
+Eveything related to MSADL and other authentication/authorization related code.

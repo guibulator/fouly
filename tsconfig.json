@@ -31,6 +31,9 @@
       ],
       "@skare/fouly/pwa/pages/support": [
         "libs/fouly/pwa/pages/support/src/index.ts"
+      ],
+      "@skare/fouly/shared/providers": [
+        "libs/fouly/shared/providers/src/index.ts"
       ]
     }
   },

@@ -23,10 +23,11 @@
       "tags": []
     },
     "fouly-pwa": {
-      "tags": []
+      "tags": ["app"],
+      "implicitDependencies":["fouly-shared-styles"]
     },
     "fouly-webfront": {
-      "tags": []
+      "tags": ["app"]
     },
     "fouly-webfront-e2e": {
       "tags": [],
@@ -43,22 +44,25 @@
       "tags": ["ui"]
     },
     "fouly-data": {
-      "tags": []
+      "tags": ["data-access"]
     },
     "fouly-shared-styles": {
       "tags": []
     },
     "fouly-pwa-pages-introduction": {
-      "tags": []
+      "tags": ["page"]
     },
     "fouly-pwa-pages-map": {
-      "tags": []
+      "tags": ["page"]
     },
     "fouly-pwa-pages-my-places": {
-      "tags": []
+      "tags": ["page"]
     },
     "fouly-pwa-pages-support": {
-      "tags": []
+      "tags": ["page"]
+    },
+    "fouly-shared-providers": {
+      "tags": ["providers"]
     }
   }
 }

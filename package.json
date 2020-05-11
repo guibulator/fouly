@@ -39,6 +39,8 @@
     "@angular/router": "^9.1.0",
     "@angular/service-worker": "^9.1.0",
     "@azure/ng-deploy": "^0.2.3",
+    "@ionic/angular": "latest",
+    "@ionic/storage": "^2.2.0",
     "@nestjs/common": "^6.8.3",
     "@nestjs/core": "^6.8.3",
     "@nestjs/platform-express": "^6.8.3",
@@ -49,8 +51,7 @@
     "rxjs": "~6.5.4",
     "swagger-ui-express": "^4.1.4",
     "tslib": "^1.10.0",
-    "zone.js": "^0.10.2",
-    "@ionic/angular": "latest"
+    "zone.js": "^0.10.2"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "0.901.0",
