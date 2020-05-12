@@ -14,12 +14,7 @@
     "default": {
       "runner": "@nrwl/workspace/tasks-runners/default",
       "options": {
-        "cacheableOperations": [
-          "build",
-          "lint",
-          "test",
-          "e2e"
-        ]
+        "cacheableOperations": ["build", "lint", "test", "e2e"]
       }
     }
   },
@@ -28,72 +23,49 @@
       "tags": []
     },
     "fouly-pwa": {
-      "tags": [
-        "app"
-      ],
-      "implicitDependencies": [
-        "fouly-shared-styles"
-      ]
+      "tags": ["app"],
+      "implicitDependencies": ["fouly-shared-styles"]
     },
     "fouly-webfront": {
-      "tags": [
-        "app"
-      ]
+      "tags": ["app"]
     },
     "fouly-webfront-e2e": {
       "tags": [],
-      "implicitDependencies": [
-        "fouly-webfront"
-      ]
+      "implicitDependencies": ["fouly-webfront"]
     },
     "fouly-pwa-e2e": {
       "tags": [],
-      "implicitDependencies": [
-        "fouly-pwa"
-      ]
+      "implicitDependencies": ["fouly-pwa"]
     },
     "fouly-backend": {
-      "tags": [
-        "backend"
-      ]
+      "tags": ["backend"]
     },
     "fouly-data": {
-      "tags": [
-        "data-access"
-      ]
+      "tags": ["data-access"]
     },
     "fouly-shared-styles": {
       "tags": []
     },
     "fouly-pwa-pages-introduction": {
-      "tags": [
-        "page"
-      ]
+      "tags": ["page"]
     },
     "fouly-pwa-pages-map": {
-      "tags": [
-        "page"
-      ]
+      "tags": ["page"]
     },
     "fouly-pwa-pages-my-places": {
-      "tags": [
-        "page"
-      ]
+      "tags": ["page"]
     },
     "fouly-pwa-pages-support": {
-      "tags": [
-        "page"
-      ]
+      "tags": ["page"]
     },
     "fouly-shared-providers": {
-      "tags": [
-        "providers"
-      ]
+      "tags": ["providers"]
     },
     "fouly-shared-ui": {
-      "tags": [
-        "ui"
-      ]
+      "tags": ["ui"]
+    },
+    "fouly-pwa-app-shell": {
+      "tags": ["appshell"]
     }
   }
 }

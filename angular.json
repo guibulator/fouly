@@ -26,10 +26,7 @@
               "libs/shared/authentication/tsconfig.lib.json",
               "libs/shared/authentication/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!libs/shared/authentication/**"
-            ]
+            "exclude": ["**/node_modules/**", "!libs/shared/authentication/**"]
           }
         },
         "test": {
@@ -143,10 +140,7 @@
               "apps/fouly/pwa/tsconfig.app.json",
               "apps/fouly/pwa/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/fouly/pwa/**"
-            ]
+            "exclude": ["**/node_modules/**", "!apps/fouly/pwa/**"]
           }
         },
         "test": {
@@ -208,9 +202,7 @@
               "apps/fouly/webfront/src/favicon.ico",
               "apps/fouly/webfront/src/assets"
             ],
-            "styles": [
-              "apps/fouly/webfront/src/styles.scss"
-            ],
+            "styles": ["apps/fouly/webfront/src/styles.scss"],
             "scripts": []
           },
           "configurations": {
@@ -269,10 +261,7 @@
               "apps/fouly/webfront/tsconfig.app.json",
               "apps/fouly/webfront/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/fouly/webfront/**"
-            ]
+            "exclude": ["**/node_modules/**", "!apps/fouly/webfront/**"]
           }
         },
         "test": {
@@ -307,13 +296,8 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": [
-              "apps/fouly/webfront-e2e/tsconfig.e2e.json"
-            ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/fouly/webfront-e2e/**"
-            ]
+            "tsConfig": ["apps/fouly/webfront-e2e/tsconfig.e2e.json"],
+            "exclude": ["**/node_modules/**", "!apps/fouly/webfront-e2e/**"]
           }
         }
       }
@@ -339,13 +323,8 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": [
-              "apps/fouly/pwa-e2e/tsconfig.e2e.json"
-            ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/fouly/pwa-e2e/**"
-            ]
+            "tsConfig": ["apps/fouly/pwa-e2e/tsconfig.e2e.json"],
+            "exclude": ["**/node_modules/**", "!apps/fouly/pwa-e2e/**"]
           }
         }
       }
@@ -363,9 +342,7 @@
             "outputPath": "dist/apps/fouly/backend",
             "main": "apps/fouly/backend/src/main.ts",
             "tsConfig": "apps/fouly/backend/tsconfig.app.json",
-            "assets": [
-              "apps/fouly/backend/src/assets"
-            ]
+            "assets": ["apps/fouly/backend/src/assets"]
           },
           "configurations": {
             "production": {
@@ -394,10 +371,7 @@
               "apps/fouly/backend/tsconfig.app.json",
               "apps/fouly/backend/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/fouly/backend/**"
-            ]
+            "exclude": ["**/node_modules/**", "!apps/fouly/backend/**"]
           }
         },
         "test": {
@@ -423,10 +397,7 @@
               "libs/fouly/data/tsconfig.lib.json",
               "libs/fouly/data/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!libs/fouly/data/**"
-            ]
+            "exclude": ["**/node_modules/**", "!libs/fouly/data/**"]
           }
         },
         "test": {
@@ -448,13 +419,8 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": [
-              "libs/fouly/shared/styles/tsconfig.lib.json"
-            ],
-            "exclude": [
-              "**/node_modules/**",
-              "!libs/fouly/shared/styles/**"
-            ]
+            "tsConfig": ["libs/fouly/shared/styles/tsconfig.lib.json"],
+            "exclude": ["**/node_modules/**", "!libs/fouly/shared/styles/**"]
           }
         }
       },
@@ -512,10 +478,7 @@
               "libs/fouly/pwa/pages/map/tsconfig.lib.json",
               "libs/fouly/pwa/pages/map/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!libs/fouly/pwa/pages/map/**"
-            ]
+            "exclude": ["**/node_modules/**", "!libs/fouly/pwa/pages/map/**"]
           }
         },
         "test": {
@@ -617,10 +580,7 @@
               "libs/fouly/shared/providers/tsconfig.lib.json",
               "libs/fouly/shared/providers/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!libs/fouly/shared/providers/**"
-            ]
+            "exclude": ["**/node_modules/**", "!libs/fouly/shared/providers/**"]
           }
         },
         "test": {
@@ -652,10 +612,7 @@
               "libs/fouly/shared/ui/tsconfig.lib.json",
               "libs/fouly/shared/ui/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!libs/fouly/shared/ui/**"
-            ]
+            "exclude": ["**/node_modules/**", "!libs/fouly/shared/ui/**"]
           }
         },
         "test": {
@@ -671,6 +628,38 @@
       "schematics": {
         "@nrwl/angular:component": {
           "style": "scss"
+        }
+      }
+    },
+    "fouly-pwa-app-shell": {
+      "projectType": "library",
+      "root": "libs/fouly/pwa/app-shell",
+      "sourceRoot": "libs/fouly/pwa/app-shell/src",
+      "prefix": "skare",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/fouly/pwa/app-shell/tsconfig.lib.json",
+              "libs/fouly/pwa/app-shell/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/fouly/pwa/app-shell/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/fouly/pwa/app-shell/jest.config.js",
+            "tsConfig": "libs/fouly/pwa/app-shell/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "libs/fouly/pwa/app-shell/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/angular:component": {
+          "style": "scc"
         }
       }
     }
