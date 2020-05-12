@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { ShellComponent } from './shell/shell.component';
 import { IonicModule } from '@ionic/angular';
@@ -7,6 +8,7 @@ import { RouterModule } from '@angular/router';
 @NgModule({
   imports: [
     CommonModule,
+    HttpClientModule,
     IonicModule.forRoot(),
     IonicStorageModule.forRoot(),
     RouterModule.forRoot(

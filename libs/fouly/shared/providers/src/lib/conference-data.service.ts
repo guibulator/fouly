@@ -1,23 +1,22 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { of } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { UserComponent } from '../user/user.component';
+import { UserDataService } from './user-data.service';
 
-const dataPath = '../../data.json';
 @Injectable({
   providedIn: 'root'
 })
-export class ConferenceComponent {
+export class ConferenceDataService {
   data: any;
 
-  constructor(public http: HttpClient, public user: UserComponent) {}
+  constructor(public http: HttpClient, public user: UserDataService) {}
 
   load(): any {
     if (this.data) {
       return of(this.data);
     } else {
-      return this.http.get(dataPath).pipe(map(this.processData, this));
+      return this.http.get('assets/data/data.json').pipe(map(this.processData, this));
     }
   }
 

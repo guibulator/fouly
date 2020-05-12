@@ -2,7 +2,7 @@ import { Component, ElementRef, Inject, ViewChild, AfterViewInit, OnInit } from 
 import { Platform } from '@ionic/angular';
 import { DOCUMENT } from '@angular/common';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
-import { ConferenceComponent } from '@skare/fouly/shared/providers/src/lib/conference/conference.component';
+import { ConferenceDataService } from '@skare/fouly/shared/providers';
 
 declare var google;
 
@@ -17,7 +17,7 @@ export class MapComponent implements OnInit {
   @ViewChild('mapElement', { static: true }) mapElement2;
   constructor(
     @Inject(DOCUMENT) private doc: Document,
-    public confData: ConferenceComponent,
+    public confData: ConferenceDataService,
     public platform: Platform,
     private geolocation: Geolocation
   ) {}

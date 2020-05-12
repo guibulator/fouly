@@ -4,12 +4,10 @@ import { RouterModule } from '@angular/router';
 import { MapComponent } from './map/map.component';
 import { IonicModule } from '@ionic/angular';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
-import { FoulySharedProvidersModule } from '@skare/fouly/shared/providers';
 @NgModule({
   imports: [
     CommonModule,
     IonicModule,
-    FoulySharedProvidersModule,
     RouterModule.forChild([{ path: '', pathMatch: 'full', component: MapComponent }])
   ],
   declarations: [MapComponent],

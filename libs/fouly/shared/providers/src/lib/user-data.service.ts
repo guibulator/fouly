@@ -1,11 +1,10 @@
-import { Component } from '@angular/core';
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
 
 @Injectable({
   providedIn: 'root'
 })
-export class UserComponent {
+export class UserDataService {
   favorites: string[] = [];
   HAS_LOGGED_IN = 'hasLoggedIn';
   HAS_SEEN_TUTORIAL = 'hasSeenTutorial';
