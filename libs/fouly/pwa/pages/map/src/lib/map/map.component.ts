@@ -1,8 +1,7 @@
-import { Component, ElementRef, Inject, ViewChild, AfterViewInit, OnInit } from '@angular/core';
-import { Platform } from '@ionic/angular';
 import { DOCUMENT } from '@angular/common';
+import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
-import { ConferenceDataService } from '@skare/fouly/shared/providers';
+import { Platform } from '@ionic/angular';
 
 declare var google;
 
@@ -17,7 +16,6 @@ export class MapComponent implements OnInit {
   @ViewChild('mapElement', { static: true }) mapElement2;
   constructor(
     @Inject(DOCUMENT) private doc: Document,
-    public confData: ConferenceDataService,
     public platform: Platform,
     private geolocation: Geolocation
   ) {}
@@ -53,28 +51,4 @@ export class MapComponent implements OnInit {
       marker.setMap(this.map);
     });
   }
-}
-
-function getGoogleMaps(apiKey: string): Promise<any> {
-  const win = window as any;
-  const googleModule = win.google;
-  if (googleModule && googleModule.maps) {
-    return Promise.resolve(googleModule.maps);
-  }
-
-  return new Promise((resolve, reject) => {
-    const script = document.createElement('script');
-    script.src = `https://maps.googleapis.com/maps/api/js?key=${'AIzaSyD_VZWJhyx3bPExTyos-JSsaemjASgGpWw'}&v=3.31`;
-    script.async = true;
-    script.defer = true;
-    document.body.appendChild(script);
-    script.onload = () => {
-      const googleModule2 = win.google;
-      if (googleModule2 && googleModule2.maps) {
-        resolve(googleModule2.maps);
-      } else {
-        reject('google maps not available');
-      }
-    };
-  });
 }
