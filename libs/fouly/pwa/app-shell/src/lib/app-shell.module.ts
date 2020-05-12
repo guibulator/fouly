@@ -13,25 +13,31 @@ import { RouterModule } from '@angular/router';
       [
         {
           path: 'introduction',
-          loadChildren: () => import('@skare/fouly/pwa/pages/introduction').then((module) => module.IntroductionModule)
+          loadChildren: () =>
+            import('@skare/fouly/pwa/pages/introduction').then(
+              (module) => module.IntroductionModule
+            ),
         },
         {
           path: 'map',
-          loadChildren: () => import('@skare/fouly/pwa/pages/map').then((module) => module.MapModule)
+          loadChildren: () =>
+            import('@skare/fouly/pwa/pages/map').then((module) => module.MapModule),
         },
         {
           path: 'my-places',
-          loadChildren: () => import('@skare/fouly/pwa/pages/my-places').then((module) => module.MyPlacesModule)
+          loadChildren: () =>
+            import('@skare/fouly/pwa/pages/my-places').then((module) => module.MyPlacesModule),
         },
         {
           path: 'support',
-          loadChildren: () => import('@skare/fouly/pwa/pages/support').then((module) => module.SupportModule)
-        }
+          loadChildren: () =>
+            import('@skare/fouly/pwa/pages/support').then((module) => module.SupportModule),
+        },
       ],
       { initialNavigation: 'enabled' }
-    )
+    ),
   ],
   declarations: [ShellComponent],
-  exports: [ShellComponent]
+  exports: [ShellComponent],
 })
 export class AppShellModule {}

@@ -4,7 +4,7 @@ import { FoulySharedProvidersModule } from './fouly-shared-providers.module';
 describe('FoulySharedProvidersModule', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [FoulySharedProvidersModule]
+      imports: [FoulySharedProvidersModule],
     }).compileComponents();
   }));
 

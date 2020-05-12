@@ -4,7 +4,7 @@ import { MapModule } from './map.module';
 describe('MapModule', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [MapModule]
+      imports: [MapModule],
     }).compileComponents();
   }));
 

@@ -4,7 +4,7 @@ import { SupportModule } from './support.module';
 describe('SupportModule', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [SupportModule]
+      imports: [SupportModule],
     }).compileComponents();
   }));
 

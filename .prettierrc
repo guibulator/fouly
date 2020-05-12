@@ -1,7 +1,16 @@
 {
-   "singleQuote": true,
-   "arrowParens": "always",
-   "printWidth": 150,
-   "useTabs": false,
-   "tabWidth": 2
+  "singleQuote": true,
+  "arrowParens": "always",
+  "printWidth": 100,
+  "useTabs": false,
+  "tabWidth": 2,
+  "overrides": [
+    {
+      "files": ["*.html"],
+      "options": {
+        "tabWidth": 3,
+        "printWidth": 150
+      }
+    }
+  ]
 }

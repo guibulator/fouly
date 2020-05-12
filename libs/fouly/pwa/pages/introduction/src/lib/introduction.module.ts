@@ -6,14 +6,7 @@ import { IntroductionRoutingModule } from './introduction-routing.module';
 import { IonicStorageModule } from '@ionic/storage';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    IonicModule,
-    IonicStorageModule,
-    IntroductionRoutingModule
-  ],
-  declarations:[
-    IntroductionComponentPage
-  ]
+  imports: [CommonModule, IonicModule, IonicStorageModule, IntroductionRoutingModule],
+  declarations: [IntroductionComponentPage],
 })
 export class IntroductionModule {}

@@ -4,7 +4,7 @@ import { MyPlacesModule } from './my-places.module';
 describe('MyPlacesModule', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [MyPlacesModule]
+      imports: [MyPlacesModule],
     }).compileComponents();
   }));
 

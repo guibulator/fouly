@@ -5,6 +5,6 @@ import { RouterModule, Route } from '@angular/router';
 export const foulyUiRoutes: Route[] = [];
 
 @NgModule({
-  imports: [CommonModule, RouterModule]
+  imports: [CommonModule, RouterModule],
 })
 export class FoulyUiModule {}

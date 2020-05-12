@@ -4,7 +4,7 @@ import { AuthenticationModule } from './authentication.module';
 describe('AuthenticationModule', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [AuthenticationModule]
+      imports: [AuthenticationModule],
     }).compileComponents();
   }));
 

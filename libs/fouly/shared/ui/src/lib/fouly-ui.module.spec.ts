@@ -4,7 +4,7 @@ import { FoulyUiModule } from './fouly-ui.module';
 describe('FoulyUiModule', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [FoulyUiModule]
+      imports: [FoulyUiModule],
     }).compileComponents();
   }));
 

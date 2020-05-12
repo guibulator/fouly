@@ -4,7 +4,7 @@ import { AppShellModule } from './app-shell.module';
 describe('AppShellModule', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [AppShellModule]
+      imports: [AppShellModule],
     }).compileComponents();
   }));
 

@@ -11,11 +11,11 @@ import { AppShellModule } from '@skare/fouly/pwa/app-shell';
   imports: [
     BrowserModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
-      enabled: environment.production
+      enabled: environment.production,
     }),
-    AppShellModule
+    AppShellModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {}
