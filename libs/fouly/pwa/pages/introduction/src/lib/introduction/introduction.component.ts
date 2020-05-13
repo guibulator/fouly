@@ -1,14 +1,12 @@
-import { Component, ViewChild, HostListener } from '@angular/core';
+import { Component, HostListener, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-
-import { MenuController, IonSlides, AlertController } from '@ionic/angular';
-
+import { AlertController, IonSlides, MenuController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'fouly-page-introduction',
   templateUrl: 'introduction.component.html',
-  styleUrls: ['./introduction.component.scss'],
+  styleUrls: ['./introduction.component.scss']
 })
 export class IntroductionComponentPage {
   showSkip = true;
@@ -35,7 +33,7 @@ export class IntroductionComponentPage {
   }
 
   ionViewWillEnter() {
-    this.storage.get('ion_did_tutorial').then((res) => {
+    this.storage.get('fouly_did_introduction').then((res) => {
       if (res === true) {
         this.router.navigateByUrl('/app/tabs/map', { replaceUrl: true });
       }
@@ -58,7 +56,7 @@ export class IntroductionComponentPage {
         "Désirez-vous installer l'application pour obtenir une meilleure expérience utilisateur ?",
       buttons: [
         {
-          text: 'Non merci',
+          text: 'Non merci'
         },
         {
           text: 'Installer',
@@ -71,9 +69,9 @@ export class IntroductionComponentPage {
                 console.log('User dismissed the install prompt');
               }
             });
-          },
-        },
-      ],
+          }
+        }
+      ]
     });
     return await alert.present();
   }

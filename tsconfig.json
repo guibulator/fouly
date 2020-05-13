@@ -16,26 +16,19 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@skare/shared/authentication": [
-        "libs/shared/authentication/src/index.ts"
-      ],
+      "@skare/shared/authentication": ["libs/shared/authentication/src/index.ts"],
       "@skare/fouly/data": ["libs/fouly/data/src/index.ts"],
       "@skare/fouly/shared/styles": ["libs/fouly/shared/styles/src/index.ts"],
-      "@skare/fouly/pwa/pages/introduction": [
-        "libs/fouly/pwa/pages/introduction/src/index.ts"
-      ],
+      "@skare/fouly/pwa/pages/introduction": ["libs/fouly/pwa/pages/introduction/src/index.ts"],
       "@skare/fouly/pwa/pages/map": ["libs/fouly/pwa/pages/map/src/index.ts"],
-      "@skare/fouly/pwa/pages/my-places": [
-        "libs/fouly/pwa/pages/my-places/src/index.ts"
-      ],
-      "@skare/fouly/pwa/pages/support": [
-        "libs/fouly/pwa/pages/support/src/index.ts"
-      ],
-      "@skare/fouly/shared/providers": [
-        "libs/fouly/shared/providers/src/index.ts"
-      ],
+      "@skare/fouly/pwa/pages/my-places": ["libs/fouly/pwa/pages/my-places/src/index.ts"],
+      "@skare/fouly/pwa/pages/support": ["libs/fouly/pwa/pages/support/src/index.ts"],
+      "@skare/fouly/shared/providers": ["libs/fouly/shared/providers/src/index.ts"],
       "@skare/fouly/shared/ui": ["libs/fouly/shared/ui/src/index.ts"],
-      "@skare/fouly/pwa/app-shell": ["libs/fouly/pwa/app-shell/src/index.ts"]
+      "@skare/fouly/pwa/app-shell": ["libs/fouly/pwa/app-shell/src/index.ts"],
+      "@skare/fouly/pwa/pages/tabs-navigation": [
+        "libs/fouly/pwa/pages/tabs-navigation/src/index.ts"
+      ]
     }
   },
   "exclude": ["node_modules", "tmp"]

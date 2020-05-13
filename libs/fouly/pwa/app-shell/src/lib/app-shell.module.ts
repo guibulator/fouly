@@ -1,44 +1,11 @@
-import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
-import { ShellComponent } from './shell/shell.component';
+import { NgModule } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { IonicStorageModule } from '@ionic/storage';
-import { RouterModule } from '@angular/router';
+import { ShellComponent } from './shell/shell.component';
+import { ShellModule } from './shell/shell.module';
 @NgModule({
-  imports: [
-    CommonModule,
-    HttpClientModule,
-    IonicModule.forRoot(),
-    IonicStorageModule.forRoot(),
-    RouterModule.forRoot(
-      [
-        {
-          path: 'introduction',
-          loadChildren: () =>
-            import('@skare/fouly/pwa/pages/introduction').then(
-              (module) => module.IntroductionModule
-            )
-        },
-        {
-          path: 'app/tabs/map',
-          loadChildren: () =>
-            import('@skare/fouly/pwa/pages/map').then((module) => module.MapModule)
-        },
-        {
-          path: 'my-places',
-          loadChildren: () =>
-            import('@skare/fouly/pwa/pages/my-places').then((module) => module.MyPlacesModule)
-        },
-        {
-          path: 'support',
-          loadChildren: () =>
-            import('@skare/fouly/pwa/pages/support').then((module) => module.SupportModule)
-        }
-      ],
-      { initialNavigation: 'enabled' }
-    )
-  ],
+  imports: [CommonModule, IonicModule.forRoot(), IonicStorageModule.forRoot(), ShellModule],
   declarations: [ShellComponent],
   exports: [ShellComponent]
 })

@@ -1,5 +1,19 @@
 {
   "git.ignoreLimitWarning": true,
   "appService.showBuildDuringDeployPrompt": false,
-  "editor.formatOnSave": true
+  "editor.formatOnSave": true,
+  "breadcrumbs.enabled": true,
+  "files.exclude": {
+    "**/.gitkeep": true,
+    "**/dist": true,
+    "**/package-lock.json": true,
+    "**/tsconfig*": true,
+    "**/tslint*": true,
+    "**/jest*": true
+  },
+  "[typescript]": {
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": true
+    }
+  }
 }
