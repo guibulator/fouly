@@ -10,30 +10,30 @@ import { Storage } from '@ionic/storage';
   selector: 'fouly-app-shell',
   templateUrl: './shell.component.html',
   styleUrls: ['./shell.component.scss'],
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class ShellComponent implements OnInit {
   appPages = [
     {
       title: 'Favoris',
       url: '/app/tabs/myplaces',
-      icon: 'heart',
+      icon: 'heart'
     },
     {
       title: 'Nouvelles',
       url: '/app/tabs/speakers',
-      icon: 'people',
+      icon: 'people'
     },
     {
       title: 'Map',
       url: '/app/tabs/map',
-      icon: 'location',
+      icon: 'location'
     },
     {
       title: 'À propos',
       url: '/app/tabs/about',
-      icon: 'information-circle',
-    },
+      icon: 'information-circle'
+    }
   ];
   loggedIn = false;
   dark = true;
@@ -58,9 +58,9 @@ export class ShellComponent implements OnInit {
         buttons: [
           {
             role: 'cancel',
-            text: 'Reload',
-          },
-        ],
+            text: 'Reload'
+          }
+        ]
       });
 
       await toast.present();
