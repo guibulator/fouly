@@ -23,14 +23,14 @@
       "tags": []
     },
     "fouly-pwa": {
-      "tags": ["app"],
+      "tags": ["scope:fouly", "pwa-app"],
       "implicitDependencies": ["fouly-shared-styles"]
     },
     "fouly-webfront": {
-      "tags": ["app"]
+      "tags": ["scope:fouly", "web-app"]
     },
     "fouly-webfront-e2e": {
-      "tags": [],
+      "tags": ["scope:fouly"],
       "implicitDependencies": ["fouly-webfront"]
     },
     "fouly-pwa-e2e": {
@@ -38,34 +38,37 @@
       "implicitDependencies": ["fouly-pwa"]
     },
     "fouly-backend": {
-      "tags": ["backend"]
+      "tags": ["scope:fouly", "backend"]
     },
     "fouly-data": {
-      "tags": ["data-access"]
+      "tags": ["scope:fouly", "data-access"]
     },
     "fouly-shared-styles": {
-      "tags": []
+      "tags": ["scope:fouly"]
     },
     "fouly-pwa-pages-introduction": {
-      "tags": ["page"]
+      "tags": ["scope:fouly", "page"]
     },
     "fouly-pwa-pages-map": {
-      "tags": ["page"]
+      "tags": ["scope:fouly", "page"]
     },
     "fouly-pwa-pages-my-places": {
-      "tags": ["page"]
+      "tags": ["scope:fouly", "page"]
     },
     "fouly-pwa-pages-support": {
-      "tags": ["page"]
+      "tags": ["scope:fouly", "page"]
     },
     "fouly-shared-providers": {
-      "tags": ["providers"]
+      "tags": ["scope:fouly", "providers"]
     },
     "fouly-shared-ui": {
-      "tags": ["ui"]
+      "tags": ["scope:fouly", "ui"]
     },
     "fouly-pwa-app-shell": {
-      "tags": ["appshell"]
+      "tags": ["scope:fouly", "appshell"]
+    },
+    "fouly-pwa-pages-tabs-navigation": {
+      "tags": ["scope:fouly"]
     }
   }
 }

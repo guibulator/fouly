@@ -136,10 +136,7 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": [
-              "apps/fouly/pwa/tsconfig.app.json",
-              "apps/fouly/pwa/tsconfig.spec.json"
-            ],
+            "tsConfig": ["apps/fouly/pwa/tsconfig.app.json", "apps/fouly/pwa/tsconfig.spec.json"],
             "exclude": ["**/node_modules/**", "!apps/fouly/pwa/**"]
           }
         },
@@ -198,10 +195,7 @@
             "polyfills": "apps/fouly/webfront/src/polyfills.ts",
             "tsConfig": "apps/fouly/webfront/tsconfig.app.json",
             "aot": true,
-            "assets": [
-              "apps/fouly/webfront/src/favicon.ico",
-              "apps/fouly/webfront/src/assets"
-            ],
+            "assets": ["apps/fouly/webfront/src/favicon.ico", "apps/fouly/webfront/src/assets"],
             "styles": ["apps/fouly/webfront/src/styles.scss"],
             "scripts": []
           },
@@ -393,10 +387,7 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": [
-              "libs/fouly/data/tsconfig.lib.json",
-              "libs/fouly/data/tsconfig.spec.json"
-            ],
+            "tsConfig": ["libs/fouly/data/tsconfig.lib.json", "libs/fouly/data/tsconfig.spec.json"],
             "exclude": ["**/node_modules/**", "!libs/fouly/data/**"]
           }
         },
@@ -443,10 +434,7 @@
               "libs/fouly/pwa/pages/introduction/tsconfig.lib.json",
               "libs/fouly/pwa/pages/introduction/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!libs/fouly/pwa/pages/introduction/**"
-            ]
+            "exclude": ["**/node_modules/**", "!libs/fouly/pwa/pages/introduction/**"]
           }
         },
         "test": {
@@ -510,10 +498,7 @@
               "libs/fouly/pwa/pages/my-places/tsconfig.lib.json",
               "libs/fouly/pwa/pages/my-places/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!libs/fouly/pwa/pages/my-places/**"
-            ]
+            "exclude": ["**/node_modules/**", "!libs/fouly/pwa/pages/my-places/**"]
           }
         },
         "test": {
@@ -545,10 +530,7 @@
               "libs/fouly/pwa/pages/support/tsconfig.lib.json",
               "libs/fouly/pwa/pages/support/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!libs/fouly/pwa/pages/support/**"
-            ]
+            "exclude": ["**/node_modules/**", "!libs/fouly/pwa/pages/support/**"]
           }
         },
         "test": {
@@ -660,6 +642,38 @@
       "schematics": {
         "@nrwl/angular:component": {
           "style": "scc"
+        }
+      }
+    },
+    "fouly-pwa-pages-tabs-navigation": {
+      "projectType": "library",
+      "root": "libs/fouly/pwa/pages/tabs-navigation",
+      "sourceRoot": "libs/fouly/pwa/pages/tabs-navigation/src",
+      "prefix": "fouly",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/fouly/pwa/pages/tabs-navigation/tsconfig.lib.json",
+              "libs/fouly/pwa/pages/tabs-navigation/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/fouly/pwa/pages/tabs-navigation/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/fouly/pwa/pages/tabs-navigation/jest.config.js",
+            "tsConfig": "libs/fouly/pwa/pages/tabs-navigation/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "libs/fouly/pwa/pages/tabs-navigation/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/angular:component": {
+          "style": "scss"
         }
       }
     }
