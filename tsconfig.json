@@ -28,7 +28,8 @@
       "@skare/fouly/pwa/app-shell": ["libs/fouly/pwa/app-shell/src/index.ts"],
       "@skare/fouly/pwa/pages/tabs-navigation": [
         "libs/fouly/pwa/pages/tabs-navigation/src/index.ts"
-      ]
+      ],
+      "@skare/fouly/pwa/pages/contact": ["libs/fouly/pwa/pages/contact/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

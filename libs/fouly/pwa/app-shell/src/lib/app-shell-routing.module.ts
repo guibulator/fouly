@@ -30,6 +30,11 @@ const routes: Routes = [];
             import('@skare/fouly/pwa/pages/introduction').then(
               (module) => module.IntroductionModule
             )
+        },
+        {
+          path: 'contact',
+          loadChildren: () =>
+            import('@skare/fouly/pwa/pages/contact').then((module) => module.ContactModule)
         }
       ],
       { initialNavigation: 'enabled' }

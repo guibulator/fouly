@@ -1,9 +1,9 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { MapComponent } from './map/map.component';
-import { IonicModule } from '@ionic/angular';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { IonicModule } from '@ionic/angular';
+import { MapComponent } from './map/map.component';
 @NgModule({
   imports: [
     CommonModule,

@@ -69,6 +69,9 @@
     },
     "fouly-pwa-pages-tabs-navigation": {
       "tags": ["scope:fouly"]
+    },
+    "fouly-pwa-pages-contact": {
+      "tags": ["scope:fouly", "page"]
     }
   }
 }

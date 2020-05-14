@@ -1,12 +1,12 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IntroductionComponentPage } from './introduction/introduction.component';
+import { NgModule } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
-import { IntroductionRoutingModule } from './introduction-routing.module';
 import { IonicStorageModule } from '@ionic/storage';
+import { IntroductionRoutingModule } from './introduction-routing.module';
+import { IntroductionComponentPage } from './introduction/introduction.component';
 
 @NgModule({
   imports: [CommonModule, IonicModule, IonicStorageModule, IntroductionRoutingModule],
-  declarations: [IntroductionComponentPage],
+  declarations: [IntroductionComponentPage]
 })
 export class IntroductionModule {}

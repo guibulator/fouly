@@ -75,21 +75,17 @@
               },
               "apps/fouly/pwa/src/manifest.webmanifest"
             ],
-            "styles": [
-              {
-                "input": "libs/fouly/shared/styles/src/index.scss"
-              }
-            ],
+            "styles": [{
+              "input": "libs/fouly/shared/styles/src/index.scss"
+            }],
             "scripts": []
           },
           "configurations": {
             "production": {
-              "fileReplacements": [
-                {
-                  "replace": "apps/fouly/pwa/src/environments/environment.ts",
-                  "with": "apps/fouly/pwa/src/environments/environment.prod.ts"
-                }
-              ],
+              "fileReplacements": [{
+                "replace": "apps/fouly/pwa/src/environments/environment.ts",
+                "with": "apps/fouly/pwa/src/environments/environment.prod.ts"
+              }],
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -98,8 +94,7 @@
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
-              "budgets": [
-                {
+              "budgets": [{
                   "type": "initial",
                   "maximumWarning": "2mb",
                   "maximumError": "5mb"
@@ -201,12 +196,10 @@
           },
           "configurations": {
             "production": {
-              "fileReplacements": [
-                {
-                  "replace": "apps/fouly/webfront/src/environments/environment.ts",
-                  "with": "apps/fouly/webfront/src/environments/environment.prod.ts"
-                }
-              ],
+              "fileReplacements": [{
+                "replace": "apps/fouly/webfront/src/environments/environment.ts",
+                "with": "apps/fouly/webfront/src/environments/environment.prod.ts"
+              }],
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -215,8 +208,7 @@
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
-              "budgets": [
-                {
+              "budgets": [{
                   "type": "initial",
                   "maximumWarning": "2mb",
                   "maximumError": "5mb"
@@ -343,12 +335,10 @@
               "optimization": true,
               "extractLicenses": true,
               "inspect": false,
-              "fileReplacements": [
-                {
-                  "replace": "apps/fouly/backend/src/environments/environment.ts",
-                  "with": "apps/fouly/backend/src/environments/environment.prod.ts"
-                }
-              ]
+              "fileReplacements": [{
+                "replace": "apps/fouly/backend/src/environments/environment.ts",
+                "with": "apps/fouly/backend/src/environments/environment.prod.ts"
+              }]
             }
           }
         },
@@ -674,6 +664,36 @@
       "schematics": {
         "@nrwl/angular:component": {
           "style": "scss"
+        }
+      }
+    },
+    "fouly-pwa-pages-contact": {
+      "root": "libs/fouly/pwa/pages/contact",
+      "sourceRoot": "libs/fouly/pwa/pages/contact/src",
+      "projectType": "library",
+      "schematics": {
+        "@nrwl/angular:component": {
+          "style": "scss"
+        }
+      },
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/fouly/pwa/pages/contact/tsconfig.lib.json",
+              "libs/fouly/pwa/pages/contact/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/fouly/pwa/pages/contact/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/fouly/pwa/pages/contact/jest.config.js",
+            "tsConfig": "libs/fouly/pwa/pages/contact/tsconfig.spec.json",
+            "passWithNoTests": true
+          }
         }
       }
     }
