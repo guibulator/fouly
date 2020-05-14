@@ -28,6 +28,11 @@ export class ShellComponent implements OnInit {
       icon: 'location'
     },
     {
+      title: 'Contactez nous',
+      url: '/contact',
+      icon: 'mail'
+    },
+    {
       title: 'À propos',
       url: '/app/tabs/about',
       icon: 'information-circle'
