@@ -29,7 +29,8 @@
       "@skare/fouly/pwa/pages/tabs-navigation": [
         "libs/fouly/pwa/pages/tabs-navigation/src/index.ts"
       ],
-      "@skare/fouly/pwa/pages/contact": ["libs/fouly/pwa/pages/contact/src/index.ts"]
+      "@skare/fouly/pwa/pages/contact": ["libs/fouly/pwa/pages/contact/src/index.ts"],
+      "@skare/fouly/api": ["libs/fouly/api/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

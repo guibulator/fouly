@@ -5,7 +5,7 @@
   "breadcrumbs.enabled": true,
   "files.exclude": {
     "**/.gitkeep": true,
-    "**/dist": true,
+    "**/dist": false,
     "**/package-lock.json": true,
     "**/tsconfig*": true,
     "**/tslint*": true,

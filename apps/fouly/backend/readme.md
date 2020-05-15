@@ -1,2 +1,15 @@
 ## Backend
-NestJS backend exposing a graphQL endpoint that is deployed as a Azure Function
+
+We are using [NestJS](https://nestjs.com/) as our main API which is deployed to an azure function.
+The lib containing modules and controllers is located under libs/fouly/api.
+This project only configures the Azure Function that acts as an API gateway.
+
+## Development
+During development you want to be able to debug the azure function as it would run on azure.
+
+    `npm install -g azure-functions-core-tools@3`
+See [Work with azure functions core tolls](https://docs.microsoft.com/en-us/azure/azure-functions/functions-run-local?tabs=windows%2Ccsharp%2Cbash)
+
+1. build the function, run `ng run fouly-backend:build-azure-function` (A custom builder was added to angular.json)
+2. from the src directory, run `func host start`
+
