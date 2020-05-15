@@ -3,6 +3,8 @@
   "version": "0.0.0",
   "license": "MIT",
   "dependencies": {
+    "@azure/identity": "^1.0.3",
+    "@azure/keyvault-secrets": "^4.0.3",
     "axios": "^0.19.2"
   },
   "devDependencies": {
