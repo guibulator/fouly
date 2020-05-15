@@ -1,4 +1,5 @@
 import { CommonModule } from '@angular/common';
+// import { HttpClient } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -10,6 +11,7 @@ import { ContactComponent } from './contact/contact.component';
     CommonModule,
     IonicModule,
     FormsModule,
+    // HttpClient,
     RouterModule.forChild([{ path: '', pathMatch: 'full', component: ContactComponent }])
   ],
   declarations: [ContactComponent]
