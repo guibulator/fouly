@@ -333,28 +333,6 @@
         "build": {
           "builder": "@nrwl/node:build",
           "options": {
-            "outputPath": "dist/apps/fouly/backend",
-            "main": "apps/fouly/backend/src/main.ts",
-            "tsConfig": "apps/fouly/backend/tsconfig.app.json",
-            "assets": ["apps/fouly/backend/src/assets"]
-          },
-          "configurations": {
-            "production": {
-              "optimization": true,
-              "extractLicenses": true,
-              "inspect": false,
-              "fileReplacements": [
-                {
-                  "replace": "apps/fouly/backend/src/environments/environment.ts",
-                  "with": "apps/fouly/backend/src/environments/environment.prod.ts"
-                }
-              ]
-            }
-          }
-        },
-        "build-azure-function": {
-          "builder": "@nrwl/node:build",
-          "options": {
             "outputPath": "dist/apps/fouly/backend/azure-function",
             "main": "apps/fouly/backend/src/fouly-nest-az-func/index.ts",
             "tsConfig": "apps/fouly/backend/tsconfig.app.json"

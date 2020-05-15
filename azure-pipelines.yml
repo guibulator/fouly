@@ -1,30 +1,42 @@
 trigger:
-- master
+  branches:
+    include:
+      - master
+      - release/*
+      - feature/*
 
 pool:
   vmImage: 'ubuntu-latest'
 
 steps:
-- task: NodeTool@0
-  inputs:
-    versionSpec: '10.x'
-  displayName: 'Install Node.js'
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '10.x'
+    displayName: 'Install Node.js'
 
-- script: |
-    npm install -g @angular/cli
-    npm install
-    ng build fouly-pwa --prod
-  displayName: 'npm install and build Fouly-pwa'
-- task: ArchiveFiles@2
-  inputs:
-    rootFolderOrFile: 'dist/apps/fouly/pwa'
-    includeRootFolder: false
-    archiveType: 'zip'
-    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
-    replaceExistingArchive: true
+  - script: |
+      npm install -g @angular/cli
+      npm install
+      npx nx run-many --all --target=build
+    displayName: 'npm install and build Fouly'
+  - task: ArchiveFiles@2
+    inputs:
+      rootFolderOrFile: 'dist/apps/fouly/pwa'
+      includeRootFolder: false
+      archiveType: 'zip'
+      archiveFile: '$(Build.ArtifactStagingDirectory)/fouly-pwa.$(Build.BuildId).zip'
+      replaceExistingArchive: true
 
-- task: PublishBuildArtifacts@1
-  inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: 'drop'
-    publishLocation: 'Container'
+  - task: ArchiveFiles@2
+    inputs:
+      rootFolderOrFile: 'dist/apps/fouly/backend/azure-function/main.js'
+      includeRootFolder: false
+      archiveType: 'zip'
+      archiveFile: '$(Build.ArtifactStagingDirectory)/fouly-backend-azure-function.$(Build.BuildId).zip'
+      replaceExistingArchive: true
+
+  - task: PublishBuildArtifacts@1
+    inputs:
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+      ArtifactName: 'drop'
+      publishLocation: 'Container'
