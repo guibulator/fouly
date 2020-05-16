@@ -340,8 +340,8 @@
               "apps/fouly/backend/src/host.json",
               {
                 "glob": "function.json",
-                "output": "./",
-                "input": "apps/fouly/backend/src/fouly-nest-az-func"
+                "output": "./foulyApiGatewayAzFunc",
+                "input": "apps/fouly/backend/src/assets"
               }
             ]
           },
@@ -359,10 +359,18 @@
             }
           }
         },
+        "build-local": {
+          "builder": "@nrwl/node:build",
+          "options": {
+            "outputPath": "dist/apps/fouly/backend-local",
+            "main": "apps/fouly/backend/src/main.ts",
+            "tsConfig": "apps/fouly/backend/tsconfig.app.json"
+          }
+        },
         "serve": {
           "builder": "@nrwl/node:execute",
           "options": {
-            "buildTarget": "fouly-backend:build"
+            "buildTarget": "fouly-backend:build-local"
           }
         },
         "lint": {
