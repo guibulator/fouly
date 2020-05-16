@@ -13,5 +13,5 @@
       "name": "res"
     }
   ],
-  "scriptFile": "../../../../../dist/apps/fouly/backend/azure-function/main.js"
+  "scriptFile": "../../../../../dist/apps/fouly/backend/main.js"
 }

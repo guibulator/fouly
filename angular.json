@@ -333,9 +333,17 @@
         "build": {
           "builder": "@nrwl/node:build",
           "options": {
-            "outputPath": "dist/apps/fouly/backend/azure-function",
+            "outputPath": "dist/apps/fouly/backend",
             "main": "apps/fouly/backend/src/fouly-nest-az-func/index.ts",
-            "tsConfig": "apps/fouly/backend/tsconfig.app.json"
+            "tsConfig": "apps/fouly/backend/tsconfig.app.json",
+            "assets": [
+              "apps/fouly/backend/src/host.json",
+              {
+                "glob": "function.json",
+                "output": "./",
+                "input": "apps/fouly/backend/src/fouly-nest-az-func"
+              }
+            ]
           },
           "configurations": {
             "production": {
