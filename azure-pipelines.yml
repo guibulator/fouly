@@ -29,7 +29,7 @@ steps:
 
   - task: ArchiveFiles@2
     inputs:
-      rootFolderOrFile: 'dist/apps/fouly/backend/azure-function/main.js'
+      rootFolderOrFile: 'dist/apps/fouly/backend'
       includeRootFolder: false
       archiveType: 'zip'
       archiveFile: '$(Build.ArtifactStagingDirectory)/fouly-backend-azure-function.$(Build.BuildId).zip'
