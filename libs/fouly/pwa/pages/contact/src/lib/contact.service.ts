@@ -7,6 +7,7 @@ import { Injectable } from '@angular/core';
 export class ContactService {
   constructor(private http: HttpClient) {}
 
+  //Todo : put url in config.
   azureFctBaseUrl =
     'https://skaresendgridapi.azurewebsites.net/api/HttpTrigger1?code=j1IIZxEna5XNfAAeHwTAJCR7aIJk/LuImKGPMZG7Yj5B407wra8rDg==';
 
