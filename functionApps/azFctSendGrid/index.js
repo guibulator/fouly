@@ -8,6 +8,9 @@ const secretName = 'sendGridApiKey';
 module.exports = async function(context, req) {
   context.log('Start azure function.');
 
+  const receivedMsg = context.req.body;
+  context.log('receivedMsg : ' + JSON.stringify(receivedMsg));
+
   const credential = new DefaultAzureCredential();
   const url = `https://${vaultName}.vault.azure.net`;
 
@@ -20,12 +23,12 @@ module.exports = async function(context, req) {
 
   var message = {
     personalizations: [{ to: [{ email: 'contactskaremano@gmail.com' }] }],
-    from: { email: 'matmarcoux@gmail.com' },
-    subject: 'Feedback from user',
+    from: { email: 'contactskaremano@gmail.com' },
+    subject: receivedMsg.subject,
     content: [
       {
         type: 'text/plain',
-        value: 'This is the user comments'
+        value: receivedMsg.detail
       }
     ]
   };
