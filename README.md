@@ -1,5 +1,18 @@
 # skare monorepo
+for this project, we use yarn and not npm.
 
+We are using lerna & yarn workspaces to efficiently manage dependencies accross all projects. When 
+building a library that needs its own package to be deployed with it like an Azure Function, the project
+should have its own package.json. Thanks to lerna and yarn workspaces, managing versions in a mono repo is a lot easier.
+This means that every project and lib in this repo share the same dependency version.
+
+We are also using NX to efficiently manage apps and libs in a mono-repo fashion.
+The idea behing the mono repo approach is to never write the same code twice.
+
+## Getting started
+1. `npm i -g yarn`
+1. `yarn bootstrap` (This will install all dependencies)
+2. `yarn clean` (To be executed to get freshly new packages) 
 
 ## Quick Start & Documentation
 

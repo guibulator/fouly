@@ -8,7 +8,7 @@ This project only configures the Azure Function that acts as an API gateway.
 
 During development you want to be able to debug the azure function as it would run on azure.
 
-    `npm install -g azure-functions-core-tools@3`
+    `yarn add -g azure-functions-core-tools@3`
 
 See [Work with azure functions core tolls](https://docs.microsoft.com/en-us/azure/azure-functions/functions-run-local?tabs=windows%2Ccsharp%2Cbash)
 

@@ -3,23 +3,23 @@
   "appService.showBuildDuringDeployPrompt": false,
   "editor.formatOnSave": true,
   "breadcrumbs.enabled": true,
-  "files.exclude": {
-    "**/.gitkeep": true,
-    "**/dist": true,
-    "**/package-lock.json": true,
-    "**/tsconfig*": true,
-    "**/tslint*": true,
-    "**/jest*": true
-  },
+  // "files.exclude": {
+  //   "**/.gitkeep": true,
+  //   "**/dist": false,
+  //   "**/package-lock.json": true,
+  //   "**/tsconfig*": true,
+  //   "**/tslint*": true,
+  //   "**/jest*": true
+  // },
   "[typescript]": {
     "editor.codeActionsOnSave": {
       "source.organizeImports": true
     }
   },
   "azureFunctions.deploySubpath": ".",
-  "azureFunctions.postDeployTask": "npm install",
+  "azureFunctions.postDeployTask": "yarn",
   "azureFunctions.projectLanguage": "JavaScript",
   "azureFunctions.projectRuntime": "~3",
   "debug.internalConsoleOptions": "neverOpen",
-  "azureFunctions.preDeployTask": "npm prune"
+  "azureFunctions.preDeployTask": "yarn"
 }
