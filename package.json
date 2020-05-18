@@ -29,7 +29,8 @@
     "dep-graph": "nx dep-graph",
     "help": "nx help",
     "postinstall": "ngcc --properties es2015 browser module main --first-only --create-ivy-entry-points",
-    "sync-yarn-npm": "synp --source-file yarn.lock"
+    "sync-yarn-npm": "synp --source-file yarn.lock",
+    "lerna-update": "lernaupdate"
   },
   "dependencies": {
     "@angular/animations": "^9.1.0",
@@ -85,6 +86,7 @@
     "jest": "25.2.3",
     "jest-preset-angular": "8.1.2",
     "lerna": "^3.20.2",
+    "lerna-update-wizard": "^0.17.8",
     "ng-packagr": "^9.0.0",
     "prettier": "1.19.1",
     "synp": "^1.7.0",
