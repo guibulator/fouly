@@ -23,10 +23,10 @@ steps:
 
   - task: CopyFiles@2
     inputs:
-    sourceFolder: ./
-    contents: 'package-lock.json'
-    targetFolder: dist/apps/fouly/backend
-    overWrite: true
+      sourceFolder: ./
+      contents: 'package-lock.json'
+      targetFolder: dist/apps/fouly/backend
+      overWrite: true
 
   - task: ArchiveFiles@2
     inputs:
