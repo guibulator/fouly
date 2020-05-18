@@ -10,7 +10,7 @@ During development you want to be able to debug the azure function as it would r
 
     `yarn add -g azure-functions-core-tools@3`
 
-See [Work with azure functions core tolls](https://docs.microsoft.com/en-us/azure/azure-functions/functions-run-local?tabs=windows%2Ccsharp%2Cbash)
+See [Work with azure functions core tools](https://docs.microsoft.com/en-us/azure/azure-functions/functions-run-local?tabs=windows%2Ccsharp%2Cbash)
 
-1. build the function, run `ng build fouly-backend`
-2. from the src directory, run `func host start`, this will start the function locally
+1. run `ng serve fouly-backend` (There is a custom build that will be generated under dist/apps/fouly/backend-local)
+2. from the apps/fouly/backend/src directory, which acts as the Function App , run `func host start`. This will start the function locally and use the backend-local previous built with its sourcemaps

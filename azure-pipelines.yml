@@ -43,7 +43,6 @@ steps:
         main.js
         main.js.map
       TargetFolder: dist/apps/fouly/backend/foulyApiGatewayHttpTrigger
-      CleanTargetFolder: true
       OverWrite: true
 
   - task: ArchiveFiles@2
