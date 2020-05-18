@@ -15,7 +15,8 @@ steps:
     displayName: 'Install Node.js'
 
   - script: |
-      yarn global add -g @angular/cli
+      yarn global add @angular/cli
+      yarn global add lerna
       yarn bootstrap
       yarn sync-yarn-npm
       yarn run nx run-many --all --target=build
