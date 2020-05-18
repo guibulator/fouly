@@ -344,11 +344,6 @@
                 "input": "apps/fouly/backend"
               },
               {
-                "glob": "yarn.lock",
-                "output": "./",
-                "input": "./"
-              },
-              {
                 "glob": "+(function.json)",
                 "output": "./foulyApiGatewayAzFunc",
                 "input": "apps/fouly/backend/src/assets"

@@ -16,9 +16,18 @@ steps:
 
   - script: |
       yarn global add -g @angular/cli
-      yarn
+      yarn bootstrap
+      yarn sync-yarn-npm
       yarn run nx run-many --all --target=build
     displayName: 'yarn install and build Fouly'
+
+  - task: CopyFiles@2
+    inputs:
+    sourceFolder: ./
+    contents: 'package-lock.json'
+    targetFolder: dist/apps/fouly/backend
+    overWrite: true
+
   - task: ArchiveFiles@2
     inputs:
       rootFolderOrFile: 'dist/apps/fouly/pwa'
