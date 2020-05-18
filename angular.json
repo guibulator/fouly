@@ -339,7 +339,17 @@
             "assets": [
               "apps/fouly/backend/src/host.json",
               {
-                "glob": "function.json",
+                "glob": "package.json",
+                "output": "./",
+                "input": "apps/fouly/backend"
+              },
+              {
+                "glob": "yarn.lock",
+                "output": "./",
+                "input": "./"
+              },
+              {
+                "glob": "+(function.json)",
                 "output": "./foulyApiGatewayAzFunc",
                 "input": "apps/fouly/backend/src/assets"
               }
