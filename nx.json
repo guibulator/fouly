@@ -72,6 +72,9 @@
     },
     "fouly-pwa-pages-contact": {
       "tags": ["scope:fouly", "page"]
+    },
+    "fouly-api": {
+      "tags": []
     }
   }
 }

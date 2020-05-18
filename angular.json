@@ -75,17 +75,21 @@
               },
               "apps/fouly/pwa/src/manifest.webmanifest"
             ],
-            "styles": [{
-              "input": "libs/fouly/shared/styles/src/index.scss"
-            }],
+            "styles": [
+              {
+                "input": "libs/fouly/shared/styles/src/index.scss"
+              }
+            ],
             "scripts": []
           },
           "configurations": {
             "production": {
-              "fileReplacements": [{
-                "replace": "apps/fouly/pwa/src/environments/environment.ts",
-                "with": "apps/fouly/pwa/src/environments/environment.prod.ts"
-              }],
+              "fileReplacements": [
+                {
+                  "replace": "apps/fouly/pwa/src/environments/environment.ts",
+                  "with": "apps/fouly/pwa/src/environments/environment.prod.ts"
+                }
+              ],
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -94,7 +98,8 @@
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
-              "budgets": [{
+              "budgets": [
+                {
                   "type": "initial",
                   "maximumWarning": "2mb",
                   "maximumError": "5mb"
@@ -196,10 +201,12 @@
           },
           "configurations": {
             "production": {
-              "fileReplacements": [{
-                "replace": "apps/fouly/webfront/src/environments/environment.ts",
-                "with": "apps/fouly/webfront/src/environments/environment.prod.ts"
-              }],
+              "fileReplacements": [
+                {
+                  "replace": "apps/fouly/webfront/src/environments/environment.ts",
+                  "with": "apps/fouly/webfront/src/environments/environment.prod.ts"
+                }
+              ],
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -208,7 +215,8 @@
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
-              "budgets": [{
+              "budgets": [
+                {
                   "type": "initial",
                   "maximumWarning": "2mb",
                   "maximumError": "5mb"
@@ -326,26 +334,48 @@
           "builder": "@nrwl/node:build",
           "options": {
             "outputPath": "dist/apps/fouly/backend",
-            "main": "apps/fouly/backend/src/main.ts",
+            "main": "apps/fouly/backend/src/fouly-nest-az-func/index.ts",
             "tsConfig": "apps/fouly/backend/tsconfig.app.json",
-            "assets": ["apps/fouly/backend/src/assets"]
+            "assets": [
+              "apps/fouly/backend/src/host.json",
+              {
+                "glob": "package.json",
+                "output": "./",
+                "input": "apps/fouly/backend"
+              },
+              {
+                "glob": "+(function.json)",
+                "output": "./foulyApiGatewayHttpTrigger",
+                "input": "apps/fouly/backend/src/assets"
+              }
+            ]
           },
           "configurations": {
             "production": {
               "optimization": true,
               "extractLicenses": true,
               "inspect": false,
-              "fileReplacements": [{
-                "replace": "apps/fouly/backend/src/environments/environment.ts",
-                "with": "apps/fouly/backend/src/environments/environment.prod.ts"
-              }]
+              "fileReplacements": [
+                {
+                  "replace": "apps/fouly/backend/src/environments/environment.ts",
+                  "with": "apps/fouly/backend/src/environments/environment.prod.ts"
+                }
+              ]
             }
+          }
+        },
+        "build-local": {
+          "builder": "@nrwl/node:build",
+          "options": {
+            "outputPath": "dist/apps/fouly/backend-local",
+            "main": "apps/fouly/backend/src/main.ts",
+            "tsConfig": "apps/fouly/backend/tsconfig.app.json"
           }
         },
         "serve": {
           "builder": "@nrwl/node:execute",
           "options": {
-            "buildTarget": "fouly-backend:build"
+            "buildTarget": "fouly-backend:build-local"
           }
         },
         "lint": {
@@ -692,6 +722,29 @@
           "options": {
             "jestConfig": "libs/fouly/pwa/pages/contact/jest.config.js",
             "tsConfig": "libs/fouly/pwa/pages/contact/tsconfig.spec.json",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "fouly-api": {
+      "root": "libs/fouly/api",
+      "sourceRoot": "libs/fouly/api/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": ["libs/fouly/api/tsconfig.lib.json", "libs/fouly/api/tsconfig.spec.json"],
+            "exclude": ["**/node_modules/**", "!libs/fouly/api/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/fouly/api/jest.config.js",
+            "tsConfig": "libs/fouly/api/tsconfig.spec.json",
             "passWithNoTests": true
           }
         }
