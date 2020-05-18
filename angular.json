@@ -345,7 +345,7 @@
               },
               {
                 "glob": "+(function.json)",
-                "output": "./foulyApiGatewayAzFunc",
+                "output": "./foulyApiGatewayHttpTrigger",
                 "input": "apps/fouly/backend/src/assets"
               }
             ]

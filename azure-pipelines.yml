@@ -35,6 +35,17 @@ steps:
     displayName: 'npm install for azure functions'
     workingDirectory: dist/apps/fouly/backend
 
+  - task: CopyFiles@2
+    displayName: 'Copy main.js'
+    inputs:
+      sourceFolder: dist/apps/fouly/backend
+      Contents: |
+        main.js
+        main.js.map
+      TargetFolder: dist/apps/fouly/backend/foulyApiGatewayHttpTrigger
+      CleanTargetFolder: true
+      OverWrite: true
+
   - task: ArchiveFiles@2
     inputs:
       rootFolderOrFile: 'dist/apps/fouly/pwa'
