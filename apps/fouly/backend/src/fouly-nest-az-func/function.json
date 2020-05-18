@@ -13,5 +13,5 @@
       "name": "res"
     }
   ],
-  "scriptFile": "../../../../../dist/apps/fouly/backend/main.js"
+  "scriptFile": "../../../../../dist/apps/fouly/backend-local/main.js"
 }
