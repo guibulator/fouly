@@ -14,7 +14,7 @@ steps:
       versionSpec: '10.x'
     displayName: 'Install Node.js'
 
-  - script: |
+  - script: | #Install all dependencies using yarn
       yarn global add @angular/cli
       yarn global add lerna
       yarn bootstrap
@@ -28,6 +28,12 @@ steps:
       contents: 'package-lock.json'
       targetFolder: dist/apps/fouly/backend
       overWrite: true
+
+  - script:
+      | # Use npm instead of yarn to avoid hoisting for azure functions, we want everything under node_modules.
+      npm install
+    displayName: 'npm install for azure functions'
+    workingDirectory: dist/apps/fouly/backend
 
   - task: ArchiveFiles@2
     inputs:
