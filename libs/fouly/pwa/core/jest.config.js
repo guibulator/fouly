@@ -1,7 +1,7 @@
 module.exports = {
-  name: 'fouly-shared-providers',
+  name: 'fouly-pwa-core',
   preset: '../../../../jest.config.js',
-  coverageDirectory: '../../../../coverage/libs/fouly/shared/providers',
+  coverageDirectory: '../../../../coverage/libs/fouly/pwa/core',
   snapshotSerializers: [
     'jest-preset-angular/build/AngularNoNgAttributesSnapshotSerializer.js',
     'jest-preset-angular/build/AngularSnapshotSerializer.js',
