@@ -1,8 +1,11 @@
 {
   "name": "skare",
+  "private": true,
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
+    "bootstrap": "lerna bootstrap",
+    "clean": "lerna clean -y",
     "ng": "ng",
     "nx": "nx",
     "start": "ng serve",
@@ -25,9 +28,10 @@
     "workspace-schematic": "nx workspace-schematic",
     "dep-graph": "nx dep-graph",
     "help": "nx help",
-    "postinstall": "ngcc --properties es2015 browser module main --first-only --create-ivy-entry-points"
+    "postinstall": "ngcc --properties es2015 browser module main --first-only --create-ivy-entry-points",
+    "sync-yarn-npm": "synp --source-file yarn.lock",
+    "lerna-update": "lernaupdate"
   },
-  "private": true,
   "dependencies": {
     "@angular/animations": "^9.1.0",
     "@angular/common": "^9.1.0",
@@ -38,17 +42,21 @@
     "@angular/platform-browser-dynamic": "^9.1.0",
     "@angular/router": "^9.1.0",
     "@angular/service-worker": "^9.1.0",
+    "@azure/functions": "^1.2.0",
     "@azure/ng-deploy": "^0.2.3",
     "@ionic-native/core": "^5.25.0",
     "@ionic-native/geolocation": "^5.25.0",
     "@ionic/angular": "latest",
     "@ionic/storage": "^2.2.0",
+    "@nestjs/azure-func-http": "^0.5.0",
     "@nestjs/common": "^6.8.3",
     "@nestjs/core": "^6.8.3",
     "@nestjs/platform-express": "^6.8.3",
     "@nestjs/swagger": "^4.5.5",
     "@nrwl/angular": "9.2.4",
+    "copy-webpack-plugin": "^6.0.0",
     "core-js": "^2.5.4",
+    "generate-package-json-webpack-plugin": "^1.0.1",
     "reflect-metadata": "^0.1.13",
     "rxjs": "~6.5.4",
     "swagger-ui-express": "^4.1.4",
@@ -61,6 +69,7 @@
     "@angular/cli": "9.1.0",
     "@angular/compiler-cli": "^9.1.0",
     "@angular/language-service": "^9.1.0",
+    "@ionic/angular-toolkit": "latest",
     "@nestjs/schematics": "^6.7.0",
     "@nestjs/testing": "^6.8.3",
     "@nrwl/cypress": "9.2.4",
@@ -76,12 +85,18 @@
     "eslint": "6.8.0",
     "jest": "25.2.3",
     "jest-preset-angular": "8.1.2",
+    "lerna": "^3.20.2",
+    "lerna-update-wizard": "^0.17.8",
     "ng-packagr": "^9.0.0",
     "prettier": "1.19.1",
+    "synp": "^1.7.0",
     "ts-jest": "25.2.1",
     "ts-node": "~7.0.0",
     "tslint": "~6.0.0",
-    "typescript": "~3.8.3",
-    "@ionic/angular-toolkit": "latest"
-  }
+    "typescript": "~3.8.3"
+  },
+  "workspaces": [
+    "apps/**",
+    "libs/**"
+  ]
 }

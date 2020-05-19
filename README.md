@@ -1,5 +1,20 @@
 # skare monorepo
 
+for this project, we use yarn and not npm.
+
+We are using lerna & yarn workspaces to efficiently manage dependencies accross all projects. When
+building a library that needs its own package to be deployed with it like an Azure Function, the project
+should have its own package.json. Thanks to lerna and yarn workspaces, managing versions in a mono repo is a lot easier.
+This means that every project and lib in this repo share the same version.
+
+We are also using NX to efficiently manage apps and libs in a mono-repo fashion.
+The idea behing the mono repo approach is to never write the same code twice.
+
+## Getting started
+
+1. `npm i -g yarn`
+1. `yarn bootstrap` (This will install all dependencies)
+1. `yarn clean` (To be executed to get freshly new packages)
 
 ## Quick Start & Documentation
 
@@ -12,7 +27,6 @@
 ## Generate a library
 
 Run `ng g @nrwl/angular:lib my-lib` to generate a library.
-
 
 Libraries are sharable across libraries and applications. They can be imported from `@skare/mylib`.
 
@@ -49,5 +63,6 @@ Run `nx dep-graph` to see a diagram of the dependencies of your projects.
 Visit the [Nx Documentation](https://nx.dev/angular) to learn more.
 
 ## To remove an app or lib
+
 This will remove from angular.json, nx.json and all files related to apps or libs.
- Run `npm run nx g @nrwl/workspace:rm <app or lib name>`
+Run `npm run nx g @nrwl/workspace:rm <app or lib name>`
