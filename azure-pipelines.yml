@@ -50,7 +50,7 @@ steps:
       rootFolderOrFile: 'dist/apps/fouly/pwa'
       includeRootFolder: false
       archiveType: 'zip'
-      archiveFile: '$(Build.ArtifactStagingDirectory)/fouly-pwa.$(Build.BuildId).zip'
+      archiveFile: '$(Build.ArtifactStagingDirectory)/fouly-pwa.$(Build.BuildId)-$(Build.SourceBranchName).zip'
       replaceExistingArchive: true
 
   - task: ArchiveFiles@2
@@ -58,7 +58,7 @@ steps:
       rootFolderOrFile: 'dist/apps/fouly/backend'
       includeRootFolder: false
       archiveType: 'zip'
-      archiveFile: '$(Build.ArtifactStagingDirectory)/fouly-backend-azure-function.$(Build.BuildId).zip'
+      archiveFile: '$(Build.ArtifactStagingDirectory)/fouly-backend-azure-function.$(Build.BuildId)-$(Build.SourceBranchName).zip'
       replaceExistingArchive: true
 
   - task: PublishBuildArtifacts@1
