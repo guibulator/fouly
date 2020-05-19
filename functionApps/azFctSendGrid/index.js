@@ -1,29 +1,40 @@
+const { DefaultAzureCredential } = require('@azure/identity');
+const { SecretClient } = require('@azure/keyvault-secrets');
 const axios = require('axios');
 
-module.exports = async function(context, req) {
-  context.log('JavaScript HTTP trigger function processed a request.');
+const vaultName = 'fouly-dev-kv';
+const secretName = 'sendGridApiKey';
 
-  const apiKey = '';
-  axios.defaults.headers.post['Authorization'] = 'Bearer ' + apiKey;
+module.exports = async function(context, req) {
+  context.log('Start azure function.');
+
+  const receivedMsg = context.req.body;
+  context.log('receivedMsg : ' + JSON.stringify(receivedMsg));
+
+  const credential = new DefaultAzureCredential();
+  const url = `https://${vaultName}.vault.azure.net`;
+
+  const client = new SecretClient(url, credential);
+  const secret = await client.getSecret(secretName);
+  context.log('Got azure secret.');
+
+  axios.defaults.headers.post['Authorization'] = 'Bearer ' + secret.value;
   axios.defaults.headers.post['Content-Type'] = 'application/json';
 
   var message = {
     personalizations: [{ to: [{ email: 'contactskaremano@gmail.com' }] }],
-    from: { email: 'matmarcoux@gmail.com' },
-    subject: 'Feedback from user',
+    from: { email: 'contactskaremano@gmail.com' },
+    subject: receivedMsg.subject,
     content: [
       {
         type: 'text/plain',
-        value: 'This is the user comments'
+        value: receivedMsg.detail
       }
     ]
   };
-
   const sendGridUrl = 'https://api.sendgrid.com/v3/mail/send';
-
   try {
-    const { data } = await axios.post(sendGridUrl, message);
-
+    await axios.post(sendGridUrl, message);
     context.res = {
       body: 'Success'
     };
@@ -31,7 +42,7 @@ module.exports = async function(context, req) {
     context.log(err);
     context.res = {
       status: 400,
-      body: 'Please pass a name on the query string or in the request body'
+      body: 'Error'
     };
   }
 };

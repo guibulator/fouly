@@ -8,26 +8,26 @@
 </ion-header>
 
 <ion-content>
-   <form #submitForm="ngForm" novalidate (ngSubmit)="submit(submitForm)">
+   <form [formGroup]="commentsForm" novalidate (ngSubmit)="submit(commentsForm.value)">
       <ion-list lines="none">
          <ion-item>
             <ion-label position="stacked" color="primary">Sujet</ion-label>
-            <ion-input type="text" required [(ngModel)]="message.subject" [ngModelOptions]="{ standalone: true }"></ion-input>
+            <ion-input type="text" required formControlName="subject"></ion-input>
          </ion-item>
          <ion-item>
             <ion-label position="stacked" color="primary">Entrez votre commentaire ci-dessous</ion-label>
-            <ion-textarea type="text" rows="6" [(ngModel)]="message.detail" [ngModelOptions]="{ standalone: true }"></ion-textarea>
+            <ion-textarea type="text" rows="6" formControlName="detail"></ion-textarea>
          </ion-item>
       </ion-list>
 
-      <ion-text color="danger">
-         <p [hidden]="submitted === false" class="ion-padding-start">
-            Support subject is required
+      <ion-text color="primary">
+         <p [hidden]="!submitted" class="ion-padding-start">
+            Commentaire envoyé avec succès, merci.
          </p>
       </ion-text>
 
       <div class="ion-padding">
-         <ion-button expand="block" type="submit">Envoyer</ion-button>
+         <ion-button expand="block" type="submit" [disabled]="disabled">Envoyer</ion-button>
       </div>
    </form>
 </ion-content>
