@@ -6,10 +6,12 @@
   "files.exclude": {
     "**/.gitkeep": true,
     "**/dist": false,
-    "**/package-lock.json": true,
+    "**/yarn.lock": true,
     "**/tsconfig*": true,
     "**/tslint*": true,
-    "**/jest*": true
+    "**/jest*": true,
+    "lerna.json": true,
+    "**/tmp": true
   },
   "[typescript]": {
     "editor.codeActionsOnSave": {

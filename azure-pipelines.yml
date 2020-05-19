@@ -19,7 +19,7 @@ steps:
       yarn global add lerna
       yarn bootstrap
       yarn sync-yarn-npm
-      yarn run nx run-many --all --target=build
+      yarn run nx run-many --all --target=build --configuration=production
     displayName: 'yarn install and build Fouly'
 
   - task: CopyFiles@2

@@ -58,9 +58,6 @@
     "fouly-pwa-pages-support": {
       "tags": ["scope:fouly", "page"]
     },
-    "fouly-shared-providers": {
-      "tags": ["scope:fouly", "providers"]
-    },
     "fouly-shared-ui": {
       "tags": ["scope:fouly", "ui"]
     },
@@ -74,6 +71,9 @@
       "tags": ["scope:fouly", "page"]
     },
     "fouly-api": {
+      "tags": []
+    },
+    "fouly-pwa-core": {
       "tags": []
     }
   }
