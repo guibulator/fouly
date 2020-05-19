@@ -19,8 +19,11 @@ const config = {
 export class AzureNotificationHubsService implements OnInit {
   public pushEvents: (Registration | Notification)[] = [];
   private eventsSubject = new Subject<any>();
+  constructor(private alertCtrl: AlertController, private platform: Platform) {
+    this.platform.ready().then(() => this.starter());
+  }
 
-  ngInit() {
+  starter() {
     console.log('AzureNotificationHubsService: Platform ready');
     debugger;
     if (config.hubName && config.hubConnectionString) {
@@ -114,11 +117,9 @@ export class AzureNotificationHubsService implements OnInit {
         .then((alert) => alert.present());
     }
   }
-  constructor(private alertCtrl: AlertController, private platform: Platform) {
-    this.platform.ready().then(() => {});
-  }
+
   ngOnInit(): void {
-    throw new Error('Method not implemented.');
+    console.log('Method not implemented.');
   }
 
   // saveData(data: Registration | Notification) {
