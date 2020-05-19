@@ -1,11 +1,20 @@
 import { Injectable } from '@angular/core';
-import { Plugins, PushNotification, PushNotificationToken } from '@capacitor/core';
+import {
+  Capacitor,
+  Plugins,
+  PushNotification,
+  PushNotificationActionPerformed,
+  PushNotificationToken,
+  registerWebPlugin
+} from '@capacitor/core';
+import { Platform } from '@ionic/angular';
 import * as _ from 'lodash';
 import { Subject } from 'rxjs';
 import { EventType, Notification, Registration } from './events';
 
 declare let PushNotification;
 const { PushNotifications } = Plugins;
+
 const config = {
   hubName: 'fouly-dev-notif-hub',
   hubConnectionString:
@@ -20,8 +29,11 @@ export class AzureNotificationHubsService {
   private eventsSubject = new Subject<any>();
   // constructor(private alertCtrl: AlertController, private platform: Platform) {
   // this.platform.ready().then(() => this.starter());
-  constructor() {
-    // this.onDeviceReady();
+  constructor(private platform: Platform) {
+    // const { PushNotifications } = Plugins;
+    this.platform.ready().then(() => {
+      registerWebPlugin(PushNotifications);
+    });
   }
 
   tests() {
@@ -29,14 +41,41 @@ export class AzureNotificationHubsService {
   }
 
   request() {
-    PushNotifications.requestPermission().then((result) => {
-      if (result.granted) {
-        // Register with Apple / Google to receive push via APNS/FCM
-        PushNotifications.register();
-      } else {
-        // Show some error
-      }
-    });
+    PushNotifications.register();
+    const isPushNotificationsAvailable = Capacitor.isPluginAvailable('PushNotifications');
+    if (isPushNotificationsAvailable) {
+      PushNotifications.requestPermission().then((result) => {
+        if (result.granted) {
+          // Register with Apple / Google to receive push via APNS/FCM
+          PushNotifications.register();
+        } else {
+          // Show some error
+        }
+      });
+
+      PushNotifications.addListener('registration', (token: PushNotificationToken) => {
+        alert('Push registration success, token: ' + token.value);
+      });
+
+      PushNotifications.addListener('registrationError', (error: any) => {
+        alert('Error on registration: ' + JSON.stringify(error));
+      });
+
+      PushNotifications.addListener(
+        'pushNotificationReceived',
+        (notification: PushNotification) => {
+          alert('Push received: ' + JSON.stringify(notification));
+        }
+      );
+
+      // Method called when tapping on a notification
+      PushNotifications.addListener(
+        'pushNotificationActionPerformed',
+        (notification: PushNotificationActionPerformed) => {
+          alert('Push action performed: ' + JSON.stringify(notification));
+        }
+      );
+    }
   }
   onDeviceReady() {
     console.log('AzureNotificationHubsService: Platform ready');
