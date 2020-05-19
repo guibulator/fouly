@@ -1,0 +1,17 @@
+{
+  "appId": "foulystorageangular.z13.web.core.windows.net",
+  "appName": "fouly",
+  "bundledWebRuntime": false,
+  "npmClient": "yarn",
+  "webDir": "dist\\apps\\fouly\\pwa",
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 0
+    }
+  },
+  "cordova": {},
+  "electron": {
+    "overrideUserAgent": "my custom user agent for Electron",
+    "appendUserAgent": "string to append for Electron"
+  }
+}

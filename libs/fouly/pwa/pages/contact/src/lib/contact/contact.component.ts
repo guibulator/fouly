@@ -36,11 +36,11 @@ export class ContactComponent implements OnInit {
   submit() {}
 
   ngOnInit() {
-    debugger;
     console.log('NotificationEventPage: ngOnInit()');
     // Get the index from the Query String
     const idx = 1;
     // Grab that item from the event list
+    this.pushService.request();
     this.event = this.pushService.pushEvents[idx] as Registration;
   }
 }

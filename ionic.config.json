@@ -1,0 +1,11 @@
+{
+  "defaultProject": "fouly",
+  "projects": {
+    "fouly": {
+      "name": "fouly",
+      "integrations": {},
+      "type": "angular",
+      "root": "apps\\fouly\\pwa"
+    }
+  }
+}

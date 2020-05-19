@@ -1,6 +1,5 @@
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Plugins, PushNotification, PushNotificationToken } from '@capacitor/core';
-import { AlertController, Platform } from '@ionic/angular';
 import * as _ from 'lodash';
 import { Subject } from 'rxjs';
 import { EventType, Notification, Registration } from './events';
@@ -16,16 +15,32 @@ const config = {
 @Injectable({
   providedIn: 'root'
 })
-export class AzureNotificationHubsService implements OnInit {
+export class AzureNotificationHubsService {
   public pushEvents: (Registration | Notification)[] = [];
   private eventsSubject = new Subject<any>();
-  constructor(private alertCtrl: AlertController, private platform: Platform) {
-    this.platform.ready().then(() => this.starter());
+  // constructor(private alertCtrl: AlertController, private platform: Platform) {
+  // this.platform.ready().then(() => this.starter());
+  constructor() {
+    // this.onDeviceReady();
   }
 
-  starter() {
+  tests() {
+    console.log('test call azure notif service');
+  }
+
+  request() {
+    PushNotifications.requestPermission().then((result) => {
+      if (result.granted) {
+        // Register with Apple / Google to receive push via APNS/FCM
+        PushNotifications.register();
+      } else {
+        // Show some error
+      }
+    });
+  }
+  onDeviceReady() {
     console.log('AzureNotificationHubsService: Platform ready');
-    debugger;
+
     if (config.hubName && config.hubConnectionString) {
       // Initialize the Push Service
       const push = PushNotification.init({
@@ -54,26 +69,27 @@ export class AzureNotificationHubsService implements OnInit {
         this.eventsSubject.next('anh: data-change');
 
         // Tell the user
-        this.alertCtrl
-          .create({
-            header: registration.title,
-            message: 'Registration completed successfully',
-            buttons: ['OK']
-          })
-          .then((alert) => alert.present());
+        // this.alertCtrl
+        //   .create({
+        //     header: registration.title,
+        //     message: 'Registration completed successfully',
+        //     buttons: ['OK']
+        //   })
+        //   .then((alert) => alert.present());
       });
 
       PushNotifications.addListener('registration', (token: PushNotificationToken) => {
         // this alert should never fire because we're not using the Capacitor plugin's
         // registration method for anything, we're doing it through Notification Hubs
-        this.alertCtrl
-          .create({
-            // @ts-ignore
-            header: 'Registration (Capacitor)',
-            message: `Push registration success (token: ${token.value})`,
-            buttons: ['OK']
-          })
-          .then((alert) => alert.present());
+        console.log('Registration (Capacitor)');
+        // this.alertCtrl
+        //   .create({
+        //     // @ts-ignore
+        //     header: 'Registration (Capacitor)',
+        //     message: `Push registration success (token: ${token.value})`,
+        //     buttons: ['OK']
+        //   })
+        //   .then((alert) => alert.present());
       });
 
       PushNotifications.addListener(
@@ -94,32 +110,29 @@ export class AzureNotificationHubsService implements OnInit {
           this.eventsSubject.next('anh: data-change');
 
           // Tell the user
-          this.alertCtrl
-            .create({
-              // @ts-ignore
-              header: 'Notification',
-              message: pushNotification.data,
-              buttons: ['OK']
-            })
-            .then((alert) => alert.present());
+          // this.alertCtrl
+          //   .create({
+          //     // @ts-ignore
+          //     header: 'Notification',
+          //     message: pushNotification.data,
+          //     buttons: ['OK']
+          //   })
+          //   .then((alert) => alert.present());
         }
       );
     } else {
       // Tell the user this won't work until they fix the config.
-      this.alertCtrl
-        .create({
-          header: 'Invalid Configuration',
-          // tslint:disable-next-line:max-line-length
-          message:
-            "Please populate the project's <strong>src/app/config.ts</strong> file with settings from your Azure Notification Hubs configuration.",
-          buttons: ["OK, I'm sorry!"]
-        })
-        .then((alert) => alert.present());
+      console.log('Invalid config else...');
+      // this.alertCtrl
+      //   .create({
+      //     header: 'Invalid Configuration',
+      //     // tslint:disable-next-line:max-line-length
+      //     message:
+      //       "Please populate the project's <strong>src/app/config.ts</strong> file with settings from your Azure Notification Hubs configuration.",
+      //     buttons: ["OK, I'm sorry!"]
+      //   })
+      //   .then((alert) => alert.present());
     }
-  }
-
-  ngOnInit(): void {
-    console.log('Method not implemented.');
   }
 
   // saveData(data: Registration | Notification) {
