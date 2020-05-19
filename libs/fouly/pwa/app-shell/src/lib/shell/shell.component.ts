@@ -84,4 +84,8 @@ export class ShellComponent implements OnInit {
     this.storage.set('fouly_did_introduction', false);
     this.router.navigateByUrl('/introduction');
   }
+
+  gotoLink(url: string) {
+    this.router.navigateByUrl(url);
+  }
 }
