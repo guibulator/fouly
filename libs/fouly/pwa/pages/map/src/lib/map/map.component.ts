@@ -1,9 +1,10 @@
-import { DOCUMENT } from '@angular/common';
-import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
+//todo: Add script loading of google api before this component is instantiated (needed to work with Google-Map component)
+//todo: add map style to match fouly style
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MapInfoWindow, MapMarker } from '@angular/google-maps';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { Platform } from '@ionic/angular';
-
-declare var google;
 
 @Component({
   selector: 'fouly-map',
@@ -11,19 +12,33 @@ declare var google;
   styleUrls: ['./map.component.scss']
 })
 export class MapComponent implements OnInit {
-  @ViewChild('mapCanvas', { static: true }) mapElement: ElementRef;
-  map;
-  @ViewChild('mapElement', { static: true }) mapElement2;
+  @ViewChild(MapInfoWindow, { static: false }) private infoWindow: MapInfoWindow;
+  center: google.maps.LatLng;
+  markerOptions = { draggable: false };
+  markerPositions: google.maps.LatLngLiteral[] = [];
+  zoom = 15;
+  display?: google.maps.LatLngLiteral;
+  private firstLoad = true;
   constructor(
-    @Inject(DOCUMENT) private doc: Document,
     public platform: Platform,
-    private geolocation: Geolocation
+    private geolocation: Geolocation,
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
+
+  addMarker(event: google.maps.MouseEvent) {
+    this.markerPositions.push(event.latLng.toJSON());
+  }
+
+  openInfoWindow(marker: MapMarker) {
+    this.router.navigate(['store-detail'], { relativeTo: this.route });
+  }
 
   ngOnInit(): void {
     this.geolocation
       .getCurrentPosition()
       .then((resp) => {
+        //this.infoWindow.open()
         // console.log(resp.coords.latitude);
         // console.log(resp.coords.longitude);
       })
@@ -33,22 +48,18 @@ export class MapComponent implements OnInit {
 
     const watch = this.geolocation.watchPosition();
     watch.subscribe((data) => {
-      // console.log(data.coords.latitude);
-      // console.log(data.coords.longitude);
-
-      const position = new google.maps.LatLng(data.coords.latitude, data.coords.longitude);
-      const mapOptions = {
-        zoom: 15,
-        center: position
-      };
-
-      this.map = new google.maps.Map(this.mapElement2.nativeElement, mapOptions);
-      const marker = new google.maps.Marker({
-        position: position,
-        title: 'Position via geolocation'
-      });
-
-      marker.setMap(this.map);
+      console.log(data.coords.latitude);
+      console.log(data.coords.longitude);
+      if (this.firstLoad) {
+        const positionLatLng = new google.maps.LatLng(data.coords.latitude, data.coords.longitude);
+        const markerYou = new google.maps.Marker({
+          position: positionLatLng,
+          title: 'Position via geolocation'
+        });
+        this.markerPositions.push(positionLatLng.toJSON());
+        this.center = positionLatLng;
+        this.firstLoad = false;
+      }
     });
   }
 }

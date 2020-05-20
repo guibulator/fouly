@@ -75,6 +75,9 @@
     },
     "fouly-pwa-core": {
       "tags": []
+    },
+    "fouly-pwa-pages-store-detail": {
+      "tags": []
     }
   }
 }

@@ -6,6 +6,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { IonicStorageModule } from '@ionic/storage';
 import { AppShellModule } from '@skare/fouly/pwa/app-shell';
 import { CoreModule } from '@skare/fouly/pwa/core';
+import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
 
 @NgModule({
@@ -15,7 +16,7 @@ import { AppComponent } from './app.component';
     HttpClientModule,
     IonicStorageModule.forRoot(),
     ServiceWorkerModule.register('ngsw-worker.js', {
-      enabled: true
+      enabled: environment.production
     }),
     AppShellModule,
     CoreModule
