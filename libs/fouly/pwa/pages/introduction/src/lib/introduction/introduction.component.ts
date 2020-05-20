@@ -33,12 +33,6 @@ export class IntroductionComponentPage {
   }
 
   ionViewWillEnter() {
-    this.storage.get('fouly_did_introduction').then((res) => {
-      if (res === true) {
-        this.router.navigateByUrl('/app/tabs/map', { replaceUrl: true });
-      }
-    });
-
     this.menu.enable(false);
   }
   @HostListener('window:beforeinstallprompt', ['$event'])

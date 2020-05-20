@@ -308,6 +308,14 @@
   resolved "https://registry.yarnpkg.com/@angular/forms/-/forms-9.1.7.tgz#cdefbc7c7093fd37b417975f18b875a798cbd2d9"
   integrity sha512-/bRs5hSFDUjOrq2vw11HoS25oEu7KYVxPbQiEjeBHJo82yDmSO+1cVukh6ulDi7iv1sJwSzikDtE9+xDx1ocfQ==
 
+"@angular/google-maps@^9.2.4":
+  version "9.2.4"
+  resolved "https://registry.yarnpkg.com/@angular/google-maps/-/google-maps-9.2.4.tgz#4702d43797ce7a9edaf54a382550625e8b0bf5a8"
+  integrity sha512-Ld1qvuYQZVOepnntNkn5bNAUEKqEU2v/ujxxGob0q/0T7R7DsToVCL6FrySc8O5/kHPmaC4B7kIcVWOu/VU6sQ==
+  dependencies:
+    "@types/googlemaps" "^3.37.0"
+    tslib "^1.9.0"
+
 "@angular/language-service@^9.1.0":
   version "9.1.7"
   resolved "https://registry.yarnpkg.com/@angular/language-service/-/language-service-9.1.7.tgz#d8d62872b8a7df61e2d0e4f546680f0a5450f6c9"
@@ -3042,6 +3050,11 @@
     "@types/events" "*"
     "@types/minimatch" "*"
     "@types/node" "*"
+
+"@types/googlemaps@^3.37.0":
+  version "3.39.6"
+  resolved "https://registry.yarnpkg.com/@types/googlemaps/-/googlemaps-3.39.6.tgz#ca76df823fb4a8bd78bf47bd215fc70417a9ae51"
+  integrity sha512-O2joRmShgUcGBSyjp0pYFIP0Kv3y6jl8UXokEkcTI4D8FinTYsSt8OaHGQ/tI7WUF2eZTXKVJg6jQuEQS4d30w==
 
 "@types/graceful-fs@^4.1.2":
   version "4.1.3"

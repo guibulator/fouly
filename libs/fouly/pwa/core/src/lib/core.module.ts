@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-
+import { IonicStorageModule } from '@ionic/storage';
 @NgModule({
-  imports: [CommonModule]
+  imports: [IonicStorageModule]
 })
 export class CoreModule {}

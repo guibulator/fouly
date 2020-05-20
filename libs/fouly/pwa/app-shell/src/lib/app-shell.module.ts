@@ -1,11 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
-import { IonicStorageModule } from '@ionic/storage';
+import { ShellRoutingModule } from './app-shell-routing.module';
 import { ShellComponent } from './shell/shell.component';
-import { ShellModule } from './shell/shell.module';
+
 @NgModule({
-  imports: [CommonModule, IonicModule.forRoot(), IonicStorageModule.forRoot(), ShellModule],
+  imports: [CommonModule, IonicModule.forRoot(), ShellRoutingModule],
   declarations: [ShellComponent],
   exports: [ShellComponent]
 })

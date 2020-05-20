@@ -1,12 +1,20 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
-    <ion-title>Map</ion-title>
-  </ion-toolbar>
+   <ion-toolbar>
+      <ion-buttons slot="start">
+         <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-searchbar placeholder="Rechercher un endroit"></ion-searchbar>
+   </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
-  <div #mapElement class="map"></div>
+   <google-map height="100%" width="100%" [center]="center" [zoom]="zoom" (mapClick)="addMarker($event)">
+      <map-marker
+         #marker
+         *ngFor="let markerPosition of markerPositions"
+         [position]="markerPosition"
+         [options]="markerOptions"
+         (mapClick)="openInfoWindow(marker)"
+      ></map-marker>
+   </google-map>
 </ion-content>
