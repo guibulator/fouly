@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-
+import { ShowIntroductionGuard } from '@skare/fouly/pwa/core';
 const routes: Routes = [];
 
 @NgModule({
@@ -26,6 +26,7 @@ const routes: Routes = [];
         },
         {
           path: 'introduction',
+          canActivate: [ShowIntroductionGuard],
           loadChildren: () =>
             import('@skare/fouly/pwa/pages/introduction').then(
               (module) => module.IntroductionModule
@@ -35,9 +36,10 @@ const routes: Routes = [];
           path: 'contact',
           loadChildren: () =>
             import('@skare/fouly/pwa/pages/contact').then((module) => module.ContactModule)
-        }
+        },
+        { path: '**', redirectTo: '' }
       ],
-      { initialNavigation: 'enabled' }
+      { initialNavigation: 'enabled', enableTracing: true }
     )
   ],
   exports: [RouterModule]
