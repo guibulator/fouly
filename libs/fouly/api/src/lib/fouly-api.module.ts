@@ -1,10 +1,12 @@
 import { Module } from '@nestjs/common';
-
-import { FoulyApiController } from './fouly-api.controller';
+import { FoulyApiController } from './controllers/fouly-api.controller';
+import { PlaceDetailsController } from './controllers/place-details.controller';
+import { PlaceDetailsService } from './services/placeDetails.service';
 
 @Module({
-  controllers: [FoulyApiController],
-  providers: [],
+  controllers: [FoulyApiController, PlaceDetailsController],
+  imports: [],
+  providers: [PlaceDetailsService],
   exports: []
 })
 export class FoulyApiModule {}

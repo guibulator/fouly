@@ -1,1 +1,1 @@
-export * from './lib/fouly-data';
+export * from './lib/placeDetailsResult';

@@ -8,7 +8,7 @@
 </ion-header>
 
 <ion-content padding>
-   <google-map height="100%" width="100%" [center]="center" [zoom]="zoom" (mapClick)="addMarker($event)">
+   <google-map #map height="100%" width="100%" [center]="center" [zoom]="zoom" [options]="mapOptions" (mapClick)="mapClick($event)">
       <map-marker
          #marker
          *ngFor="let markerPosition of markerPositions"

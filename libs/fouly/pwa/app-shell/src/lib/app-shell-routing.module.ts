@@ -39,7 +39,7 @@ const routes: Routes = [];
         },
         { path: '**', redirectTo: '' }
       ],
-      { initialNavigation: 'enabled', enableTracing: true }
+      { initialNavigation: 'enabled' }
     )
   ],
   exports: [RouterModule]
