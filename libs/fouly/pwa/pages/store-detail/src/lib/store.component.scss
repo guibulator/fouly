@@ -1,0 +1,13 @@
+$categories: (
+  high: var(--ion-color-danger),
+  medium: var(--ion-color-warning),
+  low: var(--ion-color-success)
+);
+
+@each $category, $value in $categories {
+  ion-icon.#{$category} {
+    border-left: 2px solid $value;
+    background-color: $value;
+    padding-left: 10px;
+  }
+}

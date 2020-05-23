@@ -22,7 +22,9 @@ export class PlaceDetailsService {
           'types',
           'website',
           'name',
-          'opening_hours'
+          'opening_hours' /* 3$/1000 request to get this*/,
+          'photo',
+          'utc_offset'
         ]
       }
     });
