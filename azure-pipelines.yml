@@ -1,5 +1,5 @@
 trigger:
-- master
+- ddd
 
 pool:
   vmImage: 'ubuntu-latest'
