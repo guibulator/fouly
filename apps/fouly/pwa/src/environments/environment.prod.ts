@@ -1,6 +1,6 @@
 import { Configuration } from '@skare/fouly/pwa/core';
 
-const apiHost = 'fouly.ca';
+const apiHost = 'foulyapigateway.azurewebsites.net';
 const apiUrl = `https://${apiHost}/api`;
 export const environment: Configuration = {
   production: true,
