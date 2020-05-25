@@ -1,6 +1,6 @@
 export type LogLevel = 'debug' | 'info' | 'warn' | 'error';
 
-export interface IEnvironment {
+export class Configuration {
   production: boolean;
   enableDebugTools: boolean;
   logLevel: LogLevel;

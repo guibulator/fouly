@@ -5,7 +5,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { IonicStorageModule } from '@ionic/storage';
 import { AppShellModule } from '@skare/fouly/pwa/app-shell';
-import { CoreModule } from '@skare/fouly/pwa/core';
+import { ConfigModule, CoreModule } from '@skare/fouly/pwa/core';
 import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
 
@@ -19,6 +19,7 @@ import { AppComponent } from './app.component';
       enabled: environment.production
     }),
     AppShellModule,
+    ConfigModule.forRoot(environment),
     CoreModule
   ],
   providers: [],

@@ -3,13 +3,14 @@ import { Injectable } from '@angular/core';
 import { PlaceDetailsResult } from '@skare/fouly/data';
 import { BehaviorSubject } from 'rxjs';
 import { finalize } from 'rxjs/operators';
+import { ConfigService } from '../modules/config/config.service';
 @Injectable({ providedIn: 'root' })
 export class PlaceDetailsStoreService {
   private readonly _placeDetails = new BehaviorSubject<PlaceDetailsResult[]>([]);
   private readonly _loading = new BehaviorSubject<boolean>(false);
   readonly placeDetails$ = this._placeDetails.asObservable();
   readonly loading$ = this._loading.asObservable();
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient, private configService: ConfigService) {}
 
   get placeDetails(): PlaceDetailsResult[] {
     return this._placeDetails.getValue();
@@ -18,8 +19,9 @@ export class PlaceDetailsStoreService {
   loadPlaceId(placeId: string) {
     //TODO: handle failure, immutabilty for store, reuse already loaded item...
     this._loading.next(true);
+    const apiEndPoint = this.configService.apiUrl;
     this.httpClient
-      .get<PlaceDetailsResult>(`api/place-details/${placeId}`)
+      .get<PlaceDetailsResult>(`${apiEndPoint}/place-details/${placeId}`)
       .pipe(finalize(() => this._loading.next(false)))
       .subscribe((response) => this._placeDetails.next([response]));
   }

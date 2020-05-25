@@ -1,8 +1,8 @@
-import { IEnvironment } from './ienvironment';
+import { Configuration } from '@skare/fouly/pwa/core';
 
 const apiHost = 'fouly.ca';
 const apiUrl = `https://${apiHost}/api`;
-export const environment: IEnvironment = {
+export const environment: Configuration = {
   production: true,
   apiHost: apiHost,
   apiUrl: apiUrl,
