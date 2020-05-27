@@ -13,8 +13,9 @@ The idea behing the mono repo approach is to never write the same code twice.
 ## Getting started
 
 1. `npm i -g yarn`
-1. `yarn bootstrap` (This will install all dependencies)
-1. `yarn clean` (To be executed to get freshly new packages)
+2. `yarn bootstrap` (This will install all dependencies)
+3. `lerna add`<package>[@version][--dev] [--exact][--peer]
+4. `yarn clean` (To be executed to get freshly new packages)
 
 ## Quick Start & Documentation
 

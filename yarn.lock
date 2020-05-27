@@ -359,6 +359,22 @@
     "@azure/ms-rest-js" "^1.2.6"
     tslib "^1.9.3"
 
+"@azure/cosmos@^3.6.3":
+  version "3.6.3"
+  resolved "https://registry.yarnpkg.com/@azure/cosmos/-/cosmos-3.6.3.tgz#bb53bde35fbf338160691d2b6a62f47b4a9a1cbb"
+  integrity sha512-JoCDxl0TnL6EHL4xD3KC9r2bMivK13q1jl7h69wd/YFLlt3aBTTCehtAX+y4alNSENpL53XdRdw/cna0mI2XDw==
+  dependencies:
+    "@types/debug" "^4.1.4"
+    debug "^4.1.1"
+    fast-json-stable-stringify "^2.0.0"
+    node-abort-controller "^1.0.4"
+    node-fetch "^2.6.0"
+    os-name "^3.1.0"
+    priorityqueuejs "^1.0.0"
+    semaphore "^1.0.5"
+    tslib "^1.10.0"
+    uuid "^3.3.2"
+
 "@azure/functions@^1.2.0":
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/@azure/functions/-/functions-1.2.0.tgz#e668c3811c6effee93e4553e69de017e2f48acd3"
@@ -2394,6 +2410,15 @@
     npmlog "^4.1.2"
     write-file-atomic "^2.3.0"
 
+"@microsoft/signalr@^3.1.4":
+  version "3.1.4"
+  resolved "https://registry.yarnpkg.com/@microsoft/signalr/-/signalr-3.1.4.tgz#1082d2063be2d04d4b4699c6a2fb17232127ff43"
+  integrity sha512-GobftNY4dH0ewciBvfeJU2oQwa4ceXoHplSMlOZdf0G+NSjITFAjhSYFqSUyIRSmkDark17R5hGeuvd58/9Ivg==
+  dependencies:
+    eventsource "^1.0.7"
+    request "^2.88.0"
+    ws "^6.0.0"
+
 "@mrmlnc/readdir-enhanced@^2.2.1":
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/@mrmlnc/readdir-enhanced/-/readdir-enhanced-2.2.1.tgz#524af240d1a360527b730475ecfa1344aa540dde"
@@ -3041,6 +3066,11 @@
   version "0.0.34"
   resolved "https://registry.yarnpkg.com/@types/cordova/-/cordova-0.0.34.tgz#ea7addf74ecec3d7629827a0c39e2c9addc73d04"
   integrity sha1-6nrd907Ow9dimCegw54smt3HPQQ=
+
+"@types/debug@^4.1.4":
+  version "4.1.5"
+  resolved "https://registry.yarnpkg.com/@types/debug/-/debug-4.1.5.tgz#b14efa8852b7768d898906613c23f688713e02cd"
+  integrity sha512-Q1y515GcOdTHgagaVFhHnIFQ38ygs/kmxdNpvpou+raI9UO3YZcHDngBSYKQklcKlvA7iuQlmIKbzvmxcOE9CQ==
 
 "@types/estree@0.0.39":
   version "0.0.39"
@@ -10380,6 +10410,11 @@ nmtree@^1.0.3:
   dependencies:
     commander "^2.11.0"
 
+node-abort-controller@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/node-abort-controller/-/node-abort-controller-1.0.4.tgz#4095e41d58b2fae169d2f9892904d603e11c7a39"
+  integrity sha512-7cNtLKTAg0LrW3ViS2C7UfIzbL3rZd8L0++5MidbKqQVJ8yrH6+1VRSHl33P0ZjBTbOJd37d9EYekvHyKkB0QQ==
+
 node-fetch-npm@^2.0.2:
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/node-fetch-npm/-/node-fetch-npm-2.0.4.tgz#6507d0e17a9ec0be3bec516958a497cec54bf5a4"
@@ -11800,6 +11835,11 @@ pretty-hrtime@^1.0.3:
   resolved "https://registry.yarnpkg.com/pretty-hrtime/-/pretty-hrtime-1.0.3.tgz#b7e3ea42435a4c9b2759d99e0f201eb195802ee1"
   integrity sha1-t+PqQkNaTJsnWdmeDyAesZWALuE=
 
+priorityqueuejs@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/priorityqueuejs/-/priorityqueuejs-1.0.0.tgz#2ee4f23c2560913e08c07ce5ccdd6de3df2c5af8"
+  integrity sha1-LuTyPCVgkT4IwHzlzN1t498sWvg=
+
 private@^0.1.8:
   version "0.1.8"
   resolved "https://registry.yarnpkg.com/private/-/private-0.1.8.tgz#2381edb3689f7a53d653190060fcf822d2f368ff"
@@ -12779,6 +12819,11 @@ selfsigned@^1.10.7:
   integrity sha512-8M3wBCzeWIJnQfl43IKwOmC4H/RAp50S8DF60znzjW5GVqTcSe2vWclt7hmYVPkKPlHWOu5EaWOMZ2Y6W8ZXTA==
   dependencies:
     node-forge "0.9.0"
+
+semaphore@^1.0.5:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/semaphore/-/semaphore-1.1.0.tgz#aaad8b86b20fe8e9b32b16dc2ee682a8cd26a8aa"
+  integrity sha512-O4OZEaNtkMd/K0i6js9SL+gqy0ZCBMgUvlSqHKi4IBdjhe7wB8pwztUk1BbZ1fmrvpwFrPbHzqd2w5pTcJH6LA==
 
 semver-compare@^1.0.0:
   version "1.0.0"
@@ -15024,7 +15069,7 @@ write@1.0.3:
   dependencies:
     mkdirp "^0.5.1"
 
-ws@^6.2.1:
+ws@^6.0.0, ws@^6.2.1:
   version "6.2.1"
   resolved "https://registry.yarnpkg.com/ws/-/ws-6.2.1.tgz#442fdf0a47ed64f59b6a5d8ff130f4748ed524fb"
   integrity sha512-GIyAXC2cB7LjvpgMt9EKS2ldqr0MTrORaleiOno6TweZ6r3TKtoFQWay/2PceJ3RuBasOHzXNn5Lrw1X0bEjqA==

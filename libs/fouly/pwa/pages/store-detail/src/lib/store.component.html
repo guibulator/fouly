@@ -45,6 +45,10 @@
             <ion-icon color="danger" size="large" name="ellipse"></ion-icon>
             <ion-label>&nbsp;Attente importante</ion-label>
          </ion-item>
+         <ion-item button *ngIf="placeDetails[0]" (click)="gotoChat(placeDetails[0].name)">
+            <ion-icon name="chatbubbles" size="large"></ion-icon>
+            <ion-label>&nbsp;Commentaires</ion-label>
+         </ion-item>
       </ion-item-group>
    </ion-list>
    <!-- <pre *ngIf="!(loading$ | async)">{{ placeDetails$ | async | json }}</pre> -->

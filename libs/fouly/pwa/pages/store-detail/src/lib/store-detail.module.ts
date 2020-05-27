@@ -7,7 +7,14 @@ import { StoreComponent } from './store.component';
   imports: [
     CommonModule,
     IonicModule,
-    RouterModule.forChild([{ path: '', pathMatch: 'full', component: StoreComponent }])
+    RouterModule.forChild([
+      { path: '', pathMatch: 'full', component: StoreComponent },
+      {
+        path: 'chat/:placeName',
+        loadChildren: () =>
+          import('@skare/fouly/pwa/pages/my-places').then((module) => module.MyPlacesModule)
+      }
+    ])
   ],
   declarations: [StoreComponent]
 })
