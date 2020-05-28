@@ -39,7 +39,7 @@ export class ShellComponent implements OnInit {
     }
   ];
   loggedIn = false;
-  dark = true;
+  dark = false;
 
   constructor(
     private menu: MenuController,
