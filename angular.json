@@ -367,6 +367,7 @@
         "build-local": {
           "builder": "@nrwl/node:build",
           "options": {
+            "webpackConfig": "apps/fouly/backend/webpack.config.js",
             "outputPath": "dist/apps/fouly/backend-local",
             "main": "apps/fouly/backend/src/main.ts",
             "tsConfig": "apps/fouly/backend/tsconfig.app.json"

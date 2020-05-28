@@ -1,11 +1,12 @@
 import { Controller, Get } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 
-@Controller('mail')
+@Controller('test')
 export class FoulyApiController {
-  constructor() {}
-  @Get('send')
+  constructor(private configurationService: ConfigService) {}
+  @Get()
   getData() {
     console.log('api called');
-    return 'Mail sent';
+    return `Working ${new Date()}`;
   }
 }

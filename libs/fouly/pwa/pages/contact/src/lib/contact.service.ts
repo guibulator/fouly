@@ -17,6 +17,7 @@ export class ContactService {
         'Access-Control-Allow-Origin': this.azureFctBaseUrl,
         'Content-Type': 'application/json'
       },
+
       responseType: 'text'
     });
   }
