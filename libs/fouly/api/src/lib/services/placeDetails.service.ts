@@ -5,7 +5,7 @@ import { PlaceDetailsResult } from '@skare/fouly/data';
 @Injectable()
 export class PlaceDetailsService {
   private client: Client;
-  private apiKeyEnv = 'FOULY_GOOGLE_MAPS_API_KEY';
+  private apiKeyEnv = 'FOULY-GOOGLEMAPS-API-KEY';
   private readonly logger = new Logger(PlaceDetailsService.name);
   constructor(private configService: ConfigService) {
     this.client = new Client();

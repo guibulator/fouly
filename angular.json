@@ -364,6 +364,15 @@
             }
           }
         },
+        "build-local-azure": {
+          "builder": "@nrwl/node:build",
+          "options": {
+            "webpackConfig": "apps/fouly/backend/webpack.config.js",
+            "outputPath": "dist/apps/fouly/backend-local-azure",
+            "main": "apps/fouly/backend/src/main.azure.ts",
+            "tsConfig": "apps/fouly/backend/tsconfig.app.json"
+          }
+        },
         "build-local": {
           "builder": "@nrwl/node:build",
           "options": {

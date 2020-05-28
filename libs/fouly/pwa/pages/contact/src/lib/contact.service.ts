@@ -1,24 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-
+import { ConfigService } from '@skare/fouly/pwa/core';
 @Injectable({
   providedIn: 'root'
 })
 export class ContactService {
-  constructor(private http: HttpClient) {}
-
-  //Todo : put url in config.
-  azureFctBaseUrl =
-    'https://skaresendgridapi.azurewebsites.net/api/HttpTrigger1?code=j1IIZxEna5XNfAAeHwTAJCR7aIJk/LuImKGPMZG7Yj5B407wra8rDg==';
+  constructor(private http: HttpClient, private configService: ConfigService) {}
 
   sendMail(msg: any) {
-    return this.http.post(this.azureFctBaseUrl, msg, {
-      headers: {
-        'Access-Control-Allow-Origin': this.azureFctBaseUrl,
-        'Content-Type': 'application/json'
-      },
-
-      responseType: 'text'
-    });
+    const apiEndPoint = this.configService.apiUrl;
+    return this.http.post(`${apiEndPoint}/mail`, msg);
   }
 }

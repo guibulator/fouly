@@ -8,7 +8,7 @@
       "remoteRoot": "/usr/src/app"
     },
     {
-      "name": "Attach to Node Functions",
+      "name": "Attach to fouly-backend",
       "type": "node",
       "request": "attach",
       "port": 50818

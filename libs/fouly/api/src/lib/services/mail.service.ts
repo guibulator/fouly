@@ -4,9 +4,9 @@ import { MailCommand } from '@skare/fouly/data';
 import axios from 'axios';
 @Injectable()
 export class MailService {
-  private apiKeyEnv = 'FOULY_SENDGRID_API_KEY';
-  private mailFoulyAdmin = 'FOULY_EMAIL_ADMIN';
-  private sendGridUrl = 'FOULY_SENDGRID_URL';
+  private apiKeyEnv = 'FOULY-SENDGRID-API-KEY';
+  private mailFoulyAdmin = 'FOULY-EMAIL-ADMIN';
+  private sendGridUrl = 'FOULY-SENDGRID-URL';
   private readonly logger = new Logger(MailService.name);
   constructor(private configService: ConfigService) {}
 
