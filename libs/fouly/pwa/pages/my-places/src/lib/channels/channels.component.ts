@@ -2,7 +2,7 @@ import { AfterViewChecked, Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import * as signalR from '@microsoft/signalr';
-import { Msg } from '@skare/fouly/pwa/core';
+import { ChatMessageCommand, ChatMessageResult } from '@skare/fouly/data';
 import { Subject } from 'rxjs';
 import { ChannelService } from './channel.service';
 
@@ -14,8 +14,8 @@ import { ChannelService } from './channel.service';
 export class ChannelsComponent implements OnInit, AfterViewChecked {
   public ready: Boolean = false;
   public userMsg = new FormControl('');
-  public messages: Msg[] = [];
-  public $messages = new Subject<Msg[]>();
+  public messages: ChatMessageResult[] = [];
+  public $messages = new Subject<ChatMessageResult[]>();
   public connection: signalR.HubConnection;
   public placeName: string;
   private placeId: string;
@@ -23,7 +23,7 @@ export class ChannelsComponent implements OnInit, AfterViewChecked {
   constructor(private channelService: ChannelService, private route: ActivatedRoute) {}
 
   sendMsg(newMsg: string) {
-    const myMsg = new Msg();
+    const myMsg = new ChatMessageCommand();
     myMsg.author = '';
     myMsg.text = newMsg;
     myMsg.time = new Date();
@@ -41,7 +41,7 @@ export class ChannelsComponent implements OnInit, AfterViewChecked {
       await this.start(info);
     });
 
-    this.channelService.getLastMsg(this.placeId).subscribe((data: Msg[]) => {
+    this.channelService.getLastMsg(this.placeId).subscribe((data: ChatMessageResult[]) => {
       this.messages = data;
       this.$messages.next(this.messages);
       // this.scrollDown();
@@ -56,7 +56,7 @@ export class ChannelsComponent implements OnInit, AfterViewChecked {
     }
   }
 
-  onNewMsgInChannel(newMsg: Msg) {
+  onNewMsgInChannel(newMsg: ChatMessageResult) {
     this.messages.push(newMsg);
     this.$messages.next(this.messages);
   }
@@ -76,7 +76,7 @@ export class ChannelsComponent implements OnInit, AfterViewChecked {
         .build();
 
       this.connection.on('onNewMsg', (data) => {
-        const myMsg = new Msg();
+        const myMsg = new ChatMessageResult();
         myMsg.author = data.author;
         myMsg.text = data.msg;
         myMsg.time = data.time;

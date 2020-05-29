@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ChatStoreService, Msg } from '@skare/fouly/pwa/core';
+import { ChatMessageCommand, ChatMessageResult } from '@skare/fouly/data';
+import { ChatStoreService } from '@skare/fouly/pwa/core';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -20,11 +21,11 @@ export class ChannelService {
     });
   }
 
-  getLastMsg(placeId: string): Observable<Msg[]> {
+  getLastMsg(placeId: string): Observable<ChatMessageResult[]> {
     return this.chatService.getMsgHistory(placeId);
   }
 
-  saveNewMsg(newMsg: Msg) {
+  saveNewMsg(newMsg: ChatMessageCommand) {
     return this.chatService.saveNewMsg(newMsg);
   }
 }
