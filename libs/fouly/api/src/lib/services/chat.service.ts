@@ -1,6 +1,6 @@
 import { Container, CosmosClient, Database } from '@azure/cosmos';
 import { Injectable, Logger } from '@nestjs/common';
-import { Msg } from '@skare/fouly/pwa/core';
+import { ChatMessageCommand, ChatMessageResult } from '@skare/fouly/data';
 import { CosmosDbService } from './cosmosDb.service';
 @Injectable()
 export class ChatService {
@@ -32,7 +32,7 @@ export class ChatService {
     );
   }
 
-  async getMsgHistory(placeId: string): Promise<Msg[]> {
+  async getMsgHistory(placeId: string): Promise<ChatMessageResult[]> {
     await this.ensureDbContext();
 
     const querySpec = {
@@ -42,7 +42,7 @@ export class ChatService {
     const { resources: items } = await this.container.items.query(querySpec).fetchAll();
 
     const result = items.map((x) => {
-      const msg = new Msg();
+      const msg = new ChatMessageResult();
       msg.text = x['$1'].msg;
       msg.author = x['$1'].author;
       msg.time = x['$1'].time;
@@ -53,7 +53,7 @@ export class ChatService {
     return result;
   }
 
-  async saveNewMsg(msg: Msg) {
+  async saveNewMsg(msg: ChatMessageCommand) {
     const newItem = {
       id: this.cosmosDbService.createGuid(),
       msg: msg.text,

@@ -1,7 +1,4 @@
 # fouly-data
 
-This library was generated with [Nx](https://nx.dev).
-
-## Running unit tests
-
-Run `ng test fouly-data` to execute the unit tests via [Jest](https://jestjs.io).
+There is an important naming convention that needs to be follow in order for the swagger api to be properly documented.
+The filename of the model needs to end either by .result.ts, .query.ts or .command.ts. Also, the file must export a class and not an interface or type.

@@ -1,4 +1,4 @@
-export class Msg {
+export class ChatMessageResult {
   text: string;
   author: string;
   time: Date;

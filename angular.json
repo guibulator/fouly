@@ -344,7 +344,7 @@
                 "input": "apps/fouly/backend"
               },
               {
-                "glob": "+(function.json)",
+                "glob": "function.json",
                 "output": "./foulyApiGatewayHttpTrigger",
                 "input": "apps/fouly/backend/src/assets"
               }
@@ -354,13 +354,7 @@
             "production": {
               "optimization": true,
               "extractLicenses": true,
-              "inspect": false,
-              "fileReplacements": [
-                {
-                  "replace": "apps/fouly/backend/src/environments/environment.ts",
-                  "with": "apps/fouly/backend/src/environments/environment.prod.ts"
-                }
-              ]
+              "inspect": false
             }
           }
         },

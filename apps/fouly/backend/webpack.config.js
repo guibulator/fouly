@@ -22,7 +22,7 @@ module.exports = (config, context) => {
       before: [
         swaggerPlugin.before(
           {
-            dtoFileNameSuffix: ['.dto.ts']
+            dtoFileNameSuffix: ['.command.ts', '.query.ts', '.result.ts']
           },
           program
         )

@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
-import { Msg } from '@skare/fouly/pwa/core';
+import { ChatMessageCommand } from '@skare/fouly/data';
 import { ChatService } from '../services/chat.service';
 @Controller('chat')
 export class ChatController {
@@ -11,7 +11,7 @@ export class ChatController {
   }
 
   @Post()
-  async saveNewMsg(@Body() msgToSave: Msg) {
+  async saveNewMsg(@Body() msgToSave: ChatMessageCommand) {
     return this.chatService.saveNewMsg(msgToSave);
   }
 }
