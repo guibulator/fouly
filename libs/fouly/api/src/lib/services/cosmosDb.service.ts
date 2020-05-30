@@ -1,6 +1,6 @@
 import { CosmosClient } from '@azure/cosmos';
 import { Injectable } from '@nestjs/common';
-import { v4 as uuidv4 } from 'uuid';
+import { uuid } from 'uuidv4';
 
 @Injectable()
 export class CosmosDbService {
@@ -17,6 +17,6 @@ export class CosmosDbService {
   }
 
   createGuid(): string {
-    return uuidv4();
+    return uuid();
   }
 }

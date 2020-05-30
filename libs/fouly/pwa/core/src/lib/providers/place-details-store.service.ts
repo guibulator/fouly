@@ -16,12 +16,14 @@ export class PlaceDetailsStoreService {
     return this._placeDetails.getValue();
   }
 
-  loadPlaceId(placeId: string) {
+  loadPlaceId(placeId: string, sessionToken?: string) {
     //TODO: handle failure, immutabilty for store, reuse already loaded item...
     this._loading.next(true);
     const apiEndPoint = this.configService.apiUrl;
     this.httpClient
-      .get<PlaceDetailsResult>(`${apiEndPoint}/place-details/${placeId}`)
+      .get<PlaceDetailsResult>(
+        `${apiEndPoint}/place-details/info/${placeId}?sessionToken=${sessionToken}`
+      )
       .pipe(finalize(() => this._loading.next(false)))
       .subscribe((response) => this._placeDetails.next([response]));
   }

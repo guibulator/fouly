@@ -785,6 +785,38 @@
           "style": "scss"
         }
       }
+    },
+    "fouly-pwa-pages-place-search": {
+      "projectType": "library",
+      "root": "libs/fouly/pwa/pages/place-search",
+      "sourceRoot": "libs/fouly/pwa/pages/place-search/src",
+      "prefix": "fouly",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/fouly/pwa/pages/place-search/tsconfig.lib.json",
+              "libs/fouly/pwa/pages/place-search/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/fouly/pwa/pages/place-search/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/fouly/pwa/pages/place-search/jest.config.js",
+            "tsConfig": "libs/fouly/pwa/pages/place-search/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "libs/fouly/pwa/pages/place-search/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/angular:component": {
+          "style": "scss"
+        }
+      }
     }
   },
   "cli": {

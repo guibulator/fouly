@@ -12,6 +12,7 @@ const routes: Routes = [];
           redirectTo: '/introduction',
           pathMatch: 'full'
         },
+
         {
           path: 'support',
           loadChildren: () =>
@@ -39,7 +40,7 @@ const routes: Routes = [];
         },
         { path: '**', redirectTo: '' }
       ],
-      { initialNavigation: 'enabled' }
+      { initialNavigation: 'enabled', enableTracing: false }
     )
   ],
   exports: [RouterModule]

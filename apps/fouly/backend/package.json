@@ -17,7 +17,7 @@
     "reflect-metadata": "^0.1.13",
     "rxjs": "^6.5.5",
     "tslib": "2.0.0",
-    "uuid": "^8.1.0"
+    "uuidv4": "^6.1.0"
   },
   "devDependencies": {
     "@nestjs/swagger": "^4.5.8",

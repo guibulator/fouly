@@ -1,0 +1,39 @@
+<ion-header padding>
+   <ion-toolbar>
+      <ion-searchbar
+         mode="md"
+         showCancelButton="focus"
+         (ionCancel)="onCancel()"
+         placeholder="Rechercher un endroit"
+         debounce="500"
+         (ionChange)="onChange($event)"
+      ></ion-searchbar>
+   </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+   <ion-list *ngIf="predictions$">
+      <ion-item *ngFor="let p of predictions$ | async" button (click)="onSelectPlace(p.placeId)">
+         <ion-icon color="primary" slot="start" name="location-outline"></ion-icon>
+         <ion-label
+            ><h2>
+               {{ p.description }}
+            </h2>
+            <p>{{ p.address }}</p>
+         </ion-label>
+      </ion-item>
+   </ion-list>
+
+   <ion-list>
+      <ion-list-header>Récents</ion-list-header>
+      <ion-item *ngFor="let p of predictions$ | async">
+         <ion-icon color="primary" slot="start" name="location-outline"></ion-icon>
+         <ion-label
+            ><h2>
+               {{ p.description }}
+            </h2>
+            <p>{{ p.address }}</p>
+         </ion-label>
+      </ion-item>
+   </ion-list>
+</ion-content>

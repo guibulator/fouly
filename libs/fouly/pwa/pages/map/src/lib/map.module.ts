@@ -19,6 +19,11 @@ import { MapComponent } from './map/map.component';
         path: 'store-detail/:placeId',
         loadChildren: () =>
           import('@skare/fouly/pwa/pages/store-detail').then((module) => module.StoreDetailModule)
+      },
+      {
+        path: 'place-search',
+        loadChildren: () =>
+          import('@skare/fouly/pwa/pages/place-search').then((module) => module.PlaceSearchModule)
       }
     ]),
     GoogleMapsModule
