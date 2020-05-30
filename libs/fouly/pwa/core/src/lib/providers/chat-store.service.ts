@@ -12,18 +12,21 @@ export class ChatStoreService {
   getMsgHistory(placeId: string): Observable<ChatMessageResult[]> {
     this._loading.next(true);
     return this.httpClient
-      .get<ChatMessageResult[]>(`api/chat/${placeId}`)
+      .get<ChatMessageResult[]>(`api/chat/history/${placeId}`)
       .pipe(finalize(() => this._loading.next(false)));
   }
 
-  saveNewMsg(msgToSave: ChatMessageCommand): Observable<any> {
+  postNewMsg(msgToSave: ChatMessageCommand): Observable<any> {
     this._loading.next(true);
     return this.httpClient
-      .post(`api/chat`, msgToSave, {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
+      .post(`api/chat/postNewMsg`, msgToSave)
+      .pipe(finalize(() => this._loading.next(false)));
+  }
+
+  getConnectionSignalR(): Observable<any> {
+    this._loading.next(true);
+    return this.httpClient
+      .get(`api/chat/signalR/infoConnection`)
       .pipe(finalize(() => this._loading.next(false)));
   }
 }

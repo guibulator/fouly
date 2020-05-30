@@ -6,5 +6,8 @@
     "@angular/core": "^9.1.4",
     "tslib": "2.0.0"
   },
-  "dependencies": {}
+  "dependencies": {
+    "@nestjs/config": "^0.5.0",
+    "uuid": "^8.1.0"
+  }
 }

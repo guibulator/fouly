@@ -12,13 +12,13 @@
 <ion-content>
    <div>
       <div class="ion-padding">
-         <ion-label class="ion-padding-bottom" position="stacked" color="primary">Discussion</ion-label>
+         <ion-label class="ion-padding-bottom" position="stacked" color="primary">Historique d'expérience</ion-label>
          <div class="fouly-chat-area" id="chatScrollView">
             <div class="fouly-chat">
                <div class="fouly-chat-line" *ngFor="let msg of $messages | async">
                   <div class="fouly-chat-msg">
                      <span class="fouly-chat-msg-meta">{{ msg.author }} {{ msg.time | date: 'shortTime' }}</span>
-                     <span class="fouly-chat-msg-text">{{ msg.text }}</span>
+                     <span class="fouly-chat-msg-text">{{ msg.msg }}</span>
                   </div>
                </div>
             </div>
@@ -26,7 +26,7 @@
       </div>
    </div>
    <div class="ion-padding" *ngIf="ready">
-      <ion-label position="stacked" color="primary">Nouveau message</ion-label>
+      <ion-label position="stacked" color="primary">Partagez votre expérience</ion-label>
       <ion-item>
          <ion-input type="text" [formControl]="userMsg"></ion-input>
       </ion-item>

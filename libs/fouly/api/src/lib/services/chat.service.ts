@@ -1,7 +1,9 @@
 import { Container, CosmosClient, Database } from '@azure/cosmos';
-import { Injectable, Logger } from '@nestjs/common';
+import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import { ChatMessageCommand, ChatMessageResult } from '@skare/fouly/data';
+import axios from 'axios';
 import { CosmosDbService } from './cosmosDb.service';
+
 @Injectable()
 export class ChatService {
   private readonly logger = new Logger(ChatService.name);
@@ -43,7 +45,7 @@ export class ChatService {
 
     const result = items.map((x) => {
       const msg = new ChatMessageResult();
-      msg.text = x['$1'].msg;
+      msg.msg = x['$1'].msg;
       msg.author = x['$1'].author;
       msg.time = x['$1'].time;
       msg.placeId = x['$1'].placeId;
@@ -53,14 +55,34 @@ export class ChatService {
     return result;
   }
 
-  async saveNewMsg(msg: ChatMessageCommand) {
+  async postNewMsg(newMsg: ChatMessageCommand, url: string) {
+    await this.ensureDbContext();
+
     const newItem = {
       id: this.cosmosDbService.createGuid(),
-      msg: msg.text,
-      author: msg.author,
-      time: msg.time,
-      placeId: msg.placeId
+      msg: newMsg.msg,
+      author: newMsg.author,
+      time: newMsg.time,
+      placeId: newMsg.placeId
     };
     await this.container.items.create(newItem);
+
+    try {
+      const result = await axios.post(url, newMsg);
+      return result.data;
+    } catch (err) {
+      this.logger.error('There was an error calling axios.post', err);
+      throw new BadRequestException();
+    }
+  }
+
+  async getSignalRconnection(url: string) {
+    try {
+      const result = await axios.get(url);
+      return result.data;
+    } catch (err) {
+      this.logger.error('There was an error calling axios.post', err);
+      throw new BadRequestException();
+    }
   }
 }

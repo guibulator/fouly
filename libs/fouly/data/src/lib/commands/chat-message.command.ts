@@ -1,5 +1,5 @@
 export class ChatMessageCommand {
-  text: string;
+  msg: string;
   author: string;
   time: Date;
   placeId: string;

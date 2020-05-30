@@ -3,8 +3,8 @@ import { FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import * as signalR from '@microsoft/signalr';
 import { ChatMessageCommand, ChatMessageResult } from '@skare/fouly/data';
+import { ChatStoreService } from '@skare/fouly/pwa/core';
 import { Subject } from 'rxjs';
-import { ChannelService } from './channel.service';
 
 @Component({
   selector: 'fouly-channels',
@@ -20,15 +20,15 @@ export class ChannelsComponent implements OnInit, AfterViewChecked {
   public placeName: string;
   private placeId: string;
 
-  constructor(private channelService: ChannelService, private route: ActivatedRoute) {}
+  constructor(private chatService: ChatStoreService, private route: ActivatedRoute) {}
 
   sendMsg(newMsg: string) {
     const myMsg = new ChatMessageCommand();
-    myMsg.author = '';
-    myMsg.text = newMsg;
+    myMsg.author = 'Anonyme';
+    myMsg.msg = newMsg;
     myMsg.time = new Date();
     myMsg.placeId = this.placeId;
-    this.channelService.saveNewMsg(myMsg).subscribe(() => console.log('Saved'));
+    this.chatService.postNewMsg(myMsg).subscribe();
     this.userMsg.setValue('');
   }
 
@@ -36,12 +36,12 @@ export class ChannelsComponent implements OnInit, AfterViewChecked {
     this.placeId = this.route.snapshot.params['placeId'];
     this.placeName = this.route.snapshot.params['placeName'];
 
-    this.channelService.getConnection().subscribe(async (res) => {
-      const info = JSON.parse(res);
+    this.chatService.getConnectionSignalR().subscribe(async (info) => {
+      // const info = JSON.parse(res);
       await this.start(info);
     });
 
-    this.channelService.getLastMsg(this.placeId).subscribe((data: ChatMessageResult[]) => {
+    this.chatService.getMsgHistory(this.placeId).subscribe((data: ChatMessageResult[]) => {
       this.messages = data;
       this.$messages.next(this.messages);
       // this.scrollDown();
@@ -76,11 +76,15 @@ export class ChannelsComponent implements OnInit, AfterViewChecked {
         .build();
 
       this.connection.on('onNewMsg', (data) => {
-        const myMsg = new ChatMessageResult();
-        myMsg.author = data.author;
-        myMsg.text = data.msg;
-        myMsg.time = data.time;
-        this.onNewMsgInChannel(myMsg);
+        if (data && data.placeId === this.placeId) {
+          console.log('received new msg');
+          const newMsg = new ChatMessageResult();
+          newMsg.author = data.author;
+          newMsg.msg = data.msg;
+          newMsg.time = data.time;
+          newMsg.placeId = data.placeId;
+          this.onNewMsgInChannel(newMsg);
+        }
       });
 
       this.connection.onclose(function() {
