@@ -16,7 +16,7 @@
          [position]="marker.getPosition()"
          [clickable]="marker.getClickable()"
          (mapClick)="mapClick({ placeId: marker.getTitle() })"
-         [options]="{ draggable: false, label: marker.getLabel(), animation: 2, icon: marker.getIcon() }"
+         [options]="{ draggable: false, label: marker.getLabel(), icon: marker.getIcon() }"
       ></map-marker>
    </google-map>
 </ion-content>
