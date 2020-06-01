@@ -10,19 +10,19 @@
    </ion-toolbar>
 </ion-header>
 <ion-content>
-   <div>
-      <div class="ion-padding">
-         <ion-label class="ion-padding-bottom" position="stacked" color="primary">Historique d'expérience</ion-label>
-         <div class="fouly-chat-area" id="chatScrollView">
+   <div class="ion-padding">
+      <ion-label class="ion-padding-bottom" position="stacked" color="primary">Historique d'expérience</ion-label>
+      <div class="fouly-chat-area" id="chatScrollView">
+         <ion-content #chatHistoryContent [scrollEvents]="true" (ionScroll)="scrolling($event)">
             <div class="fouly-chat">
-               <div class="fouly-chat-line" *ngFor="let msg of $messages | async">
+               <div class="fouly-chat-line" *ngFor="let msg of messages$ | async">
                   <div class="fouly-chat-msg">
                      <span class="fouly-chat-msg-meta">{{ msg.author }} {{ msg.time | date: 'shortTime' }}</span>
                      <span class="fouly-chat-msg-text">{{ msg.msg }}</span>
                   </div>
                </div>
             </div>
-         </div>
+         </ion-content>
       </div>
    </div>
    <div class="ion-padding" *ngIf="ready">
@@ -32,6 +32,11 @@
       </ion-item>
       <div>
          <ion-button expand="block" type="submit" (click)="sendMsg(userMsg.value)">Envoyer</ion-button>
+      </div>
+   </div>
+   <div class="ion-padding" *ngIf="!ready">
+      <div class="fouly-center">
+         <ion-spinner></ion-spinner>
       </div>
    </div>
 </ion-content>

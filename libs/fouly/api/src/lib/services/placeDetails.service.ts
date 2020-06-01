@@ -36,7 +36,6 @@ export class PlaceDetailsService {
     });
     const details = await promise;
     if (details?.data?.status === 'OK') {
-      this.logger.debug(`Succesfully got place-details for placeId ${placeId}`);
       return details.data.result;
     }
     throw Error(

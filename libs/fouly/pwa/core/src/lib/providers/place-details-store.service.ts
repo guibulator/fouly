@@ -12,10 +12,6 @@ export class PlaceDetailsStoreService {
   readonly loading$ = this._loading.asObservable();
   constructor(private httpClient: HttpClient, private configService: ConfigService) {}
 
-  get placeDetails(): PlaceDetailsResult[] {
-    return this._placeDetails.getValue();
-  }
-
   loadPlaceId(placeId: string, sessionToken?: string) {
     //TODO: handle failure, immutabilty for store, reuse already loaded item...
     this._loading.next(true);
