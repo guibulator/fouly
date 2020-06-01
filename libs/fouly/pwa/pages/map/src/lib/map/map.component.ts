@@ -19,6 +19,7 @@ export class MapComponent implements OnInit, OnDestroy {
   private subscription = new Subscription();
   private firstLoad = true;
   private placeIdToFocus: string;
+  private markerYou: google.maps.Marker;
   @ViewChild(GoogleMap, { static: false }) private map: GoogleMap;
   positionLatLng: google.maps.LatLng;
   mapOptions: google.maps.MapOptions = {
@@ -92,23 +93,26 @@ export class MapComponent implements OnInit, OnDestroy {
   }
 
   onPositionChanged(data: Geoposition) {
-    if (this.firstLoad) {
-      this.positionLatLng = new google.maps.LatLng(data.coords.latitude, data.coords.longitude);
-      const markerYou = new google.maps.Marker({
-        position: this.positionLatLng,
-        label: '',
-        icon: {
-          url: 'https://cdn.pixabay.com/photo/2020/04/19/06/57/marvel-5062138_960_720.png',
-          size: new google.maps.Size(100, 100),
-          origin: new google.maps.Point(0, 0),
-          anchor: new google.maps.Point(17, 34),
-          scaledSize: new google.maps.Size(35, 35)
-        }
-      });
-      this.markers.push(markerYou);
-      this.center = this.positionLatLng;
-      this.firstLoad = false;
+    if (this.markerYou) {
+      this.markers = this.markers.filter((p) => this.markerYou !== p);
     }
+
+    this.positionLatLng = new google.maps.LatLng(data.coords.latitude, data.coords.longitude);
+    this.markerYou = new google.maps.Marker({
+      position: this.positionLatLng,
+      label: '',
+      icon: {
+        url: 'https://cdn.pixabay.com/photo/2020/04/19/06/57/marvel-5062138_960_720.png',
+        size: new google.maps.Size(100, 100),
+        origin: new google.maps.Point(0, 0),
+        anchor: new google.maps.Point(17, 34),
+        scaledSize: new google.maps.Size(35, 35)
+      }
+    });
+
+    this.center = this.positionLatLng;
+    this.markers.push(this.markerYou);
+    this.firstLoad = false;
   }
 
   private addPlaceMarker(placeDetail: PlaceDetailsResult) {
