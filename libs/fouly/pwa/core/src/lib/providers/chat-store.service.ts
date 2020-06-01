@@ -16,11 +16,12 @@ export class ChatStoreService {
       .pipe(finalize(() => this._loading.next(false)));
   }
 
-  postNewMsg(msgToSave: ChatMessageCommand): Observable<any> {
+  postNewMsg(msgToSave: ChatMessageCommand) {
     this._loading.next(true);
     return this.httpClient
       .post(`api/chat/postNewMsg`, msgToSave)
-      .pipe(finalize(() => this._loading.next(false)));
+      .pipe(finalize(() => this._loading.next(false)))
+      .subscribe();
   }
 
   getConnectionSignalR(): Observable<any> {
