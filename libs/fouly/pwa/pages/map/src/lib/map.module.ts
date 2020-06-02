@@ -2,9 +2,9 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { RouterModule } from '@angular/router';
-import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { IonicModule } from '@ionic/angular';
 import { MapComponent } from './map/map.component';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -29,6 +29,6 @@ import { MapComponent } from './map/map.component';
     GoogleMapsModule
   ],
   declarations: [MapComponent],
-  providers: [Geolocation]
+  providers: []
 })
 export class MapModule {}

@@ -1,31 +1,24 @@
 <ion-header>
    <ion-toolbar>
+      <ion-title>Détails</ion-title>
       <ion-buttons slot="start">
          <ion-back-button></ion-back-button>
       </ion-buttons>
       <ion-buttons slot="start">
          <ion-menu-button></ion-menu-button>
       </ion-buttons>
-      <div class="fouly-header-title">
-         <ion-title>Détails</ion-title>
-
+      <ion-buttons slot="end">
          <ion-icon
-            *ngIf="placeDetails$ && isCurrentFavorite"
+            padding
+            *ngIf="placeDetails$"
             class="fouly-header-icon-right"
             color="primary"
-            name="star"
+            size="large"
+            [name]="!isCurrentFavorite ? 'star-outline' : 'star'"
             (click)="addRemoveToFavorite()"
             >Ajouter au favoris</ion-icon
-         >
-         <ion-icon
-            *ngIf="placeDetails$ && !isCurrentFavorite"
-            class="fouly-header-icon-right"
-            color="primary"
-            name="star-outline"
-            (click)="addRemoveToFavorite()"
-            >Ajouter au favoris</ion-icon
-         >
-      </div>
+         ></ion-buttons
+      >
    </ion-toolbar>
 </ion-header>
 
@@ -63,32 +56,32 @@
             </ion-label>
          </ion-item>
          <ion-item>
-            <ion-icon class="fouly-icon-list" color="warning" size="large" name="ellipse"></ion-icon>
+            <ion-icon color="warning" size="medium" name="ellipse"></ion-icon>
             <ion-label>&nbsp;Attente moyenne</ion-label>
          </ion-item>
          <ion-item button *ngIf="placeDetails[0]" (click)="gotoChat(placeDetails[0].name)">
-            <ion-icon class="fouly-icon-list" name="chatbubbles" size="large"></ion-icon>
+            <ion-icon name="chatbubbles" size="medium"></ion-icon>
             <ion-label>&nbsp;Commentaires</ion-label>
          </ion-item>
          <ion-item button *ngIf="placeDetails[0]" (click)="gotoChat(placeDetails[0].name)">
-            <ion-icon class="fouly-icon-list" name="videocam" size="large"></ion-icon>
+            <ion-icon name="videocam" size="medium"></ion-icon>
             <ion-label>&nbsp;En direct</ion-label>
          </ion-item>
       </ion-item-group>
    </ion-list>
-   <ion-fab vertical="center" horizontal="center" slot="fixed">
+   <ion-fab vertical="center" horizontal="end" slot="fixed">
       <ion-fab-button>
          <ion-icon name="body"></ion-icon>
       </ion-fab-button>
       <ion-fab-list side="top">
-         <ion-fab-button><ion-icon color="danger" name="body-outline"></ion-icon></ion-fab-button>
+         <ion-fab-button><ion-icon color="danger" name="body"></ion-icon></ion-fab-button>
       </ion-fab-list>
 
       <ion-fab-list side="start">
-         <ion-fab-button><ion-icon color="success" name="body-outline"></ion-icon></ion-fab-button>
+         <ion-fab-button><ion-icon color="success" name="body"></ion-icon></ion-fab-button>
       </ion-fab-list>
-      <ion-fab-list side="end">
-         <ion-fab-button><ion-icon color="warning" name="body-outline"></ion-icon></ion-fab-button>
+      <ion-fab-list side="bottom">
+         <ion-fab-button><ion-icon color="warning" name="body"></ion-icon></ion-fab-button>
       </ion-fab-list>
    </ion-fab>
    <!-- <pre *ngIf="!(loading$ | async)">{{ placeDetails$ | async | json }}</pre> -->
