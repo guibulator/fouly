@@ -6,7 +6,26 @@
       <ion-buttons slot="start">
          <ion-menu-button></ion-menu-button>
       </ion-buttons>
-      <ion-title>Détails</ion-title>
+      <div class="fouly-header-title">
+         <ion-title>Détails</ion-title>
+
+         <ion-icon
+            *ngIf="placeDetails$ && isCurrentFavorite"
+            class="fouly-header-icon-right"
+            color="primary"
+            name="star"
+            (click)="addRemoveToFavorite()"
+            >Ajouter au favoris</ion-icon
+         >
+         <ion-icon
+            *ngIf="placeDetails$ && !isCurrentFavorite"
+            class="fouly-header-icon-right"
+            color="primary"
+            name="star-outline"
+            (click)="addRemoveToFavorite()"
+            >Ajouter au favoris</ion-icon
+         >
+      </div>
    </ion-toolbar>
 </ion-header>
 
@@ -44,15 +63,15 @@
             </ion-label>
          </ion-item>
          <ion-item>
-            <ion-icon color="warning" size="large" name="ellipse"></ion-icon>
+            <ion-icon class="fouly-icon-list" color="warning" size="large" name="ellipse"></ion-icon>
             <ion-label>&nbsp;Attente moyenne</ion-label>
          </ion-item>
          <ion-item button *ngIf="placeDetails[0]" (click)="gotoChat(placeDetails[0].name)">
-            <ion-icon name="chatbubbles" size="large"></ion-icon>
+            <ion-icon class="fouly-icon-list" name="chatbubbles" size="large"></ion-icon>
             <ion-label>&nbsp;Commentaires</ion-label>
          </ion-item>
          <ion-item button *ngIf="placeDetails[0]" (click)="gotoChat(placeDetails[0].name)">
-            <ion-icon name="videocam" size="large"></ion-icon>
+            <ion-icon class="fouly-icon-list" name="videocam" size="large"></ion-icon>
             <ion-label>&nbsp;En direct</ion-label>
          </ion-item>
       </ion-item-group>

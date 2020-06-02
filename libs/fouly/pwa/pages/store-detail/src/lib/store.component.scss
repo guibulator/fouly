@@ -1,13 +1,29 @@
-$categories: (
-  high: var(--ion-color-danger),
+$categories: (high: var(--ion-color-danger),
   medium: var(--ion-color-warning),
-  low: var(--ion-color-success)
-);
+  low: var(--ion-color-success));
 
-@each $category, $value in $categories {
+@each $category,
+$value in $categories {
   ion-icon.#{$category} {
     border-left: 2px solid $value;
     background-color: $value;
     padding-left: 10px;
   }
+}
+
+.fouly-icon-list {
+  margin-right: 12px;
+  margin-top: 12px;
+  margin-bottom: 12px;
+  width: 24px;
+  height: 24px;
+}
+
+.fouly-header-title {
+  display: flex;
+}
+
+.fouly-header-icon-right {
+  padding-right: 2rem;
+  cursor: pointer;
 }

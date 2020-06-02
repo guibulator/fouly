@@ -4,14 +4,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { ChannelsComponent } from './channels/channels.component';
+import { FavoritesComponent } from './favorites/favorites.component';
 @NgModule({
   imports: [
     CommonModule,
     IonicModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule.forChild([{ path: '', pathMatch: 'full', component: ChannelsComponent }])
+    RouterModule.forChild([{ path: '', pathMatch: 'full', component: FavoritesComponent }])
   ],
-  declarations: [ChannelsComponent]
+  declarations: [ChannelsComponent, FavoritesComponent]
 })
 export class MyPlacesModule {}

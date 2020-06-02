@@ -1,0 +1,29 @@
+<ion-header>
+   <ion-toolbar>
+      <ion-buttons slot="start">
+         <ion-back-button></ion-back-button>
+      </ion-buttons>
+      <ion-buttons slot="start">
+         <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title>Mes commerces favoris</ion-title>
+   </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+   <ion-list *ngIf="listFavorites">
+      <ion-item *ngFor="let p of listFavorites" button (click)="onSelectPlace(p.placeId)">
+         <ion-icon class="fouly-icon-list" color="primary" name="star-outline"></ion-icon>
+         <ion-label
+            ><h2>
+               {{ p.name }}
+            </h2>
+            <p [innerHtml]="p.address"></p>
+            <ion-chip class="fouly-chip" color="primary">
+               <ion-icon class="fouly-icon-list" color="warning" size="large" name="ellipse"></ion-icon> <ion-label>&nbsp;Attente moyenne</ion-label>
+            </ion-chip>
+         </ion-label>
+         <ion-icon name="trash" (click)="onRemovePlace(p.placeId)"></ion-icon>
+      </ion-item>
+   </ion-list>
+</ion-content>
