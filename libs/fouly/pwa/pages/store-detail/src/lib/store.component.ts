@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Storage } from '@ionic/storage';
 import { PlaceDetailsResult } from '@skare/fouly/data';
-import { PlaceDetailsStoreService } from '@skare/fouly/pwa/core';
-import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { FavoriteStoreService, PlaceDetailsStoreService } from '@skare/fouly/pwa/core';
+import { combineLatest, Observable } from 'rxjs';
+import { map, take } from 'rxjs/operators';
 
 @Component({
   selector: 'skare-store',
@@ -12,59 +11,47 @@ import { tap } from 'rxjs/operators';
   styleUrls: ['./store.component.scss']
 })
 export class StoreComponent implements OnInit {
+  isCurrentlyFavorite$: Observable<boolean>;
   constructor(
     private placeDetailsStore: PlaceDetailsStoreService,
     private route: ActivatedRoute,
     private router: Router,
-    private storage: Storage
-  ) {}
+    private favoriteStoreService: FavoriteStoreService
+  ) {
+    this.favoriteStoreService.init().subscribe();
+  }
+
   placeDetails$: Observable<PlaceDetailsResult[]>;
   loading$: Observable<boolean>;
-  private listFavorites: any[];
-  private currentPlaceFavorite: any;
-  isCurrentFavorite: boolean;
 
-  async ngOnInit() {
+  ngOnInit() {
     this.loading$ = this.placeDetailsStore.loading$;
-    this.placeDetails$ = this.placeDetailsStore.placeDetails$.pipe(tap((t) => console.log(t)));
+    this.placeDetails$ = this.placeDetailsStore.placeDetails$;
     this.placeDetailsStore.loadPlaceId(this.route.snapshot.params['placeId']);
-    this.placeDetails$.subscribe((data: any) => {
-      if (data && data.length) {
-        this.currentPlaceFavorite = {
-          name: data[0].name,
-          placeId: data[0].place_id,
-          address: data[0].adr_address
-        };
-        if (!this.listFavorites) {
-          this.listFavorites = [];
-        }
-        this.isCurrentFavorite =
-          this.listFavorites.find((x) => x.placeId === this.currentPlaceFavorite.placeId) !==
-          undefined;
-      }
-    });
-    this.listFavorites = await this.storage.get('fouly_favorites_places');
+    this.isCurrentlyFavorite$ = this.favoriteStoreService.favorites$.pipe(
+      map((f) => !!f.find((fav) => fav.placeId === this.route.snapshot.params['placeId']))
+    );
   }
 
   gotoChat(placeName: string) {
     this.router.navigate(['chat', placeName], { relativeTo: this.route });
   }
 
-  async addRemoveToFavorite() {
-    if (!this.listFavorites) {
-      this.listFavorites = [];
-    }
-
-    if (this.isCurrentFavorite) {
-      const indexItem = this.listFavorites.findIndex(
-        (x) => this.currentPlaceFavorite.placeId === x.placeId
-      );
-      this.listFavorites.splice(indexItem, 1);
-      this.isCurrentFavorite = false;
-    } else {
-      this.listFavorites.push(this.currentPlaceFavorite);
-      this.isCurrentFavorite = true;
-    }
-    this.storage.set('fouly_favorites_places', this.listFavorites);
+  addRemoveToFavorite() {
+    combineLatest([this.placeDetails$.pipe(take(1)), this.isCurrentlyFavorite$])
+      .pipe(take(1))
+      .subscribe(([placeDetails, isCurrentlyFavorite]) => {
+        if (isCurrentlyFavorite) {
+          this.favoriteStoreService.removeFavorite(placeDetails[0].place_id);
+        } else {
+          return this.favoriteStoreService.addFavorite({
+            address: placeDetails[0].adr_address,
+            placeId: placeDetails[0].place_id,
+            name: placeDetails[0].name,
+            lat: placeDetails[0].geometry.location.lat,
+            lng: placeDetails[0].geometry.location.lng
+          });
+        }
+      });
   }
 }

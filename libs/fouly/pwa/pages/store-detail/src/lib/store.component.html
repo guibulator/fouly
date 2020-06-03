@@ -14,7 +14,7 @@
             class="fouly-header-icon-right"
             color="primary"
             size="large"
-            [name]="!isCurrentFavorite ? 'star-outline' : 'star'"
+            [name]="!(isCurrentlyFavorite$ | async) ? 'star-outline' : 'star'"
             (click)="addRemoveToFavorite()"
             >Ajouter au favoris</ion-icon
          ></ion-buttons

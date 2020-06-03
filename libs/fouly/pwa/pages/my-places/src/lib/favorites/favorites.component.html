@@ -11,19 +11,41 @@
 </ion-header>
 
 <ion-content fullscreen>
-   <ion-list *ngIf="listFavorites">
-      <ion-item *ngFor="let p of listFavorites" button (click)="onSelectPlace(p.placeId)">
-         <ion-icon class="fouly-icon-list" color="primary" name="star-outline"></ion-icon>
-         <ion-label
-            ><h2>
-               {{ p.name }}
-            </h2>
-            <p [innerHtml]="p.address"></p>
-            <ion-chip class="fouly-chip" color="primary">
-               <ion-icon class="fouly-icon-list" color="warning" size="large" name="ellipse"></ion-icon> <ion-label>&nbsp;Attente moyenne</ion-label>
-            </ion-chip>
-         </ion-label>
-         <ion-icon name="trash" (click)="onRemovePlace(p.placeId)"></ion-icon>
-      </ion-item>
-   </ion-list>
+   <ng-container *ngIf="favorites$ | async as favorites">
+      <ion-list *ngIf="favorites.length > 0; else infoSlide">
+         <ion-item-sliding *ngFor="let p of favorites" button (click)="onSelectPlace(p.placeId)">
+            <ion-item>
+               <ion-icon class="fouly-icon-list" color="primary" name="star-outline"></ion-icon>
+               <ion-label
+                  ><h2>
+                     {{ p.name }}
+                  </h2>
+                  <p [innerHtml]="p.address"></p>
+                  <ion-chip class="fouly-chip" color="primary">
+                     <ion-icon class="fouly-icon-list" color="warning" size="large" name="ellipse"></ion-icon>
+                     <ion-label>&nbsp;Attente moyenne</ion-label>
+                  </ion-chip>
+               </ion-label>
+            </ion-item>
+            <ion-item-options side="end">
+               <ion-item-option (click)="onRemovePlace(p.placeId)">Enlever</ion-item-option>
+            </ion-item-options>
+         </ion-item-sliding>
+      </ion-list>
+   </ng-container>
 </ion-content>
+
+<ng-template #infoSlide>
+   <ion-slides pager="false">
+      <ion-slide>
+         <img src="https://cdn3.iconfinder.com/data/icons/location-map/512/pin_marker_star-512.png" class="slide-image" />
+         <h2 class="slide-title">
+            Vos commerces favoris
+         </h2>
+         <p class="p-slide">
+            Vous trouverez en un clin d'oeil les détails importants comme le délai d'attente et l'Achalandage de vos commerces favoris. Pour ajouter
+            un favoris, dirigez vous sur la map, sélectionner un commerce et cliquer sur l'étoile.
+         </p>
+      </ion-slide>
+   </ion-slides>
+</ng-template>
