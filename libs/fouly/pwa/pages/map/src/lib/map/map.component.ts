@@ -143,11 +143,7 @@ export class MapComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private addPlaceMarker(lat: number, lng: number, placeId: string, iconUrl: string) {
     this.markers = this.markers.filter(
-      (p) =>
-        // tslint:disable-next-line: triple-equals
-        p.getPosition().lat() != lat &&
-        // tslint:disable-next-line: triple-equals
-        p.getPosition().lng() != lng
+      (p) => p.getPosition().lat() !== lat && p.getPosition().lng() !== lng
     );
     const markerPlace = new google.maps.Marker({
       position: { lat, lng },
