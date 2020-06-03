@@ -12,7 +12,6 @@ export class LocalisationStoreService {
   constructor(private geolocation: Geolocation) {}
 
   initPosition() {
-    if (this.alreadyInit) return;
     return from(
       this.geolocation
         .getCurrentPosition()

@@ -15,7 +15,7 @@ export class ShellComponent implements OnInit {
     {
       title: 'Favoris',
       url: '/app/tabs/myplaces',
-      icon: 'heart'
+      icon: 'star'
     },
     {
       title: 'Nouvelles',
@@ -61,7 +61,7 @@ export class ShellComponent implements OnInit {
         buttons: [
           {
             role: 'cancel',
-            text: 'Reload'
+            text: 'Rafraichir'
           }
         ]
       });

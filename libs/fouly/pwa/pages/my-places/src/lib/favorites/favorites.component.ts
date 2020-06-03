@@ -1,21 +1,20 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Storage } from '@ionic/storage';
+import { FavoriteResult } from '@skare/fouly/data';
+import { FavoriteStoreService } from '@skare/fouly/pwa/core';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'fouly-favorites',
   templateUrl: './favorites.component.html',
   styleUrls: ['./favorites.component.scss']
 })
-export class FavoritesComponent {
-  listFavorites: any;
-  constructor(private storage: Storage, private router: Router) {}
-
-  async ionViewDidEnter() {
-    this.listFavorites = await this.storage.get('fouly_favorites_places');
-    if (!this.listFavorites) {
-      this.listFavorites = [];
-    }
+export class FavoritesComponent implements OnInit {
+  favorites$: Observable<FavoriteResult[]>;
+  constructor(private favoriteStoreService: FavoriteStoreService, private router: Router) {}
+  ngOnInit(): void {
+    this.favorites$ = this.favoriteStoreService.favorites$;
+    this.favoriteStoreService.init().subscribe();
   }
 
   onSelectPlace(placeId: string) {
@@ -23,8 +22,6 @@ export class FavoritesComponent {
   }
 
   onRemovePlace(placeId: string) {
-    const indexItem = this.listFavorites.findIndex((x) => placeId === x.placeId);
-    this.listFavorites.splice(indexItem, 1);
-    this.storage.set('fouly_favorites_places', this.listFavorites);
+    this.favoriteStoreService.removeFavorite(placeId);
   }
 }

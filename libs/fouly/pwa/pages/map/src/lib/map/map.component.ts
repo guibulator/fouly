@@ -4,10 +4,13 @@ import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular
 import { GoogleMap } from '@angular/google-maps';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Platform } from '@ionic/angular';
-import { PlaceDetailsResult } from '@skare/fouly/data';
-import { LocalisationStoreService, PlaceDetailsStoreService } from '@skare/fouly/pwa/core';
+import {
+  FavoriteStoreService,
+  LocalisationStoreService,
+  PlaceDetailsStoreService
+} from '@skare/fouly/pwa/core';
 import { Subscription } from 'rxjs';
-import { take, tap } from 'rxjs/operators';
+import { take } from 'rxjs/operators';
 import { lightStyle } from './map-style';
 @Component({
   selector: 'fouly-map',
@@ -15,6 +18,13 @@ import { lightStyle } from './map-style';
   styleUrls: ['./map.component.scss']
 })
 export class MapComponent implements OnInit, OnDestroy, AfterViewInit {
+  private readonly urlIcon = {
+    me:
+      'https://lh3.googleusercontent.com/proxy/zAEPALBXfrktI4HYtUvn9cCSHG8vTIZu-jpMwQrkxyXfps3_pQeu61EiQLoyOCEs41SfTg7n257wbzMuV2JrbC5YWHButSxsAT24_58W7rRODBe5OxhDviFus6WpXXL3XMDedC9A3zMsQF-Y',
+    favorite: 'https://cdn3.iconfinder.com/data/icons/location-map/512/pin_marker_star-512.png',
+    store:
+      'https://cdn1.iconfinder.com/data/icons/Map-Markers-Icons-Demo-PNG/256/Map-Marker-Marker-Outside-Pink.png'
+  };
   private subscription = new Subscription();
   private placeIdToFocus: string;
   private markerYou: google.maps.Marker;
@@ -36,7 +46,8 @@ export class MapComponent implements OnInit, OnDestroy, AfterViewInit {
     private localisationStore: LocalisationStoreService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private placeDetailsStore: PlaceDetailsStoreService
+    private placeDetailsStore: PlaceDetailsStoreService,
+    private favoriteStore: FavoriteStoreService
   ) {
     this.activatedRoute.queryParams.subscribe((params) => {
       const placeId = router?.getCurrentNavigation()?.extras?.state?.placeId;
@@ -46,15 +57,27 @@ export class MapComponent implements OnInit, OnDestroy, AfterViewInit {
     });
 
     // Every time a place details is loaded, we add a marker and center the map
-    this.placeDetailsStore.placeDetails$
-      .pipe(
-        tap((place) => {
-          // For now there is always only one place in the store
-          const geometry = place.length > 0 && place[0].geometry;
-          if (geometry) this.addPlaceMarker(place[0]);
-        })
-      )
-      .subscribe();
+    this.subscription.add(
+      this.placeDetailsStore.placeDetails$.subscribe((place) => {
+        // For now there is always only one place in the store
+        const geometry = place.length > 0 && place[0].geometry;
+        if (geometry)
+          this.addPlaceMarker(
+            place[0].geometry.location.lat,
+            place[0].geometry.location.lng,
+            place[0].place_id,
+            this.urlIcon.store
+          );
+      })
+    );
+
+    this.subscription.add(
+      this.favoriteStore.favorites$.subscribe((favorites) => {
+        favorites.forEach((fav) => {
+          this.addPlaceMarker(fav.lat, fav.lng, fav.placeId, this.urlIcon.favorite);
+        });
+      })
+    );
   }
 
   mapClick(event: google.maps.MouseEvent & { placeId: string }) {
@@ -76,14 +99,16 @@ export class MapComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
 
-  ngOnInit(): void {}
-  ngAfterViewInit() {
-    this.map.tilesloaded.pipe(take(1)).subscribe(() => {
-      console.log('tiles loaded');
-    });
+  ngOnInit(): void {
     this.localisationStore.initPosition().subscribe(() => {
       console.log('position initialized');
       this.centerMe();
+    });
+    this.subscription.add(this.favoriteStore.init().subscribe());
+  }
+  ngAfterViewInit() {
+    this.map.tilesloaded.pipe(take(1)).subscribe(() => {
+      console.log('tiles loaded');
     });
   }
 
@@ -92,7 +117,6 @@ export class MapComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   centerMe() {
-    console.log('center me');
     this.localisationStore.currentPosition$.pipe(take(1)).subscribe((data) => {
       if (!data) return;
       if (this.markerYou) {
@@ -104,11 +128,11 @@ export class MapComponent implements OnInit, OnDestroy, AfterViewInit {
         position: this.positionLatLng,
         label: '',
         icon: {
-          url: 'https://cdn.pixabay.com/photo/2020/04/19/06/57/marvel-5062138_960_720.png',
+          url: this.urlIcon.me,
           size: new google.maps.Size(100, 100),
           origin: new google.maps.Point(0, 0),
           anchor: new google.maps.Point(17, 34),
-          scaledSize: new google.maps.Size(35, 35)
+          scaledSize: new google.maps.Size(45, 45)
         }
       });
 
@@ -117,23 +141,29 @@ export class MapComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
 
-  private addPlaceMarker(placeDetail: PlaceDetailsResult) {
+  private addPlaceMarker(lat: number, lng: number, placeId: string, iconUrl: string) {
+    this.markers = this.markers.filter(
+      (p) =>
+        // tslint:disable-next-line: triple-equals
+        p.getPosition().lat() != lat &&
+        // tslint:disable-next-line: triple-equals
+        p.getPosition().lng() != lng
+    );
     const markerPlace = new google.maps.Marker({
-      position: placeDetail.geometry.location,
+      position: { lat, lng },
       icon: {
-        url:
-          'https://cdn1.iconfinder.com/data/icons/Map-Markers-Icons-Demo-PNG/256/Map-Marker-Marker-Outside-Pink.png',
+        url: iconUrl,
         size: new google.maps.Size(100, 100),
         origin: new google.maps.Point(0, 0),
         anchor: new google.maps.Point(20, 40),
         scaledSize: new google.maps.Size(45, 45)
       },
-      title: placeDetail.place_id,
-      place: { placeId: placeDetail.place_id },
+      title: placeId,
+      place: { placeId: placeId, location: { lat, lng } },
       clickable: true
     });
     this.markers.push(markerPlace);
 
-    this.center = new google.maps.LatLng(placeDetail.geometry.location);
+    this.center = new google.maps.LatLng({ lat, lng });
   }
 }
