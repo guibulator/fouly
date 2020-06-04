@@ -6,7 +6,7 @@ import * as signalR from '@microsoft/signalr';
 import { ChatMessageCommand, ChatMessageResult } from '@skare/fouly/data';
 import { ChatStoreService } from '@skare/fouly/pwa/core';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
-import { map, switchMap, throttleTime } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'fouly-channel',
@@ -57,8 +57,8 @@ export class ChannelComponent implements OnInit, OnDestroy, AfterViewInit {
           this.followTail = false;
           return true;
         }
-      }),
-      throttleTime(200)
+        return false;
+      })
     );
     this.sendMsgButton.el.addEventListener('click', () => {
       this.sendMsg(this.userMsg.value);
@@ -82,7 +82,7 @@ export class ChannelComponent implements OnInit, OnDestroy, AfterViewInit {
 
   onNewMsgInChannel(newMsg: ChatMessageResult) {
     if (this.followTail) {
-      this.chatHistoryContent.scrollToBottom();
+      this.chatHistoryContent.scrollToBottom(500);
     }
     this.messages.push(newMsg);
     this.messages$.next([...this.messages]);
