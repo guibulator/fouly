@@ -20,7 +20,7 @@ import { lightStyle } from './map-style';
 export class MapComponent implements OnInit, OnDestroy, AfterViewInit {
   private readonly urlIcon = {
     me:
-      'https://lh3.googleusercontent.com/proxy/zAEPALBXfrktI4HYtUvn9cCSHG8vTIZu-jpMwQrkxyXfps3_pQeu61EiQLoyOCEs41SfTg7n257wbzMuV2JrbC5YWHButSxsAT24_58W7rRODBe5OxhDviFus6WpXXL3XMDedC9A3zMsQF-Y',
+      'https://toppng.com/uploads/preview/red-location-icon-map-png-clip-art-11563267716immuffqihc.png',
     favorite: 'https://cdn3.iconfinder.com/data/icons/location-map/512/pin_marker_star-512.png',
     store:
       'https://cdn1.iconfinder.com/data/icons/Map-Markers-Icons-Demo-PNG/256/Map-Marker-Marker-Outside-Pink.png'
