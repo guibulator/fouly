@@ -13,24 +13,26 @@
 <ion-content fullscreen>
    <ng-container *ngIf="favorites$ | async as favorites">
       <ion-list *ngIf="favorites.length > 0; else infoSlide">
-         <ion-item-sliding *ngFor="let p of favorites" button (click)="onSelectPlace(p.placeId)">
-            <ion-item>
-               <ion-icon class="fouly-icon-list" color="primary" name="star-outline"></ion-icon>
-               <ion-label
-                  ><h2>
-                     {{ p.name }}
-                  </h2>
-                  <p [innerHtml]="p.address"></p>
-                  <ion-chip class="fouly-chip" color="primary">
-                     <ion-icon class="fouly-icon-list" color="warning" size="large" name="ellipse"></ion-icon>
-                     <ion-label>&nbsp;Attente moyenne</ion-label>
-                  </ion-chip>
-               </ion-label>
-            </ion-item>
-            <ion-item-options side="end">
-               <ion-item-option (click)="onRemovePlace(p.placeId)">Enlever</ion-item-option>
-            </ion-item-options>
-         </ion-item-sliding>
+         <ion-item-group>
+            <ion-item-sliding *ngFor="let p of favorites">
+               <ion-item routerLink="/app/tabs/map/store-detail/{{ p.placeId }}">
+                  <ion-icon class="fouly-icon-list" color="primary" name="star-outline"></ion-icon>
+                  <ion-label
+                     ><h2>
+                        {{ p.name }}
+                     </h2>
+                     <p [innerHtml]="p.address"></p>
+                     <ion-chip class="fouly-chip" color="primary">
+                        <ion-icon class="fouly-icon-list" color="warning" size="large" name="ellipse"></ion-icon>
+                        <ion-label>&nbsp;Attente moyenne</ion-label>
+                     </ion-chip>
+                  </ion-label>
+               </ion-item>
+               <ion-item-options side="end">
+                  <ion-item-option (click)="onRemovePlace(p.placeId)">Enlever</ion-item-option>
+               </ion-item-options>
+            </ion-item-sliding>
+         </ion-item-group>
       </ion-list>
    </ng-container>
 </ion-content>

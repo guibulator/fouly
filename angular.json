@@ -817,6 +817,38 @@
           "style": "scss"
         }
       }
+    },
+    "fouly-pwa-pages-channel": {
+      "projectType": "library",
+      "root": "libs/fouly/pwa/pages/channel/channel",
+      "sourceRoot": "libs/fouly/pwa/pages/channel/channel/src",
+      "prefix": "skare",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/fouly/pwa/pages/channel/channel/tsconfig.lib.json",
+              "libs/fouly/pwa/pages/channel/channel/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/fouly/pwa/pages/channel/channel/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/fouly/pwa/pages/channel/channel/jest.config.js",
+            "tsConfig": "libs/fouly/pwa/pages/channel/channel/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "libs/fouly/pwa/pages/channel/channel/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/angular:component": {
+          "style": "scss"
+        }
+      }
     }
   },
   "cli": {

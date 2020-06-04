@@ -1,0 +1,53 @@
+<ion-header>
+   <ion-toolbar>
+      <ion-buttons slot="start">
+         <ion-back-button></ion-back-button>
+      </ion-buttons>
+      <ion-buttons slot="start">
+         <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title>Discussions</ion-title>
+      <ion-progress-bar *ngIf="!ready" color="primary" type="indeterminate"></ion-progress-bar>
+   </ion-toolbar>
+   <ion-toolbar
+      ><ion-title color="secondary" size="small">{{ placeName }}</ion-title></ion-toolbar
+   >
+</ion-header>
+
+<ion-content class="fouly-content" fullscreen #chatHistoryContent [scrollEvents]="true">
+   <div class="fouly-content-wrapper">
+      <div class="fouly-chat">
+         <div class="fouly-chat-line" *ngFor="let msg of messages$ | async">
+            <div class="fouly-chat-msg">
+               <span class="fouly-chat-msg-meta">{{ msg.author }} {{ msg.time | date: 'shortTime' }}</span>
+               <span class="fouly-chat-msg-text">{{ msg.msg }}</span>
+            </div>
+         </div>
+      </div>
+   </div>
+   <ion-fab *ngIf="userScrolled$ | async" vertical="bottom" horizontal="end" slot="fixed">
+      <ion-fab-button (click)="scrollToBottom()" size="small" color="secondary">
+         <ion-icon name="arrow-down-circle"></ion-icon>
+      </ion-fab-button>
+   </ion-fab>
+</ion-content>
+
+<ion-footer class="ion-no-border">
+   <ion-toolbar>
+      <ion-item>
+         <ion-input
+            class="fouly-input"
+            spellcheck="true"
+            placeholder="Partagez votre expérience"
+            color="primary"
+            type="text"
+            autofocus="on"
+            [formControl]="userMsg"
+         ></ion-input>
+
+         <ion-icon #sendBtn [hidden]="userMsg.value == ''" slot="end" name="arrow-forward-circle"></ion-icon>
+
+         <ion-icon *ngIf="userMsg.value === ''" color="primary" slot="end" name="mic-circle-sharp"></ion-icon>
+      </ion-item>
+   </ion-toolbar>
+</ion-footer>

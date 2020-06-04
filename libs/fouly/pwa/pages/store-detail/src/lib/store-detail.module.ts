@@ -10,9 +10,9 @@ import { StoreComponent } from './store.component';
     RouterModule.forChild([
       { path: '', pathMatch: 'full', component: StoreComponent },
       {
-        path: 'chat/:placeName',
+        path: 'chat',
         loadChildren: () =>
-          import('@skare/fouly/pwa/pages/my-places').then((module) => module.MyPlacesModule)
+          import('@skare/fouly/pwa/pages/channel').then((module) => module.ChannelModule)
       }
     ])
   ],

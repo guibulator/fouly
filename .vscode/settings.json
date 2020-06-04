@@ -7,8 +7,8 @@
     "**/.gitkeep": true,
     "**/dist": false,
     "**/yarn.lock": true,
-    "**/tsconfig*": true,
-    "**/tslint*": true,
+    "**/tsconfig*": false,
+    "**/tslint*": false,
     "**/jest*": true,
     "lerna.json": true,
     "**/tmp": true

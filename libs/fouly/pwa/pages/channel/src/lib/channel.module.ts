@@ -1,19 +1,22 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import { FavoritesComponent } from './favorites/favorites.component';
+import { ChannelComponent } from './channel.component';
 @NgModule({
   imports: [
     CommonModule,
     IonicModule,
+    FormsModule,
+    ReactiveFormsModule,
     RouterModule.forChild([
       {
-        path: '',
-        component: FavoritesComponent
+        path: ':placeName',
+        component: ChannelComponent
       }
     ])
   ],
-  declarations: [FavoritesComponent]
+  declarations: [ChannelComponent]
 })
-export class MyPlacesModule {}
+export class ChannelModule {}

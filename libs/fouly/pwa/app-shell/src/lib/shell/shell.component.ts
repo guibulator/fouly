@@ -14,7 +14,7 @@ export class ShellComponent implements OnInit {
   appPages = [
     {
       title: 'Favoris',
-      url: '/app/tabs/myplaces',
+      url: '/app/tabs/my-places',
       icon: 'star'
     },
     {

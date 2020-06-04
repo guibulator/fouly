@@ -39,7 +39,7 @@ const routes: Routes = [];
             import('@skare/fouly/pwa/pages/contact').then((module) => module.ContactModule)
         },
         {
-          path: 'app/tabs/myplaces',
+          path: 'app/tabs/my-places',
           loadChildren: () =>
             import('@skare/fouly/pwa/pages/my-places').then((module) => module.MyPlacesModule)
         },

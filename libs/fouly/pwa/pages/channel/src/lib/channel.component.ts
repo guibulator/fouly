@@ -1,28 +1,31 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { IonContent } from '@ionic/angular';
 import * as signalR from '@microsoft/signalr';
 import { ChatMessageCommand, ChatMessageResult } from '@skare/fouly/data';
 import { ChatStoreService } from '@skare/fouly/pwa/core';
-import { Subject, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { map, switchMap, throttleTime } from 'rxjs/operators';
 
 @Component({
-  selector: 'fouly-channels',
-  templateUrl: './channels.component.html',
-  styleUrls: ['./channels.component.scss']
+  selector: 'fouly-channel',
+  templateUrl: './channel.component.html',
+  styleUrls: ['./channel.component.scss']
 })
-export class ChannelsComponent implements OnInit, OnDestroy {
+export class ChannelComponent implements OnInit, OnDestroy, AfterViewInit {
+  userScrolled$: Observable<boolean>;
+  private followTail = true;
   public ready: Boolean = false;
   public userMsg = new FormControl('');
-  public messages: ChatMessageResult[] = [];
-  public messages$ = new Subject<ChatMessageResult[]>();
+  private messages: ChatMessageResult[] = [];
+  public messages$ = new BehaviorSubject<ChatMessageResult[]>([]);
   public connection: signalR.HubConnection;
   public placeName: string;
   private placeId: string;
-  public userScrollUp = false;
   subscriptions = new Subscription();
-  @ViewChild('chatHistoryContent') chatHistoryContent: any;
-
+  @ViewChild('chatHistoryContent') chatHistoryContent: IonContent;
+  @ViewChild('sendBtn') sendMsgButton: any;
   constructor(private chatService: ChatStoreService, private route: ActivatedRoute) {}
 
   ngOnInit() {
@@ -35,30 +38,36 @@ export class ChannelsComponent implements OnInit, OnDestroy {
 
     this.chatService.getMsgHistory(this.placeId).subscribe((data: ChatMessageResult[]) => {
       this.messages = data;
-      this.messages$.next(this.messages);
+      this.messages$.next([...data]);
     });
-
-    const scrollDownOnNewMsg = this.messages$.subscribe(() => {
-      this.scrollToBottomIfNeeded();
-    });
-    this.subscriptions.add(scrollDownOnNewMsg);
   }
 
-  scrollToBottomIfNeeded() {
-    if (!this.userScrollUp) {
-      this.chatHistoryContent.scrollToBottom(300);
-    }
+  ngAfterViewInit(): void {
+    this.userScrolled$ = this.chatHistoryContent.ionScroll.pipe(
+      // tslint:disable-next-line: deprecation
+      switchMap(
+        (event: any) => event.target.getScrollElement(),
+        (event, scrollElement) => [event, scrollElement]
+      ),
+      map(([event, scrollElement]) => {
+        const scrollHeight = scrollElement.scrollHeight - scrollElement.clientHeight;
+        const currentScrollDepth = event.detail.scrollTop;
+        // Once user scrolls, user needs to press the bottom to follow the tail again.
+        if (currentScrollDepth < scrollHeight) {
+          this.followTail = false;
+          return true;
+        }
+      }),
+      throttleTime(200)
+    );
+    this.sendMsgButton.el.addEventListener('click', () => {
+      this.sendMsg(this.userMsg.value);
+    });
   }
 
-  async scrolling($event: any) {
-    const scrollElement = await $event.target.getScrollElement();
-    const scrollHeight = scrollElement.scrollHeight - scrollElement.clientHeight;
-    const currentScrollDepth = $event.detail.scrollTop;
-    if (currentScrollDepth < scrollHeight) {
-      this.userScrollUp = true;
-    } else {
-      this.userScrollUp = false;
-    }
+  scrollToBottom() {
+    this.chatHistoryContent.scrollToBottom(300);
+    this.followTail = true;
   }
 
   sendMsg(newMsg: string) {
@@ -72,8 +81,11 @@ export class ChannelsComponent implements OnInit, OnDestroy {
   }
 
   onNewMsgInChannel(newMsg: ChatMessageResult) {
+    if (this.followTail) {
+      this.chatHistoryContent.scrollToBottom();
+    }
     this.messages.push(newMsg);
-    this.messages$.next(this.messages);
+    this.messages$.next([...this.messages]);
   }
 
   async start(info: any) {
@@ -119,6 +131,15 @@ export class ChannelsComponent implements OnInit, OnDestroy {
     }
   }
 
+  startSpeechRecognition() {
+    // todo..
+    // const recognition = new webkitSpeechRecognition();
+    // recognition.addEventListener('result', (event) => {
+    //   recognition.stop();
+    //   this.userMsg.setValue(event.results[0].transcript, { emitModelToViewChange: true });
+    // });
+    // recognition.start();
+  }
   ngOnDestroy() {
     this.connection.stop();
     this.subscriptions.unsubscribe();
