@@ -19,8 +19,7 @@ import { lightStyle } from './map-style';
 })
 export class MapComponent implements OnInit, OnDestroy, AfterViewInit {
   private readonly urlIcon = {
-    me:
-      'https://toppng.com/uploads/preview/red-location-icon-map-png-clip-art-11563267716immuffqihc.png',
+    me: 'https://fr.seaicons.com/wp-content/uploads/2016/03/Map-Marker-Marker-Inside-Pink-icon.png',
     favorite: 'https://cdn3.iconfinder.com/data/icons/location-map/512/pin_marker_star-512.png',
     store:
       'https://cdn1.iconfinder.com/data/icons/Map-Markers-Icons-Demo-PNG/256/Map-Marker-Marker-Outside-Pink.png'
@@ -106,6 +105,7 @@ export class MapComponent implements OnInit, OnDestroy, AfterViewInit {
     });
     this.subscription.add(this.favoriteStore.init().subscribe());
   }
+
   ngAfterViewInit() {
     this.map.tilesloaded.pipe(take(1)).subscribe(() => {
       console.log('tiles loaded');
