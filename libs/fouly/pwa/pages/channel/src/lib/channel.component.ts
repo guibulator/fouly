@@ -6,7 +6,7 @@ import * as signalR from '@microsoft/signalr';
 import { ChatMessageCommand, ChatMessageResult } from '@skare/fouly/data';
 import { ChatStoreService } from '@skare/fouly/pwa/core';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { map, switchMap, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'fouly-channel',
@@ -53,11 +53,14 @@ export class ChannelComponent implements OnInit, OnDestroy, AfterViewInit {
         const scrollHeight = scrollElement.scrollHeight - scrollElement.clientHeight;
         const currentScrollDepth = event.detail.scrollTop;
         // Once user scrolls, user needs to press the bottom to follow the tail again.
-        if (currentScrollDepth < scrollHeight) {
-          this.followTail = false;
+        if (currentScrollDepth < scrollHeight - 15) {
+          // tolerance of 5 px
           return true;
         }
         return false;
+      }),
+      tap((v) => {
+        this.followTail = !v;
       })
     );
     this.sendMsgButton.el.addEventListener('click', () => {
