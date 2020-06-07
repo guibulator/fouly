@@ -43,7 +43,7 @@
    </ion-list>
    <ion-list *ngIf="!(loading$ | async) && placeDetails$ | async as placeDetails">
       <ion-item-group>
-         <ion-item><ion-img [src]="mainImage$ | async"></ion-img> </ion-item>
+         <ion-item *ngIf="mainImage$ | async as mainImage"><ion-img [src]="mainImage"></ion-img> </ion-item>
          <ion-item *ngIf="placeDetails[0]">
             <ion-label>
                <h3>{{ placeDetails[0].name }}</h3>

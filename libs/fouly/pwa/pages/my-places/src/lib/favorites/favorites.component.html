@@ -6,7 +6,7 @@
       <ion-buttons slot="start">
          <ion-menu-button></ion-menu-button>
       </ion-buttons>
-      <ion-title>Mes commerces favoris</ion-title>
+      <ion-title>Mes favoris</ion-title>
    </ion-toolbar>
 </ion-header>
 
@@ -16,17 +16,19 @@
          <ion-item-group>
             <ion-item-sliding *ngFor="let p of favorites">
                <ion-item routerLink="/app/tabs/map/store-detail/{{ p.placeId }}">
-                  <ion-icon class="fouly-icon-list" color="primary" name="star-outline"></ion-icon>
+                  <ion-icon class="fouly-icon-list" color="primary" name="star"></ion-icon>
                   <ion-label
                      ><h2>
                         {{ p.name }}
                      </h2>
                      <p [innerHtml]="p.address"></p>
-                     <ion-chip class="fouly-chip" color="primary">
+                     <fouly-affluence></fouly-affluence>
+                     <!-- <ion-chip class="fouly-chip" color="primary">
                         <ion-icon class="fouly-icon-list" color="warning" size="large" name="ellipse"></ion-icon>
                         <ion-label>&nbsp;Attente moyenne</ion-label>
-                     </ion-chip>
+                     </ion-chip> -->
                   </ion-label>
+                  <!-- <ion-icon color="tertiary" size="large" name="add-circle-outline"></ion-icon> -->
                </ion-item>
                <ion-item-options side="end">
                   <ion-item-option (click)="onRemovePlace(p.placeId)">Enlever</ion-item-option>

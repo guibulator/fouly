@@ -99,6 +99,7 @@ export class MapComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnInit(): void {
+    console.log('initializing component');
     this.localisationStore.initPosition().subscribe(() => {
       console.log('position initialized');
       this.centerMe();
@@ -113,7 +114,9 @@ export class MapComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnDestroy() {
+    console.log('destroying');
     this.subscription.unsubscribe();
+    this.map.ngOnDestroy();
   }
 
   centerMe() {
@@ -136,8 +139,9 @@ export class MapComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       });
 
-      this.center = this.positionLatLng;
-      this.markers.push(this.markerYou);
+      this.center = new google.maps.LatLng(this.positionLatLng.lat(), this.positionLatLng.lng());
+      this.markers = [...this.markers, this.markerYou];
+      this.zoom = this.zoom - 1;
     });
   }
 

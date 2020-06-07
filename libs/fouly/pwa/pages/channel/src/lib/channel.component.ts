@@ -5,7 +5,7 @@ import { IonContent } from '@ionic/angular';
 import * as signalR from '@microsoft/signalr';
 import { ChatMessageCommand, ChatMessageResult } from '@skare/fouly/data';
 import { ChatStoreService } from '@skare/fouly/pwa/core';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { BehaviorSubject, fromEvent, Observable, Subscription } from 'rxjs';
 import { map, switchMap, tap } from 'rxjs/operators';
 
 @Component({
@@ -14,6 +14,7 @@ import { map, switchMap, tap } from 'rxjs/operators';
   styleUrls: ['./channel.component.scss']
 })
 export class ChannelComponent implements OnInit, OnDestroy, AfterViewInit {
+  private hasBeendDestroyed = false;
   userScrolled$: Observable<boolean>;
   private followTail = true;
   public ready: Boolean = false;
@@ -63,9 +64,9 @@ export class ChannelComponent implements OnInit, OnDestroy, AfterViewInit {
         this.followTail = !v;
       })
     );
-    this.sendMsgButton.el.addEventListener('click', () => {
-      this.sendMsg(this.userMsg.value);
-    });
+    this.subscriptions.add(
+      fromEvent(this.sendMsgButton.el, 'click').subscribe(() => this.sendMsg(this.userMsg.value))
+    );
   }
 
   scrollToBottom() {
@@ -92,6 +93,7 @@ export class ChannelComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   async start(info: any) {
+    if (this.hasBeendDestroyed) return;
     try {
       const options = {
         accessTokenFactory: () => info.accessToken
@@ -144,7 +146,8 @@ export class ChannelComponent implements OnInit, OnDestroy, AfterViewInit {
     // recognition.start();
   }
   ngOnDestroy() {
-    this.connection.stop();
+    this.hasBeendDestroyed = true;
+    this.connection && this.connection.stop();
     this.subscriptions.unsubscribe();
   }
 }

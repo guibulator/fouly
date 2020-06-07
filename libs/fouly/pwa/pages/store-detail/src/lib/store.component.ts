@@ -31,7 +31,7 @@ export class StoreComponent implements OnInit {
 
     this.mainImage$ = this.placeDetails$.pipe(
       tap(() => console.log('subscribed')),
-      filter((details) => details && details.length > 0),
+      filter((details) => details && details.length > 0 && !!details[0].photos),
       flatMap((details) =>
         this.placeDetailsStore.getPhotoUrl(details[0]?.photos[0]?.photo_reference)
       ),
