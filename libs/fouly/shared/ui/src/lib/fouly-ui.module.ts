@@ -1,10 +1,10 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule, Route } from '@angular/router';
-
-export const foulyUiRoutes: Route[] = [];
-
+import { NgModule } from '@angular/core';
+import { IonicModule } from '@ionic/angular';
+import { FoulyAffluenceComponent } from './affluence/affluence.component';
 @NgModule({
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, IonicModule],
+  declarations: [FoulyAffluenceComponent],
+  exports: [FoulyAffluenceComponent, CommonModule]
 })
 export class FoulyUiModule {}

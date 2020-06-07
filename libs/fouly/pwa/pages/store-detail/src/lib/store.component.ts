@@ -3,15 +3,16 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { PlaceDetailsResult } from '@skare/fouly/data';
 import { FavoriteStoreService, PlaceDetailsStoreService } from '@skare/fouly/pwa/core';
 import { combineLatest, Observable } from 'rxjs';
-import { map, take } from 'rxjs/operators';
+import { filter, flatMap, map, take, tap } from 'rxjs/operators';
 
 @Component({
-  selector: 'skare-store',
+  selector: 'fouly-store',
   templateUrl: './store.component.html',
   styleUrls: ['./store.component.scss']
 })
 export class StoreComponent implements OnInit {
   isCurrentlyFavorite$: Observable<boolean>;
+  mainImage$: Observable<string>;
   constructor(
     private placeDetailsStore: PlaceDetailsStoreService,
     private route: ActivatedRoute,
@@ -27,6 +28,15 @@ export class StoreComponent implements OnInit {
   ngOnInit() {
     this.loading$ = this.placeDetailsStore.loading$;
     this.placeDetails$ = this.placeDetailsStore.placeDetails$;
+
+    this.mainImage$ = this.placeDetails$.pipe(
+      tap(() => console.log('subscribed')),
+      filter((details) => details && details.length > 0),
+      flatMap((details) =>
+        this.placeDetailsStore.getPhotoUrl(details[0]?.photos[0]?.photo_reference)
+      ),
+      tap((url) => console.log(url))
+    );
     this.placeDetailsStore.loadPlaceId(this.route.snapshot.params['placeId']);
     this.isCurrentlyFavorite$ = this.favoriteStoreService.favorites$.pipe(
       map((f) => !!f.find((fav) => fav.placeId === this.route.snapshot.params['placeId']))
@@ -35,6 +45,10 @@ export class StoreComponent implements OnInit {
 
   gotoChat(placeName: string) {
     this.router.navigate(['chat', placeName], { relativeTo: this.route });
+  }
+
+  gotoFavorites() {
+    this.router.navigate(['my-places'], { relativeTo: this.route });
   }
 
   addRemoveToFavorite() {
