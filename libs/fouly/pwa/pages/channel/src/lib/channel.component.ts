@@ -3,8 +3,8 @@ import { FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { IonContent } from '@ionic/angular';
 import * as signalR from '@microsoft/signalr';
-import { ChatMessageCommand, ChatMessageResult } from '@skare/fouly/data';
-import { ChatStoreService } from '@skare/fouly/pwa/core';
+import { ChatMessageCommand, ChatMessageResult, UserResult } from '@skare/fouly/data';
+import { ChatStoreService, UserLoginService } from '@skare/fouly/pwa/core';
 import { BehaviorSubject, fromEvent, Observable, Subscription } from 'rxjs';
 import { map, switchMap, tap } from 'rxjs/operators';
 
@@ -24,14 +24,23 @@ export class ChannelComponent implements OnInit, OnDestroy, AfterViewInit {
   public connection: signalR.HubConnection;
   public placeName: string;
   private placeId: string;
+  private user: UserResult = null;
   subscriptions = new Subscription();
   @ViewChild('chatHistoryContent') chatHistoryContent: IonContent;
   @ViewChild('sendBtn') sendMsgButton: any;
-  constructor(private chatService: ChatStoreService, private route: ActivatedRoute) {}
+  constructor(
+    private chatService: ChatStoreService,
+    private route: ActivatedRoute,
+    private userLoginService: UserLoginService
+  ) {}
 
   ngOnInit() {
     this.placeId = this.route.snapshot.params['placeId'];
     this.placeName = this.route.snapshot.params['placeName'];
+
+    this.userLoginService.init().subscribe((user: UserResult) => {
+      this.user = user;
+    });
 
     this.chatService.getConnectionSignalR().subscribe(async (info) => {
       await this.start(info);
@@ -76,7 +85,7 @@ export class ChannelComponent implements OnInit, OnDestroy, AfterViewInit {
 
   sendMsg(newMsg: string) {
     const myMsg = new ChatMessageCommand();
-    myMsg.author = 'Anonyme';
+    myMsg.author = this.user ? this.user.name : 'Anonyme';
     myMsg.msg = newMsg;
     myMsg.time = new Date();
     myMsg.placeId = this.placeId;

@@ -18,11 +18,11 @@ export class ShellComponent implements OnInit {
       url: '/app/tabs/my-places',
       icon: 'star'
     },
-    {
-      title: 'Nouvelles',
-      url: '/app/tabs/speakers',
-      icon: 'people'
-    },
+    // {
+    //   title: 'Nouvelles',
+    //   url: '/app/tabs/speakers',
+    //   icon: 'people'
+    // },
     {
       title: 'Map',
       url: '/app/tabs/map',
@@ -32,12 +32,12 @@ export class ShellComponent implements OnInit {
       title: 'Contactez nous',
       url: '/contact',
       icon: 'mail'
-    },
-    {
-      title: 'À propos',
-      url: '/app/tabs/about',
-      icon: 'information-circle'
     }
+    // {
+    //   title: 'À propos',
+    //   url: '/app/tabs/about',
+    //   icon: 'information-circle'
+    // }
   ];
   loggedIn = false;
   dark = false;

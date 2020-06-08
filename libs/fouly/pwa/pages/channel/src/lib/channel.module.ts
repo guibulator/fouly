@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { ChannelComponent } from './channel.component';
+
 @NgModule({
   imports: [
     CommonModule,

@@ -12,12 +12,11 @@ const routes: Routes = [];
           redirectTo: '/introduction',
           pathMatch: 'full'
         },
-
-        {
-          path: 'support',
-          loadChildren: () =>
-            import('@skare/fouly/pwa/pages/support').then((module) => module.SupportModule)
-        },
+        // {
+        //   path: 'support',
+        //   loadChildren: () =>
+        //     import('@skare/fouly/pwa/pages/support').then((module) => module.SupportModule)
+        // },
         {
           path: 'app',
           loadChildren: () =>
@@ -37,6 +36,11 @@ const routes: Routes = [];
           path: 'contact',
           loadChildren: () =>
             import('@skare/fouly/pwa/pages/contact').then((module) => module.ContactModule)
+        },
+        {
+          path: 'login',
+          loadChildren: () =>
+            import('@skare/fouly/pwa/pages/login').then((module) => module.LoginModule)
         },
         {
           path: 'app/tabs/my-places',

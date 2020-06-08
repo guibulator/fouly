@@ -1,37 +1,15 @@
 {
-  "name": "skare",
+  "name": "fouly-pwa",
   "private": true,
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "bootstrap": "lerna bootstrap",
-    "clean": "lerna clean -y",
     "ng": "ng",
-    "backend": "ng serve fouly-backend --port=55723",
     "nx": "nx",
     "start": "ng serve",
     "build": "ng build",
     "test": "ng test",
-    "lint": "nx workspace-lint && ng lint",
-    "e2e": "ng e2e",
-    "affected:apps": "nx affected:apps",
-    "affected:libs": "nx affected:libs",
-    "affected:build": "nx affected:build",
-    "affected:e2e": "nx affected:e2e",
-    "affected:test": "nx affected:test",
-    "affected:lint": "nx affected:lint",
-    "affected:dep-graph": "nx affected:dep-graph",
-    "affected": "nx affected",
-    "format": "nx format:write",
-    "format:write": "nx format:write",
-    "format:check": "nx format:check",
-    "update": "ng update @nrwl/workspace",
-    "workspace-schematic": "nx workspace-schematic",
-    "dep-graph": "nx dep-graph",
-    "help": "nx help",
-    "postinstall": "ngcc --properties es2015 browser module main --first-only --create-ivy-entry-points",
-    "sync-yarn-npm": "synp --source-file yarn.lock",
-    "lerna-update": "lernaupdate"
+    "lint": "nx workspace-lint && ng lint"
   },
   "dependencies": {
     "@angular/animations": "^9.1.0",
@@ -48,7 +26,6 @@
     "@azure/ng-deploy": "^0.2.3",
     "@googlemaps/google-maps-services-js": "^2.6.1",
     "@ionic-native/core": "^5.25.0",
-    "@ionic-native/facebook": "^5.26.0",
     "@ionic-native/geolocation": "^5.25.0",
     "@ionic/angular": "latest",
     "@ionic/storage": "^2.2.0",
@@ -60,8 +37,11 @@
     "@nestjs/platform-express": "^6.8.3",
     "@nestjs/swagger": "^4.5.5",
     "@nrwl/angular": "9.2.4",
-    "angularx-social-login": "^2.3.1",
     "copy-webpack-plugin": "^6.0.0",
+    "cordova-android": "8.1.0",
+    "cordova-browser": "^6.0.0",
+    "cordova-ios": "5.1.1",
+    "cordova-plugin-facebook4": "^6.4.0",
     "core-js": "^2.5.4",
     "generate-package-json-webpack-plugin": "^1.0.1",
     "reflect-metadata": "^0.1.13",
@@ -88,6 +68,12 @@
     "@types/jest": "25.1.4",
     "@types/node": "~8.9.4",
     "codelyzer": "~5.0.1",
+    "cordova-plugin-device": "^2.0.2",
+    "cordova-plugin-ionic-keyboard": "^2.2.0",
+    "cordova-plugin-ionic-webview": "^4.2.1",
+    "cordova-plugin-splashscreen": "^5.0.2",
+    "cordova-plugin-statusbar": "^2.4.2",
+    "cordova-plugin-whitelist": "^1.3.3",
     "cypress": "^4.1.0",
     "dotenv": "6.2.0",
     "eslint": "6.8.0",
@@ -103,8 +89,23 @@
     "tslint": "~6.0.0",
     "typescript": "~3.8.3"
   },
-  "workspaces": [
-    "apps/**",
-    "libs/**"
-  ]
+  "cordova": {
+    "plugins": {
+      "cordova-plugin-facebook4": {
+        "APP_ID": "250123776255481",
+        "APP_NAME": "fouly"
+      },
+      "cordova-plugin-whitelist": {},
+      "cordova-plugin-statusbar": {},
+      "cordova-plugin-device": {},
+      "cordova-plugin-splashscreen": {},
+      "cordova-plugin-ionic-webview": {},
+      "cordova-plugin-ionic-keyboard": {}
+    },
+    "platforms": [
+      "browser",
+      "ios",
+      "android"
+    ]
+  }
 }

@@ -1,5 +1,12 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
+#ionic resources
+/apps/fouly/pwa/platforms
+/apps/fouly/pwa/resources
+/apps/fouly/pwa/plugins
+/apps/fouly/pwa/simulation
+/apps/fouly/pwa/.idea
+
 # compiled output
 /dist
 /tmp

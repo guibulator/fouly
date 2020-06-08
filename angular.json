@@ -849,6 +849,32 @@
           "style": "scss"
         }
       }
+    },
+    "fouly-pwa-pages-login": {
+      "root": "libs/fouly/pwa/pages/login",
+      "sourceRoot": "libs/fouly/pwa/pages/login/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/fouly/pwa/pages/login/tsconfig.lib.json",
+              "libs/fouly/pwa/pages/login/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/fouly/pwa/pages/login/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/fouly/pwa/pages/login/jest.config.js",
+            "tsConfig": "libs/fouly/pwa/pages/login/tsconfig.spec.json",
+            "passWithNoTests": true
+          }
+        }
+      }
     }
   },
   "cli": {

@@ -1,0 +1,17 @@
+{
+  "defaultProject": "fouly-pwa",
+  "projects": {
+    "fouly-pwa": {
+      "name": "fouly-pwa",
+      "integrations": {
+        "cordova": {}
+      },
+      "type": "angular",
+      "root": "apps\\fouly\\pwa",
+      "proxies": [{
+        "path": "/localhost",
+        "proxyUrl": "http://localhost:8100"
+      }]
+    }
+  }
+}
