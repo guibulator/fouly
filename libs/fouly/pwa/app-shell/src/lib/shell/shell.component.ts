@@ -1,9 +1,10 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { SwUpdate } from '@angular/service-worker';
 import { MenuController, Platform, ToastController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
-
+import { filter, tap } from 'rxjs/operators';
+declare let gtag: Function;
 @Component({
   selector: 'fouly-app-shell',
   templateUrl: './shell.component.html',
@@ -51,6 +52,16 @@ export class ShellComponent implements OnInit {
     private toastCtrl: ToastController
   ) {
     this.initializeApp();
+    this.router.events
+      .pipe(
+        filter((e) => e instanceof NavigationEnd),
+        tap((e) =>
+          gtag('config', 'G-E8SJZBBV49', {
+            page_path: e['urlAfterRedirects']
+          })
+        )
+      )
+      .subscribe();
   }
 
   async ngOnInit() {
