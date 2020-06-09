@@ -19,6 +19,7 @@ import {
 })
 export class LoginComponent implements OnInit {
   public userData: UserResult = null;
+  private userFouly: UserResult = null;
   public loggedIn = false;
   public showAnonymousLogin = true;
   public showUserNameInput = false;
@@ -127,11 +128,17 @@ export class LoginComponent implements OnInit {
   }
 
   login(): void {
-    this.userLoginService.addUpdateUser(this.userData);
+    this.userLoginService.addUpdateUser(this.userData).subscribe((user: UserResult) => {
+      this.userFouly = user;
+    });
     this.router.navigateByUrl('/');
   }
 
-  logout(): void {
+  async logout() {
+    if (this.userData.loginFrom !== 'anonymous') {
+      await this.authService.signOut();
+    }
+
     this.userData = null;
     this.loggedIn = false;
     this.manageLoginOptions('');
