@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PlaceDetailsResult } from '@skare/fouly/data';
 import { FavoriteStoreService, PlaceDetailsStoreService } from '@skare/fouly/pwa/core';
-import { combineLatest, Observable } from 'rxjs';
+import { combineLatest, Observable, of } from 'rxjs';
 import { filter, flatMap, map, take, tap } from 'rxjs/operators';
 
 @Component({
@@ -31,10 +31,14 @@ export class StoreComponent implements OnInit {
 
     this.mainImage$ = this.placeDetails$.pipe(
       tap(() => console.log('subscribed')),
-      filter((details) => details && details.length > 0 && !!details[0].photos),
-      flatMap((details) =>
-        this.placeDetailsStore.getPhotoUrl(details[0]?.photos[0]?.photo_reference)
-      ),
+      filter((details) => details && details.length > 0),
+      flatMap((details) => {
+        if (details[0]?.photos && details[0].photos.length > 0) {
+          return this.placeDetailsStore.getPhotoUrl(details[0]?.photos[0]?.photo_reference);
+        } else {
+          return of('assets/img/svg/undraw_best_place_r685.svg');
+        }
+      }),
       tap((url) => console.log(url))
     );
     this.placeDetailsStore.loadPlaceId(this.route.snapshot.params['placeId']);

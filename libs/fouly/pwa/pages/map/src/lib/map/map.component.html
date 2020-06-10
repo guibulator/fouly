@@ -2,9 +2,14 @@
    <ion-toolbar>
       <ion-buttons slot="start">
          <ion-menu-button></ion-menu-button>
-         <ion-title>Recherche</ion-title>
       </ion-buttons>
-      <ion-searchbar mode="md" (ionFocus)="onSearchFocus($event)" placeholder="Rechercher un endroit"></ion-searchbar>
+      <ion-searchbar
+         [disabled]="loading$ | async"
+         color="primary"
+         (ionFocus)="onSearchFocus($event)"
+         placeholder="Rechercher un endroit"
+      ></ion-searchbar>
+      <ion-progress-bar *ngIf="loading$ | async" color="primary" type="indeterminate"></ion-progress-bar>
    </ion-toolbar>
 </ion-header>
 

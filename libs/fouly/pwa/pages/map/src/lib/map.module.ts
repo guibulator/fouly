@@ -24,7 +24,7 @@ import { MapComponent } from './map/map.component';
         path: 'place-search',
         loadChildren: () =>
           import('@skare/fouly/pwa/pages/place-search').then((module) => module.PlaceSearchModule),
-        data: { preload: true, delay: 500 }
+        data: { preload: true }
       }
     ]),
     GoogleMapsModule

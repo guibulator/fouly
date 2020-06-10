@@ -10,27 +10,75 @@
    </ion-toolbar>
 </ion-header>
 
-<ion-content>
-   <form [formGroup]="commentsForm" novalidate (ngSubmit)="submit(commentsForm.value)">
-      <ion-list lines="none">
-         <ion-item>
-            <ion-label position="stacked" color="primary">Sujet</ion-label>
-            <ion-input type="text" required formControlName="subject"></ion-input>
-         </ion-item>
-         <ion-item>
-            <ion-label position="stacked" color="primary">Entrez votre commentaire ci-dessous</ion-label>
-            <ion-textarea type="text" rows="6" formControlName="detail"></ion-textarea>
-         </ion-item>
-      </ion-list>
+<ion-content fullscreen>
+   <fouly-content-centered class="ion-text-center">
+      <ion-img [src]="'assets/img/svg/undraw_feedback_h2ft.svg'"></ion-img>
+      <ion-text><h1>Vous avez une idée ?</h1></ion-text>
+      <ion-text><p>Soummetez-nous vos idées et/ou commentaires. Il nous fera plaisir de vous lire et améliorer Fouly!</p></ion-text>
+      <form [formGroup]="commentsForm" novalidate (ngSubmit)="submit(commentsForm.value)">
+         <ion-list lines="none">
+            <ion-item>
+               <ion-input placeholder="À quel sujet?" type="text" required formControlName="subject"></ion-input>
+            </ion-item>
+            <ion-item>
+               <ion-textarea
+                  placeholder="Entrez vos commentaires, suggestions ou idées."
+                  type="text"
+                  rows="6"
+                  formControlName="detail"
+               ></ion-textarea>
+            </ion-item>
+         </ion-list>
 
-      <ion-text color="primary">
-         <p [hidden]="!submitted" class="ion-padding-start">
-            Commentaire envoyé avec succès, merci.
-         </p>
-      </ion-text>
+         <ion-text color="primary">
+            <p [hidden]="!submitted" class="ion-padding-start">
+               Commentaire envoyé avec succès, merci.
+            </p>
+         </ion-text>
 
-      <div class="ion-padding">
-         <ion-button expand="block" type="submit" [disabled]="disabled">Envoyer</ion-button>
-      </div>
-   </form>
+         <div class="ion-padding">
+            <ion-button expand="block" type="submit" [disabled]="disabled">Envoyer</ion-button>
+         </div>
+      </form>
+   </fouly-content-centered>
+
+   <!-- <ion-img [src]="'assets/img/svg/undraw_feedback_h2ft.svg'"></ion-img> -->
 </ion-content>
+
+<!-- <fouly-content-centered>
+   <ion-card class="ion-text-center">
+      <ion-img [src]="'assets/img/svg/undraw_feedback_h2ft.svg'"></ion-img>
+      <ion-card-header>
+         <ion-card-title>Vous avez une idée ?</ion-card-title>
+         <ion-card-subtitle>Soummetez-nous vos idées et/ou commentaires. Il nous fera plaisir de vous lire et améliorer Fouly!</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+         <form [formGroup]="commentsForm" novalidate (ngSubmit)="submit(commentsForm.value)">
+            <ion-list lines="none">
+               <ion-item>
+                  <ion-input color="secondary" placeholder="À quel sujet?" type="text" required formControlName="subject"></ion-input>
+               </ion-item>
+               <ion-item>
+                  <ion-textarea
+                     placeholder="Entrez vos commentaires, suggestions ou idées."
+                     color="secondary"
+                     type="text"
+                     rows="6"
+                     formControlName="detail"
+                  ></ion-textarea>
+               </ion-item>
+            </ion-list>
+
+            <ion-text color="primary">
+               <p [hidden]="!submitted" class="ion-padding-start">
+                  Commentaire envoyé avec succès, merci.
+               </p>
+            </ion-text>
+
+            <div class="ion-padding">
+               <ion-button expand="block" type="submit" [disabled]="disabled">Envoyer</ion-button>
+            </div>
+         </form>
+      </ion-card-content>
+   </ion-card>
+</fouly-content-centered> -->

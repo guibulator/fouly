@@ -9,8 +9,8 @@ import {
   LocalisationStoreService,
   PlaceDetailsStoreService
 } from '@skare/fouly/pwa/core';
-import { Subscription } from 'rxjs';
-import { take } from 'rxjs/operators';
+import { BehaviorSubject, from, Subscription } from 'rxjs';
+import { finalize, take } from 'rxjs/operators';
 import { lightStyle } from './map-style';
 @Component({
   selector: 'fouly-map',
@@ -18,6 +18,7 @@ import { lightStyle } from './map-style';
   styleUrls: ['./map.component.scss']
 })
 export class MapComponent implements OnInit, OnDestroy, AfterViewInit {
+  loading$ = new BehaviorSubject(false);
   //TODO: have our own icons
   private readonly urlIcon = {
     me: 'https://fr.seaicons.com/wp-content/uploads/2016/03/Map-Marker-Marker-Inside-Pink-icon.png',
@@ -93,10 +94,15 @@ export class MapComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onSearchFocus(e) {
-    this.router.navigate(['place-search'], {
-      relativeTo: this.activatedRoute,
-      state: { lat: this.positionLatLng.lat(), lng: this.positionLatLng.lng() }
-    });
+    this.loading$.next(true);
+    from(
+      this.router.navigate(['place-search'], {
+        relativeTo: this.activatedRoute,
+        state: { lat: this.positionLatLng.lat(), lng: this.positionLatLng.lng() }
+      })
+    )
+      .pipe(finalize(() => this.loading$.next(false)))
+      .subscribe();
   }
 
   ngOnInit(): void {

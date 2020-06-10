@@ -1,55 +1,53 @@
-<ion-header no-border>
-   <ion-toolbar>
+<ion-header *ngIf="!showSkip">
+   <ion-toolbar class="fouly-toolbar">
       <ion-buttons slot="end">
-         <ion-button color="primary" (click)="startApp()" [hidden]="!showSkip">Sauter l'introduction</ion-button>
+         <ion-button color="secondary" (click)="startApp()">Continuer sur le site</ion-button>
       </ion-buttons>
    </ion-toolbar>
 </ion-header>
 
 <ion-content fullscreen="true">
-   <ion-slides #slides (ionSlideWillChange)="onSlideChangeStart($event)" pager="true">
-      <ion-slide>
-         <img src="assets/img/introduction/city_movement.jpg" class="slide-image" />
-         <h2 class="slide-title"><b>Fouly</b>, votre planificateur personnel de déplacements</h2>
-         <p>
-            Pratiquer la distanciation sociale est devenue essentielle pour tous. Mais certains déplacements ne peuvent être évités, comme pour aller
-            à l’épicerie, à la pharmacie, etc. Fouly permet de planifier parfaitement vos déplacements dans ces commerces en affichant l’achalandage
-            actuel et donc le temps d’attente. Vous connaissez ainsi le meilleur moment pour vos déplacements et éviter les foules!
-         </p>
-      </ion-slide>
+   <fouly-content-centered>
+      <ion-slides #slides (ionSlideWillChange)="onSlideChangeStart($event)" pager="true">
+         <ion-slide>
+            <ion-img [src]="'assets/img/svg/undraw_social_distancing_2g0u.svg'" class="slide-image"></ion-img>
+            <h2 class="slide-title">Fouly, votre planificateur de déplacements</h2>
+            <p>
+               Pratiquer la distanciation sociale est devenue essentielle pour tous. Mais certains déplacements ne peuvent être évités, comme pour
+               aller à l’épicerie, à la pharmacie, etc. Fouly permet de planifier vos déplacements en affichant l’achalandage actuel. Vous connaissez
+               ainsi le meilleur moment pour vos déplacements et éviter les foules!
+            </p>
+         </ion-slide>
 
-      <ion-slide>
-         <img src="assets/img/introduction/lineup_waiting.jpg" class="slide-image" />
-         <h2 class="slide-title">Pourquoi <b>Fouly</b>?</h2>
-         <p>
-            Y a-t-il la queue à l’épicerie ? Est-ce le bon moment pour aller à la pharmacie ? Quelles sont les mesures de distanciation sociale mises
-            en place par le commerce ? Quel est le meilleur moment de la journée pour y aller ? <b>Fouly</b> répond en direct à toutes ces questions,
-            et bien plus !
-         </p>
-         <br />
-      </ion-slide>
+         <ion-slide>
+            <ion-img src="assets/img/svg/undraw_stand_out_1oag.svg" class="slide-image"></ion-img>
+            <h2 class="slide-title">Pourquoi Fouly ?</h2>
+            <p>
+               Y a-t-il la queue à l’épicerie ? Est-ce le bon moment pour aller à la pharmacie ? Quelles sont les mesures de distanciation sociale
+               mises en place par le commerce ? Quel est le meilleur moment de la journée pour y aller ? <b>Fouly</b> répond en direct à toutes ces
+               questions, et bien plus !
+            </p>
+            <br />
+         </ion-slide>
 
-      <ion-slide>
-         <img src="assets/img/introduction/security.jpg" class="slide-image" />
-         <h2 class="slide-title">Simple, efficace et toujours là !</h2>
-         <p>
-            L’interface simple et épurée de <b>Fouly</b> vous permet de retrouver facilement vos commerces préférés sur une carte interactive, et
-            d’ajouter ces commerces à une liste de favoris pour faciliter encore davantage vos prochaines visites. Recevez des alertes à chaque fois
-            que le niveau d’achalandage baisse pour planifier de manière plus précise vos déplacements.
-         </p>
-      </ion-slide>
-      <ion-slide class="ion-margin-vertical">
-         <img src="assets/img/introduction/time_for_change.jpg" class="slide-image" />
-         <h2 class="slide-title">Êtes-vous prêts ?</h2>
-         <p>
-            Laissez <b>Fouly</b> vous aider à planifier vos déplacements vers vos commerces préférés, en toute sécurité, à votre rythme. Contribuer
-            facilement vous aussi à tenir informés les autres utilisateurs de Fouly sur le niveau d’achalandage des commerces que vous visitez. Et
-            n’hésitez surtout pas à nous laisser vos commentaires, nous sommes à votre écoute !
-         </p>
-         <ion-button fill="clear" (click)="startApp()">
-            Continuer sur le site mobile
-            <ion-icon slot="end" name="arrow-forward"></ion-icon>
-         </ion-button>
-      </ion-slide>
-   </ion-slides>
+         <ion-slide>
+            <ion-img src="assets/img/svg/undraw_Map_light_3hjy.svg" class="slide-image"></ion-img>
+            <h2 class="slide-title">Simple, efficace et toujours là !</h2>
+            <p>
+               L’interface simple et épurée de Fouly vous permet de retrouver facilement vos commerces préférés sur une carte interactive, et
+               d’ajouter ces commerces à une liste de favoris pour faciliter encore davantage vos prochaines visites. Recevez des alertes à chaque
+               fois que le niveau d’achalandage baisse pour planifier de manière plus précise vos déplacements.
+            </p>
+         </ion-slide>
+         <ion-slide class="ion-margin-vertical">
+            <ion-img src="assets/img/svg/undraw_navigator_a479.svg" class="slide-image"></ion-img>
+            <h2 class="slide-title">Êtes-vous prêts ?</h2>
+            <p>
+               Laissez Fouly vous aider à planifier vos déplacements vers vos commerces préférés, en toute sécurité, à votre rythme. Contribuer
+               facilement vous aussi à tenir informés les autres utilisateurs de Fouly sur le niveau d’achalandage des commerces que vous visitez. Et
+               n’hésitez surtout pas à nous laisser vos commentaires, nous sommes à votre écoute !
+            </p>
+         </ion-slide>
+      </ion-slides>
+   </fouly-content-centered>
 </ion-content>

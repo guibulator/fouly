@@ -1,10 +1,11 @@
 <ion-app [class.dark-theme]="dark">
-   <ion-split-pane contentId="main-content">
+   <ion-split-pane when="sm" contentId="main-content">
       <ion-menu contentId="main-content">
          <ion-content>
             <ion-list lines="none">
                <ion-list-header>
-                  Fouly - Planifier vos déplacements
+                  <ion-img [src]="'assets/icons/apple-icon-72x72.png'"></ion-img>
+                  Planifier vos déplacements
                </ion-list-header>
                <ion-menu-toggle autoHide="false" *ngFor="let p of appPages; let i = index">
                   <!-- Todo : Fix ion router

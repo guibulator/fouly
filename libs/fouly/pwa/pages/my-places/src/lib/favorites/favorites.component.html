@@ -12,7 +12,7 @@
 
 <ion-content fullscreen>
    <ng-container *ngIf="favorites$ | async as favorites">
-      <ion-list *ngIf="favorites.length > 0; else infoSlide">
+      <ion-list>
          <ion-item-group>
             <ion-item-sliding *ngFor="let p of favorites">
                <ion-item routerLink="/app/tabs/map/store-detail/{{ p.placeId }}">
@@ -37,19 +37,26 @@
          </ion-item-group>
       </ion-list>
    </ng-container>
+   <ng-container *ngIf="(favorites$ | async).length < 3 as favorites">
+      <ng-container *ngTemplateOutlet="infoSlide"></ng-container>
+   </ng-container>
 </ion-content>
 
 <ng-template #infoSlide>
-   <ion-slides pager="false">
-      <ion-slide>
-         <img src="https://cdn3.iconfinder.com/data/icons/location-map/512/pin_marker_star-512.png" class="slide-image" />
-         <h2 class="slide-title">
-            Vos commerces favoris
-         </h2>
-         <p class="p-slide">
-            Vous trouverez en un clin d'oeil les détails importants comme le délai d'attente et l'Achalandage de vos commerces favoris. Pour ajouter
-            un favoris, dirigez vous sur la map, sélectionner un commerce et cliquer sur l'étoile.
-         </p>
-      </ion-slide>
-   </ion-slides>
+   <fouly-content-centered sizeLg="6">
+      <ion-card class="ion-text-center">
+         <ion-card-header>
+            <ion-img [src]="'assets/img//svg/undraw_map_1r69.svg'" class="empty-image"></ion-img>
+            <h2>
+               Vos commerces favoris
+            </h2>
+         </ion-card-header>
+         <ion-card-content>
+            <p class="p-slide">
+               Vous trouverez en un clin d'oeil les détails importants comme le délai d'attente et l'achalandage de vos commerces favoris. Pour
+               ajouter un favoris, dirigez vous sur la map, sélectionner un commerce et cliquer sur l'étoile.
+            </p>
+         </ion-card-content>
+      </ion-card>
+   </fouly-content-centered>
 </ng-template>
