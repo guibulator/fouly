@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { UserCommand, UserResult } from '@skare/fouly/data';
 import { MongoClient } from 'mongodb';
-import { uuid } from 'uuidv4';
 
 @Injectable()
 export class UserService {
@@ -29,26 +28,77 @@ export class UserService {
     return userResult;
   }
 
-  async createUser(user: UserCommand): Promise<UserResult> {
+  async createUpdateUser(user: UserCommand): Promise<UserResult> {
     let userResult: UserResult;
     MongoClient.connect(this.config.endpoint, function(err: any, client: any) {
       const db = client.db('users');
-      const result = db.collection('user').insertOne(
+      db.collection('user').updateOne(
         {
-          userId: uuid(),
-          name: user.name,
-          firstName: user.firstName,
-          email: user.email,
-          picture: user.picture,
-          loginFrom: user.loginFrom
+          email: user.email
         },
+        {
+          $set: {
+            providerId: user.providerId,
+            name: user.name,
+            firstName: user.firstName,
+            email: user.email,
+            picture: user.picture,
+            loginFrom: user.loginFrom
+          }
+        },
+        { upsert: true },
         function(_err: any, result: any) {
           userResult = result;
+          console.dir(_err);
+          client.close();
         }
       );
-      client.close();
     });
     return userResult;
+  }
+
+  async updateUser(user: UserCommand): Promise<UserResult> {
+    return await this.addOrUpdateOne(user);
+  }
+
+  async addOrUpdateOne(user: UserCommand): Promise<UserResult> {
+    const client = await MongoClient.connect(this.config.endpoint, { useNewUrlParser: true }).catch(
+      (err) => {
+        console.log(err);
+      }
+    );
+
+    if (!client) {
+      return;
+    }
+
+    try {
+      const db = client.db('users');
+      const collection: any = db.collection('user');
+      const res: any = await collection.updateOne(
+        {
+          email: user.email
+        },
+        {
+          $set: {
+            providerId: user.providerId,
+            name: user.name,
+            firstName: user.firstName,
+            email: user.email,
+            picture: user.picture,
+            loginFrom: user.loginFrom
+          }
+        },
+        { upsert: true }
+      );
+
+      console.log(res);
+      return res;
+    } catch (err) {
+      console.log(err);
+    } finally {
+      client.close();
+    }
   }
 
   async deleteUser(userId: string) {

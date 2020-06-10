@@ -7,17 +7,24 @@ import { UserService } from '../services/user.service';
 export class UserController {
   constructor(private userService: UserService, private configService: ConfigService) {}
 
-  @Get('user/:userId')
-  async getMsgHistory(@Param() params) {
+  @Get('getById/:userId')
+  async getById(@Param() params) {
     return this.userService.getUser(params.userId);
   }
 
-  @Post('create')
-  async postUser(@Body() userToSave: UserCommand) {
-    return this.userService.createUser(userToSave);
+  @Get('getByEmail/:email')
+  async getByEmail(@Param() params) {
+    return this.userService.getUser(params.email);
   }
 
-  @Delete('user/:userId')
+  @Post('create')
+  async createUser(@Body() userToSave: UserCommand) {
+    const test = await this.userService.updateUser(userToSave);
+    let t = test;
+    return t;
+  }
+
+  @Delete('delete/:userId')
   async deleteUser(@Param() params) {
     return this.userService.deleteUser(params.userId);
   }

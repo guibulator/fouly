@@ -1,5 +1,6 @@
 export class UserResult {
-  id: string;
+  _id: string;
+  providerId: string;
   name: string;
   firstName: string;
   email: string;

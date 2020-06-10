@@ -66,7 +66,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     if (user && !this.userData) {
       if (user.provider) this.manageLoginOptions(user.provider.toLowerCase());
       this.userData = {
-        id: user.id,
+        _id: null,
+        providerId: user.id,
         email: user.email,
         firstName: user.first_name ? user.first_name : user.firstName,
         name: user.name,
@@ -137,6 +138,9 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   login(): void {
+    this.userStoreService.createUpdateUser(this.userData).subscribe((user: UserResult) => {
+      this.userFouly = user;
+    });
     this.userStoreService.add(this.userData);
     this.router.navigateByUrl('/');
   }
@@ -146,7 +150,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       await this.authService.signOut();
     }
 
-    const id = this.userData?.id;
+    const id = this.userData?.providerId;
     this.userData = null;
     this.loggedIn = false;
     this.manageLoginOptions('');
