@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { IonContent } from '@ionic/angular';
 import * as signalR from '@microsoft/signalr';
 import { ChatMessageCommand, ChatMessageResult, UserResult } from '@skare/fouly/data';
-import { ChatStoreService, UserLoginService } from '@skare/fouly/pwa/core';
+import { ChatStoreService, UserStoreService } from '@skare/fouly/pwa/core';
 import { BehaviorSubject, fromEvent, Observable, Subscription } from 'rxjs';
 import { map, switchMap, tap } from 'rxjs/operators';
 
@@ -31,16 +31,18 @@ export class ChannelComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(
     private chatService: ChatStoreService,
     private route: ActivatedRoute,
-    private userLoginService: UserLoginService
+    private userLoginService: UserStoreService
   ) {}
 
   ngOnInit() {
     this.placeId = this.route.snapshot.params['placeId'];
     this.placeName = this.route.snapshot.params['placeName'];
 
-    this.userLoginService.init().subscribe((user: UserResult) => {
-      this.user = user;
-    });
+    this.subscriptions.add(
+      this.userLoginService.getAll().subscribe((users: UserResult[]) => {
+        this.user = users && users.length > 0 && users[0];
+      })
+    );
 
     this.chatService.getConnectionSignalR().subscribe(async (info) => {
       await this.start(info);
@@ -64,7 +66,6 @@ export class ChannelComponent implements OnInit, OnDestroy, AfterViewInit {
         const currentScrollDepth = event.detail.scrollTop;
         // Once user scrolls, user needs to press the bottom to follow the tail again.
         if (currentScrollDepth < scrollHeight - 15) {
-          // tolerance of 5 px
           return true;
         }
         return false;

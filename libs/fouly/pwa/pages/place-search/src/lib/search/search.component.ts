@@ -35,7 +35,7 @@ export class SearchComponent implements OnInit {
         lng: router?.getCurrentNavigation()?.extras?.state?.lng
       };
     });
-    this.favorites$ = this.favoriteStore.favorites$;
+    this.favorites$ = this.favoriteStore.store$;
   }
 
   ionViewDidEnter() {
