@@ -1,13 +1,18 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import { BrowserModule } from '@angular/platform-browser';
+import { PreloadAllModules, RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
-import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, RouterModule.forRoot([], { initialNavigation: 'enabled' })],
+  imports: [
+    BrowserModule,
+    RouterModule.forRoot([], {
+      initialNavigation: 'enabled',
+      preloadingStrategy: PreloadAllModules
+    })
+  ],
   providers: [],
-  bootstrap: [AppComponent],
+  bootstrap: [AppComponent]
 })
 export class AppModule {}

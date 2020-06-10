@@ -18,6 +18,7 @@ import { lightStyle } from './map-style';
   styleUrls: ['./map.component.scss']
 })
 export class MapComponent implements OnInit, OnDestroy, AfterViewInit {
+  //TODO: have our own icons
   private readonly urlIcon = {
     me: 'https://fr.seaicons.com/wp-content/uploads/2016/03/Map-Marker-Marker-Inside-Pink-icon.png',
     favorite: 'https://cdn3.iconfinder.com/data/icons/location-map/512/pin_marker_star-512.png',
@@ -71,7 +72,7 @@ export class MapComponent implements OnInit, OnDestroy, AfterViewInit {
     );
 
     this.subscription.add(
-      this.favoriteStore.favorites$.subscribe((favorites) => {
+      this.favoriteStore.store$.subscribe((favorites) => {
         favorites.forEach((fav) => {
           this.addPlaceMarker(fav.lat, fav.lng, fav.placeId, this.urlIcon.favorite);
         });
@@ -99,22 +100,17 @@ export class MapComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnInit(): void {
-    console.log('initializing component');
     this.localisationStore.initPosition().subscribe(() => {
-      console.log('position initialized');
       this.centerMe();
     });
-    this.subscription.add(this.favoriteStore.init().subscribe());
+    this.subscription.add(this.favoriteStore.getAll().subscribe());
   }
 
   ngAfterViewInit() {
-    this.map.tilesloaded.pipe(take(1)).subscribe(() => {
-      console.log('tiles loaded');
-    });
+    this.map.tilesloaded.pipe(take(1)).subscribe(() => {});
   }
 
   ngOnDestroy() {
-    console.log('destroying');
     this.subscription.unsubscribe();
     this.map.ngOnDestroy();
   }
@@ -141,7 +137,6 @@ export class MapComponent implements OnInit, OnDestroy, AfterViewInit {
 
       this.center = new google.maps.LatLng(this.positionLatLng.lat(), this.positionLatLng.lng());
       this.markers = [...this.markers, this.markerYou];
-      this.zoom = this.zoom - 1;
     });
   }
 

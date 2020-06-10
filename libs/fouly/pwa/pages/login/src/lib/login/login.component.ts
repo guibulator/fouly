@@ -1,23 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook/ngx';
 import { Platform } from '@ionic/angular';
 import { UserResult } from '@skare/fouly/data';
-import { UserLoginService } from '@skare/fouly/pwa/core';
+import { UserStoreService } from '@skare/fouly/pwa/core';
 import {
   AuthService,
   FacebookLoginProvider,
   GoogleLoginProvider,
   SocialUser
 } from 'angularx-social-login';
+import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'login',
+  selector: 'fouly-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
   public userData: UserResult = null;
   private userFouly: UserResult = null;
   public loggedIn = false;
@@ -26,31 +27,39 @@ export class LoginComponent implements OnInit {
   public showFbLogin = true;
   public showGoogleLogin = true;
   public userName = new FormControl('');
-
+  private readonly subscriptions = new Subscription();
   constructor(
     private facebook: Facebook,
     private platform: Platform,
     private authService: AuthService,
     private router: Router,
-    private userLoginService: UserLoginService
+    private userStoreService: UserStoreService
   ) {}
 
   ngOnInit(): void {
-    this.userLoginService.init().subscribe((user: UserResult) => {
-      this.loginUser(user);
-      if (user) {
-        this.manageLoginOptions(user.loginFrom);
-      }
-    });
+    this.subscriptions.add(
+      this.userStoreService.getAll().subscribe((users: UserResult[]) => {
+        const user = users && users.length > 0 && users[0];
+        this.loginUser(user);
+        if (user) {
+          this.manageLoginOptions(user.loginFrom);
+        }
+      })
+    );
 
-    this.authService.authState.subscribe((user: SocialUser) => {
-      this.loginUser(user);
-    });
+    this.subscriptions.add(
+      this.authService.authState.subscribe((user: SocialUser) => {
+        this.loginUser(user);
+      })
+    );
 
     this.userName.valueChanges.subscribe((val: string) => {
       this.userData = null;
       this.loginUser({ name: val });
     });
+  }
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
   }
 
   loginUser(user: any) {
@@ -59,7 +68,7 @@ export class LoginComponent implements OnInit {
       this.userData = {
         id: user.id,
         email: user.email,
-        first_name: user.first_name ? user.first_name : user.firstName,
+        firstName: user.first_name ? user.first_name : user.firstName,
         name: user.name,
         picture: user.picture ? user.picture : user.photoUrl,
         loginFrom: user.loginFrom
@@ -128,9 +137,7 @@ export class LoginComponent implements OnInit {
   }
 
   login(): void {
-    this.userLoginService.addUpdateUser(this.userData).subscribe((user: UserResult) => {
-      this.userFouly = user;
-    });
+    this.userStoreService.add(this.userData);
     this.router.navigateByUrl('/');
   }
 
@@ -139,9 +146,10 @@ export class LoginComponent implements OnInit {
       await this.authService.signOut();
     }
 
+    const id = this.userData?.id;
     this.userData = null;
     this.loggedIn = false;
     this.manageLoginOptions('');
-    this.userLoginService.removeUser();
+    this.userStoreService.remove(id);
   }
 }

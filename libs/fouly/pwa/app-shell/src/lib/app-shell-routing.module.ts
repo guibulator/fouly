@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ShowIntroductionGuard } from '@skare/fouly/pwa/core';
+import { ShowIntroductionGuard, WithDelayPreloadingStrategy } from '@skare/fouly/pwa/core';
 const routes: Routes = [];
 
 @NgModule({
@@ -22,7 +22,8 @@ const routes: Routes = [];
           loadChildren: () =>
             import('@skare/fouly/pwa/pages/tabs-navigation').then(
               (module) => module.TabsNavigationModule
-            )
+            ),
+          data: { preload: true }
         },
         {
           path: 'introduction',
@@ -49,9 +50,14 @@ const routes: Routes = [];
         },
         { path: '**', redirectTo: '' }
       ],
-      { initialNavigation: 'enabled', enableTracing: false }
+      {
+        initialNavigation: 'enabled',
+        enableTracing: false,
+        preloadingStrategy: WithDelayPreloadingStrategy
+      }
     )
   ],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers: [WithDelayPreloadingStrategy]
 })
 export class ShellRoutingModule {}

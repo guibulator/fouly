@@ -1,11 +1,11 @@
 /// <reference types="googlemaps" />
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
-import { FavoriteResult } from '@skare/fouly/data';
+import { UserResult } from '@skare/fouly/data';
 import { BaseStorage } from './base-storage.service';
 @Injectable({ providedIn: 'root' })
-export class FavoriteStoreService extends BaseStorage<FavoriteResult> {
+export class UserStoreService extends BaseStorage<UserResult> {
   constructor(protected storage: Storage) {
-    super(storage, 'fouly_favorites_places', (favorite) => favorite.placeId);
+    super(storage, 'fouly_user_store', (user: UserResult) => user?.id);
   }
 }

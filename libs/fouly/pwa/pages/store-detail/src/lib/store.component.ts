@@ -19,7 +19,7 @@ export class StoreComponent implements OnInit {
     private router: Router,
     private favoriteStoreService: FavoriteStoreService
   ) {
-    this.favoriteStoreService.init().subscribe();
+    this.favoriteStoreService.getAll().subscribe();
   }
 
   placeDetails$: Observable<PlaceDetailsResult[]>;
@@ -38,7 +38,7 @@ export class StoreComponent implements OnInit {
       tap((url) => console.log(url))
     );
     this.placeDetailsStore.loadPlaceId(this.route.snapshot.params['placeId']);
-    this.isCurrentlyFavorite$ = this.favoriteStoreService.favorites$.pipe(
+    this.isCurrentlyFavorite$ = this.favoriteStoreService.store$.pipe(
       map((f) => !!f.find((fav) => fav.placeId === this.route.snapshot.params['placeId']))
     );
   }
@@ -56,9 +56,9 @@ export class StoreComponent implements OnInit {
       .pipe(take(1))
       .subscribe(([placeDetails, isCurrentlyFavorite]) => {
         if (isCurrentlyFavorite) {
-          this.favoriteStoreService.removeFavorite(placeDetails[0].place_id);
+          this.favoriteStoreService.remove(placeDetails[0].place_id);
         } else {
-          return this.favoriteStoreService.addFavorite({
+          return this.favoriteStoreService.add({
             address: placeDetails[0].adr_address,
             placeId: placeDetails[0].place_id,
             name: placeDetails[0].name,
