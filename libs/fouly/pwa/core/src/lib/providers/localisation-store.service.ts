@@ -17,10 +17,7 @@ export class LocalisationStoreService {
     private httpClient: HttpClient,
     private configService: ConfigService
   ) {}
-  //TODO: handle errors, if can't get from html5 geo, we try a fallback on the server to get from ip
-  // if it still not working, we should take a default lat/lng. There are services to get this from multiple properties
-  // from device.. The Google geolocation api needs some infos from device and towers to approximate this. For now
-  // we use ipstack
+
   initPosition() {
     return from(
       this.geolocation
