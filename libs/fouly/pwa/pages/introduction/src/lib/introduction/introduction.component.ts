@@ -2,14 +2,13 @@ import { Component, HostListener, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController, IonSlides, MenuController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
-
+import { from } from 'rxjs';
 @Component({
   selector: 'fouly-page-introduction',
   templateUrl: 'introduction.component.html',
   styleUrls: ['./introduction.component.scss']
 })
 export class IntroductionComponentPage {
-  showSkip = true;
   private pwaInstallDeferred: any;
   @ViewChild('slides', { static: true }) slides: IonSlides;
 
@@ -21,15 +20,9 @@ export class IntroductionComponentPage {
   ) {}
 
   startApp() {
-    this.router
-      .navigateByUrl('/app/tabs/map', { replaceUrl: true })
-      .then(() => this.storage.set('fouly_did_introduction', true));
-  }
-
-  onSlideChangeStart(event) {
-    event.target.isEnd().then((isEnd) => {
-      this.showSkip = !isEnd;
-    });
+    from(this.router.navigateByUrl('/app/tabs/map', { replaceUrl: true }))
+      .pipe()
+      .subscribe(() => this.storage.set('fouly_did_introduction', true));
   }
 
   ionViewWillEnter() {

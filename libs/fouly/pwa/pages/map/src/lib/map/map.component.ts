@@ -106,9 +106,11 @@ export class MapComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.localisationStore.initPosition().subscribe(() => {
-      this.centerMe();
-    });
+    this.subscription.add(
+      this.localisationStore.initPosition().subscribe(() => {
+        this.centerMe();
+      })
+    );
     this.subscription.add(this.favoriteStore.getAll().subscribe());
   }
 
@@ -118,7 +120,6 @@ export class MapComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
-    this.map.ngOnDestroy();
   }
 
   centerMe() {
@@ -156,7 +157,7 @@ export class MapComponent implements OnInit, OnDestroy, AfterViewInit {
         url: iconUrl,
         size: new google.maps.Size(100, 100),
         origin: new google.maps.Point(0, 0),
-        anchor: new google.maps.Point(20, 40),
+        anchor: new google.maps.Point(20, 70),
         scaledSize: new google.maps.Size(45, 45)
       },
       title: placeId,
