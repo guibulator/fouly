@@ -1,8 +1,11 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { NavigationEnd, Router } from '@angular/router';
 import { SwUpdate } from '@angular/service-worker';
 import { MenuController, Platform, ToastController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
+import { TranslateService } from '@ngx-translate/core';
+import { Subscription } from 'rxjs';
 import { filter, tap } from 'rxjs/operators';
 declare let gtag: Function;
 @Component({
@@ -11,7 +14,7 @@ declare let gtag: Function;
   styleUrls: ['./shell.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class ShellComponent implements OnInit {
+export class ShellComponent implements OnInit, OnDestroy {
   appPages = [
     {
       title: 'Favoris',
@@ -41,15 +44,18 @@ export class ShellComponent implements OnInit {
   ];
   loggedIn = false;
   dark = false;
+  languageForm: FormGroup;
+  private subcribes = new Subscription();
 
   constructor(
     private menu: MenuController,
     private platform: Platform,
     private router: Router,
-
+    private formBuilder: FormBuilder,
     private storage: Storage,
     private swUpdate: SwUpdate,
-    private toastCtrl: ToastController
+    private toastCtrl: ToastController,
+    private readonly translate: TranslateService
   ) {
     this.initializeApp();
     this.router.events
@@ -62,6 +68,14 @@ export class ShellComponent implements OnInit {
         )
       )
       .subscribe();
+
+    this.languageForm = this.formBuilder.group({
+      language: 'fr'
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.subcribes.unsubscribe();
   }
 
   async ngOnInit() {
@@ -84,6 +98,15 @@ export class ShellComponent implements OnInit {
         .then(() => this.swUpdate.activateUpdate())
         .then(() => window.location.reload());
     });
+
+    this.translate.setDefaultLang('fr');
+    this.translate.use('fr');
+
+    this.subcribes.add(
+      this.languageForm.controls['language'].valueChanges.subscribe((value) => {
+        this.translate.use(value);
+      })
+    );
   }
 
   initializeApp() {

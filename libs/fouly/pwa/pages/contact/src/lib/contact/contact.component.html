@@ -6,23 +6,27 @@
       <ion-buttons slot="start">
          <ion-menu-button></ion-menu-button>
       </ion-buttons>
-      <ion-title>Commentaire</ion-title>
+      <ion-title>{{ 'page.contact.title' | translate }}</ion-title>
    </ion-toolbar>
 </ion-header>
 
 <ion-content fullscreen>
    <fouly-content-centered class="ion-text-center">
       <ion-img [src]="'assets/img/svg/undraw_feedback_h2ft.svg'"></ion-img>
-      <ion-text><h1>Vous avez une idée ?</h1></ion-text>
-      <ion-text><p>Soummetez-nous vos idées et/ou commentaires. Il nous fera plaisir de vous lire et améliorer Fouly!</p></ion-text>
+      <ion-text
+         ><h1>{{ 'page.contact.ideaTitle' | translate }}</h1></ion-text
+      >
+      <ion-text
+         ><p>{{ 'page.contact.ideaSuggest' | translate }}</p></ion-text
+      >
       <form [formGroup]="commentsForm" novalidate (ngSubmit)="submit(commentsForm.value)">
          <ion-list lines="none">
             <ion-item>
-               <ion-input placeholder="À quel sujet?" type="text" required formControlName="subject"></ion-input>
+               <ion-input [placeholder]="'page.contact.subjectPlaceHolder' | translate" type="text" required formControlName="subject"></ion-input>
             </ion-item>
             <ion-item>
                <ion-textarea
-                  placeholder="Entrez vos commentaires, suggestions ou idées."
+                  [placeholder]="'page.contact.commentPlaceHolder' | translate"
                   type="text"
                   rows="6"
                   formControlName="detail"
@@ -32,12 +36,12 @@
 
          <ion-text color="primary">
             <p [hidden]="!submitted" class="ion-padding-start">
-               Commentaire envoyé avec succès, merci.
+               {{ 'page.contact.thanks' | translate }}
             </p>
          </ion-text>
 
          <div class="ion-padding">
-            <ion-button expand="block" type="submit" [disabled]="disabled">Envoyer</ion-button>
+            <ion-button expand="block" type="submit" [disabled]="disabled">{{ 'page.contact.send' | translate }}</ion-button>
          </div>
       </form>
    </fouly-content-centered>

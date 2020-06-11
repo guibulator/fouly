@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 import { ContactService } from '../contact.service';
 
@@ -13,7 +14,11 @@ export class ContactComponent implements OnInit, OnDestroy {
   private contactService: ContactService;
   commentsForm: FormGroup;
 
-  constructor(private contactservice: ContactService, private formBuilder: FormBuilder) {
+  constructor(
+    private contactservice: ContactService,
+    private formBuilder: FormBuilder,
+    private readonly translate: TranslateService
+  ) {
     this.contactService = contactservice;
     this.commentsForm = this.formBuilder.group({
       subject: '',
@@ -29,6 +34,12 @@ export class ContactComponent implements OnInit, OnDestroy {
       this.disabled = false;
       this.submitted = false;
     });
+
+    this.translate.store.onLangChange.subscribe((lang) => {
+      this.translate.use(lang.lang);
+    });
+
+    // console.log(this.translate.store);
   }
 
   submit(formData: any) {

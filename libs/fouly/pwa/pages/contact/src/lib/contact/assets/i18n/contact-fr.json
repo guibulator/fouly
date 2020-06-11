@@ -1,0 +1,14 @@
+{
+  "page": {
+    "contact": {
+      "title": "Commentaire",
+      "ideaTitle": "Vous avez une idée ?",
+      "ideaSuggest": "Soummetez-nous vos idées et/ou commentaires. Il nous fera plaisir de vous lire et améliorer Fouly!",
+      "subjectPlaceHolder": "À quel sujet?",
+      "commentPlaceHolder": "Entrez vos commentaires, suggestions ou idées.",
+      "instruction": "Entrez votre commentaire ci-dessous",
+      "thanks": "Commentaire envoyé avec succès, merci.",
+      "send": "Envoyer"
+    }
+  }
+}

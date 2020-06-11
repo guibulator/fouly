@@ -23,6 +23,13 @@
                      </ion-label>
                   </ion-item>
                </ion-menu-toggle>
+               <ion-item [formGroup]="languageForm">
+                  <ion-label>{{ 'appshell.language' | translate }}</ion-label>
+                  <ion-select [placeholder]="'appshell.selectOne' | translate" formControlName="language">
+                     <ion-select-option value="fr">Francais</ion-select-option>
+                     <ion-select-option value="en">English</ion-select-option>
+                  </ion-select>
+               </ion-item>
             </ion-list>
 
             <ion-list *ngIf="loggedIn" lines="none">
