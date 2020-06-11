@@ -150,7 +150,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       await this.authService.signOut();
     }
 
-    const id = this.userData?.providerId;
+    const id = this.userData?._id;
     this.userData = null;
     this.loggedIn = false;
     this.manageLoginOptions('');

@@ -7,7 +7,8 @@ import { MailController } from './controllers/mail.controller';
 import { PlaceDetailsController } from './controllers/place-details.controller';
 import { UserController } from './controllers/user.controller';
 import { ChatService } from './services/chat.service';
-import { CosmosDbService } from './services/cosmosDb.service';
+import { CosmosDbMongoApiService } from './services/cosmosDb.mongoApi.service';
+import { CosmosDbSqlApiService } from './services/cosmosDb.sqlApi.service';
 import { MailService } from './services/mail.service';
 import { PlaceDetailsService } from './services/placeDetails.service';
 import { UserService } from './services/user.service';
@@ -25,7 +26,14 @@ import { UserService } from './services/user.service';
       ignoreEnvFile: true
     })
   ],
-  providers: [PlaceDetailsService, ChatService, CosmosDbService, MailService, UserService],
+  providers: [
+    PlaceDetailsService,
+    ChatService,
+    MailService,
+    UserService,
+    CosmosDbSqlApiService,
+    CosmosDbMongoApiService
+  ],
   exports: []
 })
 export class FoulyApiModule {}

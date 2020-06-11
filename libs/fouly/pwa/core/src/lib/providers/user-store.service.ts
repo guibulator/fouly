@@ -15,7 +15,7 @@ export class UserStoreService extends BaseStorage<UserResult> {
     private httpClient: HttpClient,
     private configService: ConfigService
   ) {
-    super(storage, 'fouly_user_store', (user: UserResult) => user?.id);
+    super(storage, 'fouly_user_store', (user: UserResult) => user?._id);
     this.apiEndPoint = this.configService.apiUrl;
   }
 

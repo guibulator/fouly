@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { UserCommand, UserResult } from '@skare/fouly/data';
-import { MongoClient } from 'mongodb';
-
+import { CosmosDbMongoApiService } from './cosmosDb.mongoApi.service';
 @Injectable()
 export class UserService {
   private config: any = {
@@ -12,100 +11,39 @@ export class UserService {
     partitionKey: { kind: 'Hash', paths: ['/userId'] }
   };
 
-  constructor() {}
+  constructor(private dbService: CosmosDbMongoApiService) {
+    this.dbService.init(this.config.endpoint, this.config.databaseId, this.config.containerId);
+  }
 
   async getUser(userId: string): Promise<UserResult> {
-    let userResult: UserResult;
-    MongoClient.connect(this.config.endpoint, function(err: any, client: any) {
-      const db = client.db(this.config.databaseId);
-      const result = db
-        .collection(this.config.containerId)
-        .find({ userId: userId }, function(_err: any, results: any) {
-          userResult = results[0];
-        });
-      client.close();
-    });
-    return userResult;
+    const query = {
+      userId: userId
+    };
+    const res = await this.dbService.getObjects(query);
+    return res[0];
   }
 
   async createUpdateUser(user: UserCommand): Promise<UserResult> {
-    let userResult: UserResult;
-    MongoClient.connect(this.config.endpoint, function(err: any, client: any) {
-      const db = client.db('users');
-      db.collection('user').updateOne(
-        {
-          email: user.email
-        },
-        {
-          $set: {
-            providerId: user.providerId,
-            name: user.name,
-            firstName: user.firstName,
-            email: user.email,
-            picture: user.picture,
-            loginFrom: user.loginFrom
-          }
-        },
-        { upsert: true },
-        function(_err: any, result: any) {
-          userResult = result;
-          console.dir(_err);
-          client.close();
-        }
-      );
-    });
-    return userResult;
-  }
-
-  async updateUser(user: UserCommand): Promise<UserResult> {
-    return await this.addOrUpdateOne(user);
-  }
-
-  async addOrUpdateOne(user: UserCommand): Promise<UserResult> {
-    const client = await MongoClient.connect(this.config.endpoint, { useNewUrlParser: true }).catch(
-      (err) => {
-        console.log(err);
-      }
-    );
-
-    if (!client) {
-      return;
-    }
-
-    try {
-      const db = client.db('users');
-      const collection: any = db.collection('user');
-      const res: any = await collection.updateOne(
-        {
-          email: user.email
-        },
-        {
-          $set: {
-            providerId: user.providerId,
-            name: user.name,
-            firstName: user.firstName,
-            email: user.email,
-            picture: user.picture,
-            loginFrom: user.loginFrom
-          }
-        },
-        { upsert: true }
-      );
-
-      console.log(res);
-      return res;
-    } catch (err) {
-      console.log(err);
-    } finally {
-      client.close();
-    }
+    const query = {
+      email: user.email
+    };
+    const upsert = {
+      providerId: user.providerId,
+      name: user.name,
+      firstName: user.firstName,
+      email: user.email,
+      picture: user.picture,
+      loginFrom: user.loginFrom
+    };
+    await this.dbService.createUpdateObject(query, upsert);
+    const res = await this.dbService.getObjects(query);
+    return res[0];
   }
 
   async deleteUser(userId: string) {
-    MongoClient.connect(this.config.endpoint, function(err: any, client: any) {
-      const db = client.db(this.config.databaseId);
-      db.collection(this.config.containerId).delete({ userId: userId });
-      client.close();
-    });
+    const query = {
+      userId: userId
+    };
+    return await this.dbService.deleteObjects(query);
   }
 }

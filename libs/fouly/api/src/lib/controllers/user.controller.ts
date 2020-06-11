@@ -19,9 +19,7 @@ export class UserController {
 
   @Post('create')
   async createUser(@Body() userToSave: UserCommand) {
-    const test = await this.userService.updateUser(userToSave);
-    let t = test;
-    return t;
+    return await this.userService.createUpdateUser(userToSave);
   }
 
   @Delete('delete/:userId')
