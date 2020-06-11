@@ -42,39 +42,37 @@
             </ion-label>
          </ion-item>
       </ion-list>
-      <ion-list *ngIf="!(loading$ | async) && placeDetails$ | async as placeDetails">
-         <ion-item-group>
-            <ion-item *ngIf="mainImage$ | async as mainImage"><ion-img [src]="mainImage"></ion-img> </ion-item>
-            <ion-item *ngIf="placeDetails[0]">
-               <ion-label>
-                  <h3>{{ placeDetails[0].name }}</h3>
-                  <p [innerHtml]="placeDetails[0].adr_address"></p>
-                  <p [innerHtml]="placeDetails[0].business_status"></p>
-                  <p [innerHtml]="placeDetails[0].formatted_phone_number"></p>
-                  <p [innerHtml]="placeDetails[0].website"></p>
-                  <p *ngIf="placeDetails[0].opening_hours">
-                     <strong>Présentement </strong>{{ !placeDetails[0].opening_hours.open_now ? 'FERMÉ' : 'OUVERT' }}
-                  </p>
-               </ion-label>
-            </ion-item>
+      <ion-card *ngIf="!(loading$ | async) && placeDetails$ | async as placeDetails" class="card">
+         <ion-img [src]="mainImage$ | async"></ion-img>
+         <ion-card-header>
+            <ion-label *ngIf="placeDetails[0]">
+               <h3>{{ placeDetails[0].name }}</h3>
+               <p [innerHtml]="placeDetails[0].adr_address"></p>
+               <p [innerHtml]="placeDetails[0].business_status"></p>
+               <p [innerHtml]="placeDetails[0].formatted_phone_number"></p>
+               <p [innerHtml]="placeDetails[0].website"></p>
+               <p *ngIf="placeDetails[0].opening_hours">
+                  <strong>Présentement </strong>{{ !placeDetails[0].opening_hours.open_now ? 'FERMÉ' : 'OUVERT' }}
+               </p>
+            </ion-label>
+         </ion-card-header>
+         <ion-card-content class="content">
             <ion-item>
-               <ion-label>
-                  <fouly-affluence></fouly-affluence>
-               </ion-label>
+               <fouly-affluence class="affluence"></fouly-affluence>
             </ion-item>
-            <ion-item button *ngIf="placeDetails[0]" (click)="gotoChat(placeDetails[0].name)">
+            <ion-item class="item" button *ngIf="placeDetails[0]" (click)="gotoChat(placeDetails[0].name)">
                <ion-icon name="chatbubbles" size="medium"></ion-icon>
                <ion-label>&nbsp;Commentaires</ion-label>
             </ion-item>
-            <ion-item button *ngIf="placeDetails[0]" (click)="gotoChat(placeDetails[0].name)">
+            <ion-item class="item" button *ngIf="placeDetails[0]" (click)="gotoChat(placeDetails[0].name)">
                <ion-icon name="videocam" size="medium"></ion-icon>
                <ion-label>&nbsp;En direct</ion-label>
             </ion-item>
-            <ion-item button *ngIf="placeDetails[0]" (click)="gotoFavorites()">
+            <ion-item class="item" button *ngIf="placeDetails[0]" (click)="gotoFavorites()">
                <ion-icon name="star" size="medium"></ion-icon>
                <ion-label>&nbsp;Mes favoris</ion-label>
             </ion-item>
-         </ion-item-group>
-      </ion-list>
+         </ion-card-content>
+      </ion-card>
    </fouly-content-centered>
 </ion-content>
