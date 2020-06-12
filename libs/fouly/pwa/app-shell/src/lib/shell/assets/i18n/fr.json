@@ -1,6 +1,17 @@
 {
   "appshell": {
+    "slogan": "PLANIFIER VOS DÉPLACEMENTS",
+    "favorites": "Favoris",
     "language": "Langue",
-    "selectOne": "Choisir une langue"
+    "map": "Carte",
+    "contactUs": "Contactez nous",
+    "selectOne": "Choisir une langue",
+    "accountTitle": "Compte",
+    "yourAccount": "Votre compte",
+    "support": "Support",
+    "logout": "Se déconnecter",
+    "login": "S'authentifier",
+    "documentation": "Documentation",
+    "introduction": "Revoir l'introduction"
   }
 }

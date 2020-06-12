@@ -17,7 +17,7 @@ declare let gtag: Function;
 export class ShellComponent implements OnInit, OnDestroy {
   appPages = [
     {
-      title: 'Favoris',
+      title: 'appshell.favorites',
       url: '/app/tabs/my-places',
       icon: 'star'
     },
@@ -27,12 +27,12 @@ export class ShellComponent implements OnInit, OnDestroy {
     //   icon: 'people'
     // },
     {
-      title: 'Map',
+      title: 'appshell.map',
       url: '/app/tabs/map',
       icon: 'location'
     },
     {
-      title: 'Contactez nous',
+      title: 'appshell.contactUs',
       url: '/contact',
       icon: 'mail'
     }
@@ -58,16 +58,19 @@ export class ShellComponent implements OnInit, OnDestroy {
     private readonly translate: TranslateService
   ) {
     this.initializeApp();
-    this.router.events
-      .pipe(
-        filter((e) => e instanceof NavigationEnd),
-        tap((e) =>
-          gtag('config', 'G-E8SJZBBV49', {
-            page_path: e['urlAfterRedirects']
-          })
+
+    this.subcribes.add(
+      this.router.events
+        .pipe(
+          filter((e) => e instanceof NavigationEnd),
+          tap((e) =>
+            gtag('config', 'G-E8SJZBBV49', {
+              page_path: e['urlAfterRedirects']
+            })
+          )
         )
-      )
-      .subscribe();
+        .subscribe()
+    );
 
     this.languageForm = this.formBuilder.group({
       language: 'fr'
@@ -79,25 +82,27 @@ export class ShellComponent implements OnInit, OnDestroy {
   }
 
   async ngOnInit() {
-    this.swUpdate.available.subscribe(async (res) => {
-      const toast = await this.toastCtrl.create({
-        message: 'Mise à jour disponible!',
-        position: 'bottom',
-        buttons: [
-          {
-            role: 'cancel',
-            text: 'Rafraichir'
-          }
-        ]
-      });
+    this.subcribes.add(
+      this.swUpdate.available.subscribe(async (res) => {
+        const toast = await this.toastCtrl.create({
+          message: 'Mise à jour disponible!',
+          position: 'bottom',
+          buttons: [
+            {
+              role: 'cancel',
+              text: 'Rafraichir'
+            }
+          ]
+        });
 
-      await toast.present();
+        await toast.present();
 
-      toast
-        .onDidDismiss()
-        .then(() => this.swUpdate.activateUpdate())
-        .then(() => window.location.reload());
-    });
+        toast
+          .onDidDismiss()
+          .then(() => this.swUpdate.activateUpdate())
+          .then(() => window.location.reload());
+      })
+    );
 
     this.translate.setDefaultLang('fr');
     this.translate.use('fr');

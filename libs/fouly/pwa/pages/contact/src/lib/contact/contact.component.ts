@@ -10,16 +10,14 @@ import { ContactService } from '../contact.service';
   styleUrls: ['./contact.component.scss']
 })
 export class ContactComponent implements OnInit, OnDestroy {
-  private subscr: Subscription;
-  private contactService: ContactService;
+  private subscriptions = new Subscription();
   commentsForm: FormGroup;
 
   constructor(
-    private contactservice: ContactService,
+    private contactService: ContactService,
     private formBuilder: FormBuilder,
     private readonly translate: TranslateService
   ) {
-    this.contactService = contactservice;
     this.commentsForm = this.formBuilder.group({
       subject: '',
       detail: ''
@@ -30,16 +28,20 @@ export class ContactComponent implements OnInit, OnDestroy {
   disabled = true;
 
   ngOnInit() {
-    this.subscr = this.commentsForm.valueChanges.subscribe(() => {
-      this.disabled = false;
-      this.submitted = false;
-    });
+    this.subscriptions.add(
+      this.commentsForm.valueChanges.subscribe(() => {
+        this.disabled = false;
+        this.submitted = false;
+      })
+    );
 
-    this.translate.store.onLangChange.subscribe((lang) => {
-      this.translate.use(lang.lang);
-    });
+    this.subscriptions.add(
+      this.translate.store.onLangChange.subscribe((lang) => {
+        this.translate.use(lang.lang);
+      })
+    );
 
-    // console.log(this.translate.store);
+    this.translate.use(this.translate.store.currentLang);
   }
 
   submit(formData: any) {
@@ -50,6 +52,6 @@ export class ContactComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subscr.unsubscribe();
+    this.subscriptions.unsubscribe();
   }
 }
