@@ -18,6 +18,11 @@ import { TabsComponent } from './tabs/tabs.component';
             path: 'my-places',
             loadChildren: () =>
               import('@skare/fouly/pwa/pages/my-places').then((module) => module.MyPlacesModule)
+          },
+          {
+            path: 'contact',
+            loadChildren: () =>
+              import('@skare/fouly/pwa/pages/contact').then((module) => module.ContactModule)
           }
         ]
       }

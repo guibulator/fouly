@@ -6,9 +6,11 @@
       "ideaSuggest": "Submit your ideas and / or comments to us. We will be happy to read you and improve Fouly!",
       "subjectPlaceHolder": "What about?",
       "commentPlaceHolder": "Enter your comments, suggestions or ideas.",
+      "emailPlaceHolder": "Email (optional)",
       "instruction": "Enter your comment below",
       "thanks": "Comment sent successfully, thank you.",
-      "send": "Send"
+      "send": "Send",
+      "findUsSocial": "You can find us on social networks. It will be our pleasure to stay connected with you!"
     }
   }
 }

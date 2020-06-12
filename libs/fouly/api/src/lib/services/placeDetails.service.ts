@@ -22,6 +22,7 @@ export class PlaceDetailsService {
         fields: [
           'adr_address',
           'business_status',
+          'permanently_closed',
           'icon',
           'types',
           'website',
@@ -36,7 +37,10 @@ export class PlaceDetailsService {
     });
     const details = await promise;
     if (details?.data?.status === 'OK') {
-      return details.data.result;
+      const address = details.data.result.adr_address.split(',');
+      // only take first 2 parts of address
+      const shortAddress = [address[0], address[1]].join(',');
+      return { ...details.data.result, ...{ shortAddress: shortAddress } };
     }
     throw Error(
       `Could not get details of ${placeId}. The error is ${details?.data?.error_message}`

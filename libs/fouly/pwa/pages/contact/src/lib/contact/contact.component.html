@@ -7,82 +7,77 @@
          <ion-menu-button></ion-menu-button>
       </ion-buttons>
       <ion-title>{{ 'page.contact.title' | translate }}</ion-title>
+      <ion-progress-bar *ngIf="sending" color="primary" type="indeterminate"></ion-progress-bar>
    </ion-toolbar>
 </ion-header>
 
 <ion-content fullscreen>
    <fouly-content-centered class="ion-text-center">
-      <ion-img [src]="'assets/img/svg/undraw_feedback_h2ft.svg'"></ion-img>
-      <ion-text
-         ><h1>{{ 'page.contact.ideaTitle' | translate }}</h1></ion-text
-      >
-      <ion-text
-         ><p>{{ 'page.contact.ideaSuggest' | translate }}</p></ion-text
-      >
-      <form [formGroup]="commentsForm" novalidate (ngSubmit)="submit(commentsForm.value)">
-         <ion-list lines="none">
-            <ion-item>
-               <ion-input [placeholder]="'page.contact.subjectPlaceHolder' | translate" type="text" required formControlName="subject"></ion-input>
-            </ion-item>
-            <ion-item>
-               <ion-textarea
-                  [placeholder]="'page.contact.commentPlaceHolder' | translate"
-                  type="text"
-                  rows="6"
-                  formControlName="detail"
-               ></ion-textarea>
-            </ion-item>
-         </ion-list>
+      <ion-card class="card">
+         <ion-img [src]="'assets/img/svg/social_girl.svg'"></ion-img>
+         <ion-card-header>
+            <ion-card-title
+               ><h3>
+                  {{ 'page.contact.findUsSocial' | translate }}
+               </h3>
+            </ion-card-title>
+         </ion-card-header>
+         <ion-card-content>
+            <ion-button color="secondary"><ion-icon slot="start" name="logo-facebook"></ion-icon>Facebook</ion-button>
+            <ion-button color="secondary"><ion-icon slot="start" name="logo-twitter"></ion-icon>Twitter</ion-button>
+            <ion-button color="secondary"><ion-icon slot="start" name="logo-instagram"></ion-icon>Instagram</ion-button>
+            <ion-button color="secondary"><ion-icon slot="start" name="logo-linkedin"></ion-icon>LinkedIn</ion-button>
+         </ion-card-content>
+      </ion-card>
 
-         <ion-text color="primary">
-            <p [hidden]="!submitted" class="ion-padding-start">
-               {{ 'page.contact.thanks' | translate }}
-            </p>
-         </ion-text>
+      <ion-card class="card">
+         <ion-img [src]="'assets/img/svg/undraw_feedback_h2ft.svg'"></ion-img>
+         <ion-card-header>
+            <ion-card-title
+               ><h3>{{ 'page.contact.ideaTitle' | translate }}</h3></ion-card-title
+            >
+            <ion-card-subtitle>{{ 'page.contact.ideaSuggest' | translate }}</ion-card-subtitle>
+         </ion-card-header>
+         <ion-card-content>
+            <form [formGroup]="commentsForm" novalidate (ngSubmit)="submit(commentsForm.value)">
+               <ion-list lines="none">
+                  <ion-item>
+                     <ion-input
+                        [placeholder]="'page.contact.subjectPlaceHolder' | translate"
+                        type="text"
+                        spellcheck
+                        required
+                        formControlName="subject"
+                     ></ion-input>
+                  </ion-item>
+                  <ion-item>
+                     <ion-input
+                        [placeholder]="'page.contact.emailPlaceHolder' | translate"
+                        type="email"
+                        autocomplete
+                        rows="6"
+                        formControlName="fromEmail"
+                     ></ion-input>
+                  </ion-item>
+                  <ion-item>
+                     <ion-textarea
+                        [placeholder]="'page.contact.commentPlaceHolder' | translate"
+                        type="text"
+                        spellcheck
+                        rows="6"
+                        formControlName="message"
+                        required
+                     ></ion-textarea>
+                  </ion-item>
+               </ion-list>
 
-         <div class="ion-padding">
-            <ion-button expand="block" type="submit" [disabled]="disabled">{{ 'page.contact.send' | translate }}</ion-button>
-         </div>
-      </form>
+               <div class="ion-margin-bottom">
+                  <ion-button color="secondary" expand="block" type="submit" [disabled]="disabled"
+                     ><ion-icon slot="end" name="send-outline"></ion-icon>{{ 'page.contact.send' | translate }}</ion-button
+                  >
+               </div>
+            </form>
+         </ion-card-content>
+      </ion-card>
    </fouly-content-centered>
-
-   <!-- <ion-img [src]="'assets/img/svg/undraw_feedback_h2ft.svg'"></ion-img> -->
 </ion-content>
-
-<!-- <fouly-content-centered>
-   <ion-card class="ion-text-center">
-      <ion-img [src]="'assets/img/svg/undraw_feedback_h2ft.svg'"></ion-img>
-      <ion-card-header>
-         <ion-card-title>Vous avez une idée ?</ion-card-title>
-         <ion-card-subtitle>Soummetez-nous vos idées et/ou commentaires. Il nous fera plaisir de vous lire et améliorer Fouly!</ion-card-subtitle>
-      </ion-card-header>
-      <ion-card-content>
-         <form [formGroup]="commentsForm" novalidate (ngSubmit)="submit(commentsForm.value)">
-            <ion-list lines="none">
-               <ion-item>
-                  <ion-input color="secondary" placeholder="À quel sujet?" type="text" required formControlName="subject"></ion-input>
-               </ion-item>
-               <ion-item>
-                  <ion-textarea
-                     placeholder="Entrez vos commentaires, suggestions ou idées."
-                     color="secondary"
-                     type="text"
-                     rows="6"
-                     formControlName="detail"
-                  ></ion-textarea>
-               </ion-item>
-            </ion-list>
-
-            <ion-text color="primary">
-               <p [hidden]="!submitted" class="ion-padding-start">
-                  Commentaire envoyé avec succès, merci.
-               </p>
-            </ion-text>
-
-            <div class="ion-padding">
-               <ion-button expand="block" type="submit" [disabled]="disabled">Envoyer</ion-button>
-            </div>
-         </form>
-      </ion-card-content>
-   </ion-card>
-</fouly-content-centered> -->

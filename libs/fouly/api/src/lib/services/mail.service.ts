@@ -19,7 +19,7 @@ export class MailService {
     axios.defaults.headers.post['Content-Type'] = 'application/json';
     const message = {
       personalizations: [{ to: [{ email: emailToAdmin }] }],
-      from: { email: emailToAdmin },
+      from: { email: cmd.fromEmail },
       subject: cmd.subject,
       content: [
         {

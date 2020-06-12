@@ -13,6 +13,7 @@ import { filter, flatMap, map, take, tap } from 'rxjs/operators';
 export class StoreComponent implements OnInit {
   isCurrentlyFavorite$: Observable<boolean>;
   mainImage$: Observable<string>;
+  notGoogleImage = false;
   constructor(
     private placeDetailsStore: PlaceDetailsStoreService,
     private route: ActivatedRoute,
@@ -36,6 +37,7 @@ export class StoreComponent implements OnInit {
         if (details[0]?.photos && details[0].photos.length > 0) {
           return this.placeDetailsStore.getPhotoUrl(details[0]?.photos[0]?.photo_reference);
         } else {
+          this.notGoogleImage = true;
           return of('assets/img/svg/undraw_best_place_r685.svg');
         }
       }),
