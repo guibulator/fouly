@@ -1,4 +1,5 @@
 import { BadRequestException, Injectable, Logger } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { ChatMessageCommand, ChatMessageResult } from '@skare/fouly/data';
 import axios from 'axios';
 import { uuid } from 'uuidv4';
@@ -7,19 +8,18 @@ import { CosmosDbSqlApiService } from './cosmosDb.sqlApi.service';
 @Injectable()
 export class ChatService {
   private readonly logger = new Logger(ChatService.name);
-
+  private apiKeyEnv = 'FOULY-CHAT-DB-KEY';
   private config: any = {
     endpoint: 'https://fouly-chat-db.documents.azure.com:443/',
-    key: '3R1032AAzCRwmXxfqsYwsuIFT6C8OxlB5QH1d2IsgjB9sIlobPxbejCHrRWAA6BI0pinNRbx9nxpoRNCr9jCMQ==',
     databaseId: 'fouly-chat-db',
     containerId: 'docs',
     partitionKey: { kind: 'Hash', paths: ['/id'] }
   };
 
-  constructor(private dbService: CosmosDbSqlApiService) {
+  constructor(private dbService: CosmosDbSqlApiService, private configService: ConfigService) {
     this.dbService.init(
       this.config.endpoint,
-      this.config.key,
+      this.configService.get<string>(this.apiKeyEnv),
       this.config.databaseId,
       this.config.containerId,
       this.config.partitionKey

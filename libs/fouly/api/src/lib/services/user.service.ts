@@ -1,29 +1,32 @@
 import { Injectable } from '@nestjs/common';
-import { UserCommand, UserResult } from '@skare/fouly/data';
+import { ConfigService } from '@nestjs/config';
+import { UserCommand } from '@skare/fouly/data';
 import { CosmosDbMongoApiService } from './cosmosDb.mongoApi.service';
 @Injectable()
 export class UserService {
+  private apiKeyEnv = 'FOULY-USER-DB-KEY';
   private config: any = {
-    endpoint:
-      'mongodb://fouly-users-db:9fo94Ng8leM9P0I9UW3i8yVPKgepb0dfI2HMUjUjwui9Ug54v786rJxjUNXrHnn7kt1XANxW3m2I9KBZI9Tm3w%3D%3D@fouly-users-db.mongo.cosmos.azure.com:10255/?ssl=true&appName=@fouly-users-db@',
     databaseId: 'users',
     containerId: 'user',
     partitionKey: { kind: 'Hash', paths: ['/userId'] }
   };
 
-  constructor(private dbService: CosmosDbMongoApiService) {
-    this.dbService.init(this.config.endpoint, this.config.databaseId, this.config.containerId);
+  constructor(private dbService: CosmosDbMongoApiService, private configService: ConfigService) {
+    const dbUrlEndpoint = `mongodb://fouly-users-db:${this.configService.get<string>(
+      this.apiKeyEnv
+    )}@fouly-users-db.mongo.cosmos.azure.com:10255/?ssl=true&replicaSet=globaldb&retrywrites=false&maxIdleTimeMS=120000&appName=@fouly-users-db@`;
+
+    this.dbService.init(dbUrlEndpoint, this.config.databaseId, this.config.containerId);
   }
 
-  async getUser(userId: string): Promise<UserResult> {
+  getUser(userId: string, callback: any): void {
     const query = {
       userId: userId
     };
-    const res = await this.dbService.getObjects(query);
-    return res[0];
+    this.dbService.getOneObject(query, callback);
   }
 
-  async createUpdateUser(user: UserCommand): Promise<UserResult> {
+  createUpdateUser(user: UserCommand, callback: any): void {
     const query = {
       email: user.email
     };
@@ -35,15 +38,14 @@ export class UserService {
       picture: user.picture,
       loginFrom: user.loginFrom
     };
-    await this.dbService.createUpdateObject(query, upsert);
-    const res = await this.dbService.getObjects(query);
-    return res[0];
+    this.dbService.createUpdateObject(query, upsert);
+    this.dbService.getOneObject(query, callback);
   }
 
-  async deleteUser(userId: string) {
+  deleteUser(userId: string, callback: any) {
     const query = {
       userId: userId
     };
-    return await this.dbService.deleteObjects(query);
+    this.dbService.deleteObjects(query, callback);
   }
 }

@@ -15,62 +15,51 @@ export class CosmosDbMongoApiService {
     this.colName = colName;
   }
 
-  async createUpdateObject(query: any, obj: any): Promise<any> {
+  createUpdateObject(query: any, obj: any): void {
     const updateCmd = async (client: any) => {
       const db = client.db(this.dbName);
       const collection: any = db.collection(this.colName);
-      await collection.updateOne(
+      collection.updateOne(
         query,
         {
           $set: obj
         },
         { upsert: true },
-        async function(err, doc: any) {
-          console.log(doc.toJSON());
-          const cursor = await collection.find(query);
-          cursor.each(function(err, doc) {
-            console.log(doc);
-            client.close();
-            return doc;
-          });
+        function(err, doc: any) {
+          if (err) {
+            console.log(`Error createOrUpdate : ${err}`);
+          }
         }
       );
     };
 
-    return await this.executeDbCmd(updateCmd);
+    this.executeDbCmd(updateCmd);
   }
 
-  async getObjects(query: any): Promise<any[]> {
+  getOneObject(query: any, callback: any): void {
     const queryCmd = async (client) => {
       const db = client.db(this.dbName);
       const collection: any = db.collection(this.colName);
-      const cursor = await collection.find(query);
-      let res: any;
-      cursor.each(function(err, doc) {
-        console.log(doc);
-        if (doc) {
-          res = doc;
-          return res;
-        }
-      });
-      client.close();
-      //   return res;
+      const cursor = await collection.findOne(query);
+      callback(null, cursor);
     };
 
-    return await this.executeDbCmd(await queryCmd);
+    this.executeDbCmd(queryCmd);
   }
 
-  async deleteObjects(query: any): Promise<any> {
+  deleteObjects(query: any, callback: any): void {
     const deleteCmd = async (client) => {
       const db = client.db(this.dbName);
       const collection: any = db.collection(this.colName);
-      return await collection.deleteMany(query);
+      collection.deleteMany(query, function(err, res) {
+        callback(err, res);
+      });
     };
 
-    return await this.executeDbCmd(deleteCmd);
+    this.executeDbCmd(deleteCmd);
   }
 
-  private async executeDbCmd(cmd: any) {
+  private async executeDbCmd(callback: any) {
     const client = await MongoClient.connect(this.url, { useNewUrlParser: true }).catch((err) => {
       console.log(err);
     });
@@ -79,11 +68,11 @@ export class CosmosDbMongoApiService {
     }
 
     try {
-      return await cmd(client);
+      callback(client);
     } catch (err) {
       console.log(err);
     } finally {
-      //   client.close();
+      client.close();
     }
   }
 }
