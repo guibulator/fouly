@@ -7,7 +7,7 @@
     "bootstrap": "lerna bootstrap",
     "clean": "lerna clean -y",
     "ng": "ng",
-    "backend": "ng serve fouly-backend --port=55723",
+    "backend": "ng serve fouly-backend --port=50818",
     "nx": "nx",
     "start": "ng serve",
     "build": "ng build",
