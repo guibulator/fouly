@@ -34,12 +34,14 @@
                   <h2 class="ion-text-center">{{ placeDetails[0].name }}</h2>
                   <p class="ion-text-center" [innerHtml]="placeDetails[0].shortAddress"></p>
                   <a *ngIf="placeDetails[0].website" class="ion-text-center" [href]="placeDetails[0].website" target="_blank">{{
-                     'page.websitePlace'
+                     'page.websitePlace' | translate
                   }}</a>
                   <div class="ion-margin-top">
-                     <strong>{{ (!placeDetails[0].opening_hours.open_now ? 'page.open' : 'page.close') | translate }}</strong
+                     <strong>{{ (placeDetails[0].opening_hours?.open_now ? 'page.open' : 'page.close') | translate }}</strong
                      >&nbsp;
-                     <a [foulyOpeningHours]="placeDetails[0].opening_hours.weekday_text">{{ 'page.openingHours' | translate }}</a>
+                     <a *ngIf="placeDetails[0].opening_hours?.weekday_text" [foulyOpeningHours]="placeDetails[0].opening_hours.weekday_text">{{
+                        'page.openingHours' | translate
+                     }}</a>
                   </div>
                </ng-container>
             </div>
