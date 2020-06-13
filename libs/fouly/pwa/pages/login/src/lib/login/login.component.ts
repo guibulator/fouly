@@ -20,12 +20,9 @@ import { Subscription } from 'rxjs';
 })
 export class LoginComponent implements OnInit, OnDestroy {
   public userData: UserResult = null;
-  private userFouly: UserResult = null;
+  private userLoginFrom = '';
   public loggedIn = false;
-  public showAnonymousLogin = true;
   public showUserNameInput = false;
-  public showFbLogin = true;
-  public showGoogleLogin = true;
   public userName = new FormControl('');
   private readonly subscriptions = new Subscription();
   constructor(
@@ -41,9 +38,6 @@ export class LoginComponent implements OnInit, OnDestroy {
       this.userStoreService.getAll().subscribe((users: UserResult[]) => {
         const user = users && users.length > 0 && users[0];
         this.loginUser(user);
-        if (user) {
-          this.manageLoginOptions(user.loginFrom);
-        }
       })
     );
 
@@ -54,8 +48,11 @@ export class LoginComponent implements OnInit, OnDestroy {
     );
 
     this.userName.valueChanges.subscribe((val: string) => {
-      this.userData = null;
-      this.loginUser({ name: val });
+      if (this.userData) {
+        this.loginUser({ ...this.userData, name: val });
+      } else {
+        this.loginUser({ name: val });
+      }
     });
   }
   ngOnDestroy() {
@@ -63,27 +60,27 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   loginUser(user: any) {
-    if (user && !this.userData) {
-      if (user.provider) this.manageLoginOptions(user.provider.toLowerCase());
+    if (user) {
       this.userData = {
-        _id: null,
-        providerId: user.id,
-        email: user.email,
-        firstName: user.first_name ? user.first_name : user.firstName,
-        name: user.name,
-        picture: user.picture ? user.picture : user.photoUrl,
+        userId: user.userId ? user.userId : null,
+        providerId: user.providerId ? user.providerId : null,
+        email: user.email ? user.email : null,
+        firstName: user.first_name ? user.first_name : user.firstName ? user.firstName : null,
+        name: user.name ? user.name : null,
+        picture: user.picture ? user.picture : user.photoUrl ? user.photoUrl : null,
         loginFrom: user.loginFrom
           ? user.loginFrom
           : user.provider
           ? user.provider.toLowerCase()
-          : this.getLoginFrom()
+          : this.userLoginFrom
       };
       this.loggedIn = true;
     }
   }
 
   loginWithFB() {
-    this.manageLoginOptions('facebook');
+    this.userLoginFrom = 'facebook';
+    this.showUserNameInput = false;
     if (this.platform.is('cordova')) {
       this.facebook.login(['email', 'public_profile']).then((response: FacebookLoginResponse) => {
         this.facebook.api('me?fields-id,name,email,first_name', []).then((profile) => {
@@ -96,53 +93,22 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   loginWithGoogle(): void {
-    this.manageLoginOptions('google');
+    this.userLoginFrom = 'google';
+    this.showUserNameInput = false;
     this.authService.signIn(GoogleLoginProvider.PROVIDER_ID);
   }
 
   loginAnonymus(): void {
-    this.manageLoginOptions('anonymous');
+    this.userLoginFrom = 'anonymous';
     this.showUserNameInput = true;
-  }
-
-  manageLoginOptions(loginWith: string): void {
-    switch (loginWith) {
-      case 'google':
-        this.showGoogleLogin = true;
-        this.showFbLogin = false;
-        this.showAnonymousLogin = false;
-        break;
-      case 'facebook':
-        this.showGoogleLogin = false;
-        this.showFbLogin = true;
-        this.showAnonymousLogin = false;
-        break;
-      case 'anonymous':
-        this.showGoogleLogin = false;
-        this.showFbLogin = false;
-        this.showAnonymousLogin = true;
-        break;
-      default:
-        this.showGoogleLogin = true;
-        this.showFbLogin = true;
-        this.showAnonymousLogin = true;
-        this.showUserNameInput = false;
-        this.loggedIn = false;
-    }
-  }
-
-  getLoginFrom(): string {
-    if (this.showGoogleLogin && !this.showFbLogin && !this.showAnonymousLogin) return 'google';
-    if (this.showFbLogin && !this.showGoogleLogin && !this.showAnonymousLogin) return 'facebook';
-    if (this.showAnonymousLogin && !this.showFbLogin && !this.showGoogleLogin) return 'anonymous';
   }
 
   login(): void {
     this.userStoreService.createUpdateUser(this.userData).subscribe((user: UserResult) => {
-      this.userFouly = user;
+      this.userStoreService.add(user);
+      this.userData = { ...user };
+      this.router.navigateByUrl('/');
     });
-    this.userStoreService.add(this.userData);
-    this.router.navigateByUrl('/');
   }
 
   async logout() {
@@ -150,10 +116,9 @@ export class LoginComponent implements OnInit, OnDestroy {
       await this.authService.signOut();
     }
 
-    const id = this.userData?._id;
+    const id = this.userData?.userId;
     this.userData = null;
     this.loggedIn = false;
-    this.manageLoginOptions('');
     this.userStoreService.remove(id);
   }
 }

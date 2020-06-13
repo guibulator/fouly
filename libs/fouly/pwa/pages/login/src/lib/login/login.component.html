@@ -13,13 +13,13 @@
 <ion-content padding>
    <div class="login-container">
       <div class="login-options">
-         <button *ngIf="showFbLogin" ion-button full class="fb btn" (click)="loginWithFB()">
-            <ion-icon class="icon" name="logo-facebook"></ion-icon>S'authentifier avec Facebook
+         <button ion-button full class="fb btn" (click)="loginWithFB()">
+            <ion-icon class="icon" name="logo-facebook"></ion-icon>S'identifier avec Facebook
          </button>
-         <button *ngIf="showGoogleLogin" ion-button full class="google btn" (click)="loginWithGoogle()">
-            <ion-icon class="icon" name="logo-google"></ion-icon>S'authentifier avec Google
+         <button ion-button full class="google btn" (click)="loginWithGoogle()">
+            <ion-icon class="icon" name="logo-google"></ion-icon>S'identifier avec Google
          </button>
-         <button *ngIf="showAnonymousLogin" ion-button full class="anonymus btn" (click)="loginAnonymus()">Anonyme</button>
+         <button ion-button full class="anonymus btn" (click)="loginAnonymus()">Anonyme</button>
          <ion-input
             *ngIf="showUserNameInput"
             class="fouly-username"

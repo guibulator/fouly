@@ -15,7 +15,7 @@ export class UserStoreService extends BaseStorage<UserResult> {
     private httpClient: HttpClient,
     private configService: ConfigService
   ) {
-    super(storage, 'fouly_user_store', (user: UserResult) => user?._id);
+    super(storage, 'fouly_user_store', (user: UserResult) => user?.userId);
     this.apiEndPoint = this.configService.apiUrl;
   }
 
@@ -26,5 +26,9 @@ export class UserStoreService extends BaseStorage<UserResult> {
 
   getUserFromEmail(email: string): Observable<any> {
     return this.httpClient.get(`${this.apiEndPoint}/user/getByEmail/${email}`);
+  }
+
+  getUserFromId(userId: string): Observable<any> {
+    return this.httpClient.get(`${this.apiEndPoint}/user/getById/${userId}`);
   }
 }

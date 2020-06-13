@@ -1,5 +1,5 @@
 export class UserCommand {
-  _id: string;
+  userId: string;
   providerId: string;
   name: string;
   firstName: string;

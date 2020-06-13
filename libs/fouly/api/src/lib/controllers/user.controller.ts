@@ -10,21 +10,21 @@ export class UserController {
 
   @Get('getById/:userId')
   async getById(@Param() params, @Res() res: any) {
-    this.userService.getUser(params.userId, (err: any, data: any) => {
+    this.userService.getUser({ userId: params.userId }, function(err: any, data: any) {
       res.send(data);
     });
   }
 
   @Get('getByEmail/:email')
   async getByEmail(@Param() params, @Res() res: any) {
-    this.userService.getUser(params.email, (err: any, data: any) => {
+    this.userService.getUser({ email: params.email }, function(err: any, data: any) {
       res.send(data);
     });
   }
 
   @Post('create')
   async createUser(@Body() userToSave: UserCommand, @Res() res: any) {
-    this.userService.createUpdateUser(userToSave, function(err, data) {
+    this.userService.createUpdateUser(userToSave, function(err: any, data: any) {
       res.send(data);
     });
   }

@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { UserCommand } from '@skare/fouly/data';
+import { uuid } from 'uuidv4';
 import { CosmosDbMongoApiService } from './cosmosDb.mongoApi.service';
 @Injectable()
 export class UserService {
@@ -19,19 +20,24 @@ export class UserService {
     this.dbService.init(dbUrlEndpoint, this.config.databaseId, this.config.containerId);
   }
 
-  getUser(userId: string, callback: any): void {
-    const query = {
-      userId: userId
-    };
+  getUser(query: any, callback: any): void {
     this.dbService.getOneObject(query, callback);
   }
 
   createUpdateUser(user: UserCommand, callback: any): void {
+    if (!user.email) {
+      user.email = uuid();
+    }
+    if (!user.userId) {
+      user.userId = uuid();
+    }
+
     const query = {
       email: user.email
     };
     const upsert = {
       providerId: user.providerId,
+      userId: user.userId,
       name: user.name,
       firstName: user.firstName,
       email: user.email,
