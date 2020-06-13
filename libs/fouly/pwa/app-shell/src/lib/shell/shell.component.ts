@@ -1,8 +1,11 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { NavigationEnd, Router } from '@angular/router';
 import { SwUpdate } from '@angular/service-worker';
 import { MenuController, Platform, ToastController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
+import { TranslateService } from '@ngx-translate/core';
+import { Subscription } from 'rxjs';
 import { filter, tap } from 'rxjs/operators';
 declare let gtag: Function;
 @Component({
@@ -11,10 +14,10 @@ declare let gtag: Function;
   styleUrls: ['./shell.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class ShellComponent implements OnInit {
+export class ShellComponent implements OnInit, OnDestroy {
   appPages = [
     {
-      title: 'Favoris',
+      title: 'appshell.favorites',
       url: '/app/tabs/my-places',
       icon: 'star'
     },
@@ -24,12 +27,12 @@ export class ShellComponent implements OnInit {
     //   icon: 'people'
     // },
     {
-      title: 'Map',
+      title: 'appshell.map',
       url: '/app/tabs/map',
       icon: 'location'
     },
     {
-      title: 'Contactez nous',
+      title: 'appshell.contactUs',
       url: '/contact',
       icon: 'mail'
     }
@@ -41,49 +44,74 @@ export class ShellComponent implements OnInit {
   ];
   loggedIn = false;
   dark = false;
+  languageForm: FormGroup;
+  private subcribes = new Subscription();
 
   constructor(
     private menu: MenuController,
     private platform: Platform,
     private router: Router,
-
+    private formBuilder: FormBuilder,
     private storage: Storage,
     private swUpdate: SwUpdate,
-    private toastCtrl: ToastController
+    private toastCtrl: ToastController,
+    private readonly translate: TranslateService
   ) {
     this.initializeApp();
-    this.router.events
-      .pipe(
-        filter((e) => e instanceof NavigationEnd),
-        tap((e) =>
-          gtag('config', 'G-E8SJZBBV49', {
-            page_path: e['urlAfterRedirects']
-          })
+
+    this.subcribes.add(
+      this.router.events
+        .pipe(
+          filter((e) => e instanceof NavigationEnd),
+          tap((e) =>
+            gtag('config', 'G-E8SJZBBV49', {
+              page_path: e['urlAfterRedirects']
+            })
+          )
         )
-      )
-      .subscribe();
+        .subscribe()
+    );
+
+    this.languageForm = this.formBuilder.group({
+      language: 'fr'
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.subcribes.unsubscribe();
   }
 
   async ngOnInit() {
-    this.swUpdate.available.subscribe(async (res) => {
-      const toast = await this.toastCtrl.create({
-        message: 'Mise à jour disponible!',
-        position: 'bottom',
-        buttons: [
-          {
-            role: 'cancel',
-            text: 'Rafraichir'
-          }
-        ]
-      });
+    this.subcribes.add(
+      this.swUpdate.available.subscribe(async (res) => {
+        const toast = await this.toastCtrl.create({
+          message: 'Mise à jour disponible!',
+          position: 'bottom',
+          buttons: [
+            {
+              role: 'cancel',
+              text: 'Rafraichir'
+            }
+          ]
+        });
 
-      await toast.present();
+        await toast.present();
 
-      toast
-        .onDidDismiss()
-        .then(() => this.swUpdate.activateUpdate())
-        .then(() => window.location.reload());
-    });
+        toast
+          .onDidDismiss()
+          .then(() => this.swUpdate.activateUpdate())
+          .then(() => window.location.reload());
+      })
+    );
+
+    this.translate.setDefaultLang('fr');
+    this.translate.use('fr');
+
+    this.subcribes.add(
+      this.languageForm.controls['language'].valueChanges.subscribe((value) => {
+        this.translate.use(value);
+      })
+    );
   }
 
   initializeApp() {

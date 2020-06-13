@@ -1,10 +1,11 @@
 <ion-app [class.dark-theme]="dark">
-   <ion-split-pane contentId="main-content">
+   <ion-split-pane when="sm" contentId="main-content">
       <ion-menu contentId="main-content">
          <ion-content>
             <ion-list lines="none">
                <ion-list-header>
-                  Fouly - Planifier vos déplacements
+                  <ion-img [src]="'assets/icons/apple-icon-72x72.png'"></ion-img>
+                  {{ 'appshell.slogan' | translate }}
                </ion-list-header>
                <ion-menu-toggle autoHide="false" *ngFor="let p of appPages; let i = index">
                   <!-- Todo : Fix ion router
@@ -18,22 +19,29 @@
                   <ion-item button (click)="gotoLink(p.url)" detail="false">
                      <ion-icon slot="start" [name]="p.icon + '-outline'"></ion-icon>
                      <ion-label>
-                        {{ p.title }}
+                        {{ p.title | translate }}
                      </ion-label>
                   </ion-item>
                </ion-menu-toggle>
+               <ion-item [formGroup]="languageForm">
+                  <ion-label>{{ 'appshell.language' | translate }}</ion-label>
+                  <ion-select [placeholder]="'appshell.selectOne' | translate" formControlName="language">
+                     <ion-select-option value="fr">Francais</ion-select-option>
+                     <ion-select-option value="en">English</ion-select-option>
+                  </ion-select>
+               </ion-item>
             </ion-list>
 
             <ion-list *ngIf="loggedIn" lines="none">
                <ion-list-header>
-                  Votre compte
+                  {{ 'appshell.accountTitle' | translate }}
                </ion-list-header>
 
                <ion-menu-toggle autoHide="false">
                   <ion-item routerLink="/account" routerLinkActive="active" routerDirection="root" detail="false">
                      <ion-icon slot="start" name="person"></ion-icon>
                      <ion-label>
-                        Votre compte
+                        {{ 'appshell.yourAccount' | translate }}
                      </ion-label>
                   </ion-item>
                </ion-menu-toggle>
@@ -42,7 +50,7 @@
                   <ion-item routerLink="/support" routerLinkActive="active" routerDirection="root" detail="false">
                      <ion-icon slot="start" name="help"></ion-icon>
                      <ion-label>
-                        Support
+                        {{ 'appshell.support' | translate }}
                      </ion-label>
                   </ion-item>
                </ion-menu-toggle>
@@ -51,7 +59,7 @@
                   <ion-item button (click)="logout()" detail="false">
                      <ion-icon slot="start" name="log-out"></ion-icon>
                      <ion-label>
-                        Se déconnecter
+                        {{ 'appshell.logout' | translate }}
                      </ion-label>
                   </ion-item>
                </ion-menu-toggle>
@@ -59,53 +67,27 @@
 
             <ion-list *ngIf="!loggedIn" lines="none">
                <ion-list-header>
-                  Compte
+                  {{ 'appshell.accountTitle' | translate }}
                </ion-list-header>
 
                <ion-menu-toggle autoHide="false">
                   <ion-item button (click)="gotoLink('/login')" detail="false">
                      <ion-icon slot="start" name="log-in"></ion-icon>
                      <ion-label>
-                        S'authentifier
+                        {{ 'appshell.login' | translate }}
                      </ion-label>
                   </ion-item>
                </ion-menu-toggle>
-
-               <!-- <ion-menu-toggle autoHide="false">
-                  <ion-item routerLink="/support" routerLinkActive="active" routerDirection="root" detail="false">
-                     <ion-icon slot="start" name="help"></ion-icon>
-                     <ion-label>
-                        Support
-                     </ion-label>
-                  </ion-item>
-               </ion-menu-toggle> -->
-
-               <!-- <ion-menu-toggle autoHide="false">
-                  <ion-item routerLink="/signup" routerLinkActive="active" routerDirection="root" detail="false">
-                     <ion-icon slot="start" name="person-add"></ion-icon>
-                     <ion-label>
-                        Créer un compte Fouly
-                     </ion-label>
-                  </ion-item>
-               </ion-menu-toggle> -->
-
-               <!-- <ion-item>
-                  <ion-icon slot="start" name="moon-outline"></ion-icon>
-                  <ion-label>
-                     Mode sombre
-                  </ion-label>
-                  <ion-toggle [(ngModel)]="dark"></ion-toggle>
-               </ion-item> -->
             </ion-list>
 
             <ion-list lines="none">
                <ion-list-header>
-                  Documentation
+                  {{ 'appshell.documentation' | translate }}
                </ion-list-header>
                <ion-menu-toggle autoHide="false">
                   <ion-item button (click)="openTutorial()" detail="false">
                      <ion-icon slot="start" name="hammer"></ion-icon>
-                     <ion-label>Revoir l'introduction</ion-label>
+                     <ion-label>{{ 'appshell.introduction' | translate }}</ion-label>
                   </ion-item>
                </ion-menu-toggle>
             </ion-list>

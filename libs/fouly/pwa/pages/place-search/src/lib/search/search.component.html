@@ -1,6 +1,7 @@
 <ion-header padding>
    <ion-toolbar>
       <ion-searchbar
+         color="primary"
          mode="md"
          showCancelButton="focus"
          (ionCancel)="onCancel()"
@@ -27,7 +28,7 @@
    </ion-list>
 
    <ion-list *ngIf="favorites$ | async as favorites">
-      <ion-list-header>Favoris</ion-list-header>
+      <ion-list-header *ngIf="favorites.length > 0">Favoris</ion-list-header>
       <ion-item *ngFor="let p of favorites">
          <ion-icon color="primary" slot="start" name="location-outline"></ion-icon>
          <ion-label
@@ -38,6 +39,7 @@
          </ion-label>
       </ion-item>
    </ion-list>
+   <ng-container *ngTemplateOutlet="imgTemplate"></ng-container>
 </ion-content>
 
 <ng-template #busyTemplate>
@@ -56,4 +58,10 @@
          </ion-label>
       </ion-item>
    </ion-list>
+</ng-template>
+
+<ng-template #imgTemplate>
+   <fouly-content-centered sizeLg="6">
+      <ion-img [src]="'assets/img/svg/undraw_searching_p5ux.svg'" class="empty-image"></ion-img>
+   </fouly-content-centered>
 </ng-template>

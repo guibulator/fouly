@@ -73,7 +73,22 @@
                 "input": "node_modules/ionicons/dist/ionicons/svg",
                 "output": "./svg"
               },
-              "apps/fouly/pwa/src/manifest.webmanifest"
+              "apps/fouly/pwa/src/manifest.webmanifest",
+              {
+                "glob": "**/*.json",
+                "input": "libs/fouly/pwa/pages/contact/src/lib/contact/assets/i18n",
+                "output": "assets/i18n"
+              },
+              {
+                "glob": "**/*.json",
+                "input": "libs/fouly/pwa/pages/my-places/src/lib/favorites/assets/i18n",
+                "output": "assets/i18n"
+              },
+              {
+                "glob": "**/*.json",
+                "input": "libs/fouly/pwa/app-shell/src/lib/shell/assets/i18n",
+                "output": "assets/i18n"
+              }
             ],
             "styles": [
               {
@@ -94,9 +109,9 @@
               "outputHashing": "all",
               "sourceMap": false,
               "extractCss": true,
-              "namedChunks": false,
+              "namedChunks": true,
               "extractLicenses": true,
-              "vendorChunk": false,
+              "vendorChunk": true,
               "buildOptimizer": true,
               "budgets": [
                 {

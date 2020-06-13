@@ -1,0 +1,17 @@
+{
+  "appshell": {
+    "slogan": "PLAN YOUR TRAVEL",
+    "favorites": "Favorites",
+    "language": "Language",
+    "map": "Map",
+    "contactUs": "Contact Us",
+    "selectOne": "Select one",
+    "accountTitle": "Account",
+    "yourAccount": "Your account",
+    "support": "Support",
+    "logout": "Logout",
+    "login": "Login",
+    "documentation": "Documentation",
+    "introduction": "Review the introduction"
+  }
+}

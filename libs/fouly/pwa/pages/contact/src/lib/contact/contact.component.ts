@@ -1,6 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ToastController } from '@ionic/angular';
+import { TranslateService } from '@ngx-translate/core';
+import { from, Subscription } from 'rxjs';
+import { finalize, flatMap, retry, tap } from 'rxjs/operators';
 import { ContactService } from '../contact.service';
 
 @Component({
@@ -9,36 +12,71 @@ import { ContactService } from '../contact.service';
   styleUrls: ['./contact.component.scss']
 })
 export class ContactComponent implements OnInit, OnDestroy {
-  private subscr: Subscription;
-  private contactService: ContactService;
+  private subscriptions = new Subscription();
   commentsForm: FormGroup;
 
-  constructor(private contactservice: ContactService, private formBuilder: FormBuilder) {
-    this.contactService = contactservice;
+  constructor(
+    private contactService: ContactService,
+    private formBuilder: FormBuilder,
+    private readonly translate: TranslateService,
+    private readonly toastController: ToastController
+  ) {
     this.commentsForm = this.formBuilder.group({
       subject: '',
-      detail: ''
+      message: '',
+      fromEmail: new FormControl('', Validators.compose([Validators.required, Validators.email]))
     });
   }
 
   submitted = false;
   disabled = true;
+  sending = false;
 
   ngOnInit() {
-    this.subscr = this.commentsForm.valueChanges.subscribe(() => {
-      this.disabled = false;
-      this.submitted = false;
-    });
+    this.subscriptions.add(
+      this.commentsForm.valueChanges.subscribe(() => {
+        this.disabled = this.commentsForm.invalid;
+        this.submitted = false;
+      })
+    );
+
+    this.subscriptions.add(
+      this.translate.store.onLangChange.subscribe((lang) => {
+        this.translate.use(lang.lang);
+      })
+    );
+
+    this.translate.use(this.translate.store.currentLang);
   }
 
   submit(formData: any) {
     this.disabled = true;
-    this.contactService.sendMail(formData).subscribe(() => {
-      this.submitted = true;
-    });
+    this.sending = true;
+    this.contactService
+      .sendMail(formData)
+      .pipe(
+        retry(3),
+        flatMap(() =>
+          from(
+            this.toastController.create({
+              message: this.translate.instant('page.contact.thanks'),
+              duration: 3000,
+              color: 'tertiary',
+              position: 'middle'
+            })
+          )
+        ),
+        tap((toast) => toast.present()),
+        finalize(() => (this.sending = false))
+      )
+      .subscribe(() => {
+        this.disabled = false;
+        this.commentsForm.reset();
+        this.submitted = true;
+      });
   }
 
   ngOnDestroy() {
-    this.subscr.unsubscribe();
+    this.subscriptions.unsubscribe();
   }
 }
