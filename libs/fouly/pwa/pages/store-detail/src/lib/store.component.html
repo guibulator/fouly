@@ -33,10 +33,14 @@
                <ng-container *ngIf="placeDetails[0]">
                   <h2 class="ion-text-center">{{ placeDetails[0].name }}</h2>
                   <p class="ion-text-center" [innerHtml]="placeDetails[0].shortAddress"></p>
-                  <!-- <p [innerHtml]="placeDetails[0].business_status"></p> -->
-                  <!-- <p [innerHtml]="placeDetails[0].formatted_phone_number"></p> -->
-                  <a class="ion-text-center" [href]="placeDetails[0].website" target="_blank">{{ placeDetails[0].website }}</a>
-                  <p *ngIf="placeDetails[0].opening_hours"><strong> </strong>{{ !placeDetails[0].opening_hours.open_now ? 'FERMÉ' : 'OUVERT' }}</p>
+                  <a *ngIf="placeDetails[0].website" class="ion-text-center" [href]="placeDetails[0].website" target="_blank"
+                     >Site web du commerçant</a
+                  >
+                  <div class="ion-margin-top">
+                     <strong>{{ !placeDetails[0].opening_hours.open_now ? 'FERMÉ' : 'OUVERT' }}</strong
+                     >&nbsp;
+                     <a [foulyOpeningHours]="placeDetails[0].opening_hours.weekday_text">Horaire</a>
+                  </div>
                </ng-container>
             </div>
          </ion-card-header>
