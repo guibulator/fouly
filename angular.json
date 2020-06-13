@@ -86,6 +86,11 @@
               },
               {
                 "glob": "**/*.json",
+                "input": "libs/fouly/pwa/pages/store-detail/src/lib/assets/i18n",
+                "output": "assets/i18n"
+              },
+              {
+                "glob": "**/*.json",
                 "input": "libs/fouly/pwa/app-shell/src/lib/shell/assets/i18n",
                 "output": "assets/i18n"
               }

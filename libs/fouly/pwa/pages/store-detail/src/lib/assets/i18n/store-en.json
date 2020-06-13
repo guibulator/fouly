@@ -1,0 +1,13 @@
+{
+  "page": {
+    "title": "Details",
+    "addFavorite": "Add to favorites",
+    "websitePlace": "Merchant website",
+    "open": "OPEN",
+    "close": "CLOSE",
+    "openingHours": "Opening hours",
+    "comments": "Comments",
+    "live": "Live",
+    "myFavorites": "My favorites"
+  }
+}

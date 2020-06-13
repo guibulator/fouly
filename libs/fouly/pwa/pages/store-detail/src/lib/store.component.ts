@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { PlaceDetailsResult } from '@skare/fouly/data';
 import { FavoriteStoreService, PlaceDetailsStoreService } from '@skare/fouly/pwa/core';
-import { combineLatest, Observable, of } from 'rxjs';
+import { combineLatest, Observable, of, Subscription } from 'rxjs';
 import { filter, flatMap, map, take, tap } from 'rxjs/operators';
 
 @Component({
@@ -10,15 +11,18 @@ import { filter, flatMap, map, take, tap } from 'rxjs/operators';
   templateUrl: './store.component.html',
   styleUrls: ['./store.component.scss']
 })
-export class StoreComponent implements OnInit {
+export class StoreComponent implements OnInit, OnDestroy {
   isCurrentlyFavorite$: Observable<boolean>;
   mainImage$: Observable<string>;
   notGoogleImage = false;
+  subscriptions = new Subscription();
+
   constructor(
     private placeDetailsStore: PlaceDetailsStoreService,
     private route: ActivatedRoute,
     private router: Router,
-    private favoriteStoreService: FavoriteStoreService
+    private favoriteStoreService: FavoriteStoreService,
+    private readonly translate: TranslateService
   ) {
     this.favoriteStoreService.getAll().subscribe();
   }
@@ -47,6 +51,14 @@ export class StoreComponent implements OnInit {
     this.isCurrentlyFavorite$ = this.favoriteStoreService.store$.pipe(
       map((f) => !!f.find((fav) => fav.placeId === this.route.snapshot.params['placeId']))
     );
+
+    this.subscriptions.add(
+      this.translate.store.onLangChange.subscribe((lang) => {
+        this.translate.use(lang.lang);
+      })
+    );
+
+    this.translate.use(this.translate.store.currentLang);
   }
 
   gotoChat(placeName: string) {
@@ -73,5 +85,9 @@ export class StoreComponent implements OnInit {
           });
         }
       });
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
   }
 }
