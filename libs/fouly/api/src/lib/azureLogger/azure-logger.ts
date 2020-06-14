@@ -22,6 +22,6 @@ export class Logger extends NestLogger {
     this.azureContext().log.verbose(message);
   }
   verbose(message: any, context?: string) {
-    this.azureContext().log(message);
+    this.azureContext().log.info(message);
   }
 }

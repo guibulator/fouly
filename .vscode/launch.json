@@ -11,7 +11,7 @@
       "name": "Attach to fouly-backend",
       "type": "node",
       "request": "attach",
-      "port": 55723
+      "port": 50818
     }
   ]
 }
