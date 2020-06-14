@@ -1,12 +1,12 @@
 import { Controller, Get } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
+import { Logger } from '../azureLogger';
 
 @Controller('test')
 export class FoulyApiController {
-  constructor(private configurationService: ConfigService) {}
+  constructor(private logger: Logger) {}
   @Get()
   getData() {
-    console.log('api called');
+    this.logger.verbose('Test logger is working');
     return `Working ${new Date()}`;
   }
 }

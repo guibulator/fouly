@@ -383,7 +383,7 @@
           "options": {
             "webpackConfig": "apps/fouly/backend/webpack.config.js",
             "outputPath": "dist/apps/fouly/backend-local-azure",
-            "main": "apps/fouly/backend/src/main.azure.ts",
+            "main": "apps/fouly/backend/src/fouly-nest-az-func/index.ts",
             "tsConfig": "apps/fouly/backend/tsconfig.app.json"
           }
         },

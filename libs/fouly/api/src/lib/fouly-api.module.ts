@@ -1,5 +1,7 @@
-import { Module } from '@nestjs/common';
+import { Context } from '@azure/functions';
+import { DynamicModule, Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import { AzureLoggerModule } from './azureLogger';
 import { ChatController } from './controllers/chat.controller';
 import { FoulyApiController } from './controllers/fouly-api.controller';
 import { GeoLocationController } from './controllers/geo-location.controller';
@@ -9,20 +11,25 @@ import { ChatService } from './services/chat.service';
 import { CosmosDbService } from './services/cosmosDb.service';
 import { MailService } from './services/mail.service';
 import { PlaceDetailsService } from './services/placeDetails.service';
-@Module({
-  controllers: [
-    FoulyApiController,
-    PlaceDetailsController,
-    ChatController,
-    MailController,
-    GeoLocationController
-  ],
-  imports: [
-    ConfigModule.forRoot({
-      ignoreEnvFile: true
-    })
-  ],
-  providers: [PlaceDetailsService, ChatService, CosmosDbService, MailService],
-  exports: []
-})
-export class FoulyApiModule {}
+@Module({})
+export class FoulyApiModule {
+  static forRoot(azureContextAccessor: () => Context): DynamicModule {
+    return {
+      module: FoulyApiModule,
+      controllers: [
+        FoulyApiController,
+        PlaceDetailsController,
+        ChatController,
+        MailController,
+        GeoLocationController
+      ],
+      imports: [
+        ConfigModule.forRoot({
+          ignoreEnvFile: true
+        }),
+        AzureLoggerModule.forRoot(azureContextAccessor)
+      ],
+      providers: [PlaceDetailsService, ChatService, CosmosDbService, MailService]
+    };
+  }
+}
