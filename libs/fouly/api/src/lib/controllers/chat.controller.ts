@@ -19,7 +19,8 @@ export class ChatController {
     // const signalRurl = this.configService.get<string>(this.chatHubUrl);
 
     const signalRurl = `https://skaresendgridapi.azurewebsites.net/api/chat`;
-    return this.chatService.postNewMsg(msgToSave, signalRurl);
+    await this.chatService.postNewMsg(msgToSave);
+    await this.chatService.sendSignalRMessage(msgToSave, signalRurl);
   }
 
   @Get('signalR/infoConnection')

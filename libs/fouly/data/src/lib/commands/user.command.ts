@@ -1,4 +1,4 @@
-export class UserResult {
+export class UserCommand {
   userId: string;
   providerId: string;
   name: string;

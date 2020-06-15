@@ -8,11 +8,15 @@ import { FoulyApiController } from './controllers/fouly-api.controller';
 import { GeoLocationController } from './controllers/geo-location.controller';
 import { MailController } from './controllers/mail.controller';
 import { PlaceDetailsController } from './controllers/place-details.controller';
+import { UserController } from './controllers/user.controller';
 import { AllExceptionsFilter } from './filters/exception.filter';
 import { ChatService } from './services/chat.service';
-import { CosmosDbService } from './services/cosmosDb.service';
+import { CosmosDbMongoApiService } from './services/cosmosDb.mongoApi.service';
+import { CosmosDbSqlApiService } from './services/cosmosDb.sqlApi.service';
 import { MailService } from './services/mail.service';
 import { PlaceDetailsService } from './services/placeDetails.service';
+import { UserService } from './services/user.service';
+
 @Module({})
 export class FoulyApiModule {
   static forRoot(azureContextAccessor: () => Context): DynamicModule {
@@ -22,6 +26,7 @@ export class FoulyApiModule {
         FoulyApiController,
         PlaceDetailsController,
         ChatController,
+        UserController,
         MailController,
         GeoLocationController
       ],
@@ -34,7 +39,9 @@ export class FoulyApiModule {
       providers: [
         PlaceDetailsService,
         ChatService,
-        CosmosDbService,
+        CosmosDbSqlApiService,
+        CosmosDbMongoApiService,
+        UserService,
         MailService,
         { provide: APP_FILTER, useClass: AllExceptionsFilter }
       ]
