@@ -4,10 +4,24 @@ import { ConfigModuleOptions } from '@nestjs/config/dist/interfaces';
 import { FoulyApiModule } from '@skare/fouly/api';
 @Module({})
 export class BootstrapModule {
-  static forRoot(options?: ConfigModuleOptions): DynamicModule {
+  static forRoot(options?: ConfigModuleOptions, contextAccessor?: () => any): DynamicModule {
+    if (!contextAccessor) {
+      contextAccessor = localCtxLogger;
+    }
     return {
       module: BootstrapModule,
-      imports: [FoulyApiModule, ConfigModule.forRoot(options)]
+      imports: [ConfigModule.forRoot(options), FoulyApiModule.forRoot(contextAccessor)]
     };
   }
+}
+
+function localCtxLogger() {
+  return {
+    log: {
+      info: console.log,
+      error: console.log,
+      verbose: console.log,
+      warn: console.log
+    }
+  };
 }

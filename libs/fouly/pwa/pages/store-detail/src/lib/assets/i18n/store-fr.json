@@ -1,0 +1,13 @@
+{
+  "page": {
+    "title": "Détails",
+    "addFavorite": "Ajouter au favoris",
+    "websitePlace": "Site web du commerçant",
+    "open": "OUVERT",
+    "close": "FERMÉ",
+    "openingHours": "Horaire",
+    "comments": "Commentaires",
+    "live": "En direct",
+    "myFavorites": "Mes favoris"
+  }
+}

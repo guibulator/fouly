@@ -2,7 +2,7 @@
  * This entry point is there for debugging purposes. The app is deployed
  * as an azure function through the main.azure.ts
  */
-import { Logger } from '@nestjs/common';
+import { Logger as NestLogger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { BootstrapModule } from './bootstrap.module';
@@ -23,7 +23,7 @@ async function bootstrap() {
   app.setGlobalPrefix(globalPrefix);
   const port = process.env.PORT || 3333;
   await app.listen(port, () => {
-    Logger.log('Listening at http://localhost:' + port + '/' + globalPrefix);
+    NestLogger.log('Listening at http://localhost:' + port + '/' + globalPrefix);
   });
 }
 
