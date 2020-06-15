@@ -11,7 +11,7 @@ export class MailService {
     this.logger.setContext(MailService.name);
   }
 
-  async sendMail(cmd: MailCommand): Promise<void> {
+  async sendMail(cmd: MailCommand): Promise<boolean> {
     this.logger.debug(`About to send email ${JSON.stringify(cmd)}`);
     const sendGridKey = this.configService.get<string>(this.apiKeyEnv);
     const emailToAdmin = this.configService.get<string>(this.mailFoulyAdmin);
@@ -34,7 +34,7 @@ export class MailService {
       this.logger.debug('Before calling axios.post');
       await axios.post(sendGridUrl, message);
       this.logger.debug('after calling axios.post');
-      return;
+      return true;
     } catch (err) {
       this.logger.error('There was an error calling axios.post', err);
       throw new BadRequestException();
