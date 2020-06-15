@@ -7,8 +7,9 @@ export class MailService {
   private apiKeyEnv = 'FOULY-SENDGRID-API-KEY';
   private mailFoulyAdmin = 'FOULY-EMAIL-ADMIN';
   private sendGridUrl = 'FOULY-SENDGRID-URL';
-  private readonly logger = new Logger(MailService.name);
-  constructor(private configService: ConfigService) {}
+  constructor(private configService: ConfigService, private logger: Logger) {
+    this.logger.setContext(MailService.name);
+  }
 
   async sendMail(cmd: MailCommand): Promise<void> {
     this.logger.debug(`About to send email ${JSON.stringify(cmd)}`);
@@ -30,7 +31,9 @@ export class MailService {
     };
 
     try {
+      this.logger.debug('Before calling axios.post');
       await axios.post(sendGridUrl, message);
+      this.logger.debug('after calling axios.post');
       return;
     } catch (err) {
       this.logger.error('There was an error calling axios.post', err);
