@@ -3,4 +3,5 @@ export * from './favorite.result';
 export * from './geolocation.result';
 export * from './place-details.result';
 export * from './search.result';
+export * from './store-crowd.result';
 export * from './user.result';

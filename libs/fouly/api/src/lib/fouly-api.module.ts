@@ -15,7 +15,9 @@ import { CosmosDbMongoApiService } from './services/cosmosDb.mongoApi.service';
 import { CosmosDbSqlApiService } from './services/cosmosDb.sqlApi.service';
 import { MailService } from './services/mail.service';
 import { PlaceDetailsService } from './services/placeDetails.service';
+import { StoreCrowdService } from './services/storeCrowd.service';
 import { UserService } from './services/user.service';
+import { WeatherService } from './services/weather.service';
 
 @Module({})
 export class FoulyApiModule {
@@ -43,6 +45,8 @@ export class FoulyApiModule {
         CosmosDbMongoApiService,
         UserService,
         MailService,
+        StoreCrowdService,
+        WeatherService,
         { provide: APP_FILTER, useClass: AllExceptionsFilter }
       ]
     };
