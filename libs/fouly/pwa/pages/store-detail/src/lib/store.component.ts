@@ -35,7 +35,6 @@ export class StoreComponent implements OnInit, OnDestroy {
     this.placeDetails$ = this.placeDetailsStore.placeDetails$;
 
     this.mainImage$ = this.placeDetails$.pipe(
-      tap(() => console.log('subscribed')),
       filter((details) => details && details.length > 0),
       flatMap((details) => {
         if (details[0]?.photos && details[0].photos.length > 0) {
@@ -69,6 +68,10 @@ export class StoreComponent implements OnInit, OnDestroy {
     this.router.navigate(['my-places'], { relativeTo: this.route });
   }
 
+  gotoContribute() {
+    this.router.navigate(['contribute'], { relativeTo: this.route });
+  }
+
   addRemoveToFavorite() {
     combineLatest([this.placeDetails$.pipe(take(1)), this.isCurrentlyFavorite$])
       .pipe(take(1))
@@ -77,7 +80,7 @@ export class StoreComponent implements OnInit, OnDestroy {
           this.favoriteStoreService.remove(placeDetails[0].place_id);
         } else {
           return this.favoriteStoreService.add({
-            address: placeDetails[0].adr_address,
+            address: placeDetails[0].shortAddress,
             placeId: placeDetails[0].place_id,
             name: placeDetails[0].name,
             lat: placeDetails[0].geometry.location.lat,

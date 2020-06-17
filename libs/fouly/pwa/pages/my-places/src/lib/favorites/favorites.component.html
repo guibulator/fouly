@@ -22,7 +22,7 @@
                         {{ p.name }}
                      </h2>
                      <p [innerHtml]="p.address"></p>
-                     <fouly-affluence></fouly-affluence>
+                     <fouly-affluence (contribute)="gotoContribute(p.placeId)"></fouly-affluence>
                      <!-- <ion-chip class="fouly-chip" color="primary">
                         <ion-icon class="fouly-icon-list" color="warning" size="large" name="ellipse"></ion-icon>
                         <ion-label>&nbsp;Attente moyenne</ion-label>

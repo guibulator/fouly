@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook/ngx';
-import { Platform } from '@ionic/angular';
+import { NavController, Platform } from '@ionic/angular';
 import { UserResult } from '@skare/fouly/data';
 import { UserStoreService } from '@skare/fouly/pwa/core';
 import {
@@ -30,7 +30,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     private platform: Platform,
     private authService: AuthService,
     private router: Router,
-    private userStoreService: UserStoreService
+    private userStoreService: UserStoreService,
+    private navController: NavController
   ) {}
 
   ngOnInit(): void {
@@ -107,7 +108,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.userStoreService.createUpdateUser(this.userData).subscribe((user: UserResult) => {
       this.userStoreService.add(user);
       this.userData = { ...user };
-      this.router.navigateByUrl('/');
+      this.navController.back();
     });
   }
 

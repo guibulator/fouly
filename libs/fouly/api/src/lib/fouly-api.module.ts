@@ -4,6 +4,7 @@ import { ConfigModule } from '@nestjs/config';
 import { APP_FILTER } from '@nestjs/core';
 import { AzureLoggerModule } from './azureLogger';
 import { ChatController } from './controllers/chat.controller';
+import { ContributeController } from './controllers/contribute.controller';
 import { FoulyApiController } from './controllers/fouly-api.controller';
 import { GeoLocationController } from './controllers/geo-location.controller';
 import { MailController } from './controllers/mail.controller';
@@ -11,6 +12,7 @@ import { PlaceDetailsController } from './controllers/place-details.controller';
 import { UserController } from './controllers/user.controller';
 import { AllExceptionsFilter } from './filters/exception.filter';
 import { ChatService } from './services/chat.service';
+import { ContributeService } from './services/contribute.service';
 import { CosmosDbMongoApiService } from './services/cosmosDb.mongoApi.service';
 import { CosmosDbSqlApiService } from './services/cosmosDb.sqlApi.service';
 import { MailService } from './services/mail.service';
@@ -28,7 +30,8 @@ export class FoulyApiModule {
         ChatController,
         UserController,
         MailController,
-        GeoLocationController
+        GeoLocationController,
+        ContributeController
       ],
       imports: [
         ConfigModule.forRoot({
@@ -43,6 +46,7 @@ export class FoulyApiModule {
         CosmosDbMongoApiService,
         UserService,
         MailService,
+        ContributeService,
         { provide: APP_FILTER, useClass: AllExceptionsFilter }
       ]
     };

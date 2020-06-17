@@ -1,4 +1,13 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  EventEmitter,
+  OnDestroy,
+  OnInit,
+  Output,
+  ViewChild
+} from '@angular/core';
 import { fromEvent, Subscription } from 'rxjs';
 
 @Component({
@@ -7,14 +16,18 @@ import { fromEvent, Subscription } from 'rxjs';
 })
 export class FoulyAffluenceComponent implements OnInit, AfterViewInit, OnDestroy {
   private subs = new Subscription();
-  @ViewChild('affluence', { static: true, read: ElementRef }) affluence: ElementRef;
+  @Output() contribute = new EventEmitter();
+
+  @ViewChild('affluence', { read: ElementRef }) affluence: ElementRef;
+  @ViewChild('contribute', { read: ElementRef }) contributeChild: ElementRef;
   constructor() {}
 
   ngAfterViewInit(): void {
     this.subs.add(
-      fromEvent(this.affluence.nativeElement, 'click').subscribe((e: Event) => {
+      fromEvent(this.contributeChild.nativeElement, 'click').subscribe((e: Event) => {
         e.preventDefault();
         e.stopPropagation();
+        this.contribute.emit();
       })
     );
   }

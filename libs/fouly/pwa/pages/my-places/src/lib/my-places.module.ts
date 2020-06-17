@@ -28,6 +28,11 @@ export function createTranslateLoader(http: HttpClient) {
       {
         path: '',
         component: FavoritesComponent
+      },
+      {
+        path: 'contribute',
+        loadChildren: () =>
+          import('@skare/fouly/pwa/pages/contribute').then((module) => module.ContributeModule)
       }
     ])
   ],

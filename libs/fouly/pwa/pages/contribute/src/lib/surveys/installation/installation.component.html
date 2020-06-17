@@ -1,0 +1,14 @@
+<ion-card>
+   <ion-img [src]="'assets/img/svg/happy_unhappy.svg'"></ion-img>
+   <ion-card-header>
+      <ion-card-title class="ion-text-center">{{ "Les installations d'attente sont-elles ..." | translate }}</ion-card-title>
+   </ion-card-header>
+   <ion-card-content>
+      <ion-button (click)="clicked('good')" expand="full" color="secondary"
+         >{{ 'Adéquates' | translate }} <ion-ripple-effect type="bounded"></ion-ripple-effect
+      ></ion-button>
+      <ion-button (click)="clicked('notgood')" expand="full" color="secondary"
+         >{{ 'Non adéquates' | translate }} <ion-ripple-effect type="unbounded"></ion-ripple-effect
+      ></ion-button>
+   </ion-card-content>
+</ion-card>

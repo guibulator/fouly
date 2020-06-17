@@ -31,7 +31,7 @@ export class ChannelComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(
     private chatService: ChatStoreService,
     private route: ActivatedRoute,
-    private userLoginService: UserStoreService
+    private userStoreService: UserStoreService
   ) {}
 
   ngOnInit() {
@@ -39,7 +39,7 @@ export class ChannelComponent implements OnInit, OnDestroy, AfterViewInit {
     this.placeName = this.route.snapshot.params['placeName'];
 
     this.subscriptions.add(
-      this.userLoginService.getAll().subscribe((users: UserResult[]) => {
+      this.userStoreService.getAll().subscribe((users: UserResult[]) => {
         this.user = users && users.length > 0 && users[0];
       })
     );
