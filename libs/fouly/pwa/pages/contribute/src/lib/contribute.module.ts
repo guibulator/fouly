@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { FoulyUiModule } from '@skare/fouly/shared/ui';
 import { SurveyFormComponent } from './survey-form/survey-form.component';
@@ -11,6 +11,7 @@ import { DelayComponent } from './surveys/delay/delay.component';
 import { InstallationComponent } from './surveys/installation/installation.component';
 import { NumberComponent } from './surveys/number/number.component';
 import { ThanksComponent } from './surveys/thanks/thanks.component';
+
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/contribute-', '.json');
 }
@@ -20,7 +21,7 @@ export function createTranslateLoader(http: HttpClient) {
     CommonModule,
     TranslateModule.forChild({
       loader: {
-        provide: TranslateModule,
+        provide: TranslateLoader,
         useFactory: createTranslateLoader,
         deps: [HttpClient]
       },

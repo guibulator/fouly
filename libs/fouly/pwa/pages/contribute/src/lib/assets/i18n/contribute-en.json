@@ -2,6 +2,31 @@
   "page": {
     "contribute": {
       "title": "Contribute"
+    },
+
+    "delay": {
+      "title": "Is the waiting line moving forward ...",
+      "fast": "Quickly",
+      "slow": "Slowly"
+    },
+
+    "installation": {
+      "title": "Are the waiting facilities ...",
+      "adequate": "Adequate",
+      "notAdequate": "Not Adequate"
+    },
+
+    "number": {
+      "title": "How many people are there in front of you ?",
+      "less5": "Less than 5 people",
+      "about10": "About 10 people",
+      "about20": "About 20 people",
+      "more30": "More than 30 people"
+    },
+
+    "thanks": {
+      "title": "Thanks for your contribution !",
+      "return": "Return"
     }
   }
 }

@@ -20,10 +20,13 @@ export class SurveyFormComponent implements OnInit, OnDestroy, AfterViewInit {
   private subscriptions = new Subscription();
   private stepValue: number;
   private userContribution = new ContributeCommand();
+
   lastSlide = false;
   progression = 0;
+
   @ViewChild('slides') slides: IonSlides;
   @ViewChild('content') content: IonContent;
+
   constructor(
     private readonly translate: TranslateService,
     private navController: NavController,
@@ -48,7 +51,7 @@ export class SurveyFormComponent implements OnInit, OnDestroy, AfterViewInit {
       })
     );
 
-    this.translate.use('fr');
+    this.translate.use(this.translate.store.currentLang);
   }
   /**
    * Fire and forget user contribution with 2 retry attempts

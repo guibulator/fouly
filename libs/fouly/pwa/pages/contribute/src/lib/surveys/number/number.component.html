@@ -1,20 +1,20 @@
 <ion-card>
    <ion-img [src]="'assets/img/svg/number_lineup.svg'"></ion-img>
    <ion-card-header>
-      <ion-card-title class="ion-text-center">{{ 'Combien de personnes y a-t-il devant vous ?' | translate }}</ion-card-title>
+      <ion-card-title class="ion-text-center">{{ 'page.number.title' | translate }}</ion-card-title>
    </ion-card-header>
    <ion-card-content>
       <ion-button (click)="clicked('lt5')" expand="full" color="secondary"
-         >{{ 'Moins de 5 personnes' | translate }} <ion-ripple-effect type="unbounded"></ion-ripple-effect
+         >{{ 'page.number.less5' | translate }} <ion-ripple-effect type="unbounded"></ion-ripple-effect
       ></ion-button>
       <ion-button (click)="clicked('around10')" expand="full" color="secondary"
-         >{{ 'Environ 10 personnes' | translate }} <ion-ripple-effect type="unbounded"></ion-ripple-effect
+         >{{ 'page.number.about10' | translate }} <ion-ripple-effect type="unbounded"></ion-ripple-effect
       ></ion-button>
       <ion-button (click)="clicked('around20')" expand="full" color="secondary"
-         >{{ 'Environ 20 personnes' | translate }} <ion-ripple-effect type="unbounded"></ion-ripple-effect
+         >{{ 'page.number.about20' | translate }} <ion-ripple-effect type="unbounded"></ion-ripple-effect
       ></ion-button>
       <ion-button (click)="clicked('>30')" expand="full" color="secondary"
-         >{{ 'Plus de 30 personnes' | translate }} <ion-ripple-effect type="unbounded"></ion-ripple-effect
+         >{{ 'page.number.more30' | translate }} <ion-ripple-effect type="unbounded"></ion-ripple-effect
       ></ion-button>
    </ion-card-content>
 </ion-card>
