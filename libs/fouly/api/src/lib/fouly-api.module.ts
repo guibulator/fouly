@@ -11,6 +11,7 @@ import { PlaceDetailsController } from './controllers/place-details.controller';
 import { UserController } from './controllers/user.controller';
 import { AllExceptionsFilter } from './filters/exception.filter';
 import { ChatService } from './services/chat.service';
+import { CityDetailService } from './services/cityDetail.service';
 import { CosmosDbMongoApiService } from './services/cosmosDb.mongoApi.service';
 import { CosmosDbSqlApiService } from './services/cosmosDb.sqlApi.service';
 import { MailService } from './services/mail.service';
@@ -47,6 +48,7 @@ export class FoulyApiModule {
         MailService,
         StoreCrowdService,
         WeatherService,
+        CityDetailService,
         { provide: APP_FILTER, useClass: AllExceptionsFilter }
       ]
     };
