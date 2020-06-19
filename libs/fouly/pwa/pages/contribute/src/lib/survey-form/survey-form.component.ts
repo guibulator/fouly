@@ -8,7 +8,11 @@ import {
   ContributeQueueLength,
   ContributeSpeed
 } from '@skare/fouly/data';
-import { ContributeStoreService, UserStoreService } from '@skare/fouly/pwa/core';
+import {
+  ContributeStoreService,
+  LocalisationStoreService,
+  UserStoreService
+} from '@skare/fouly/pwa/core';
 import { from, Subscription } from 'rxjs';
 import { delay, flatMap, retryWhen, take, tap } from 'rxjs/operators';
 @Component({
@@ -32,7 +36,8 @@ export class SurveyFormComponent implements OnInit, OnDestroy, AfterViewInit {
     private navController: NavController,
     private contributeService: ContributeStoreService,
     private userStoreService: UserStoreService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private localisationService: LocalisationStoreService
   ) {
     this.userContribution.placeId = this.activatedRoute.snapshot.params.placeId;
   }
@@ -52,6 +57,11 @@ export class SurveyFormComponent implements OnInit, OnDestroy, AfterViewInit {
     );
 
     this.translate.use(this.translate.store.currentLang);
+
+    this.localisationService.getPosition().subscribe((pos) => {
+      this.userContribution.lng = pos?.coords?.longitude;
+      this.userContribution.lat = pos?.coords?.latitude;
+    });
   }
   /**
    * Fire and forget user contribution with 2 retry attempts

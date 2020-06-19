@@ -7,4 +7,6 @@ export class ContributeCommand {
   globalApreciation: ContributeGlobalAppreciation;
   placeId: string;
   userId?: string;
+  lat?: number;
+  lng: number;
 }

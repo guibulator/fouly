@@ -1,6 +1,6 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { ContributeCommand } from '@skare/fouly/data';
-import { ContributeService } from '../services/contribute.service';
+import { ContributeService } from './contribute.service';
 
 @Controller('contribute')
 export class ContributeController {
