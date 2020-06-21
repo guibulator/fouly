@@ -1,0 +1,30 @@
+<ion-header>
+   <ion-toolbar>
+      <ion-buttons slot="start">
+         <ion-back-button></ion-back-button>
+      </ion-buttons>
+      <ion-buttons slot="start">
+         <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title>{{ 'page.contribute.title' | translate }}</ion-title>
+      <ion-progress-bar color="secondary" [value]="progression"></ion-progress-bar>
+   </ion-toolbar>
+</ion-header>
+<ion-content fullscreen #content>
+   <fouly-content-centered>
+      <ion-slides #slides class="swiper-no-swiping">
+         <ion-slide>
+            <fouly-survey-number (userChoice)="surveyNumberChoice($event)"></fouly-survey-number>
+         </ion-slide>
+         <ion-slide>
+            <fouly-survey-delay (userChoice)="surveySpeedChoice($event)"></fouly-survey-delay>
+         </ion-slide>
+         <ion-slide>
+            <fouly-survey-installation (userChoice)="surveyGlobalAppreciationChoice($event)"></fouly-survey-installation>
+         </ion-slide>
+         <ion-slide>
+            <fouly-survey-thanks (userChoice)="end()"></fouly-survey-thanks>
+         </ion-slide>
+      </ion-slides>
+   </fouly-content-centered>
+</ion-content>

@@ -1,0 +1,14 @@
+<ion-card>
+   <ion-img [src]="'assets/img/svg/waiting.svg'"></ion-img>
+   <ion-card-header>
+      <ion-card-title class="ion-text-center">{{ 'page.delay.title' | translate }}</ion-card-title>
+   </ion-card-header>
+   <ion-card-content>
+      <ion-button (click)="clicked('fast')" expand="full" color="secondary"
+         >{{ 'page.delay.fast' | translate }} <ion-ripple-effect type="bounded"></ion-ripple-effect
+      ></ion-button>
+      <ion-button (click)="clicked('slow')" expand="full" color="secondary"
+         >{{ 'page.delay.slow' | translate }} <ion-ripple-effect type="unbounded"></ion-ripple-effect
+      ></ion-button>
+   </ion-card-content>
+</ion-card>

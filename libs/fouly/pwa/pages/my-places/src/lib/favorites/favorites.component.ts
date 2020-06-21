@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { FavoriteResult } from '@skare/fouly/data';
 import { FavoriteStoreService } from '@skare/fouly/pwa/core';
@@ -16,6 +16,7 @@ export class FavoritesComponent implements OnInit, OnDestroy {
   constructor(
     private favoriteStoreService: FavoriteStoreService,
     private router: Router,
+    private activatedRoute: ActivatedRoute,
     private readonly translate: TranslateService
   ) {}
 
@@ -41,5 +42,9 @@ export class FavoritesComponent implements OnInit, OnDestroy {
 
   onRemovePlace(placeId: string) {
     this.favoriteStoreService.remove(placeId);
+  }
+
+  gotoContribute(placeId: string) {
+    this.router.navigate(['contribute', placeId], { relativeTo: this.activatedRoute });
   }
 }

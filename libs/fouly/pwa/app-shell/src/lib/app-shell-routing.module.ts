@@ -48,6 +48,11 @@ const routes: Routes = [];
           loadChildren: () =>
             import('@skare/fouly/pwa/pages/my-places').then((module) => module.MyPlacesModule)
         },
+        {
+          path: 'contribute',
+          loadChildren: () =>
+            import('@skare/fouly/pwa/pages/contribute').then((module) => module.ContributeModule)
+        },
         { path: '**', redirectTo: '' }
       ],
       {

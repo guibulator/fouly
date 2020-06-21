@@ -48,7 +48,7 @@
          </ion-card-header>
          <ion-card-content class="content">
             <ion-item>
-               <fouly-affluence class="affluence"></fouly-affluence>
+               <fouly-affluence (contribute)="gotoContribute()" class="affluence"></fouly-affluence>
             </ion-item>
             <ion-item class="item" button *ngIf="placeDetails[0]" (click)="gotoChat(placeDetails[0].name)">
                <ion-icon color="secondary" name="chatbubbles" size="medium"></ion-icon>

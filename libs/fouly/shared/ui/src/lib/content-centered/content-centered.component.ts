@@ -18,7 +18,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class FoulyContentCenteredComponent implements OnInit {
   constructor() {}
-  @Input() sizeLg = 8;
+  @Input() sizeLg = 6;
   @Input() sizeMd = 8;
   ngOnInit() {}
 }

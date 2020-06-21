@@ -106,11 +106,7 @@ export class MapComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.subscription.add(
-      this.localisationStore.initPosition().subscribe(() => {
-        this.centerMe();
-      })
-    );
+    this.centerMe();
     this.subscription.add(this.favoriteStore.getAll().subscribe());
   }
 
@@ -123,7 +119,7 @@ export class MapComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   centerMe() {
-    this.localisationStore.currentPosition$.pipe(take(1)).subscribe((data) => {
+    this.localisationStore.getPosition().subscribe((data) => {
       if (!data) return;
       if (this.markerYou) {
         this.markers = this.markers.filter((p) => this.markerYou !== p);

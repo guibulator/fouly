@@ -19,4 +19,10 @@ There are 2 options to test the app locally:
 ## Environment configuration
 
 In order to get the latest configuration to run the backend locally, you need to sync the Azure Key Vault with a local file named .env.
-Simply run the tool under `.\tools\powershell\azure\ReadAllSecretsFromKeyVault.ps1`. This will set on your clipboard the content of all the secrets for the specified KeyVault. You then create a file named `.env` under src and paste the content in it.
+Simply run the tool under `.\tools\powershell\azure\ReadAllSecretsFromKeyVault.ps1`.
+Before run the tool, you must log into az with the following command:
+az login --tenant 798152d6-db45-47e7-a4c8-6ffba45f1a0a
+
+NB: You must specify the tenant in case your account is link with multiple tenant
+
+This will set on your clipboard the content of all the secrets for the specified KeyVault. You then create a file named `.env` under src and paste the content in it.

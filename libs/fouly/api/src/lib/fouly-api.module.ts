@@ -10,6 +10,8 @@ import { MailController } from './controllers/mail.controller';
 import { PlaceDetailsController } from './controllers/place-details.controller';
 import { UserController } from './controllers/user.controller';
 import { AllExceptionsFilter } from './filters/exception.filter';
+import { ContributeModule } from './orm/contribute/contribute.module';
+import { DatabaseModule } from './orm/database-common.module';
 import { ChatService } from './services/chat.service';
 import { CosmosDbMongoApiService } from './services/cosmosDb.mongoApi.service';
 import { CosmosDbSqlApiService } from './services/cosmosDb.sqlApi.service';
@@ -37,7 +39,9 @@ export class FoulyApiModule {
         ConfigModule.forRoot({
           ignoreEnvFile: true
         }),
-        AzureLoggerModule.forRoot(azureContextAccessor)
+        AzureLoggerModule.forRoot(azureContextAccessor),
+        DatabaseModule,
+        ContributeModule
       ],
       providers: [
         PlaceDetailsService,

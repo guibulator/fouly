@@ -36,6 +36,11 @@ export function createTranslateLoader(http: HttpClient) {
         loadChildren: () =>
           import('@skare/fouly/pwa/pages/my-places').then((module) => module.MyPlacesModule),
         data: { prefetch: true }
+      },
+      {
+        path: 'contribute',
+        loadChildren: () =>
+          import('@skare/fouly/pwa/pages/contribute').then((module) => module.ContributeModule)
       }
     ])
   ],
