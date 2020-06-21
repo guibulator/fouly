@@ -19,8 +19,19 @@ export class CityDetailService {
 
     const getCityResult = await axios.get(`${queryUrl}${queryParams}`);
     const cityResult = getCityResult.data.data.find(
-      (x: any) => x.name.includes(city) && x.countryCode === countryCode
+      (x: any) =>
+        (x.name.toLowerCase().trim() === city.toLowerCase().trim() &&
+          x.countryCode.toLowerCase().trim() === countryCode.toLowerCase().trim()) ||
+        (x.name
+          .toLowerCase()
+          .trim()
+          .includes(city.toLowerCase().trim()) &&
+          x.countryCode === countryCode)
     );
+
+    if (!cityResult) {
+      return null;
+    }
 
     queryParams = `?languageCode=${language}`;
 

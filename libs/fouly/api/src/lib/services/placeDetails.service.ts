@@ -46,7 +46,7 @@ export class PlaceDetailsService {
 
       const crowdResult = await this.storeCrowdService.getStoreCrowdStatus({
         placeDetail: placeDetail,
-        localTime: new Date()
+        localTime: new Date() //Todo take localtime from user input.
       });
 
       return { ...placeDetail, storeCrowdResult: crowdResult };
