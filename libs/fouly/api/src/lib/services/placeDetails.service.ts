@@ -3,12 +3,13 @@ import { PlaceAutocompleteType } from '@googlemaps/google-maps-services-js/dist/
 import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { PlaceDetailsResult, SearchResult } from '@skare/fouly/data';
+import { StoreCrowdService } from './storeCrowd.service';
 @Injectable()
 export class PlaceDetailsService {
   private client: Client;
   private apiKeyEnv = 'FOULY-GOOGLEMAPS-API-KEY';
   private readonly logger = new Logger(PlaceDetailsService.name);
-  constructor(private configService: ConfigService) {
+  constructor(private configService: ConfigService, private storeCrowdService: StoreCrowdService) {
     this.client = new Client();
   }
 
@@ -40,7 +41,15 @@ export class PlaceDetailsService {
       const address = details.data.result.adr_address.split(',');
       // only take first 2 parts of address
       const shortAddress = [address[0], address[1]].join(',');
-      return { ...details.data.result, ...{ shortAddress: shortAddress } };
+
+      const placeDetail = { ...details.data.result, ...{ shortAddress: shortAddress } };
+
+      const crowdResult = await this.storeCrowdService.getStoreCrowdStatus({
+        placeDetail: placeDetail,
+        localTime: new Date() //Todo take localtime from user input.
+      });
+
+      return { ...placeDetail, storeCrowdResult: crowdResult };
     }
     throw Error(
       `Could not get details of ${placeId}. The error is ${details?.data?.error_message}`
