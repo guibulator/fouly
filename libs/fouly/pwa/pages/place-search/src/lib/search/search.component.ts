@@ -3,9 +3,10 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IonSearchbar, NavController } from '@ionic/angular';
+import { TranslateService } from '@ngx-translate/core';
 import { FavoriteResult, SearchResult } from '@skare/fouly/data';
 import { ConfigService, FavoriteStoreService } from '@skare/fouly/pwa/core';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, Subscription } from 'rxjs';
 import { distinctUntilChanged, filter, map, share, switchMap, tap } from 'rxjs/operators';
 import { uuid } from 'uuidv4';
 @Component({
@@ -18,16 +19,21 @@ export class SearchComponent implements OnInit {
   private textInput$ = new Subject<CustomEvent>();
   private sessionToken = uuid();
   private latLng: google.maps.LatLngLiteral;
+  private subscriptions = new Subscription();
+
   predictions$: Observable<SearchResult[]>;
   favorites$: Observable<FavoriteResult[]>;
+
   @ViewChild(IonSearchbar) private searchBar: IonSearchbar;
+
   constructor(
     private navCtrl: NavController,
     private router: Router,
     private httpClient: HttpClient,
     private configService: ConfigService,
     private activatedRoute: ActivatedRoute,
-    private favoriteStore: FavoriteStoreService
+    private favoriteStore: FavoriteStoreService,
+    private translate: TranslateService
   ) {
     this.activatedRoute.queryParams.subscribe((params) => {
       this.latLng = {
@@ -69,6 +75,14 @@ export class SearchComponent implements OnInit {
       switchMap((search) => this.findPredictions(search)),
       tap(() => (this.busy = false))
     );
+
+    this.subscriptions.add(
+      this.translate.store.onLangChange.subscribe((lang) => {
+        this.translate.use(lang.lang);
+      })
+    );
+
+    this.translate.use(this.translate.store.currentLang);
   }
 
   private findPredictions(value) {
