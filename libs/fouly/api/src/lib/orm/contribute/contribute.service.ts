@@ -1,13 +1,13 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { InjectRepository } from '@nestjs/typeorm';
+import { InjectModel } from '@nestjs/mongoose';
 import { ContributeCommand } from '@skare/fouly/data';
-import { Repository } from 'typeorm';
-import { ContributeEntity } from './contribute.entity';
+import { Model } from 'mongoose';
+import { Contribute } from './contribute.schema';
 @Injectable()
 export class ContributeService {
   constructor(
-    @InjectRepository(ContributeEntity) readonly contributeRepository: Repository<ContributeEntity>,
+    @InjectModel(Contribute.name) private readonly contributeModel: Model<Contribute>,
     private configService: ConfigService,
     private logger: Logger
   ) {}
@@ -18,7 +18,9 @@ export class ContributeService {
     //    1. logged in -> Bigger weight factor
     //    2. with gps coordinates ->Bigger weight (we trust more an authenticated user that is near the business while contributing)
     this.logger.log(`Received a contribution from user ${cmd.userId} for placeId ${cmd.placeId}`);
-    await this.contributeRepository.insert(ContributeEntity.fromCmd(cmd));
+
+    const createdContribution = new this.contributeModel(Contribute.fromCmd(cmd));
+    await createdContribution.save();
     return true;
   }
 }

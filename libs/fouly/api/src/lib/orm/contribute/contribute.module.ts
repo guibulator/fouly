@@ -1,11 +1,11 @@
 import { Logger, Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { MongooseModule } from '@nestjs/mongoose';
 import { ContributeController } from './contribute.controller';
-import { ContributeEntity } from './contribute.entity';
+import { ConributeSchema, Contribute } from './contribute.schema';
 import { ContributeService } from './contribute.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([ContributeEntity])],
+  imports: [MongooseModule.forFeature([{ name: Contribute.name, schema: ConributeSchema }])],
   providers: [ContributeService, Logger],
   controllers: [ContributeController]
 })
