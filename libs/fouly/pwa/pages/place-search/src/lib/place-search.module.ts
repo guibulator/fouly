@@ -24,6 +24,11 @@ export function createTranslateLoader(http: HttpClient) {
         pathMatch: 'full',
         component: SearchComponent,
         canActivate: [PlaceSearchLatLngGuard]
+      },
+      {
+        path: 'store-detail/:placeId',
+        loadChildren: () =>
+          import('@skare/fouly/pwa/pages/store-detail').then((module) => module.StoreDetailModule)
       }
     ]),
     TranslateModule.forChild({

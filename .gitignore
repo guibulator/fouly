@@ -48,4 +48,3 @@ Thumbs.db
 
 #dotenv configs
 *.env
-yarn.lock
