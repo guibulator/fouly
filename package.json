@@ -59,6 +59,8 @@
     "@nestjs/core": "^6.8.3",
     "@nestjs/platform-express": "^6.8.3",
     "@nestjs/swagger": "^4.5.5",
+    "@nestjs/mongoose": "^7.0.1",
+    "mongoose": "^5.9.20",
     "@ngx-translate/core": "^12.1.2",
     "@ngx-translate/http-loader": "^4.0.0",
     "@nrwl/angular": "9.2.4",
