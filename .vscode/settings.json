@@ -6,7 +6,7 @@
   "files.exclude": {
     "**/.gitkeep": true,
     "**/dist": false,
-    "**/yarn.lock": true,
+    "**/yarn.lock": false,
     "**/tsconfig*": false,
     "**/tslint*": false,
     "**/jest*": true,
