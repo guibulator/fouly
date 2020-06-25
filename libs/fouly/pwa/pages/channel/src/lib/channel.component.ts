@@ -16,7 +16,7 @@ import { map, switchMap, tap } from 'rxjs/operators';
 export class ChannelComponent implements OnInit, OnDestroy, AfterViewInit {
   private hasBeendDestroyed = false;
   userScrolled$: Observable<boolean>;
-  private followTail = true;
+  followTail = true;
   public ready: Boolean = false;
   public userMsg = new FormControl('');
   private messages: ChatMessageResult[] = [];
@@ -51,6 +51,10 @@ export class ChannelComponent implements OnInit, OnDestroy, AfterViewInit {
     this.chatService.getMsgHistory(this.placeId).subscribe((data: ChatMessageResult[]) => {
       this.messages = data;
       this.messages$.next([...data]);
+      setTimeout(() => {
+        this.scrollToBottom();
+        this.ready = true;
+      }, 500);
     });
   }
 
@@ -138,8 +142,6 @@ export class ChannelComponent implements OnInit, OnDestroy, AfterViewInit {
 
       await this.connection.start();
       console.log('connected');
-
-      this.ready = true;
     } catch (err) {
       console.log('Fatal : ' + err);
       setTimeout(() => this.connection.start(), 15000);
