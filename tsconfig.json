@@ -36,7 +36,8 @@
       "@skare/fouly/pwa/pages/place-search": ["libs/fouly/pwa/pages/place-search/src/index.ts"],
       "@skare/fouly/pwa/pages/channel": ["libs/fouly/pwa/pages/channel/src/index.ts"],
       "@skare/fouly/pwa/pages/login": ["libs/fouly/pwa/pages/login/src/index.ts"],
-      "@skare/fouly/pwa/pages/contribute": ["libs/fouly/pwa/pages/contribute/src/index.ts"]
+      "@skare/fouly/pwa/pages/contribute": ["libs/fouly/pwa/pages/contribute/src/index.ts"],
+      "@skare/fouly/pwa/pages/owner": ["libs/fouly/pwa/pages/owner/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

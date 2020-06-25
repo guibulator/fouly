@@ -64,6 +64,10 @@ export class StoreComponent implements OnInit, OnDestroy {
     this.router.navigate(['chat', placeName], { relativeTo: this.route });
   }
 
+  gotoOwner(placeName: string) {
+    this.router.navigate(['owner-enroll', placeName], { relativeTo: this.route });
+  }
+
   gotoFavorites() {
     this.router.navigate(['my-places'], { relativeTo: this.route });
   }

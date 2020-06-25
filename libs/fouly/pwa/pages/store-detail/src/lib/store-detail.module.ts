@@ -33,6 +33,11 @@ export function createTranslateLoader(http: HttpClient) {
           import('@skare/fouly/pwa/pages/channel').then((module) => module.ChannelModule)
       },
       {
+        path: 'owner-enroll',
+        loadChildren: () =>
+          import('@skare/fouly/pwa/pages/owner').then((module) => module.OwnerModule)
+      },
+      {
         path: 'my-places',
         loadChildren: () =>
           import('@skare/fouly/pwa/pages/my-places').then((module) => module.MyPlacesModule),

@@ -9,7 +9,7 @@
     "comments": "Commentaires",
     "owner": "Vous êtes propriétaires ?",
     "myFavorites": "Mes favoris",
-    "proposeBtn": { "title": "Proposer ajout/retrait d'une mesure" },
+    "proposeBtn": { "title": "Ajout/retrait d'une mesure" },
     "measures": {
       "title": "Mesures de distanciation",
       "content": "<li>Respecter une distance d'au moins 2 mètres avec les autres clients et le personnel</li> <li>Se laver les mains avant d'entrer dans le magasin (ou suivre les consignes des employés)</li><li>Suivre les consignes à la caisse pour payer vos articles</li><li>Ne pas vous présenter dans le commerce si vous avez des symptômes</li><li>Limiter la manipulation des articles le plus possible</li><li>Payer en carte de crédit ou de débit</li>",

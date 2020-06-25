@@ -25,47 +25,48 @@
 <ion-content>
    <fouly-content-centered sizeLg="8">
       <ng-container *ngTemplateOutlet="skeleton"></ng-container>
-
-      <ion-card *ngIf="!(loading$ | async) && placeDetails$ | async as placeDetails" class="card">
-         <ion-img [src]="mainImage$ | async"></ion-img>
-         <ion-card-header class="fouly-header ion-text-center" [class.notGoogleImage]="notGoogleImage">
-            <div>
-               <ng-container *ngIf="placeDetails[0]">
-                  <h2 class="ion-text-center">{{ placeDetails[0].name }}</h2>
-                  <p class="ion-text-center" [innerHtml]="placeDetails[0].shortAddress"></p>
-                  <a *ngIf="placeDetails[0].website" class="ion-text-center" [href]="placeDetails[0].website" target="_blank">{{
-                     'page.websitePlace' | translate
-                  }}</a>
-                  <div class="ion-margin-top">
-                     <strong>{{ (placeDetails[0].opening_hours?.open_now ? 'page.open' : 'page.close') | translate }}</strong
-                     >&nbsp;
-                     <a *ngIf="placeDetails[0].opening_hours?.weekday_text" [foulyOpeningHours]="placeDetails[0].opening_hours.weekday_text">{{
-                        'page.openingHours' | translate
+      <ng-container *ngIf="!(loading$ | async) && placeDetails$ | async as placeDetails">
+         <ion-card class="card">
+            <ion-img [src]="mainImage$ | async"></ion-img>
+            <ion-card-header class="fouly-header ion-text-center" [class.notGoogleImage]="notGoogleImage">
+               <div>
+                  <ng-container *ngIf="placeDetails[0]">
+                     <h2 class="ion-text-center">{{ placeDetails[0].name }}</h2>
+                     <p class="ion-text-center" [innerHtml]="placeDetails[0].shortAddress"></p>
+                     <a *ngIf="placeDetails[0].website" class="ion-text-center" [href]="placeDetails[0].website" target="_blank">{{
+                        'page.websitePlace' | translate
                      }}</a>
-                  </div>
-               </ng-container>
-            </div>
-         </ion-card-header>
-         <ion-card-content class="content">
-            <ion-item>
-               <fouly-affluence (contribute)="gotoContribute()" class="affluence"></fouly-affluence>
-            </ion-item>
-            <ion-item class="item" button *ngIf="placeDetails[0]" (click)="gotoChat(placeDetails[0].name)">
-               <ion-icon color="secondary" name="chatbubbles" size="medium"></ion-icon>
-               <ion-label>&nbsp;{{ 'page.comments' | translate }}</ion-label>
-            </ion-item>
-            <ion-item class="item" button *ngIf="placeDetails[0]" (click)="gotoChat(placeDetails[0].name)">
-               <ion-icon color="secondary" name="videocam" size="medium"></ion-icon>
-               <ion-label>&nbsp;{{ 'page.owner' | translate }}</ion-label>
-            </ion-item>
-            <ion-item class="item" button *ngIf="placeDetails[0]" (click)="gotoFavorites()">
-               <ion-icon color="secondary" name="star" size="medium"></ion-icon>
-               <ion-label>&nbsp;{{ 'page.myFavorites' | translate }}</ion-label>
-            </ion-item>
-         </ion-card-content>
-      </ion-card>
+                     <div class="ion-margin-top">
+                        <strong>{{ (placeDetails[0].opening_hours?.open_now ? 'page.open' : 'page.close') | translate }}</strong
+                        >&nbsp;
+                        <a *ngIf="placeDetails[0].opening_hours?.weekday_text" [foulyOpeningHours]="placeDetails[0].opening_hours.weekday_text">{{
+                           'page.openingHours' | translate
+                        }}</a>
+                     </div>
+                  </ng-container>
+               </div>
+            </ion-card-header>
+            <ion-card-content class="content">
+               <ion-item>
+                  <fouly-affluence (contribute)="gotoContribute()" class="affluence"></fouly-affluence>
+               </ion-item>
+               <ion-item class="item" button *ngIf="placeDetails[0]" (click)="gotoChat(placeDetails[0].name)">
+                  <ion-icon color="secondary" name="chatbubbles" size="medium"></ion-icon>
+                  <ion-label>&nbsp;{{ 'page.comments' | translate }}</ion-label>
+               </ion-item>
+               <ion-item class="item" button *ngIf="placeDetails[0]" (click)="gotoOwner(placeDetails[0].name)">
+                  <ion-icon color="secondary" name="bulb" size="medium"></ion-icon>
+                  <ion-label>&nbsp;{{ 'page.owner' | translate }}</ion-label>
+               </ion-item>
+               <ion-item class="item" button *ngIf="placeDetails[0]" (click)="gotoFavorites()">
+                  <ion-icon color="secondary" name="star" size="medium"></ion-icon>
+                  <ion-label>&nbsp;{{ 'page.myFavorites' | translate }}</ion-label>
+               </ion-item>
+            </ion-card-content>
+         </ion-card>
 
-      <fouly-measures></fouly-measures>
+         <fouly-measures></fouly-measures>
+      </ng-container>
    </fouly-content-centered>
 </ion-content>
 
