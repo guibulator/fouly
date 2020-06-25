@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { StoreCrowdCommand, StoreCrowdResult, StoreType } from '@skare/fouly/data';
 import { CityDetailService } from './rapid-api/cityDetail.service';
 import { WeatherService } from './rapid-api/weather.service';
@@ -7,7 +7,8 @@ import { WeatherService } from './rapid-api/weather.service';
 export class StoreCrowdService {
   constructor(
     private weatherService: WeatherService,
-    private cityDetailService: CityDetailService
+    private cityDetailService: CityDetailService,
+    private logger: Logger
   ) {}
 
   //Todo : Persist or cache crowd status for reuse
@@ -52,7 +53,12 @@ export class StoreCrowdService {
     // Get RawData
     const weatherStatus = await this.weatherService.getWeatherStatus(city, countryIsoCode, 'fr');
     const cityDetail = await this.cityDetailService.getCityDetail(city, countryIsoCode, 'fr');
-
+    if (!cityDetail) {
+      this.logger.log(`Cannot find city details of ${city}`);
+    }
+    if (!weatherStatus) {
+      this.logger.log(`Cannot find wheater details of ${city}`);
+    }
     // Set Status
     const storeStatus = this.setPlaceStatus(
       storeCrowdCmd.placeDetail,
@@ -145,7 +151,7 @@ export class StoreCrowdService {
     let result = 'n/a';
     let weatherStatus = 'n/a';
 
-    if (weather.length > 0) {
+    if (weather && weather.length > 0) {
       if (main.temp > 20 && weather[0].main === 'Clear') {
         weatherStatus = 'clear-hot';
       } else if (weather[0].main === 'Clear') {
@@ -161,7 +167,7 @@ export class StoreCrowdService {
       }
     }
 
-    if (city.population < 300000) {
+    if (city && city.population < 300000) {
       result = 'medium';
     } else {
       if (weatherStatus.includes('cold')) {
