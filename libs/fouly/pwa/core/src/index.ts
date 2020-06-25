@@ -6,5 +6,6 @@ export * from './lib/providers/contribute.service';
 export * from './lib/providers/favorite-store.service';
 export * from './lib/providers/localisation-store.service';
 export * from './lib/providers/place-details-store.service';
+export * from './lib/providers/toastService';
 export * from './lib/providers/user-store.service';
 export * from './lib/strategies/preloadingStrategy';

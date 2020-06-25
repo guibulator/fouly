@@ -19,6 +19,7 @@
     "rxjs": "^6.5.5",
     "tslib": "2.0.0",
     "uuidv4": "^6.1.0",
+    "xmldom": "^0.3.0",
     "@nestjs/mongoose": "^7.0.1",
     "mongoose": "^5.9.20"
   },

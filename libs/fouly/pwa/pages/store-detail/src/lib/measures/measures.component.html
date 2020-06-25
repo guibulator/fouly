@@ -1,0 +1,15 @@
+<ion-card>
+   <ion-img [src]="'assets/img/svg/undraw_preferences_popup_wbfw.svg'"></ion-img>
+   <ion-header>
+      <ion-card-title class="ion-text-center"
+         ><h1>{{ 'page.measures.title' | translate }}</h1></ion-card-title
+      >
+   </ion-header>
+   <ion-card-content>
+      <ul [innerHtml]="'page.measures.content' | translate"></ul>
+
+      <ion-button (click)="proposeMeasure()" expand="block" color="primary"
+         >{{ 'page.proposeBtn.title' | translate }}<ion-ripple-effect type="bounded"></ion-ripple-effect
+      ></ion-button>
+   </ion-card-content>
+</ion-card>

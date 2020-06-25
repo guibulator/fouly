@@ -56,7 +56,7 @@
             </ion-item>
             <ion-item class="item" button *ngIf="placeDetails[0]" (click)="gotoChat(placeDetails[0].name)">
                <ion-icon color="secondary" name="videocam" size="medium"></ion-icon>
-               <ion-label>&nbsp;{{ 'page.live' | translate }}</ion-label>
+               <ion-label>&nbsp;{{ 'page.owner' | translate }}</ion-label>
             </ion-item>
             <ion-item class="item" button *ngIf="placeDetails[0]" (click)="gotoFavorites()">
                <ion-icon color="secondary" name="star" size="medium"></ion-icon>
@@ -64,6 +64,8 @@
             </ion-item>
          </ion-card-content>
       </ion-card>
+
+      <fouly-measures></fouly-measures>
    </fouly-content-centered>
 </ion-content>
 
