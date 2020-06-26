@@ -14,13 +14,11 @@
   z-index: 1;
 }
 .fouly-content-wrapper {
-  opacity: 1;
   z-index: 2;
   position: relative;
 }
 
 .fouly-chat {
-  opacity: 1;
   flex-direction: column;
   display: flex;
   flex: 1;
@@ -43,7 +41,6 @@
 }
 
 .fouly-chat-msg {
-  opacity: 1;
   float: right;
   border-radius: 1rem;
   background-color: var(--ion-color-secondary);
