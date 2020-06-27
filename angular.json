@@ -108,6 +108,11 @@
                 "glob": "**/*.json",
                 "input": "libs/fouly/pwa/pages/owner/src/lib/assets/i18n",
                 "output": "assets/i18n"
+              },
+              {
+                "glob": "**/*.json",
+                "input": "libs/fouly/pwa/pages/channel/src/lib/assets/i18n",
+                "output": "assets/i18n"
               }
             ],
             "styles": [
