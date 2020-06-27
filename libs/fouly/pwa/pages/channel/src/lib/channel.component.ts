@@ -3,6 +3,7 @@ import { FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { IonContent } from '@ionic/angular';
 import * as signalR from '@microsoft/signalr';
+import { TranslateService } from '@ngx-translate/core';
 import { ChatMessageCommand, ChatMessageResult, UserResult } from '@skare/fouly/data';
 import { ChatStoreService, UserStoreService } from '@skare/fouly/pwa/core';
 import { BehaviorSubject, fromEvent, Observable, Subscription } from 'rxjs';
@@ -14,24 +15,28 @@ import { map, switchMap, tap } from 'rxjs/operators';
   styleUrls: ['./channel.component.scss']
 })
 export class ChannelComponent implements OnInit, OnDestroy, AfterViewInit {
-  private hasBeendDestroyed = false;
   userScrolled$: Observable<boolean>;
   followTail = true;
   public ready: Boolean = false;
   public userMsg = new FormControl('');
-  private messages: ChatMessageResult[] = [];
   public messages$ = new BehaviorSubject<ChatMessageResult[]>([]);
   public connection: signalR.HubConnection;
   public placeName: string;
+
+  private hasBeendDestroyed = false;
+  private messages: ChatMessageResult[] = [];
   private placeId: string;
   private user: UserResult = null;
-  subscriptions = new Subscription();
+  private subscriptions = new Subscription();
+
   @ViewChild('chatHistoryContent') chatHistoryContent: IonContent;
   @ViewChild('sendBtn') sendMsgButton: any;
+
   constructor(
     private chatService: ChatStoreService,
     private route: ActivatedRoute,
-    private userStoreService: UserStoreService
+    private userStoreService: UserStoreService,
+    private readonly translate: TranslateService
   ) {}
 
   ngOnInit() {
@@ -43,6 +48,14 @@ export class ChannelComponent implements OnInit, OnDestroy, AfterViewInit {
         this.user = users && users.length > 0 && users[0];
       })
     );
+
+    this.subscriptions.add(
+      this.translate.store.onLangChange.subscribe((lang) => {
+        this.translate.use(lang.lang);
+      })
+    );
+
+    this.translate.use(this.translate.store.currentLang);
 
     this.chatService.getConnectionSignalR().subscribe(async (info) => {
       await this.start(info);
@@ -89,6 +102,10 @@ export class ChannelComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   sendMsg(newMsg: string) {
+    if (newMsg === null || newMsg === '' || newMsg.trim() === '') {
+      return;
+    }
+
     const myMsg = new ChatMessageCommand();
     myMsg.author = this.user ? this.user.name : 'Anonyme';
     myMsg.msg = newMsg;
@@ -131,19 +148,19 @@ export class ChannelComponent implements OnInit, OnDestroy, AfterViewInit {
       });
 
       this.connection.onclose(function() {
-        console.log('signalr disconnected');
+        //console.log('signalr disconnected');
       });
 
-      this.connection.onreconnecting((err) => console.log('err reconnecting  ', err));
+      //this.connection.onreconnecting((err) => console.log('err reconnecting  ', err));
 
       this.connection.onclose(async () => {
         await this.connection.start();
       });
 
       await this.connection.start();
-      console.log('connected');
+      //console.log('connected');
     } catch (err) {
-      console.log('Fatal : ' + err);
+      //console.log('Fatal : ' + err);
       setTimeout(() => this.connection.start(), 15000);
     }
   }
@@ -157,6 +174,7 @@ export class ChannelComponent implements OnInit, OnDestroy, AfterViewInit {
     // });
     // recognition.start();
   }
+
   ngOnDestroy() {
     this.hasBeendDestroyed = true;
     this.connection && this.connection.stop();
