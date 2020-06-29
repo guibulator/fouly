@@ -44,7 +44,7 @@ export class StoreCrowdService {
       placeId: storeCrowdCmd.placeDetail.place_id
     });
     const statusFromFeedback = this.getCrowdStatusFromContribution(feedback);
-    if (statusFromFeedback !== 'N/A') {
+    if (statusFromFeedback) {
       return {
         localTime: storeCrowdCmd.localTime,
         status: statusFromFeedback
@@ -127,7 +127,7 @@ export class StoreCrowdService {
 
   getCrowdStatusFromContribution(contributions: Contribute[]): string {
     if (!contributions && contributions.length <= 0) {
-      return 'N/A';
+      return null;
     }
 
     const orderedContribution = contributions.sort(
@@ -157,7 +157,7 @@ export class StoreCrowdService {
       case 'gt30-slow':
         return 'high';
       default:
-        return 'N/A';
+        return null;
     }
   }
 
