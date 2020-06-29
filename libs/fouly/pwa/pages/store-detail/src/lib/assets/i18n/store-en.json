@@ -18,6 +18,7 @@
       "na": "This functionality will be available soon. Thanks for your interest in Fouly!"
     },
     "crowdStatus": {
+      "closed": "N/A",
       "low": "Low",
       "medium": "Medium",
       "high": "High"

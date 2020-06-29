@@ -18,6 +18,7 @@
       "na": "Cette fonctionnalité sera présente très bientôt. Merci de votre intérêt pour Fouly !"
     },
     "crowdStatus": {
+      "closed": "N/A",
       "low": "Bas",
       "medium": "Moyen",
       "high": "Haut"

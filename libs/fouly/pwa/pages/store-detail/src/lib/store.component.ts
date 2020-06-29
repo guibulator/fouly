@@ -78,13 +78,12 @@ export class StoreComponent implements OnInit, OnDestroy {
     this.translate.get(`page.crowdStatus.${status}`).subscribe((res: string) => {
       this.crowdStatus = res;
     });
+
     if (status === 'low') {
       this.crowdColor = 'success';
-    }
-    if (status === 'medium') {
+    } else if (status === 'medium') {
       this.crowdColor = 'warning';
-    }
-    if (status === 'high') {
+    } else if (status === 'high') {
       this.crowdColor = 'danger';
     }
   }

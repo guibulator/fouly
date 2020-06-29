@@ -21,19 +21,19 @@ export class StoreCrowdService {
   //Todo : Persist or cache crowd status for reuse
   //Todo : Define CrowdStatus enum values;
   async getStoreCrowdStatus(storeCrowdCmd: StoreCrowdCommand): Promise<StoreCrowdResult> {
-    // if (storeCrowdCmd.placeDetail.business_status !== 'OPERATIONAL') {
-    //   return {
-    //     localTime: storeCrowdCmd.localTime,
-    //     status: 'closed'
-    //   };
-    // }
+    if (storeCrowdCmd.placeDetail.business_status !== 'OPERATIONAL') {
+      return {
+        asOfTime: storeCrowdCmd.asOfTime,
+        status: 'closed'
+      };
+    }
 
-    // if (!this.isBusinessOpen(storeCrowdCmd.placeDetail.opening_hours, storeCrowdCmd.localTime)) {
-    //   return {
-    //     localTime: storeCrowdCmd.localTime,
-    //     status: 'closed'
-    //   };
-    // }
+    if (!this.isBusinessOpen(storeCrowdCmd.placeDetail.opening_hours, storeCrowdCmd.asOfTime)) {
+      return {
+        asOfTime: storeCrowdCmd.asOfTime,
+        status: 'closed'
+      };
+    }
 
     // Todo : Try get status from cache
     // const cachedStatus = this.tryGetExistingStatus(storeCrowdCmd.placeDetail.id);
@@ -78,31 +78,24 @@ export class StoreCrowdService {
     }
 
     //Get status from fouly custom model
-    const countryName = this.getNodeValue(storeCrowdCmd.placeDetail.adr_address, 'country-name');
-    const countryIsoCode = this.getCountryIsoCode(countryName);
-    const city = this.getNodeValue(storeCrowdCmd.placeDetail.adr_address, 'locality');
+    // const countryName = this.getNodeValue(storeCrowdCmd.placeDetail.adr_address, 'country-name');
+    // const countryIsoCode = this.getCountryIsoCode(countryName);
+    // const city = this.getNodeValue(storeCrowdCmd.placeDetail.adr_address, 'locality');
 
-    // Get RawData
-    const weatherStatus = await this.weatherService.getWeatherStatus(city, countryIsoCode, 'fr');
-    const cityDetail = await this.cityDetailService.getCityDetail(city, countryIsoCode, 'fr');
-    if (!cityDetail) {
-      this.logger.log(`Cannot find city details of ${city}`);
-    }
-    if (!weatherStatus) {
-      this.logger.log(`Cannot find wheater details of ${city}`);
-    }
+    // // Get RawData
+    // const weatherStatus = await this.weatherService.getWeatherStatus(city, countryIsoCode, 'fr');
+    // const cityDetail = await this.cityDetailService.getCityDetail(city, countryIsoCode, 'fr');
+    // if (!cityDetail) {
+    //   this.logger.log(`Cannot find city details of ${city}`);
+    // }
+    // if (!weatherStatus) {
+    //   this.logger.log(`Cannot find wheater details of ${city}`);
+    // }
 
     const foulyModelStatus = this.foulyCrowdModelService.getCrowdStatus(
       currentStoreType,
       storeCrowdCmd.asOfTime
     );
-    // // Set Status
-    // const storeStatus = this.setPlaceStatus(
-    //   storeCrowdCmd.placeDetail,
-    //   weatherStatus,
-    //   cityDetail,
-    //   storeCrowdCmd.localTime
-    // );
 
     return {
       asOfTime: storeCrowdCmd.asOfTime,
