@@ -9,11 +9,18 @@
     "comments": "Comments",
     "owner": "Business owner?",
     "myFavorites": "My favorites",
-    "proposeBtn": { "title": "Add/remove a measure" },
+    "proposeBtn": {
+      "title": "Add/remove a measure"
+    },
     "measures": {
       "title": "Distanciation measures",
       "content": "<li>Maintain a distance of at least 2 meters with other customers and staff</li><li>Wash hands before entering the store (or follow employee instructions)</li><li>Follow the instructions at checkout to pay for your items</li><li>Do not go to the store if you have symptoms</li><li>Limit handling of items as much as possible</li><li>Pay by credit or debit card</li>",
       "na": "This functionality will be available soon. Thanks for your interest in Fouly!"
+    },
+    "crowdStatus": {
+      "low": "Low",
+      "medium": "Medium",
+      "high": "High"
     }
   }
 }

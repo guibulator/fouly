@@ -16,6 +16,8 @@ export class StoreComponent implements OnInit, OnDestroy {
   mainImage$: Observable<string>;
   notGoogleImage = false;
   subscriptions = new Subscription();
+  crowdStatus: string;
+  crowdColor: string;
 
   constructor(
     private placeDetailsStore: PlaceDetailsStoreService,
@@ -37,6 +39,8 @@ export class StoreComponent implements OnInit, OnDestroy {
     this.mainImage$ = this.placeDetails$.pipe(
       filter((details) => details && details.length > 0),
       flatMap((details) => {
+        this.setCrowdStatus(details[0].storeCrowdResult.status);
+
         if (details[0]?.photos && details[0].photos.length > 0) {
           return this.placeDetailsStore.getPhotoUrl(details[0]?.photos[0]?.photo_reference);
         } else {
@@ -58,6 +62,21 @@ export class StoreComponent implements OnInit, OnDestroy {
     );
 
     this.translate.use(this.translate.store.currentLang);
+  }
+
+  setCrowdStatus(status: string): any {
+    this.translate.get(`page.crowdStatus.${status}`).subscribe((res: string) => {
+      this.crowdStatus = res;
+    });
+    if (status === 'low') {
+      this.crowdColor = 'success';
+    }
+    if (status === 'medium') {
+      this.crowdColor = 'warning';
+    }
+    if (status === 'high') {
+      this.crowdColor = 'danger';
+    }
   }
 
   gotoChat(placeName: string) {

@@ -13,12 +13,12 @@ import { ContributeModule } from './orm/contribute/contribute.module';
 import { DatabaseModule } from './orm/database-common.module';
 import { ChatService } from './services/chat.service';
 import { CosmosDbSqlApiService } from './services/cosmosDb.sqlApi.service';
+import { QuoteFromFeedbackService } from './services/crowdStatus/quoteFromFeedback.service';
+import { StoreCrowdService } from './services/crowdStatus/storeCrowd.service';
 import { MailService } from './services/mail.service';
 import { PlaceDetailsService } from './services/placeDetails.service';
 import { CityDetailService } from './services/rapid-api/cityDetail.service';
 import { WeatherService } from './services/rapid-api/weather.service';
-import { StoreCrowdService } from './services/storeCrowd.service';
-
 @Module({})
 export class FoulyApiModule {
   static forRoot(azureContextAccessor: () => Context): DynamicModule {
@@ -47,6 +47,7 @@ export class FoulyApiModule {
         StoreCrowdService,
         WeatherService,
         CityDetailService,
+        QuoteFromFeedbackService,
         { provide: APP_FILTER, useClass: AllExceptionsFilter }
       ]
     };

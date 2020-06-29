@@ -3,7 +3,7 @@ import { PlaceAutocompleteType } from '@googlemaps/google-maps-services-js/dist/
 import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { PlaceDetailsResult, SearchResult } from '@skare/fouly/data';
-import { StoreCrowdService } from './storeCrowd.service';
+import { StoreCrowdService } from './crowdStatus/storeCrowd.service';
 @Injectable()
 export class PlaceDetailsService {
   private client: Client;

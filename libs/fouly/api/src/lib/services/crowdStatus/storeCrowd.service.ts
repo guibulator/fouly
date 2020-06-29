@@ -1,9 +1,10 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { StoreCrowdCommand, StoreCrowdResult, StoreType } from '@skare/fouly/data';
-import { Contribute } from '../orm/contribute/contribute.schema';
-import { ContributeService } from '../orm/contribute/contribute.service';
-import { CityDetailService } from './rapid-api/cityDetail.service';
-import { WeatherService } from './rapid-api/weather.service';
+import { Contribute } from '../../orm/contribute/contribute.schema';
+import { ContributeService } from '../../orm/contribute/contribute.service';
+import { CityDetailService } from '../rapid-api/cityDetail.service';
+import { WeatherService } from '../rapid-api/weather.service';
+import { QuoteFromFeedbackService } from './quoteFromFeedback.service';
 
 @Injectable()
 export class StoreCrowdService {
@@ -11,6 +12,7 @@ export class StoreCrowdService {
     private readonly weatherService: WeatherService,
     private readonly cityDetailService: CityDetailService,
     private readonly contributeService: ContributeService,
+    private readonly quoteFromFeedbackService: QuoteFromFeedbackService,
     private logger: Logger
   ) {}
 
@@ -43,7 +45,9 @@ export class StoreCrowdService {
     const feedback: Contribute[] = await this.contributeService.find({
       placeId: storeCrowdCmd.placeDetail.place_id
     });
-    const statusFromFeedback = this.getCrowdStatusFromContribution(feedback);
+    const statusFromFeedback = this.quoteFromFeedbackService.getCrowdStatusFromContribution(
+      feedback
+    );
     if (statusFromFeedback) {
       return {
         localTime: storeCrowdCmd.localTime,
@@ -76,89 +80,6 @@ export class StoreCrowdService {
       localTime: storeCrowdCmd.localTime,
       status: storeStatus
     };
-  }
-
-  getRecentFeedback(contributions: Contribute[]): Contribute {
-    const lastestCtrb = contributions[0];
-    const lastContributionHoursDelay: number =
-      (new Date().getTime() - new Date(lastestCtrb.time).getTime()) / (3600 * 1000);
-
-    if (lastContributionHoursDelay > 2) return null;
-
-    return lastestCtrb;
-  }
-
-  getSimilarTimeFeedback(contributions: Contribute[], asOfTime: Date): Contribute {
-    const similarDaysContribution = contributions.filter((x: Contribute) => {
-      return this.isSimilarDay(asOfTime.getDay(), new Date(x.time).getDay());
-    });
-
-    const similarHoursContribution = similarDaysContribution.filter((x: Contribute) => {
-      return this.isSimilarHours(asOfTime.getHours(), new Date(x.time).getHours());
-    });
-
-    // const last4Weeks = similarHoursContribution.
-    const lastestCtrb = contributions[0];
-    const lastContributionHoursDelay: number =
-      (new Date().getTime() - new Date(lastestCtrb.time).getTime()) / (3600 * 1000);
-
-    if (lastContributionHoursDelay > 2) return null;
-
-    return lastestCtrb;
-  }
-
-  isSimilarHours(asOfHours: number, ctrbHours: number): boolean {
-    return Math.abs(asOfHours - ctrbHours) < 2;
-  }
-
-  isSimilarDay(asOfDay: number, ctrbDay: number): boolean {
-    if ((asOfDay === 1 || asOfDay === 3) && (ctrbDay === 1 || ctrbDay === 3)) {
-      return true;
-    }
-    if ((asOfDay === 2 || asOfDay === 4) && (ctrbDay === 2 || ctrbDay === 4)) {
-      return true;
-    }
-    if ((asOfDay === 6 || asOfDay === 0) && (ctrbDay === 0 || ctrbDay === 6)) {
-      return true;
-    }
-
-    return asOfDay === ctrbDay;
-  }
-
-  getCrowdStatusFromContribution(contributions: Contribute[]): string {
-    if (!contributions && contributions.length <= 0) {
-      return null;
-    }
-
-    const orderedContribution = contributions.sort(
-      (a: Contribute, b: Contribute) => new Date(a.time).getTime() - new Date(b.time).getTime()
-    );
-    let ctrb = this.getRecentFeedback(orderedContribution);
-    if (!ctrb) {
-      ctrb = this.getSimilarTimeFeedback(orderedContribution, new Date());
-    }
-
-    const contributionTag = `${ctrb.queueLength}-${ctrb.speed}`;
-    switch (contributionTag) {
-      case 'lt5-fast':
-        return 'low';
-      case 'lt5-slow':
-        return 'low';
-      case 'around10-fast':
-        return 'low';
-      case 'around10-slow':
-        return 'medium';
-      case 'around20-fast':
-        return 'medium';
-      case 'around20-slow':
-        return 'high';
-      case 'gt30-fast':
-        return 'high';
-      case 'gt30-slow':
-        return 'high';
-      default:
-        return null;
-    }
   }
 
   getCountryIsoCode(name: string): string {
