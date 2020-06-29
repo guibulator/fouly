@@ -8,6 +8,7 @@ import { UserModule } from './users/user.module';
  */
 @Module({
   imports: [
+    ContributeModule,
     MongooseModule.forRootAsync({
       imports: [ConfigModule, ContributeModule, UserModule],
       useFactory: async (config: ConfigService) => ({

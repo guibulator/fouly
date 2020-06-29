@@ -9,6 +9,7 @@ import { GeoLocationController } from './controllers/geo-location.controller';
 import { MailController } from './controllers/mail.controller';
 import { PlaceDetailsController } from './controllers/place-details.controller';
 import { AllExceptionsFilter } from './filters/exception.filter';
+import { ContributeModule } from './orm/contribute/contribute.module';
 import { DatabaseModule } from './orm/database-common.module';
 import { ChatService } from './services/chat.service';
 import { CosmosDbSqlApiService } from './services/cosmosDb.sqlApi.service';
@@ -35,7 +36,8 @@ export class FoulyApiModule {
           ignoreEnvFile: true
         }),
         AzureLoggerModule.forRoot(azureContextAccessor),
-        DatabaseModule
+        DatabaseModule,
+        ContributeModule
       ],
       providers: [
         PlaceDetailsService,

@@ -40,6 +40,7 @@ export class SurveyFormComponent implements OnInit, OnDestroy, AfterViewInit {
     private localisationService: LocalisationStoreService
   ) {
     this.userContribution.placeId = this.activatedRoute.snapshot.params.placeId;
+    this.userContribution.time = new Date();
   }
 
   ngAfterViewInit(): void {

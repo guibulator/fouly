@@ -1,31 +1,34 @@
 import { Injectable } from '@nestjs/common';
 import { StoreCrowdCommand, StoreCrowdResult, StoreType } from '@skare/fouly/data';
+import { Contribute } from '../orm/contribute/contribute.schema';
+import { ContributeService } from '../orm/contribute/contribute.service';
 import { CityDetailService } from './rapid-api/cityDetail.service';
 import { WeatherService } from './rapid-api/weather.service';
 
 @Injectable()
 export class StoreCrowdService {
   constructor(
-    private weatherService: WeatherService,
-    private cityDetailService: CityDetailService
+    private readonly weatherService: WeatherService,
+    private readonly cityDetailService: CityDetailService,
+    private readonly contributeService: ContributeService
   ) {}
 
   //Todo : Persist or cache crowd status for reuse
   //Todo : Define CrowdStatus enum values;
   async getStoreCrowdStatus(storeCrowdCmd: StoreCrowdCommand): Promise<StoreCrowdResult> {
-    if (storeCrowdCmd.placeDetail.business_status !== 'OPERATIONAL') {
-      return {
-        localTime: storeCrowdCmd.localTime,
-        status: 'closed'
-      };
-    }
+    // if (storeCrowdCmd.placeDetail.business_status !== 'OPERATIONAL') {
+    //   return {
+    //     localTime: storeCrowdCmd.localTime,
+    //     status: 'closed'
+    //   };
+    // }
 
-    if (!this.isBusinessOpen(storeCrowdCmd.placeDetail.opening_hours, storeCrowdCmd.localTime)) {
-      return {
-        localTime: storeCrowdCmd.localTime,
-        status: 'closed'
-      };
-    }
+    // if (!this.isBusinessOpen(storeCrowdCmd.placeDetail.opening_hours, storeCrowdCmd.localTime)) {
+    //   return {
+    //     localTime: storeCrowdCmd.localTime,
+    //     status: 'closed'
+    //   };
+    // }
 
     // Todo : Try get status from cache
     // const cachedStatus = this.tryGetExistingStatus(storeCrowdCmd.placeDetail.id);
@@ -36,14 +39,16 @@ export class StoreCrowdService {
     //   };
     // }
 
-    // Todo : When feedback persisted, get from db user feedback
-    // const feedback = await this.feedbackService.getFeedback(storeCrowdCmd.placeDetail.id)
-    // if (feedback) {
-    //   return {
-    //     localTime: storeCrowdCmd.localTime,
-    //     status: feedback
-    //   };
-    // }
+    const feedback: Contribute[] = await this.contributeService.find({
+      placeId: storeCrowdCmd.placeDetail.place_id
+    });
+    const statusFromFeedback = this.getCrowdStatusFromContribution(feedback);
+    if (statusFromFeedback !== 'N/A') {
+      return {
+        localTime: storeCrowdCmd.localTime,
+        status: statusFromFeedback
+      };
+    }
 
     const countryName = this.getNodeValue(storeCrowdCmd.placeDetail.adr_address, 'country-name');
     const countryIsoCode = this.getCountryIsoCode(countryName);
@@ -60,6 +65,92 @@ export class StoreCrowdService {
       cityDetail,
       storeCrowdCmd.localTime
     );
+
+    return {
+      localTime: storeCrowdCmd.localTime,
+      status: storeStatus
+    };
+  }
+
+  getRecentFeedback(contributions: Contribute[]): Contribute {
+    const lastestCtrb = contributions[0];
+    const lastContributionHoursDelay: number =
+      (new Date().getTime() - new Date(lastestCtrb.time).getTime()) / (3600 * 1000);
+
+    if (lastContributionHoursDelay > 2) return null;
+
+    return lastestCtrb;
+  }
+
+  getSimilarTimeFeedback(contributions: Contribute[], asOfTime: Date): Contribute {
+    const similarDaysContribution = contributions.filter((x: Contribute) => {
+      return this.isSimilarDay(asOfTime.getDay(), new Date(x.time).getDay());
+    });
+
+    const similarHoursContribution = similarDaysContribution.filter((x: Contribute) => {
+      return this.isSimilarHours(asOfTime.getHours(), new Date(x.time).getHours());
+    });
+
+    // const last4Weeks = similarHoursContribution.
+    const lastestCtrb = contributions[0];
+    const lastContributionHoursDelay: number =
+      (new Date().getTime() - new Date(lastestCtrb.time).getTime()) / (3600 * 1000);
+
+    if (lastContributionHoursDelay > 2) return null;
+
+    return lastestCtrb;
+  }
+
+  isSimilarHours(asOfHours: number, ctrbHours: number): boolean {
+    return Math.abs(asOfHours - ctrbHours) < 2;
+  }
+
+  isSimilarDay(asOfDay: number, ctrbDay: number): boolean {
+    if ((asOfDay === 1 || asOfDay === 3) && (ctrbDay === 1 || ctrbDay === 3)) {
+      return true;
+    }
+    if ((asOfDay === 2 || asOfDay === 4) && (ctrbDay === 2 || ctrbDay === 4)) {
+      return true;
+    }
+    if ((asOfDay === 6 || asOfDay === 0) && (ctrbDay === 0 || ctrbDay === 6)) {
+      return true;
+    }
+
+    return asOfDay === ctrbDay;
+  }
+
+  getCrowdStatusFromContribution(contributions: Contribute[]): string {
+    if (contributions && contributions.length > 0) {
+      const orderedContribution = contributions.sort(
+        (a: Contribute, b: Contribute) => new Date(a.time).getTime() - new Date(b.time).getTime()
+      );
+      let ctrb = this.getRecentFeedback(orderedContribution);
+      if (!ctrb) {
+        ctrb = this.getSimilarTimeFeedback(orderedContribution);
+      }
+    }
+
+    const contributionTag = `${ctrb.queueLength}-${ctrb.speed}`;
+    switch (contributionTag) {
+      case 'lt5-fast':
+        return 'low';
+      case 'lt5-slow':
+        return 'low';
+      case 'around10-fast':
+        return 'low';
+      case 'around10-slow':
+        return 'medium';
+      case 'around20-fast':
+        return 'medium';
+      case 'around20-slow':
+        return 'high';
+      case 'gt30-fast':
+        return 'high';
+      case 'gt30-slow':
+        return 'high';
+      default:
+        return 'N/A';
+    }
   }
 
   getCountryIsoCode(name: string): string {

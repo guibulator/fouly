@@ -23,4 +23,8 @@ export class ContributeService {
     await createdContribution.save();
     return true;
   }
+
+  async find(query: { placeId?: string }): Promise<Contribute[]> {
+    return this.contributeModel.find(query).exec();
+  }
 }

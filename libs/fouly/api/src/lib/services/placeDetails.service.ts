@@ -21,6 +21,7 @@ export class PlaceDetailsService {
         sessiontoken: sessionToken,
         language: Language.fr,
         fields: [
+          'address_components',
           'adr_address',
           'business_status',
           'permanently_closed',
