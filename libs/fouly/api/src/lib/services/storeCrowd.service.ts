@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { StoreCrowdCommand, StoreCrowdResult, StoreType } from '@skare/fouly/data';
 import { Contribute } from '../orm/contribute/contribute.schema';
 import { ContributeService } from '../orm/contribute/contribute.service';
@@ -10,7 +10,8 @@ export class StoreCrowdService {
   constructor(
     private readonly weatherService: WeatherService,
     private readonly cityDetailService: CityDetailService,
-    private readonly contributeService: ContributeService
+    private readonly contributeService: ContributeService,
+    private logger: Logger
   ) {}
 
   //Todo : Persist or cache crowd status for reuse
@@ -57,7 +58,12 @@ export class StoreCrowdService {
     // Get RawData
     const weatherStatus = await this.weatherService.getWeatherStatus(city, countryIsoCode, 'fr');
     const cityDetail = await this.cityDetailService.getCityDetail(city, countryIsoCode, 'fr');
-
+    if (!cityDetail) {
+      this.logger.log(`Cannot find city details of ${city}`);
+    }
+    if (!weatherStatus) {
+      this.logger.log(`Cannot find wheater details of ${city}`);
+    }
     // Set Status
     const storeStatus = this.setPlaceStatus(
       storeCrowdCmd.placeDetail,
@@ -120,14 +126,16 @@ export class StoreCrowdService {
   }
 
   getCrowdStatusFromContribution(contributions: Contribute[]): string {
-    if (contributions && contributions.length > 0) {
-      const orderedContribution = contributions.sort(
-        (a: Contribute, b: Contribute) => new Date(a.time).getTime() - new Date(b.time).getTime()
-      );
-      let ctrb = this.getRecentFeedback(orderedContribution);
-      if (!ctrb) {
-        ctrb = this.getSimilarTimeFeedback(orderedContribution);
-      }
+    if (!contributions && contributions.length <= 0) {
+      return 'N/A';
+    }
+
+    const orderedContribution = contributions.sort(
+      (a: Contribute, b: Contribute) => new Date(a.time).getTime() - new Date(b.time).getTime()
+    );
+    let ctrb = this.getRecentFeedback(orderedContribution);
+    if (!ctrb) {
+      ctrb = this.getSimilarTimeFeedback(orderedContribution, new Date());
     }
 
     const contributionTag = `${ctrb.queueLength}-${ctrb.speed}`;
@@ -236,7 +244,7 @@ export class StoreCrowdService {
     let result = 'n/a';
     let weatherStatus = 'n/a';
 
-    if (weather.length > 0) {
+    if (weather && weather.length > 0) {
       if (main.temp > 20 && weather[0].main === 'Clear') {
         weatherStatus = 'clear-hot';
       } else if (weather[0].main === 'Clear') {
@@ -252,7 +260,7 @@ export class StoreCrowdService {
       }
     }
 
-    if (city.population < 300000) {
+    if (city && city.population < 300000) {
       result = 'medium';
     } else {
       if (weatherStatus.includes('cold')) {

@@ -1,27 +1,24 @@
 .fouly-content:after {
   --background: none;
-  background-image: url('/assets/img/background_chat_1.gif');
+  background-image: url('/assets/img/background_chat_1.png');
   background-position: center top;
   background-repeat: repeat;
   background-size: auto;
-  opacity: 0.2;
   content: ' ';
   display: block;
   position: absolute;
   left: 0;
-  top: 0;
+  top: -50px;
+  bottom: -50px;
   width: 100%;
-  height: 100%;
   z-index: 1;
 }
 .fouly-content-wrapper {
-  opacity: 1;
   z-index: 2;
   position: relative;
 }
 
 .fouly-chat {
-  opacity: 1;
   flex-direction: column;
   display: flex;
   flex: 1;
@@ -44,10 +41,9 @@
 }
 
 .fouly-chat-msg {
-  opacity: 1;
   float: right;
   border-radius: 1rem;
-  background-color: var(--ion-color-primary);
+  background-color: var(--ion-color-secondary);
   padding: 0.5rem;
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;

@@ -14,7 +14,8 @@ import { UserModule } from './users/user.module';
       useFactory: async (config: ConfigService) => ({
         uri: config.get<string>('FOULY-NOSQL-CONNECTION-STRING'),
         useNewUrlParser: true,
-        useFindAndModify: false /* fixes deprecation warning */
+        useFindAndModify: false /* fixes deprecation warning */,
+        dbName: config.get<string>('FOULY-NOSQL-DB-NAME')
       }),
       inject: [ConfigService]
     })

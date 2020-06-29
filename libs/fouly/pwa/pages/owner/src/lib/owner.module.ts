@@ -1,31 +1,20 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { FoulyUiModule } from '@skare/fouly/shared/ui';
-import { ChannelComponent } from './channel.component';
-
+import { OwnerProposedSolutionComponent } from './proposed-solution/proposed-solution.component';
 export function createTranslateLoader(http: HttpClient) {
-  return new TranslateHttpLoader(http, './assets/i18n/channel-', '.json');
+  return new TranslateHttpLoader(http, './assets/i18n/owner-', '.json');
 }
-
 @NgModule({
   imports: [
     CommonModule,
-    FoulyUiModule,
     IonicModule,
-    FormsModule,
-    ReactiveFormsModule,
-    RouterModule.forChild([
-      {
-        path: ':placeName',
-        component: ChannelComponent
-      }
-    ]),
+    FoulyUiModule,
     TranslateModule.forChild({
       loader: {
         provide: TranslateLoader,
@@ -33,8 +22,11 @@ export function createTranslateLoader(http: HttpClient) {
         deps: [HttpClient]
       },
       isolate: true
-    })
+    }),
+    RouterModule.forChild([
+      { path: ':placeName', pathMatch: 'full', component: OwnerProposedSolutionComponent }
+    ])
   ],
-  declarations: [ChannelComponent]
+  declarations: [OwnerProposedSolutionComponent]
 })
-export class ChannelModule {}
+export class OwnerModule {}
