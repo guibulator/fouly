@@ -13,7 +13,11 @@ export class PlaceDetailsService {
     this.client = new Client();
   }
 
-  async getPlaceDetails(placeId: string, sessionToken: string): Promise<PlaceDetailsResult> {
+  async getPlaceDetails(
+    placeId: string,
+    sessionToken: string,
+    asOfTime: Date
+  ): Promise<PlaceDetailsResult> {
     const promise = this.client.placeDetails({
       params: {
         key: this.configService.get<string>(this.apiKeyEnv),
@@ -47,7 +51,7 @@ export class PlaceDetailsService {
 
       const crowdResult = await this.storeCrowdService.getStoreCrowdStatus({
         placeDetail: placeDetail,
-        localTime: new Date() //Todo take localtime from user input.
+        asOfTime: asOfTime
       });
 
       return { ...placeDetail, storeCrowdResult: crowdResult };

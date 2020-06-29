@@ -50,7 +50,17 @@ export class StoreComponent implements OnInit, OnDestroy {
       }),
       tap((url) => console.log(url))
     );
-    this.placeDetailsStore.loadPlaceId(this.route.snapshot.params['placeId']);
+    const currentTime = new Date();
+    this.placeDetailsStore.loadPlaceId(
+      this.route.snapshot.params['placeId'],
+      new Date(
+        currentTime.getFullYear(),
+        currentTime.getMonth(),
+        currentTime.getDate(),
+        currentTime.getHours(),
+        currentTime.getMinutes()
+      )
+    );
     this.isCurrentlyFavorite$ = this.favoriteStoreService.store$.pipe(
       map((f) => !!f.find((fav) => fav.placeId === this.route.snapshot.params['placeId']))
     );

@@ -13,8 +13,16 @@ import { ContributeModule } from './orm/contribute/contribute.module';
 import { DatabaseModule } from './orm/database-common.module';
 import { ChatService } from './services/chat.service';
 import { CosmosDbSqlApiService } from './services/cosmosDb.sqlApi.service';
+import { FoulyCrowdModelService } from './services/crowdStatus/foulyCrowdModel.service';
 import { QuoteFromFeedbackService } from './services/crowdStatus/quoteFromFeedback.service';
 import { StoreCrowdService } from './services/crowdStatus/storeCrowd.service';
+import { QuoteFromElectronicStoreService } from './services/crowdStatus/storeTypes/quoteFromElectronicStore.service';
+import { QuoteFromFurnitureStoreService } from './services/crowdStatus/storeTypes/quoteFromFurnitureStore.service';
+import { QuoteFromHardwareStoreService } from './services/crowdStatus/storeTypes/quoteFromHardwareStore.service';
+import { QuoteFromLiquorStoreService } from './services/crowdStatus/storeTypes/quoteFromLiquorStore.service';
+import { QuoteFromPharmacyService } from './services/crowdStatus/storeTypes/quoteFromPharmacy.service';
+import { QuoteFromRetailService } from './services/crowdStatus/storeTypes/quoteFromRetail.service';
+import { QuoteFromSupermarketService } from './services/crowdStatus/storeTypes/quoteFromSupermarket.service';
 import { MailService } from './services/mail.service';
 import { PlaceDetailsService } from './services/placeDetails.service';
 import { CityDetailService } from './services/rapid-api/cityDetail.service';
@@ -48,6 +56,14 @@ export class FoulyApiModule {
         WeatherService,
         CityDetailService,
         QuoteFromFeedbackService,
+        FoulyCrowdModelService,
+        QuoteFromPharmacyService,
+        QuoteFromRetailService,
+        QuoteFromLiquorStoreService,
+        QuoteFromHardwareStoreService,
+        QuoteFromElectronicStoreService,
+        QuoteFromSupermarketService,
+        QuoteFromFurnitureStoreService,
         { provide: APP_FILTER, useClass: AllExceptionsFilter }
       ]
     };

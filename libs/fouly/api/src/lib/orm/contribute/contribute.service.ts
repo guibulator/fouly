@@ -27,4 +27,8 @@ export class ContributeService {
   async find(query: { placeId?: string }): Promise<Contribute[]> {
     return this.contributeModel.find(query).exec();
   }
+
+  async findFromType(query: { storeType: string }): Promise<Contribute[]> {
+    return this.contributeModel.find(query).exec();
+  }
 }

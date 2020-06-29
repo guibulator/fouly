@@ -10,4 +10,5 @@ export class ContributeCommand {
   lat?: number;
   lng: number;
   time: Date;
+  storeType: string;
 }

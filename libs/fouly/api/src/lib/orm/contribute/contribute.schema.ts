@@ -8,6 +8,9 @@ export class Contribute extends Document {
   placeId: string;
 
   @Prop()
+  storeType: string;
+
+  @Prop()
   speed: string;
 
   @Prop()

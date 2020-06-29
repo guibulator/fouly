@@ -10,8 +10,16 @@ export class PlaceDetailsController {
   ) {}
 
   @Get('info/:placeId')
-  async getPlaceDetails(@Param() params, @Query('sessionToken') sessionToken) {
-    return this.placeDetailsService.getPlaceDetails(params.placeId, sessionToken);
+  async getPlaceDetails(
+    @Param() params,
+    @Query('sessionToken') sessionToken,
+    @Query('asOfTime') asOfTime
+  ) {
+    return this.placeDetailsService.getPlaceDetails(
+      params.placeId,
+      sessionToken,
+      new Date(asOfTime)
+    );
   }
 
   @Get('find')

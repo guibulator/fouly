@@ -4,6 +4,7 @@ import { Contribute } from '../../orm/contribute/contribute.schema';
 import { ContributeService } from '../../orm/contribute/contribute.service';
 import { CityDetailService } from '../rapid-api/cityDetail.service';
 import { WeatherService } from '../rapid-api/weather.service';
+import { FoulyCrowdModelService } from './foulyCrowdModel.service';
 import { QuoteFromFeedbackService } from './quoteFromFeedback.service';
 
 @Injectable()
@@ -13,6 +14,7 @@ export class StoreCrowdService {
     private readonly cityDetailService: CityDetailService,
     private readonly contributeService: ContributeService,
     private readonly quoteFromFeedbackService: QuoteFromFeedbackService,
+    private readonly foulyCrowdModelService: FoulyCrowdModelService,
     private logger: Logger
   ) {}
 
@@ -42,19 +44,40 @@ export class StoreCrowdService {
     //   };
     // }
 
-    const feedback: Contribute[] = await this.contributeService.find({
+    //Get status from store contributions
+    const listOfFeedback: Contribute[] = await this.contributeService.find({
       placeId: storeCrowdCmd.placeDetail.place_id
     });
     const statusFromFeedback = this.quoteFromFeedbackService.getCrowdStatusFromContribution(
-      feedback
+      listOfFeedback,
+      storeCrowdCmd.asOfTime
     );
     if (statusFromFeedback) {
       return {
-        localTime: storeCrowdCmd.localTime,
+        asOfTime: storeCrowdCmd.asOfTime,
         status: statusFromFeedback
       };
     }
 
+    //Get status from similar store type contributions
+    const currentStoreType = this.getStoreType(storeCrowdCmd.placeDetail);
+    const statusFromOtherStoreTypeFeedback: Contribute[] = await this.contributeService.findFromType(
+      {
+        storeType: currentStoreType
+      }
+    );
+    const statusFromOtherTypeFeedback = this.quoteFromFeedbackService.getStatusFromSimilarTimeFeedback(
+      statusFromOtherStoreTypeFeedback,
+      storeCrowdCmd.asOfTime
+    );
+    if (statusFromOtherTypeFeedback) {
+      return {
+        asOfTime: storeCrowdCmd.asOfTime,
+        status: statusFromOtherTypeFeedback
+      };
+    }
+
+    //Get status from fouly custom model
     const countryName = this.getNodeValue(storeCrowdCmd.placeDetail.adr_address, 'country-name');
     const countryIsoCode = this.getCountryIsoCode(countryName);
     const city = this.getNodeValue(storeCrowdCmd.placeDetail.adr_address, 'locality');
@@ -68,18 +91,52 @@ export class StoreCrowdService {
     if (!weatherStatus) {
       this.logger.log(`Cannot find wheater details of ${city}`);
     }
-    // Set Status
-    const storeStatus = this.setPlaceStatus(
-      storeCrowdCmd.placeDetail,
-      weatherStatus,
-      cityDetail,
-      storeCrowdCmd.localTime
+
+    const foulyModelStatus = this.foulyCrowdModelService.getCrowdStatus(
+      currentStoreType,
+      storeCrowdCmd.asOfTime
     );
+    // // Set Status
+    // const storeStatus = this.setPlaceStatus(
+    //   storeCrowdCmd.placeDetail,
+    //   weatherStatus,
+    //   cityDetail,
+    //   storeCrowdCmd.localTime
+    // );
 
     return {
-      localTime: storeCrowdCmd.localTime,
-      status: storeStatus
+      asOfTime: storeCrowdCmd.asOfTime,
+      status: foulyModelStatus
     };
+  }
+
+  getStoreType(placeDetail: any): StoreType {
+    const isTypeOf = (storeTypes: string[], target: string) => {
+      const result = storeTypes.find(
+        (x: string) => x.toLowerCase().trim() === target.toLowerCase().trim()
+      );
+      return result !== undefined;
+    };
+
+    const types: string[] = placeDetail.types;
+
+    if (isTypeOf(types, 'supermarket') || isTypeOf(types, 'food')) {
+      return 'supermarket';
+    } else if (isTypeOf(types, 'pharmacy')) {
+      return 'pharmacy';
+    } else if (isTypeOf(types, 'home_goods_store')) {
+      return 'retail';
+    } else if (isTypeOf(types, 'restaurant')) {
+      return 'restaurant';
+    } else if (isTypeOf(types, 'liquor_store')) {
+      return 'liquor_store';
+    } else if (isTypeOf(types, 'hardware_store')) {
+      return 'hardware_store';
+    } else if (isTypeOf(types, 'electronic_store')) {
+      return 'electronic_store';
+    } else if (isTypeOf(types, 'furniture_store')) {
+      return 'furniture_store';
+    }
   }
 
   getCountryIsoCode(name: string): string {
@@ -132,110 +189,5 @@ export class StoreCrowdService {
     }
 
     return true;
-  }
-
-  getStoreType(placeDetail: any): StoreType {
-    const isTypeOf = (types: string[], target: string) => {
-      const result = types.find(
-        (x: string) => x.toLowerCase().trim() === target.toLowerCase().trim()
-      );
-      return result !== undefined;
-    };
-
-    const types: string[] = placeDetail.types;
-
-    if (isTypeOf(types, 'supermarket')) {
-      return StoreType.Supermarket;
-    }
-    if (isTypeOf(types, 'pharmacy')) {
-      return StoreType.Pharmacy;
-    }
-    if (isTypeOf(types, 'home_goods_store')) {
-      return StoreType.Retail;
-    }
-    if (isTypeOf(types, 'restaurant')) {
-      return StoreType.Retail;
-    }
-  }
-
-  setPlaceStatus(placeDetail: any, weatherData: any, city: any, asOfTime: Date): string {
-    const { main, weather } = weatherData;
-    const placeType: StoreType = this.getStoreType(placeDetail);
-
-    let result = 'n/a';
-    let weatherStatus = 'n/a';
-
-    if (weather && weather.length > 0) {
-      if (main.temp > 20 && weather[0].main === 'Clear') {
-        weatherStatus = 'clear-hot';
-      } else if (weather[0].main === 'Clear') {
-        weatherStatus = 'clear-cold';
-      } else {
-        weatherStatus = 'cloud-cold';
-      }
-    } else if (main.temp) {
-      if (main.temp > 20) {
-        weatherStatus = 'hot';
-      } else {
-        weatherStatus = 'cold';
-      }
-    }
-
-    if (city && city.population < 300000) {
-      result = 'medium';
-    } else {
-      if (weatherStatus.includes('cold')) {
-        result = 'low';
-      } else {
-        result = 'high';
-      }
-    }
-
-    if ((placeType as StoreType) === StoreType.Supermarket) {
-      const numberAsOfTime = asOfTime.getHours() * 100;
-
-      if (asOfTime.getDay() !== 0 && asOfTime.getDay() < 6) {
-        //Week
-        if (numberAsOfTime < 1100) {
-          result = 'low';
-        } else if (numberAsOfTime < 1500) {
-          result = 'medium';
-        } else if (numberAsOfTime < 1900) {
-          result = 'high';
-        } else if (numberAsOfTime < 2000) {
-          result = 'medium';
-        } else if (numberAsOfTime < 2100) {
-          result = 'low';
-        }
-      } else if (asOfTime.getDay() === 6) {
-        //Saterday
-        if (numberAsOfTime < 1000) {
-          result = 'low';
-        } else if (numberAsOfTime < 1200) {
-          result = 'medium';
-        } else if (numberAsOfTime < 1300) {
-          result = 'high';
-        } else if (numberAsOfTime < 1500) {
-          result = 'medium';
-        } else if (numberAsOfTime < 1900) {
-          result = 'high';
-        } else if (numberAsOfTime < 2000) {
-          result = 'medium';
-        } else if (numberAsOfTime < 2100) {
-          result = 'low';
-        }
-      } else if (asOfTime.getDay() === 0) {
-        //Sunday
-        if (numberAsOfTime < 1300) {
-          result = 'low';
-        } else if (numberAsOfTime < 1800) {
-          result = 'medium';
-        } else if (numberAsOfTime < 2100) {
-          result = 'low';
-        }
-      }
-    }
-
-    return result;
   }
 }

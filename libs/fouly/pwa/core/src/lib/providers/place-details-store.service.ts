@@ -21,12 +21,12 @@ export class PlaceDetailsStoreService {
       );
   }
 
-  loadPlaceId(placeId: string, sessionToken?: string) {
+  loadPlaceId(placeId: string, asOfTime: Date, sessionToken?: string) {
     //TODO: handle failure, immutabilty for store, reuse already loaded item...
     this._loading.next(true);
     this.httpClient
       .get<PlaceDetailsResult>(
-        `${this.configService.apiUrl}/place-details/info/${placeId}?sessionToken=${sessionToken}`
+        `${this.configService.apiUrl}/place-details/info/${placeId}?asOfTime=${asOfTime}&sessionToken=${sessionToken}`
       )
       .pipe(finalize(() => this._loading.next(false)))
       .subscribe((response) => this._placeDetails.next([response]));
