@@ -19,7 +19,7 @@ There are 2 options to test the app locally:
 ## Environment configuration
 
 In order to get the latest configuration to run the backend locally, you need to sync the FunctionApp configuration with a local file named .env.
-Simply run the tool under `.\tools\powershell\azure\ReadEnvFromFunctionApp.psq`.
+Simply run the tool under `.\tools\powershell\azure\ReadEnvFromFunctionApp.ps1`.
 **NB**: You must specify the tenant in case your account is link with multiple tenant
 `az login --tenant 798152d6-db45-47e7-a4c8-6ffba45f1a0a`
 
