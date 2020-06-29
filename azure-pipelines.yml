@@ -3,7 +3,6 @@ trigger:
     include:
       - develop
       - release/*
-      - feature/*
 
 pool:
   vmImage: 'ubuntu-latest'
@@ -14,13 +13,23 @@ steps:
       versionSpec: '10.x'
     displayName: 'Install Node.js'
 
-  - script: | #Install all dependencies using yarn
+  - script: | #Install all global dependencies using yarn
       yarn global add @angular/cli
       yarn global add lerna
       yarn bootstrap
       yarn sync-yarn-npm
-      yarn run nx run-many --all --target=build --configuration=production
-    displayName: 'yarn install and build Fouly'
+
+    displayName: 'install global dependencies'
+
+  - script: |
+      yarn run nx run-many --projects=fouly-backend,fouly-pwa --target=build --configuration=production
+    condition: and(succeeded(), contains(variables['Build.SourceBranch'], 'heads/release'))
+    displayName: 'Build production packages'
+
+  - script: |
+      yarn run nx run-many --projects=fouly-backend,fouly-pwa --target=build --configuration=staging
+    condition: and(succeeded(), contains(variables['Build.SourceBranch'], 'heads/develop'))
+    displayName: 'Build staging packages'
 
   - task: CopyFiles@2
     inputs:
@@ -50,7 +59,8 @@ steps:
       rootFolderOrFile: 'dist/apps/fouly/pwa'
       includeRootFolder: false
       archiveType: 'zip'
-      archiveFile: '$(Build.ArtifactStagingDirectory)/fouly-pwa.$(Build.BuildId)-$(Build.SourceBranchName).zip'
+
+      archiveFile: '$(Build.ArtifactStagingDirectory)/fouly-pwa.zip'
       replaceExistingArchive: true
 
   - task: ArchiveFiles@2
@@ -58,11 +68,25 @@ steps:
       rootFolderOrFile: 'dist/apps/fouly/backend'
       includeRootFolder: false
       archiveType: 'zip'
-      archiveFile: '$(Build.ArtifactStagingDirectory)/fouly-backend-azure-function.$(Build.BuildId)-$(Build.SourceBranchName).zip'
+      archiveFile: '$(Build.ArtifactStagingDirectory)/fouly-backend-azure-function.zip'
       replaceExistingArchive: true
 
-  - task: PublishBuildArtifacts@1
+  - task: UniversalPackages@0
+    condition: and(succeeded(), contains(variables['Build.SourceBranch'], 'heads/develop'))
     inputs:
-      PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-      ArtifactName: 'drop'
-      publishLocation: 'Container'
+      command: 'publish'
+      publishDirectory: '$(Build.ArtifactStagingDirectory)'
+      feedsToUsePublish: 'internal'
+      vstsFeedPublish: '8f09215d-4571-4b5e-b7e3-7cc9aec53b51/fdf6fdf3-237b-4b42-9dba-2029bf24a1f7'
+      vstsFeedPackagePublish: 'fouly'
+      versionOption: 'patch'
+
+  - task: UniversalPackages@0
+    condition: and(succeeded(), contains(variables['Build.SourceBranch'], 'heads/release'))
+    inputs:
+      command: 'publish'
+      publishDirectory: '$(Build.ArtifactStagingDirectory)'
+      feedsToUsePublish: 'internal'
+      vstsFeedPublish: '8f09215d-4571-4b5e-b7e3-7cc9aec53b51/d38e1a80-fbb3-4554-b27f-29e39a29add6'
+      vstsFeedPackagePublish: 'fouly'
+      versionOption: 'patch'
