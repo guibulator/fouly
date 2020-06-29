@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
+import { ChatModule } from './chat/chat.module';
 import { ContributeModule } from './contribute/contribute.module';
 import { UserModule } from './users/user.module';
 /**
@@ -9,7 +10,7 @@ import { UserModule } from './users/user.module';
 @Module({
   imports: [
     MongooseModule.forRootAsync({
-      imports: [ConfigModule, ContributeModule, UserModule],
+      imports: [ConfigModule, ContributeModule, UserModule, ChatModule],
       useFactory: async (config: ConfigService) => ({
         uri: config.get<string>('FOULY-NOSQL-CONNECTION-STRING'),
         useNewUrlParser: true,
