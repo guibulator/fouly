@@ -3,7 +3,7 @@ import { PlaceAutocompleteType } from '@googlemaps/google-maps-services-js/dist/
 import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { PlaceDetailsResult, SearchResult } from '@skare/fouly/data';
-import { StoreCrowdService } from './storeCrowd.service';
+import { StoreCrowdService } from './crowdStatus/storeCrowd.service';
 @Injectable()
 export class PlaceDetailsService {
   private client: Client;
@@ -16,6 +16,7 @@ export class PlaceDetailsService {
   async getPlaceDetails(
     placeId: string,
     sessionToken: string,
+    asOfTime: Date,
     languageCode?: string
   ): Promise<PlaceDetailsResult> {
     const promise = this.client.placeDetails({
@@ -25,6 +26,7 @@ export class PlaceDetailsService {
         sessiontoken: sessionToken,
         language: languageCode ? Language[languageCode] : Language.fr,
         fields: [
+          'address_components',
           'adr_address',
           'business_status',
           'permanently_closed',
@@ -50,7 +52,7 @@ export class PlaceDetailsService {
 
       const crowdResult = await this.storeCrowdService.getStoreCrowdStatus({
         placeDetail: placeDetail,
-        localTime: new Date() //Todo take localtime from user input.
+        asOfTime: asOfTime
       });
 
       return { ...placeDetail, storeCrowdResult: crowdResult };

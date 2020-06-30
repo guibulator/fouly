@@ -7,6 +7,7 @@ import { ContributeService } from './contribute.service';
 @Module({
   imports: [MongooseModule.forFeature([{ name: Contribute.name, schema: ConributeSchema }])],
   providers: [ContributeService, Logger],
-  controllers: [ContributeController]
+  controllers: [ContributeController],
+  exports: [ContributeService]
 })
 export class ContributeModule {}

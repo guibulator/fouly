@@ -26,13 +26,13 @@ export class PlaceDetailsStoreService {
       );
   }
 
-  loadPlaceId(placeId: string, sessionToken?: string) {
+  loadPlaceId(placeId: string, asOfTime: Date, sessionToken?: string) {
     const lngCode = this.translateService.store.currentLang;
     //TODO: handle failure, immutabilty for store, reuse already loaded item...
     this._loading.next(true);
     this.httpClient
       .get<PlaceDetailsResult>(
-        `${this.configService.apiUrl}/place-details/info/${placeId}?sessionToken=${sessionToken}&languageCode=${lngCode}`
+        `${this.configService.apiUrl}/place-details/info/${placeId}?asOfTime=${asOfTime}&sessionToken=${sessionToken}&languageCode=${lngCode}`
       )
       .pipe(finalize(() => this._loading.next(false)))
       .subscribe((response) => this._placeDetails.next([response]));

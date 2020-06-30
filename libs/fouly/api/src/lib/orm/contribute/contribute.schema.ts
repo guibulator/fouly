@@ -7,6 +7,10 @@ export class Contribute extends Document {
   @Prop()
   placeId: string;
 
+  //Todo : add storeType value in db
+  @Prop()
+  storeType: string;
+
   @Prop()
   speed: string;
 
@@ -22,6 +26,9 @@ export class Contribute extends Document {
   @Prop()
   lng?: number;
 
+  @Prop()
+  time: Date;
+
   static fromCmd(cmd: ContributeCommand) {
     return {
       placeId: cmd.placeId,
@@ -29,7 +36,8 @@ export class Contribute extends Document {
       speed: cmd.speed,
       userId: cmd.userId,
       lat: cmd.lat,
-      lng: cmd.lng
+      lng: cmd.lng,
+      time: cmd.time
     };
   }
 }

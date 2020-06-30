@@ -1,4 +1,5 @@
 //TODO: deals with placeId refresh.
+// **** We should use Azure Search Index for caching ****
 /**
  * Place IDs are exempt from the caching restrictions stated in Section 3.2.4(a) of the Google Maps Platform Terms of Service. You can therefore store place ID values for later use.
 
