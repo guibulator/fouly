@@ -59,9 +59,10 @@ export class StoreComponent implements OnInit, OnDestroy {
   }
 
   setCrowdStatus(status: string): any {
-    this.translate.get(`page.crowdStatus.${status}`).subscribe((res: string) => {
-      this.crowdStatus = res;
-    });
+    this.crowdStatus = `sharedUI.affluence.${status}`;
+    // this.translate.get(`sharedUI.affluence.${status}`).subscribe((res: string) => {
+    //   this.crowdStatus = res;
+    // });
 
     if (status === 'low') {
       this.crowdColor = 'success';
