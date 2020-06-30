@@ -19,9 +19,9 @@
     },
     "crowdStatus": {
       "closed": "N/A",
-      "low": "Bas",
+      "low": "Faible",
       "medium": "Moyen",
-      "high": "Haut"
+      "high": "Élevé"
     }
   }
 }

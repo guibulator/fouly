@@ -13,7 +13,7 @@ export class PlaceDetailsController {
   async getPlaceDetails(
     @Param() params,
     @Query('sessionToken') sessionToken: string,
-    @Query('asOfTime') asOfTime: Date,
+    @Query('asOfTime') asOfTime: string,
     @Query('languageCode') languageCode: string
   ) {
     //Storer les model chercher par des user dans fouly.  Stats importante.
@@ -22,7 +22,7 @@ export class PlaceDetailsController {
     return this.placeDetailsService.getPlaceDetails(
       params.placeId,
       sessionToken,
-      asOfTime,
+      new Date(asOfTime),
       languageCode
     );
   }

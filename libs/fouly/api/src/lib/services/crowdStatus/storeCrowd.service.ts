@@ -166,6 +166,15 @@ export class StoreCrowdService {
     if (!openningHours) {
       return true; //Todo : define how to handle no oppenning hours
     }
+
+    if (openningHours.periods.length === 1) {
+      const period = openningHours.periods[0];
+      if ((period.open.time = '0000' && openningHours.open_now)) {
+        //Open 24h/24h
+        return true;
+      }
+    }
+
     const dayIndex = asOfTime.getDay();
     const openScheduleForThatDay = openningHours.periods[dayIndex];
 
