@@ -13,5 +13,90 @@
     "login": "S'identifier",
     "documentation": "Documentation",
     "introduction": "Revoir l'introduction"
+  },
+
+  "page": {
+    "channel": {
+      "title": "Discussions"
+    },
+
+    "contact": {
+      "title": "Commentaire",
+      "ideaTitle": "Vous avez une idée ?",
+      "ideaSuggest": "Soummetez-nous vos idées et/ou commentaires. Il nous fera plaisir de vous lire et améliorer Fouly !",
+      "subjectPlaceHolder": "À quel sujet ?",
+      "commentPlaceHolder": "Entrez vos commentaires, suggestions ou idées.",
+      "emailPlaceHolder": "Courriel (optionnel)",
+      "instruction": "Entrez votre commentaire ci-dessous",
+      "thanks": "Commentaire envoyé avec succès, merci !",
+      "send": "Envoyer",
+      "findUsSocial": "Retrouvez-nous sur les réseaux sociaux pour communiquer avec nous et rester en contact !"
+    },
+
+    "contribute": {
+      "title": "Contribuer",
+      "delay": {
+        "title": "La ligne d'attente avance-t-elle ...",
+        "fast": "Rapidement",
+        "slow": "Lentement"
+      },
+
+      "installation": {
+        "title": "Les installations d'attente sont-elles ...",
+        "adequate": "Adéquates",
+        "notAdequate": "Non Adéquates"
+      },
+
+      "number": {
+        "title": "Combien de personnes y a-t-il devant vous ?",
+        "less5": "Moins de 5 personnes",
+        "about10": "Environ 10 personnes",
+        "about20": "Environ 20 personnes",
+        "more30": "Plus de 30 personnes"
+      },
+
+      "thanks": {
+        "title": "Merci pour votre contribution !",
+        "return": "Retour"
+      }
+    },
+
+    "myFavorites": {
+      "title": "Mes favoris",
+      "remove": "Retirer",
+      "favoriteShops": "Vos commerces favoris",
+      "instruction": "Vous trouverez en un clin d'oeil les détails importants comme le délai d'attente et l'achalandage de vos commerces favoris. Pour ajouter un favoris, dirigez vous sur la map, sélectionner un commerce et cliquer sur l'étoile."
+    },
+
+    "owner": {
+      "title": "Propriétaires/Gestionnaires",
+      "subtitle": "Vous êtes propriétaire, gestionnaire ou désirez soumettre l'idée aux propriétaires ?",
+      "content": "Avec les nouvelles règles de distanciation sociale à mettre en place, les écueils rencontrés par les commerçants dans les mois à venir seront nombreux et à différents niveaux. Ces nouvelles règles imposent souvent des changements importants au niveau organisationnel pour les commerçants, en plus d’ajouter des contraintes à la clientèle, ce qui est toujours un défi à relever. Un de ces défis consiste à permettre à la clientèle d’être servie sans attente, de manière sécuritaire en respectant les règles de distanciation.  "
+    },
+
+    "storeDetail": {
+      "title": "Détails",
+      "addFavorite": "Ajouter au favoris",
+      "websitePlace": "Site web du commerçant",
+      "open": "OUVERT",
+      "close": "FERMÉ",
+      "openingHours": "Horaire",
+      "comments": "Commentaires",
+      "owner": "Vous êtes propriétaires ?",
+      "myFavorites": "Mes favoris",
+      "proposeBtn": { "title": "Ajout/retrait d'une mesure" },
+      "measures": {
+        "title": "Mesures de distanciation",
+        "content": "<li>Respecter une distance d'au moins 2 mètres avec les autres clients et le personnel</li> <li>Se laver les mains avant d'entrer dans le magasin (ou suivre les consignes des employés)</li><li>Suivre les consignes à la caisse pour payer vos articles</li><li>Ne pas vous présenter dans le commerce si vous avez des symptômes</li><li>Limiter la manipulation des articles le plus possible</li><li>Payer en carte de crédit ou de débit</li>",
+        "na": "Cette fonctionnalité sera présente très bientôt. Merci de votre intérêt pour Fouly !"
+      }
+    }
+  },
+
+  "sharedUI": {
+    "affluence": {
+      "medium": "Moyen",
+      "contribute": "Contribuer"
+    }
   }
 }

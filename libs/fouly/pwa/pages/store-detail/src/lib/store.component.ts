@@ -1,6 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
 import { PlaceDetailsResult } from '@skare/fouly/data';
 import { FavoriteStoreService, PlaceDetailsStoreService } from '@skare/fouly/pwa/core';
 import { combineLatest, Observable, of, Subscription } from 'rxjs';
@@ -23,8 +22,7 @@ export class StoreComponent implements OnInit, OnDestroy {
     private placeDetailsStore: PlaceDetailsStoreService,
     private route: ActivatedRoute,
     private router: Router,
-    private favoriteStoreService: FavoriteStoreService,
-    private readonly translate: TranslateService
+    private favoriteStoreService: FavoriteStoreService
   ) {
     this.favoriteStoreService.getAll().subscribe();
   }
@@ -58,14 +56,6 @@ export class StoreComponent implements OnInit, OnDestroy {
     this.isCurrentlyFavorite$ = this.favoriteStoreService.store$.pipe(
       map((f) => !!f.find((fav) => fav.placeId === this.route.snapshot.params['placeId']))
     );
-
-    this.subscriptions.add(
-      this.translate.store.onLangChange.subscribe((lang) => {
-        this.translate.use(lang.lang);
-      })
-    );
-
-    this.translate.use(this.translate.store.currentLang);
   }
 
   setCrowdStatus(status: string): any {

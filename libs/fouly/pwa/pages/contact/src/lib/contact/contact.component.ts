@@ -18,8 +18,8 @@ export class ContactComponent implements OnInit, OnDestroy {
   constructor(
     private contactService: ContactService,
     private formBuilder: FormBuilder,
-    private readonly translate: TranslateService,
-    private readonly toastController: ToastController
+    private readonly toastController: ToastController,
+    private translateService: TranslateService
   ) {
     this.commentsForm = this.formBuilder.group({
       subject: '',
@@ -39,14 +39,6 @@ export class ContactComponent implements OnInit, OnDestroy {
         this.submitted = false;
       })
     );
-
-    this.subscriptions.add(
-      this.translate.store.onLangChange.subscribe((lang) => {
-        this.translate.use(lang.lang);
-      })
-    );
-
-    this.translate.use(this.translate.store.currentLang);
   }
 
   submit(formData: any) {
@@ -59,7 +51,7 @@ export class ContactComponent implements OnInit, OnDestroy {
         flatMap(() =>
           from(
             this.toastController.create({
-              message: this.translate.instant('page.contact.thanks'),
+              message: this.translateService.instant('page.contact.thanks'),
               duration: 3000,
               color: 'tertiary',
               position: 'middle'

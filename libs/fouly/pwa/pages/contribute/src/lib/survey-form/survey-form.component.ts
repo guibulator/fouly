@@ -1,7 +1,6 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { IonContent, IonSlides, NavController } from '@ionic/angular';
-import { TranslateService } from '@ngx-translate/core';
 import {
   ContributeCommand,
   ContributeGlobalAppreciation,
@@ -32,7 +31,6 @@ export class SurveyFormComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('content') content: IonContent;
 
   constructor(
-    private readonly translate: TranslateService,
     private navController: NavController,
     private contributeService: ContributeStoreService,
     private userStoreService: UserStoreService,
@@ -51,14 +49,6 @@ export class SurveyFormComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.subscriptions.add(
-      this.translate.store.onLangChange.subscribe((lang) => {
-        this.translate.use(lang.lang);
-      })
-    );
-
-    this.translate.use(this.translate.store.currentLang);
-
     this.localisationService.getPosition().subscribe((pos) => {
       this.userContribution.lng = pos?.coords?.longitude;
       this.userContribution.lat = pos?.coords?.latitude;

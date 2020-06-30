@@ -6,7 +6,7 @@
       <ion-buttons slot="start">
          <ion-menu-button></ion-menu-button>
       </ion-buttons>
-      <ion-title>{{ 'page.myFavorites' | translate }}</ion-title>
+      <ion-title>{{ 'page.myFavorites.title' | translate }}</ion-title>
    </ion-toolbar>
 </ion-header>
 
@@ -31,7 +31,7 @@
                   <!-- <ion-icon color="tertiary" size="large" name="add-circle-outline"></ion-icon> -->
                </ion-item>
                <ion-item-options side="end">
-                  <ion-item-option (click)="onRemovePlace(p.placeId)">{{ 'page.remove' | translate }}</ion-item-option>
+                  <ion-item-option (click)="onRemovePlace(p.placeId)">{{ 'page.myFavorites.remove' | translate }}</ion-item-option>
                </ion-item-options>
             </ion-item-sliding>
          </ion-item-group>
@@ -48,11 +48,11 @@
          <ion-card-header>
             <ion-img [src]="'assets/img/svg/undraw_map_1r69.svg'" class="empty-image"></ion-img>
             <h2>
-               {{ 'page.favoriteShops' | translate }}
+               {{ 'page.myFavorites.favoriteShops' | translate }}
             </h2>
          </ion-card-header>
          <ion-card-content class="ion-text-justify">
-            {{ 'page.instruction' | translate }}
+            {{ 'page.myFavorites.instruction' | translate }}
          </ion-card-content>
       </ion-card>
    </fouly-content-centered>

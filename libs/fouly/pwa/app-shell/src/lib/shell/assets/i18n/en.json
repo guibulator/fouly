@@ -13,5 +13,88 @@
     "login": "Login",
     "documentation": "Documentation",
     "introduction": "Review the introduction"
+  },
+
+  "page": {
+    "channel": {
+      "title": "Discussions"
+    },
+
+    "contact": {
+      "title": "Comment",
+      "ideaTitle": "You have an idea ?",
+      "ideaSuggest": "Submit your ideas and / or comments to us. We will be happy to read you and improve Fouly!",
+      "subjectPlaceHolder": "What about?",
+      "commentPlaceHolder": "Enter your comments, suggestions or ideas.",
+      "emailPlaceHolder": "Email (optional)",
+      "instruction": "Enter your comment below",
+      "thanks": "Comment sent successfully, thank you.",
+      "send": "Send",
+      "findUsSocial": "You can find us on social networks. It will be our pleasure to stay connected with you!"
+    },
+
+    "contribute": {
+      "title": "Contribute",
+      "delay": {
+        "title": "Is the waiting line moving forward ...",
+        "fast": "Quickly",
+        "slow": "Slowly"
+      },
+
+      "installation": {
+        "title": "Are the waiting facilities ...",
+        "adequate": "Adequate",
+        "notAdequate": "Not Adequate"
+      },
+
+      "number": {
+        "title": "How many people are there in front of you ?",
+        "less5": "Less than 5 people",
+        "about10": "About 10 people",
+        "about20": "About 20 people",
+        "more30": "More than 30 people"
+      },
+
+      "thanks": {
+        "title": "Thanks for your contribution !",
+        "return": "Return"
+      }
+    },
+
+    "myFavorites": {
+      "title": "My favorites",
+      "remove": "Remove",
+      "favoriteShops": "Your favorite shops",
+      "instruction": "You will find important details in the blink of an eye such as the waiting time and the traffic in your favorite businesses. To add a favorite, go to the map, select a business and click on the star."
+    },
+
+    "owner": {
+      "title": "Owners and managers",
+      "content": "Avec les nouvelles règles de distanciation sociale à mettre en place, les écueils rencontrés par les commerçants dans les mois à venir seront nombreux et à différents niveaux. Ces nouvelles règles imposent souvent des changements importants au niveau organisationnel pour les commerçants, en plus d’ajouter des contraintes à la clientèle, ce qui est toujours un défi à relever. Un de ces défis consiste à permettre à la clientèle d’être servie sans attente, de manière sécuritaire en respectant les règles de distanciation.  "
+    },
+    "storeDetail": {
+      "title": "Details",
+      "addFavorite": "Add to favorites",
+      "websitePlace": "Merchant website",
+      "open": "OPEN",
+      "close": "CLOSE",
+      "openingHours": "Opening hours",
+      "comments": "Comments",
+      "owner": "Business owner?",
+      "myFavorites": "My favorites",
+      "proposeBtn": { "title": "Add/remove a measure" },
+      "measures": {
+        "title": "Distanciation measures",
+        "content": "<li>Maintain a distance of at least 2 meters with other customers and staff</li><li>Wash hands before entering the store (or follow employee instructions)</li><li>Follow the instructions at checkout to pay for your items</li><li>Do not go to the store if you have symptoms</li><li>Limit handling of items as much as possible</li><li>Pay by credit or debit card</li>",
+        "na": "This functionality will be available soon. Thanks for your interest in Fouly!"
+      }
+    }
+  },
+
+  "sharedUI": {
+    "affluence": {
+      "medium": "Medium",
+      "contribute": "Contribute"
+    }
   }
 }
