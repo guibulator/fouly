@@ -15,6 +15,8 @@ export class StoreComponent implements OnInit, OnDestroy {
   mainImage$: Observable<string>;
   notGoogleImage = false;
   subscriptions = new Subscription();
+  crowdStatusTranslateTag: string;
+  crowdColor: string;
 
   constructor(
     private placeDetailsStore: PlaceDetailsStoreService,
@@ -35,6 +37,8 @@ export class StoreComponent implements OnInit, OnDestroy {
     this.mainImage$ = this.placeDetails$.pipe(
       filter((details) => details && details.length > 0),
       flatMap((details) => {
+        this.setCrowdStatus(details[0].storeCrowdResult.status);
+
         if (details[0]?.photos && details[0].photos.length > 0) {
           return this.placeDetailsStore.getPhotoUrl(details[0]?.photos[0]?.photo_reference);
         } else {
@@ -44,10 +48,26 @@ export class StoreComponent implements OnInit, OnDestroy {
       }),
       tap((url) => console.log(url))
     );
-    this.placeDetailsStore.loadPlaceId(this.route.snapshot.params['placeId']);
+
+    this.placeDetailsStore.loadPlaceId(
+      this.route.snapshot.params['placeId'],
+      new Date() //Todo : add support for choosing different time values
+    );
     this.isCurrentlyFavorite$ = this.favoriteStoreService.store$.pipe(
       map((f) => !!f.find((fav) => fav.placeId === this.route.snapshot.params['placeId']))
     );
+  }
+
+  setCrowdStatus(status: string): any {
+    this.crowdStatusTranslateTag = `sharedUI.affluence.${status}`;
+
+    if (status === 'low') {
+      this.crowdColor = 'success';
+    } else if (status === 'medium') {
+      this.crowdColor = 'warning';
+    } else if (status === 'high') {
+      this.crowdColor = 'danger';
+    }
   }
 
   gotoChat(placeName: string) {

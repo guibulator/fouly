@@ -3,6 +3,7 @@ import {
   Component,
   ElementRef,
   EventEmitter,
+  Input,
   OnDestroy,
   OnInit,
   Output,
@@ -16,6 +17,8 @@ import { fromEvent, Subscription } from 'rxjs';
 })
 export class FoulyAffluenceComponent implements OnInit, AfterViewInit, OnDestroy {
   private subs = new Subscription();
+  @Input() crowdStatus: string;
+  @Input() crowdColor: string;
   @Output() contribute = new EventEmitter();
 
   @ViewChild('affluence', { read: ElementRef }) affluence: ElementRef;

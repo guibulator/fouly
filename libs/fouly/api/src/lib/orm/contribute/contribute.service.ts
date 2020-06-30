@@ -13,6 +13,10 @@ export class ContributeService {
   ) {}
 
   async contribute(cmd: ContributeCommand): Promise<boolean> {
+    //Todo : add fake points to users profile for his contribution to incitate him to continue.
+
+    //Creer un guid fouly linker a un placeId google. Stocker la guid fouly pour les contribution. On update cette table lorsque un placeId change.
+
     //TODO: apply a weight factor of the contribution based from whether the user
     // is:
     //    1. logged in -> Bigger weight factor
@@ -22,5 +26,14 @@ export class ContributeService {
     const createdContribution = new this.contributeModel(Contribute.fromCmd(cmd));
     await createdContribution.save();
     return true;
+  }
+
+  //Todo : Query 4 weeks of contribution data max
+  async find(query: { placeId?: string }): Promise<Contribute[]> {
+    return this.contributeModel.find(query).exec();
+  }
+
+  async findFromType(query: { storeType: string }): Promise<Contribute[]> {
+    return this.contributeModel.find(query).exec();
   }
 }

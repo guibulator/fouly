@@ -1,4 +1,4 @@
 export class StoreCrowdResult {
-  localTime: Date;
+  asOfTime: Date;
   status: string;
 }

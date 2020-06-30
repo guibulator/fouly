@@ -54,7 +54,7 @@ export class MapComponent implements OnInit, OnDestroy, AfterViewInit {
       const placeId = router?.getCurrentNavigation()?.extras?.state?.placeId;
       if (!placeId) return;
       const sessionToken = router?.getCurrentNavigation()?.extras?.state?.sessionToken;
-      this.placeDetailsStore.loadPlaceId(placeId, sessionToken);
+      this.placeDetailsStore.loadPlaceId(placeId, new Date(), sessionToken);
     });
 
     // Every time a place details is loaded, we add a marker and center the map
