@@ -15,6 +15,8 @@ export class ContributeService {
   async contribute(cmd: ContributeCommand): Promise<boolean> {
     //Todo : add fake points to users profile for his contribution to incitate him to continue.
 
+    //Creer un guid fouly linker a un placeId google. Stocker la guid fouly pour les contribution. On update cette table lorsque un placeId change.
+
     //TODO: apply a weight factor of the contribution based from whether the user
     // is:
     //    1. logged in -> Bigger weight factor
