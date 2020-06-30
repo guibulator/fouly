@@ -76,42 +76,7 @@
               "apps/fouly/pwa/src/manifest.webmanifest",
               {
                 "glob": "**/*.json",
-                "input": "libs/fouly/pwa/pages/contact/src/lib/contact/assets/i18n",
-                "output": "assets/i18n"
-              },
-              {
-                "glob": "**/*.json",
-                "input": "libs/fouly/pwa/pages/my-places/src/lib/favorites/assets/i18n",
-                "output": "assets/i18n"
-              },
-              {
-                "glob": "**/*.json",
-                "input": "libs/fouly/pwa/pages/store-detail/src/lib/assets/i18n",
-                "output": "assets/i18n"
-              },
-              {
-                "glob": "**/*.json",
                 "input": "libs/fouly/pwa/app-shell/src/lib/shell/assets/i18n",
-                "output": "assets/i18n"
-              },
-              {
-                "glob": "**/*.json",
-                "input": "libs/fouly/pwa/pages/contribute/src/lib/assets/i18n",
-                "output": "assets/i18n"
-              },
-              {
-                "glob": "**/*.json",
-                "input": "libs/fouly/pwa/pages/place-search/src/lib/search/assets/i18n",
-                "output": "assets/i18n"
-              },
-              {
-                "glob": "**/*.json",
-                "input": "libs/fouly/pwa/pages/owner/src/lib/assets/i18n",
-                "output": "assets/i18n"
-              },
-              {
-                "glob": "**/*.json",
-                "input": "libs/fouly/pwa/pages/channel/src/lib/assets/i18n",
                 "output": "assets/i18n"
               }
             ],

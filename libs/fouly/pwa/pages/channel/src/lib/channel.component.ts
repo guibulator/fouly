@@ -3,7 +3,6 @@ import { FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { IonContent } from '@ionic/angular';
 import * as signalR from '@microsoft/signalr';
-import { TranslateService } from '@ngx-translate/core';
 import { ChatMessageCommand, ChatMessageResult, UserResult } from '@skare/fouly/data';
 import { ChatStoreService, UserStoreService } from '@skare/fouly/pwa/core';
 import { BehaviorSubject, fromEvent, Observable, Subscription } from 'rxjs';
@@ -35,8 +34,7 @@ export class ChannelComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(
     private chatService: ChatStoreService,
     private route: ActivatedRoute,
-    private userStoreService: UserStoreService,
-    private readonly translate: TranslateService
+    private userStoreService: UserStoreService
   ) {}
 
   ngOnInit() {
@@ -48,14 +46,6 @@ export class ChannelComponent implements OnInit, OnDestroy, AfterViewInit {
         this.user = users && users.length > 0 && users[0];
       })
     );
-
-    this.subscriptions.add(
-      this.translate.store.onLangChange.subscribe((lang) => {
-        this.translate.use(lang.lang);
-      })
-    );
-
-    this.translate.use(this.translate.store.currentLang);
 
     this.chatService.getConnectionSignalR().subscribe(async (info) => {
       await this.start(info);
