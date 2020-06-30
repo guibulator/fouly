@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { PlaceDetailsResult } from '@skare/fouly/data';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { finalize, map, shareReplay } from 'rxjs/operators';
@@ -12,7 +13,11 @@ export class PlaceDetailsStoreService {
   readonly placeDetails$ = this._placeDetails.asObservable();
   readonly loading$ = this._loading.asObservable();
   private readonly _placeApiKey$: Observable<string>;
-  constructor(private httpClient: HttpClient, private configService: ConfigService) {
+  constructor(
+    private httpClient: HttpClient,
+    private configService: ConfigService,
+    private translateService: TranslateService
+  ) {
     this._placeApiKey$ = this.httpClient
       .get<{ key: string }>(`${this.configService.apiUrl}/place-details/placePhoto/`)
       .pipe(
@@ -22,11 +27,12 @@ export class PlaceDetailsStoreService {
   }
 
   loadPlaceId(placeId: string, sessionToken?: string) {
+    const lngCode = this.translateService.store.currentLang;
     //TODO: handle failure, immutabilty for store, reuse already loaded item...
     this._loading.next(true);
     this.httpClient
       .get<PlaceDetailsResult>(
-        `${this.configService.apiUrl}/place-details/info/${placeId}?sessionToken=${sessionToken}`
+        `${this.configService.apiUrl}/place-details/info/${placeId}?sessionToken=${sessionToken}&languageCode=${lngCode}`
       )
       .pipe(finalize(() => this._loading.next(false)))
       .subscribe((response) => this._placeDetails.next([response]));

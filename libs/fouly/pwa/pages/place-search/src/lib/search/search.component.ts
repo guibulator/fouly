@@ -91,7 +91,7 @@ export class SearchComponent implements OnInit {
   private findPredictions(value) {
     const apiEndPoint = this.configService.apiUrl;
     return this.httpClient.get<SearchResult[]>(
-      `${apiEndPoint}/place-details/find/?query=${value}&lat=${this.latLng.lat}&lng=${this.latLng.lng}&sessionToken=${this.sessionToken}}`
+      `${apiEndPoint}/place-details/find/?query=${value}&lat=${this.latLng.lat}&lng=${this.latLng.lng}&sessionToken=${this.sessionToken}&languageCode=${this.translate.currentLang}}`
     );
   }
 }

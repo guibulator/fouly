@@ -13,13 +13,17 @@ export class PlaceDetailsService {
     this.client = new Client();
   }
 
-  async getPlaceDetails(placeId: string, sessionToken: string): Promise<PlaceDetailsResult> {
+  async getPlaceDetails(
+    placeId: string,
+    sessionToken: string,
+    languageCode?: string
+  ): Promise<PlaceDetailsResult> {
     const promise = this.client.placeDetails({
       params: {
         key: this.configService.get<string>(this.apiKeyEnv),
         place_id: placeId,
         sessiontoken: sessionToken,
-        language: Language.fr,
+        language: languageCode ? Language[languageCode] : Language.fr,
         fields: [
           'adr_address',
           'business_status',
@@ -61,6 +65,7 @@ export class PlaceDetailsService {
     lat: number;
     lng: number;
     sessionToken: string;
+    languageCode?: string;
   }): Promise<SearchResult[]> {
     const request: PlaceAutocompleteRequest = {
       params: {
@@ -70,7 +75,7 @@ export class PlaceDetailsService {
         radius: 5000, //5km radius
         key: this.configService.get<string>(this.apiKeyEnv),
         sessiontoken: options.sessionToken,
-        language: 'fr'
+        language: options.languageCode ?? 'fr'
       }
     };
     const result = await this.client.placeAutocomplete(request);
