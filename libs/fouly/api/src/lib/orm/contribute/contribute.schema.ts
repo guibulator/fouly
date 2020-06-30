@@ -7,6 +7,7 @@ export class Contribute extends Document {
   @Prop()
   placeId: string;
 
+  //Todo : add storeType value in db
   @Prop()
   storeType: string;
 

@@ -50,16 +50,10 @@ export class StoreComponent implements OnInit, OnDestroy {
       }),
       tap((url) => console.log(url))
     );
-    const currentTime = new Date();
+
     this.placeDetailsStore.loadPlaceId(
       this.route.snapshot.params['placeId'],
-      new Date(
-        currentTime.getFullYear(),
-        currentTime.getMonth(),
-        currentTime.getDate(),
-        currentTime.getHours(),
-        currentTime.getMinutes()
-      )
+      new Date() //Todo : add support for choosing different time values
     );
     this.isCurrentlyFavorite$ = this.favoriteStoreService.store$.pipe(
       map((f) => !!f.find((fav) => fav.placeId === this.route.snapshot.params['placeId']))

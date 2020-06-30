@@ -28,6 +28,7 @@ export class ContributeService {
     return true;
   }
 
+  //Todo : Query 4 weeks of contribution data max
   async find(query: { placeId?: string }): Promise<Contribute[]> {
     return this.contributeModel.find(query).exec();
   }

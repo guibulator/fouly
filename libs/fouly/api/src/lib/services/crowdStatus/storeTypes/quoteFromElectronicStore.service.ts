@@ -4,6 +4,9 @@ import { Injectable } from '@nestjs/common';
 export class QuoteFromElectronicStoreService {
   constructor() {}
 
+  //Todo : Add special events per store type
+  //Ex : Black Friday, Chrismas
+
   getCrowdStatus(asOfTime: Date): string {
     const numberAsOfTime = asOfTime.getHours() * 100;
     let result: string;

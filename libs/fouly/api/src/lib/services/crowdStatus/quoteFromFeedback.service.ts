@@ -21,6 +21,8 @@ export class QuoteFromFeedbackService {
       status = this.getStatusFromSimilarTimeFeedback(orderedContribution, asOfTime);
     }
 
+    //Todo : add getStatusFromSimilarStoreTypeFeedback(...);
+
     return status;
   }
 
@@ -32,7 +34,7 @@ export class QuoteFromFeedbackService {
     if (lastContributionHoursDelay > similarHoursDelay) return null;
 
     const contributionTag = this.getTagFromContribute(lastestCtrb);
-    return this.getStatusFromContribution(contributionTag);
+    return this.getStatusFromContributionTag(contributionTag);
   }
 
   getStatusFromSimilarTimeFeedback(contributions: Contribute[], asOfTime: Date): string {
@@ -63,17 +65,19 @@ export class QuoteFromFeedbackService {
       return this.getTagFromContribute(x);
     });
 
+    //Group results by tag category
     const groupsByResult = result4Weekds.reduce((prev, item) => {
       if (item in prev) prev[item]++;
       else prev[item] = 1;
       return prev;
     }, {});
 
+    //Get results most often set by users
     const mostOftenTag = Object.keys(groupsByResult).reduce((a, b) =>
       groupsByResult[a] > groupsByResult[b] ? a : b
     );
 
-    return this.getStatusFromContribution(mostOftenTag);
+    return this.getStatusFromContributionTag(mostOftenTag);
   }
 
   getTagFromContribute(contribution: Contribute): string {
@@ -83,7 +87,7 @@ export class QuoteFromFeedbackService {
     return `${contribution.queueLength}-${contribution.speed}`;
   }
 
-  getStatusFromContribution(contributionTag: string): string {
+  getStatusFromContributionTag(contributionTag: string): string {
     switch (contributionTag) {
       case 'lt5-fast':
         return 'low';
@@ -114,7 +118,8 @@ export class QuoteFromFeedbackService {
     if (asOfDay >= 1 && asOfDay < 6 && ctrbDay >= 1 && ctrbDay < 6) {
       return true;
     }
-
     return asOfDay === ctrbDay;
   }
+
+  //Todo : add isSimilarMonth(...)
 }

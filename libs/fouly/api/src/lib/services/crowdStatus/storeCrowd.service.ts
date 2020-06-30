@@ -143,6 +143,7 @@ export class StoreCrowdService {
     }
   }
 
+  //Todo : Remove this function and get information from google address_components.
   getNodeValue(htmlTextSrc: string, targetName: string): string {
     const DOMParser = require('xmldom').DOMParser;
     const parsedResult = new DOMParser().parseFromString(htmlTextSrc, 'text/html');
