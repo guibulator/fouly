@@ -3,7 +3,6 @@ import { DynamicModule, Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { APP_FILTER } from '@nestjs/core';
 import { AzureLoggerModule } from './azureLogger';
-import { ChatController } from './controllers/chat.controller';
 import { FoulyApiController } from './controllers/fouly-api.controller';
 import { GeoLocationController } from './controllers/geo-location.controller';
 import { MailController } from './controllers/mail.controller';
@@ -11,8 +10,6 @@ import { PlaceDetailsController } from './controllers/place-details.controller';
 import { AllExceptionsFilter } from './filters/exception.filter';
 import { ContributeModule } from './orm/contribute/contribute.module';
 import { DatabaseModule } from './orm/database-common.module';
-import { ChatService } from './services/chat.service';
-import { CosmosDbSqlApiService } from './services/cosmosDb.sqlApi.service';
 import { FoulyCrowdModelService } from './services/crowdStatus/foulyCrowdModel.service';
 import { QuoteFromFeedbackService } from './services/crowdStatus/quoteFromFeedback.service';
 import { StoreCrowdService } from './services/crowdStatus/storeCrowd.service';
@@ -35,7 +32,6 @@ export class FoulyApiModule {
       controllers: [
         FoulyApiController,
         PlaceDetailsController,
-        ChatController,
         MailController,
         GeoLocationController
       ],
@@ -49,8 +45,7 @@ export class FoulyApiModule {
       ],
       providers: [
         PlaceDetailsService,
-        ChatService,
-        CosmosDbSqlApiService,
+
         MailService,
         StoreCrowdService,
         WeatherService,

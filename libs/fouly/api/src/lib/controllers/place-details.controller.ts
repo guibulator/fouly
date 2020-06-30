@@ -12,8 +12,9 @@ export class PlaceDetailsController {
   @Get('info/:placeId')
   async getPlaceDetails(
     @Param() params,
-    @Query('sessionToken') sessionToken,
-    @Query('asOfTime') asOfTime
+    @Query('sessionToken') sessionToken: string,
+    @Query('asOfTime') asOfTime: Date,
+    @Query('languageCode') languageCode: string
   ) {
     //Storer les model chercher par des user dans fouly.  Stats importante.
     //Combien de fois le status est vue par un user.
@@ -21,7 +22,8 @@ export class PlaceDetailsController {
     return this.placeDetailsService.getPlaceDetails(
       params.placeId,
       sessionToken,
-      new Date(asOfTime)
+      asOfTime,
+      languageCode
     );
   }
 
@@ -30,9 +32,10 @@ export class PlaceDetailsController {
     @Query('query') query,
     @Query('lat') lat: number,
     @Query('lng') lng: number,
-    @Query('sessionToken') sessionToken: string
+    @Query('sessionToken') sessionToken: string,
+    @Query('languageCode') languageCode: string
   ) {
-    return this.placeDetailsService.findPlace({ query, sessionToken, lat, lng });
+    return this.placeDetailsService.findPlace({ query, sessionToken, lat, lng, languageCode });
   }
   /**
    * * Make sure that the key is protected by CORS in google api console..
