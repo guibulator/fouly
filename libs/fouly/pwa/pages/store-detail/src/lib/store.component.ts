@@ -15,7 +15,7 @@ export class StoreComponent implements OnInit, OnDestroy {
   mainImage$: Observable<string>;
   notGoogleImage = false;
   subscriptions = new Subscription();
-  crowdStatus: string;
+  crowdStatusTranslateTag: string;
   crowdColor: string;
 
   constructor(
@@ -59,10 +59,7 @@ export class StoreComponent implements OnInit, OnDestroy {
   }
 
   setCrowdStatus(status: string): any {
-    this.crowdStatus = `sharedUI.affluence.${status}`;
-    // this.translate.get(`sharedUI.affluence.${status}`).subscribe((res: string) => {
-    //   this.crowdStatus = res;
-    // });
+    this.crowdStatusTranslateTag = `sharedUI.affluence.${status}`;
 
     if (status === 'low') {
       this.crowdColor = 'success';
