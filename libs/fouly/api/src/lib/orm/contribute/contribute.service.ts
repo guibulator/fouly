@@ -13,6 +13,8 @@ export class ContributeService {
   ) {}
 
   async contribute(cmd: ContributeCommand): Promise<boolean> {
+    //Todo : add fake points to users profile for his contribution to incitate him to continue.
+
     //TODO: apply a weight factor of the contribution based from whether the user
     // is:
     //    1. logged in -> Bigger weight factor

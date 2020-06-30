@@ -11,4 +11,5 @@ export class ContributeCommand {
   lng: number;
   time: Date;
   storeType: string;
+  //storeArea: double;
 }

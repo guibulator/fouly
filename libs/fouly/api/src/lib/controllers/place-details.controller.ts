@@ -15,6 +15,9 @@ export class PlaceDetailsController {
     @Query('sessionToken') sessionToken,
     @Query('asOfTime') asOfTime
   ) {
+    //Storer les model chercher par des user dans fouly.  Stats importante.
+    //Combien de fois le status est vue par un user.
+    //On utilise le model souvent ?
     return this.placeDetailsService.getPlaceDetails(
       params.placeId,
       sessionToken,
