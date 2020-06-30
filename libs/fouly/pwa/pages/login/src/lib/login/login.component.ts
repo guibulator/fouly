@@ -1,6 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Router } from '@angular/router';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook/ngx';
 import { NavController, Platform } from '@ionic/angular';
 import { UserResult } from '@skare/fouly/data';
@@ -24,12 +23,12 @@ export class LoginComponent implements OnInit, OnDestroy {
   public loggedIn = false;
   public showUserNameInput = false;
   public userName = new FormControl('');
+  public canLogin = false;
   private readonly subscriptions = new Subscription();
   constructor(
     private facebook: Facebook,
     private platform: Platform,
     private authService: AuthService,
-    private router: Router,
     private userStoreService: UserStoreService,
     private navController: NavController
   ) {}
@@ -44,11 +43,18 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     this.subscriptions.add(
       this.authService.authState.subscribe((user: SocialUser) => {
+        const isUserWasLogued = this.loggedIn;
         this.loginUser(user);
+        if (this.loggedIn && !isUserWasLogued) {
+          setTimeout(() => this.login(), 1000);
+        }
       })
     );
 
     this.userName.valueChanges.subscribe((val: string) => {
+      if (val.length > 0) {
+        this.canLogin = true;
+      }
       if (this.userData) {
         this.loginUser({ ...this.userData, name: val });
       } else {
@@ -113,13 +119,12 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   async logout() {
-    if (this.userData.loginFrom !== 'anonymous') {
+    const id = this.userData?.userId;
+    this.userStoreService.remove(id);
+    if (this.userData.loginFrom !== 'anonymous' && this.loggedIn) {
       await this.authService.signOut();
     }
-
-    const id = this.userData?.userId;
-    this.userData = null;
     this.loggedIn = false;
-    this.userStoreService.remove(id);
+    this.userData = null;
   }
 }
