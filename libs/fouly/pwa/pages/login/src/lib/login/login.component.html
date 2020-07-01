@@ -45,7 +45,7 @@
             </ion-item>
          </ion-card-content>
       </ion-card>
-      <button *ngIf="loggedIn" ion-button full class="login btn" (click)="login()">Connexion</button>
+      <button *ngIf="canLogin" ion-button full class="login btn" (click)="login()">Connexion</button>
       <button *ngIf="loggedIn" ion-button full class="logout btn" (click)="logout()">Déconnexion</button>
    </div>
 </ion-content>

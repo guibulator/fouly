@@ -11,7 +11,7 @@ export class UserService {
     return this.userModel.find(query).exec()[0];
   }
 
-  createUpdateUser(user: UserCommand) {
+  async createUpdateUser(user: UserCommand) {
     if (!user.email) {
       user.email = uuid();
     }
@@ -31,7 +31,17 @@ export class UserService {
       picture: user.picture,
       loginFrom: user.loginFrom
     };
-    return this.userModel.findOneAndUpdate(query, upsert, { upsert: true }).exec();
+
+    const userCreated = await this.userModel
+      .findOneAndUpdate(query, upsert, { upsert: true })
+      .exec();
+
+    if (userCreated) {
+      return userCreated;
+    }
+
+    const users = await this.userModel.find(query).exec();
+    return users[0];
   }
 
   deleteUser(userId: string) {

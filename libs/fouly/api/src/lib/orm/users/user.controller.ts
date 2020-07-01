@@ -1,5 +1,5 @@
 /// <reference types="node" />
-import { Body, Controller, Delete, Get, Param, Post, Res } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { UserCommand } from '@skare/fouly/data';
 import { UserService } from './user.service';
 
@@ -18,12 +18,12 @@ export class UserController {
   }
 
   @Post('create')
-  async createUser(@Body() userToSave: UserCommand, @Res() res: any) {
+  async createUser(@Body() userToSave: UserCommand) {
     return await this.userService.createUpdateUser(userToSave);
   }
 
   @Delete('delete/:userId')
-  async deleteUser(@Param() params, @Res() res: any) {
+  async deleteUser(@Param() params) {
     return await this.userService.deleteUser(params.userId);
   }
 }
