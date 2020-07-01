@@ -46,7 +46,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         const isUserWasLogued = this.loggedIn;
         this.loginUser(user);
         if (this.loggedIn && !isUserWasLogued) {
-          setTimeout(() => this.login(), 1000);
+          setTimeout(() => this.login(), 3000);
         }
       })
     );
