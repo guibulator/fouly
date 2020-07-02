@@ -7,6 +7,9 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
+variables:
+   version: $(Date:yyyyMMdd)$(Rev:.r)and(eq(contains(variables['Build.SourceBranch'], 'heads/develop'), '-Staging')
+
 steps:
   - task: NodeTool@0
     inputs:
@@ -20,6 +23,19 @@ steps:
       yarn sync-yarn-npm
 
     displayName: 'install global dependencies'
+
+  - task: replacetokens@3
+    inputs:
+      rootDirectory: 'apps/fouly/pwa//src/environments'
+      targetFiles: '**/*.ts'
+      encoding: 'auto'
+      writeBOM: true
+      actionOnMissing: 'warn'
+      keepToken: false
+      tokenPrefix: '#{'
+      tokenSuffix: '}#'
+      useLegacyPattern: false
+      enableTelemetry: false
 
   - script: |
       yarn run nx run-many --projects=fouly-backend,fouly-pwa --target=build --configuration=production
