@@ -8,7 +8,7 @@ pool:
   vmImage: 'ubuntu-latest'
 
 variables:
-   version: $(Date:yyyyMMdd)$(Rev:.r)and(eq(contains(variables['Build.SourceBranch'], 'heads/develop'), '-Staging')
+   version: $[$(Date:yyyyMMdd)$(Rev:.r)and(eq(contains(variables['Build.SourceBranch'], 'heads/develop'), '-Staging')]
 
 steps:
   - task: NodeTool@0
