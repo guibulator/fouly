@@ -7,5 +7,6 @@ export const environment: Configuration = {
   apiHost: apiHost,
   apiUrl: apiUrl,
   logLevel: 'info',
-  enableDebugTools: true
+  enableDebugTools: true,
+  version: '#{version}#'
 };

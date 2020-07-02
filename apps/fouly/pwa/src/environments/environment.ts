@@ -15,5 +15,6 @@ export const environment: Configuration = {
   apiHost: apiHost,
   apiUrl: apiUrl,
   logLevel: 'debug',
-  enableDebugTools: true
+  enableDebugTools: true,
+  version: '0.0.1'
 };

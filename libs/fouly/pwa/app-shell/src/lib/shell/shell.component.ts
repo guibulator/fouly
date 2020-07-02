@@ -5,8 +5,10 @@ import { SwUpdate } from '@angular/service-worker';
 import { MenuController, Platform, ToastController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 import { TranslateService } from '@ngx-translate/core';
+import { ConfigService } from '@skare/fouly/pwa/core';
 import { Subscription } from 'rxjs';
 import { filter, tap } from 'rxjs/operators';
+
 declare let gtag: Function;
 @Component({
   selector: 'fouly-app-shell',
@@ -21,11 +23,6 @@ export class ShellComponent implements OnInit, OnDestroy {
       url: '/app/tabs/my-places',
       icon: 'star'
     },
-    // {
-    //   title: 'Nouvelles',
-    //   url: '/app/tabs/speakers',
-    //   icon: 'people'
-    // },
     {
       title: 'appshell.map',
       url: '/app/tabs/map',
@@ -36,16 +33,13 @@ export class ShellComponent implements OnInit, OnDestroy {
       url: '/contact',
       icon: 'mail'
     }
-    // {
-    //   title: 'À propos',
-    //   url: '/app/tabs/about',
-    //   icon: 'information-circle'
-    // }
   ];
+
   loggedIn = false;
   dark = false;
   languageForm: FormGroup;
   private subcribes = new Subscription();
+  version: string;
 
   constructor(
     private menu: MenuController,
@@ -55,7 +49,8 @@ export class ShellComponent implements OnInit, OnDestroy {
     private storage: Storage,
     private swUpdate: SwUpdate,
     private toastCtrl: ToastController,
-    private readonly translate: TranslateService
+    private readonly translate: TranslateService,
+    private readonly config: ConfigService
   ) {
     this.initializeApp();
 
@@ -75,6 +70,8 @@ export class ShellComponent implements OnInit, OnDestroy {
     this.languageForm = this.formBuilder.group({
       language: 'fr'
     });
+
+    this.version = this.config.version;
   }
 
   ngOnDestroy(): void {

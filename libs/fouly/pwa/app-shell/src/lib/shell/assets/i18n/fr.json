@@ -12,7 +12,8 @@
     "logout": "Se déconnecter",
     "login": "S'identifier",
     "documentation": "Documentation",
-    "introduction": "Revoir l'introduction"
+    "introduction": "Revoir l'introduction",
+    "version": "Version: "
   },
 
   "page": {

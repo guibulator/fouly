@@ -12,7 +12,8 @@
     "logout": "Logout",
     "login": "Login",
     "documentation": "Documentation",
-    "introduction": "Review the introduction"
+    "introduction": "Review the introduction",
+    "version": "Version: "
   },
 
   "page": {

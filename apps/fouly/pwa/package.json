@@ -46,6 +46,7 @@
     "core-js": "^2.5.4",
     "generate-package-json-webpack-plugin": "^1.0.1",
     "reflect-metadata": "^0.1.13",
+    "replace-in-file": "^6.1.0",
     "rxjs": "~6.5.4",
     "swagger-ui-express": "^4.1.4",
     "tslib": "^1.10.0",

@@ -6,4 +6,5 @@ export class Configuration {
   logLevel: LogLevel;
   apiUrl: string;
   apiHost: string;
+  version: string;
 }
