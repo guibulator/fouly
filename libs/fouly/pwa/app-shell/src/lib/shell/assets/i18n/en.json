@@ -62,6 +62,29 @@
       }
     },
 
+    "introduction": {
+      "card1": {
+        "title": "<span class='fouly-title-introduction'>Fouly</span>, your personal travel planner",
+        "text": "Practicing social distancing has become essential for everyone. But some trips cannot be avoided, like going to the grocery store, the pharmacy, etc. <span class='fouly-title-introduction'>Fouly</span> allows you to perfectly plan your trips to these merchants by displaying the current traffic in front of the merchant and therefore, the waiting time. You can thus better plan your trips and avoid the crowds!"
+      },
+      "card2": {
+        "title": "Why <span class='fouly-title-introduction'>Fouly</span> ?",
+        "text": "Is there a line to enter the grocery store? Is it a good time to go to the pharmacy? What are the social distancing measures implemented by the merchant? Is it a good time to go into this merchant now? <span class='fouly-title-introduction'>Fouly</span> answers all these questions live!"
+      },
+
+      "card3": {
+        "title": "Simple, efficient and always there !",
+        "text": "<span class='fouly-title-introduction'>Fouly</span>'s simple and refined interface makes it quite easy to find your favorite businesses on an interactive map. In addition, you can easily create your own list of favorite businesses, to find these businesses even more easily on your next visit. Finally, leave comments on certain businesses, to give even more information to other <span class='fouly-title-introduction'>Fouly</span> users."
+      },
+
+      "card4": {
+        "title": "Are you ready ?",
+        "text": "Let <span class='fouly-title-introduction'>Fouly</span> help you plan your trips to your favorite merchants, safely, at your own pace. Easily contribute to keeping other <span class='fouly-title-introduction'>Fouly</span> users informed about the level of traffic in the merchants you visit, and the social distancing measures in place in the business. And do not hesitate to leave us your comments on <span class='fouly-title-introduction'>Fouly</span>, we are listening to you!"
+      },
+
+      "tryFouly": "Try <span class='fouly-title-introduction'>Fouly</span>"
+    },
+
     "myFavorites": {
       "title": "My favorites",
       "remove": "Remove",

@@ -62,6 +62,30 @@
       }
     },
 
+    "introduction": {
+      "card1": {
+        "title": "<span class='fouly-title-introduction'>Fouly</span>, votre planificateur personnel de déplacements",
+        "text": "Pratiquer la distanciation sociale est devenue essentielle pour tous. Mais certains déplacements ne peuvent être évités, comme aller à l’épicerie, à la pharmacie, etc. <span class='fouly-title-introduction'>Fouly</span> permet de planifier parfaitement vos déplacements dans ces commerces en affichant l’achalandage actuel devant le commerce et donc, le temps d’attente. Vous pouvez ainsi mieux planifier vos déplacements et éviter les foules!"
+      },
+      "card2": {
+        "title": "Pourquoi <span class='fouly-title-introduction'>Fouly</span> ?",
+        "text": "Y a-t-il la queue à l’épicerie ? Est-ce le bon moment pour aller à la pharmacie ? Quelles sont les mesures de distanciation sociale mises en place par le commerçant ? Est-ce un bon moment pour aller dans ce commerce maintenant ? <span class='fouly-title-introduction'>Fouly</span> répond en direct à toutes ces questions !"
+      },
+
+      "card3": {
+        "title": "Simple, efficace et toujours là !",
+        "text": "L’interface simple et épurée de <span class='fouly-title-introduction'>Fouly</span> vous permet de retrouver très facilement, sur une carte interactive, vos commerces préférés. De plus, vous pouvez créer très facilement votre propre liste de commerces favoris, pour retrouver encore plus facilement ces commerces à votre prochaine visite. Enfin, laisser des commentaires sur certains commerces, pour donner encore plus d’informations aux autres utilisateurs de <span class='fouly-title-introduction'>Fouly</span>."
+      },
+
+      "card4": {
+        "title": "Êtes-vous prêts ?",
+        "text": "Laissez <span class='fouly-title-introduction'>Fouly</span> vous aider à planifier vos déplacements vers vos commerces préférés, en toute sécurité, à votre rythme. Contribuer facilement à tenir informés les autres utilisateurs de <span class='fouly-title-introduction'>Fouly</span> sur le niveau d’achalandage des commerces que vous visitez, et les mesures de distanciation sociales en place dans le commerce. Et n’hésitez surtout pas à nous laisser vos commentaires sur <span class='fouly-title-introduction'>Fouly</span>, nous sommes à votre écoute !"
+      },
+
+      "tryFouly": "Essayer Fouly",
+      "tryFouly2": "Essayer <span class='fouly-title-introduction'>Fouly</span>"
+    },
+
     "myFavorites": {
       "title": "Mes favoris",
       "remove": "Retirer",
