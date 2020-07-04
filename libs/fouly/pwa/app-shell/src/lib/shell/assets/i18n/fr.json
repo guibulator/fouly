@@ -82,8 +82,17 @@
         "text": "Laissez <span class='fouly-title-introduction'>Fouly</span> vous aider à planifier vos déplacements vers vos commerces préférés, en toute sécurité, à votre rythme. Contribuer facilement à tenir informés les autres utilisateurs de <span class='fouly-title-introduction'>Fouly</span> sur le niveau d’achalandage des commerces que vous visitez, et les mesures de distanciation sociales en place dans le commerce. Et n’hésitez surtout pas à nous laisser vos commentaires sur <span class='fouly-title-introduction'>Fouly</span>, nous sommes à votre écoute !"
       },
 
-      "tryFouly": "Essayer Fouly",
-      "tryFouly2": "Essayer <span class='fouly-title-introduction'>Fouly</span>"
+      "tryFouly": "Essayer <span class='fouly-title-introduction'>Fouly</span>"
+    },
+
+    "login": {
+      "title": "Connexion",
+      "connectionFacebook": "S'identifier avec Facebook",
+      "connectionGoogle": "S'identifier avec Google",
+      "anonymous": "Anonyme",
+      "welcome": "Bienvenue",
+      "login": "Connexion",
+      "logout": "Déconnexion"
     },
 
     "myFavorites": {
@@ -97,6 +106,12 @@
       "title": "Propriétaires/Gestionnaires",
       "subtitle": "Vous êtes propriétaire, gestionnaire ou désirez soumettre l'idée aux propriétaires ?",
       "content": "Avec les nouvelles règles de distanciation sociale à mettre en place, les écueils rencontrés par les commerçants dans les mois à venir seront nombreux et à différents niveaux. Ces nouvelles règles imposent souvent des changements importants au niveau organisationnel pour les commerçants, en plus d’ajouter des contraintes à la clientèle, ce qui est toujours un défi à relever. Un de ces défis consiste à permettre à la clientèle d’être servie sans attente, de manière sécuritaire en respectant les règles de distanciation.  "
+    },
+
+    "placeSearch": {
+      "placeHolderLocation": "Rechercher un endroit",
+      "results": "Résultats",
+      "favorites": "Favoris"
     },
 
     "storeDetail": {
@@ -117,6 +132,13 @@
         "content": "<li>Respecter une distance d'au moins 2 mètres avec les autres clients et le personnel</li> <li>Se laver les mains avant d'entrer dans le magasin (ou suivre les consignes des employés)</li><li>Suivre les consignes à la caisse pour payer vos articles</li><li>Ne pas vous présenter dans le commerce si vous avez des symptômes</li><li>Limiter la manipulation des articles le plus possible</li><li>Payer en carte de crédit ou de débit</li>",
         "na": "Cette fonctionnalité sera présente très bientôt. Merci de votre intérêt pour Fouly !"
       }
+    },
+
+    "tabsNavigation": {
+      "favorites": "Favoris",
+      "contact": "Contact",
+      "map": "Carte",
+      "about": "À propos"
     }
   },
 

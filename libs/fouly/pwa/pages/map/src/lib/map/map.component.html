@@ -8,7 +8,7 @@
          mode="md"
          color="primary"
          (ionFocus)="onSearchFocus($event)"
-         placeholder="Rechercher un endroit"
+         [placeholder]="'page.placeSearch.placeHolderLocation' | translate"
       ></ion-searchbar>
       <ion-progress-bar *ngIf="loading$ | async" color="primary" type="indeterminate"></ion-progress-bar>
    </ion-toolbar>

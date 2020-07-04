@@ -85,6 +85,16 @@
       "tryFouly": "Try <span class='fouly-title-introduction'>Fouly</span>"
     },
 
+    "login": {
+      "title": "Login",
+      "connectionFacebook": "Login with Facebook",
+      "connectionGoogle": "Login with Google",
+      "anonymous": "Anonymous",
+      "welcome": "Welcome",
+      "login": "Login",
+      "logout": "Logout"
+    },
+
     "myFavorites": {
       "title": "My favorites",
       "remove": "Remove",
@@ -96,6 +106,13 @@
       "title": "Owners and managers",
       "content": "Avec les nouvelles règles de distanciation sociale à mettre en place, les écueils rencontrés par les commerçants dans les mois à venir seront nombreux et à différents niveaux. Ces nouvelles règles imposent souvent des changements importants au niveau organisationnel pour les commerçants, en plus d’ajouter des contraintes à la clientèle, ce qui est toujours un défi à relever. Un de ces défis consiste à permettre à la clientèle d’être servie sans attente, de manière sécuritaire en respectant les règles de distanciation.  "
     },
+
+    "placeSearch": {
+      "placeHolderLocation": "Search a location",
+      "results": "Results",
+      "favorites": "Favorites"
+    },
+
     "storeDetail": {
       "title": "Details",
       "addFavorite": "Add to favorites",
@@ -114,6 +131,13 @@
         "content": "<li>Maintain a distance of at least 2 meters with other customers and staff</li><li>Wash hands before entering the store (or follow employee instructions)</li><li>Follow the instructions at checkout to pay for your items</li><li>Do not go to the store if you have symptoms</li><li>Limit handling of items as much as possible</li><li>Pay by credit or debit card</li>",
         "na": "This functionality will be available soon. Thanks for your interest in Fouly!"
       }
+    },
+
+    "tabsNavigation": {
+      "favorites": "Favorites",
+      "contact": "Contact",
+      "map": "Map",
+      "about": "About"
     }
   },
 

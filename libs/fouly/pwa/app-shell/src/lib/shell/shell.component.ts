@@ -5,7 +5,7 @@ import { SwUpdate } from '@angular/service-worker';
 import { MenuController, Platform, ToastController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 import { TranslateService } from '@ngx-translate/core';
-import { ConfigService } from '@skare/fouly/pwa/core';
+import { ConfigService, UserPreferenceService } from '@skare/fouly/pwa/core';
 import { Subscription } from 'rxjs';
 import { filter, tap } from 'rxjs/operators';
 
@@ -50,7 +50,8 @@ export class ShellComponent implements OnInit, OnDestroy {
     private swUpdate: SwUpdate,
     private toastCtrl: ToastController,
     private readonly translate: TranslateService,
-    private readonly config: ConfigService
+    private readonly config: ConfigService,
+    private readonly userPreference: UserPreferenceService
   ) {
     this.initializeApp();
 
@@ -67,10 +68,6 @@ export class ShellComponent implements OnInit, OnDestroy {
         .subscribe()
     );
 
-    this.languageForm = this.formBuilder.group({
-      language: 'fr'
-    });
-
     this.version = this.config.version;
   }
 
@@ -79,6 +76,8 @@ export class ShellComponent implements OnInit, OnDestroy {
   }
 
   async ngOnInit() {
+    const lang = await this.userPreference.GetLanguage();
+
     this.subcribes.add(
       this.swUpdate.available.subscribe(async (res) => {
         const toast = await this.toastCtrl.create({
@@ -101,11 +100,16 @@ export class ShellComponent implements OnInit, OnDestroy {
       })
     );
 
-    this.translate.setDefaultLang('fr');
-    this.translate.use('fr');
+    this.languageForm = this.formBuilder.group({
+      language: lang
+    });
+
+    this.translate.setDefaultLang(lang);
+    this.translate.use(lang);
 
     this.subcribes.add(
       this.languageForm.controls['language'].valueChanges.subscribe((value) => {
+        this.userPreference.SetLanguage(value);
         this.translate.use(value);
       })
     );

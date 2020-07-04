@@ -3,12 +3,14 @@ import { NgModule } from '@angular/core';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
+import { TranslateModule } from '@ngx-translate/core';
 import { MapComponent } from './map/map.component';
 
 @NgModule({
   imports: [
     CommonModule,
     IonicModule,
+    TranslateModule,
     RouterModule.forChild([
       {
         path: '',

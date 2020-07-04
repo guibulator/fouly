@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { Facebook } from '@ionic-native/facebook/ngx';
 import { IonicModule } from '@ionic/angular';
+import { TranslateModule } from '@ngx-translate/core';
 import {
   AuthServiceConfig,
   FacebookLoginProvider,
@@ -48,6 +49,7 @@ export function provideConfig() {
     SocialLoginModule,
     FormsModule,
     ReactiveFormsModule,
+    TranslateModule,
     RouterModule.forChild([
       {
         path: '',

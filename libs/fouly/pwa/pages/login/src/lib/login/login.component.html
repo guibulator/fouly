@@ -6,7 +6,7 @@
       <ion-buttons slot="start">
          <ion-menu-button></ion-menu-button>
       </ion-buttons>
-      <ion-title>Connexion</ion-title>
+      <ion-title>{{ 'page.login.title' | translate }}</ion-title>
    </ion-toolbar>
 </ion-header>
 
@@ -14,12 +14,12 @@
    <div class="login-container">
       <div class="login-options">
          <button ion-button full class="fb btn" (click)="loginWithFB()">
-            <ion-icon class="icon" name="logo-facebook"></ion-icon>S'identifier avec Facebook
+            <ion-icon class="icon" name="logo-facebook"></ion-icon>{{ 'page.login.connectionFacebook' | translate }}
          </button>
          <button ion-button full class="google btn" (click)="loginWithGoogle()">
-            <ion-icon class="icon" name="logo-google"></ion-icon>S'identifier avec Google
+            <ion-icon class="icon" name="logo-google"></ion-icon>{{ 'page.login.connectionGoogle' | translate }}
          </button>
-         <button ion-button full class="anonymus btn" (click)="loginAnonymus()">Anonyme</button>
+         <button ion-button full class="anonymus btn" (click)="loginAnonymus()">{{ 'page.login.anonymous' | translate }}</button>
          <ion-input
             *ngIf="showUserNameInput"
             class="fouly-username"
@@ -33,7 +33,9 @@
       </div>
       <ion-card *ngIf="loggedIn" class="profile">
          <ion-card-header>
-            <ion-card-title><div class="profile-title">Bienvenue</div></ion-card-title>
+            <ion-card-title
+               ><div class="profile-title">{{ 'page.login.welcome' | translate }}</div></ion-card-title
+            >
             <ion-card-subtitle
                ><div class="profile-name">{{ userData.name }}</div>
             </ion-card-subtitle>
@@ -45,7 +47,7 @@
             </ion-item>
          </ion-card-content>
       </ion-card>
-      <button *ngIf="canLogin" ion-button full class="login btn" (click)="login()">Connexion</button>
-      <button *ngIf="loggedIn" ion-button full class="logout btn" (click)="logout()">Déconnexion</button>
+      <button *ngIf="canLogin" ion-button full class="login btn" (click)="login()">{{ 'page.login.login' | translate }}</button>
+      <button *ngIf="loggedIn" ion-button full class="logout btn" (click)="logout()">{{ 'page.login.logout' | translate }}</button>
    </div>
 </ion-content>

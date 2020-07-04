@@ -5,7 +5,7 @@
          mode="md"
          showCancelButton="focus"
          (ionCancel)="onCancel()"
-         [placeholder]="'page.placeHolderLocation' | translate"
+         [placeholder]="'page.placeSearch.placeHolderLocation' | translate"
          debounce="200"
          (ionChange)="onChange($event)"
       ></ion-searchbar>
@@ -15,7 +15,7 @@
 <ion-content fullscreen>
    <ng-container *ngTemplateOutlet="busy ? busyTemplate : ''"></ng-container>
    <ion-list *ngIf="predictions$ | async as predictions">
-      <ion-list-header *ngIf="predictions.length > 0">{{ 'page.results' | translate }}</ion-list-header>
+      <ion-list-header *ngIf="predictions.length > 0">{{ 'page.placeSearch.results' | translate }}</ion-list-header>
       <ion-item *ngFor="let p of predictions" button (click)="onSelectPlace(p.placeId)">
          <ion-icon color="primary" slot="start" name="location-outline"></ion-icon>
          <ion-label
@@ -28,7 +28,7 @@
    </ion-list>
 
    <ion-list *ngIf="favorites$ | async as favorites">
-      <ion-list-header *ngIf="favorites.length > 0">{{ 'page.favorites' | translate }}</ion-list-header>
+      <ion-list-header *ngIf="favorites.length > 0">{{ 'page.placeSearch.favorites' | translate }}</ion-list-header>
       <ion-item *ngFor="let p of favorites">
          <ion-icon color="primary" slot="start" name="location-outline"></ion-icon>
          <ion-label

@@ -36,6 +36,7 @@ export class FoulyAffluenceComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   ngOnInit() {}
+
   ngOnDestroy(): void {
     this.subs.unsubscribe();
   }
