@@ -4,6 +4,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { ChatMessageCommand, ChatMessageResult } from '@skare/fouly/data';
 import axios from 'axios';
 import { Model } from 'mongoose';
+import { PlaceIdMapperService } from '../placeIdMapper/place-id-mapper.service';
 import { Chat } from './chat.schema';
 
 @Injectable()
@@ -13,18 +14,23 @@ export class ChatService {
   private signalrConnectionInfoUrl: string;
   constructor(
     @InjectModel(Chat.name) private readonly chatModel: Model<Chat>,
-    private configService: ConfigService
+    private configService: ConfigService,
+    private idMapper: PlaceIdMapperService
   ) {
     this.signalRChatUrl = configService.get<string>('FOULY-CHAT-SIGNALR-URL');
     this.signalrConnectionInfoUrl = configService.get<string>('FOULY-SIGNALR-CONNECTIONINFO-URL');
   }
 
   async getMsgHistory(placeId: string): Promise<ChatMessageResult[]> {
-    return await this.chatModel.find({ placeId: placeId }).exec();
+    const foulyPlaceId = await this.idMapper.findIdAndUpdateFromPlaceId(placeId);
+    return await this.chatModel.find({ placeId: foulyPlaceId }).exec();
   }
 
   async postNewMsg(cmd: ChatMessageCommand) {
-    const chat = new this.chatModel(Chat.fromCmd(cmd));
+    const foulyPlaceId = await this.idMapper.findIdAndUpdateFromPlaceId(cmd.placeId);
+    const data = Chat.fromCmd(cmd);
+    data.placeId = foulyPlaceId;
+    const chat = new this.chatModel(data);
     await chat.save();
   }
 

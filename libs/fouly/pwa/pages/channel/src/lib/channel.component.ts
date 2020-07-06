@@ -7,7 +7,7 @@ import { ChatMessageCommand, ChatMessageResult, UserResult } from '@skare/fouly/
 import { ChatStoreService, UserStoreService } from '@skare/fouly/pwa/core';
 import { BehaviorSubject, fromEvent, Observable, Subscription } from 'rxjs';
 import { map, switchMap, tap } from 'rxjs/operators';
-
+import { uuid } from 'uuidv4';
 @Component({
   selector: 'fouly-channel',
   templateUrl: './channel.component.html',
@@ -27,6 +27,7 @@ export class ChannelComponent implements OnInit, OnDestroy, AfterViewInit {
   private placeId: string;
   private user: UserResult = null;
   private subscriptions = new Subscription();
+  private correlationIds: string[] = [];
 
   @ViewChild('chatHistoryContent') chatHistoryContent: IonContent;
   @ViewChild('sendBtn') sendMsgButton: any;
@@ -97,18 +98,24 @@ export class ChannelComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     const myMsg = new ChatMessageCommand();
+    myMsg.correlationId = uuid();
     myMsg.author = this.user ? this.user.name : 'Anonyme';
     myMsg.msg = newMsg;
     myMsg.time = new Date();
     myMsg.placeId = this.placeId;
+    this.correlationIds.push(myMsg.correlationId);
     this.chatService.postNewMsg(myMsg);
+    this.onNewMsgInChannel(myMsg, true);
     this.userMsg.setValue('');
   }
 
-  onNewMsgInChannel(newMsg: ChatMessageResult) {
+  onNewMsgInChannel(newMsg: ChatMessageResult, isLocal: boolean = false) {
     if (this.followTail) {
       this.chatHistoryContent.scrollToBottom(500);
     }
+    // if matching correlation id message in list, this is user's own new message.
+    if (!isLocal && newMsg.correlationId && this.correlationIds.indexOf(newMsg.correlationId) > -1)
+      return;
     this.messages.push(newMsg);
     this.messages$.next([...this.messages]);
   }
@@ -133,6 +140,7 @@ export class ChannelComponent implements OnInit, OnDestroy, AfterViewInit {
           newMsg.msg = data.msg;
           newMsg.time = data.time;
           newMsg.placeId = data.placeId;
+          newMsg.correlationId = data.correlationId;
           this.onNewMsgInChannel(newMsg);
         }
       });
@@ -153,16 +161,6 @@ export class ChannelComponent implements OnInit, OnDestroy, AfterViewInit {
       //console.log('Fatal : ' + err);
       setTimeout(() => this.connection.start(), 15000);
     }
-  }
-
-  startSpeechRecognition() {
-    // todo..
-    // const recognition = new webkitSpeechRecognition();
-    // recognition.addEventListener('result', (event) => {
-    //   recognition.stop();
-    //   this.userMsg.setValue(event.results[0].transcript, { emitModelToViewChange: true });
-    // });
-    // recognition.start();
   }
 
   ngOnDestroy() {

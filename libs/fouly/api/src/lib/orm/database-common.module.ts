@@ -3,15 +3,15 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ChatModule } from './chat/chat.module';
 import { ContributeModule } from './contribute/contribute.module';
+import { PlaceIdMapperModule } from './placeIdMapper/place-id-mapper.module';
 import { UserModule } from './users/user.module';
 /**
  * This module should be only imported once at root.
  */
 @Module({
   imports: [
-    ContributeModule,
     MongooseModule.forRootAsync({
-      imports: [ConfigModule, ContributeModule, UserModule, ChatModule],
+      imports: [ConfigModule, PlaceIdMapperModule, ContributeModule, UserModule, ChatModule],
       useFactory: async (config: ConfigService) => ({
         uri: config.get<string>('FOULY-NOSQL-CONNECTION-STRING'),
         useNewUrlParser: true,

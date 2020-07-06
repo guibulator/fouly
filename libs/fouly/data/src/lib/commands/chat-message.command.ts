@@ -3,4 +3,5 @@ export class ChatMessageCommand {
   author: string;
   time: Date;
   placeId: string;
+  correlationId: string;
 }

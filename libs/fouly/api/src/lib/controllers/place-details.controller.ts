@@ -2,6 +2,7 @@
 import { Controller, Get, Param, Query } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { PlaceDetailsService } from '../services/placeDetails.service';
+
 @Controller('place-details')
 export class PlaceDetailsController {
   constructor(
