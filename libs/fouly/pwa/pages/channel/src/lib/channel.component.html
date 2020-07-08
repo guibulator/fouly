@@ -15,21 +15,21 @@
 </ion-header>
 
 <ion-content class="fouly-content" fullscreen #chatHistoryContent [scrollEvents]="true">
-   <div class="fouly-content-wrapper">
-      <div class="fouly-chat">
-         <div class="fouly-chat-line" *ngFor="let msg of messages$ | async">
-            <div class="fouly-chat-msg">
-               <span class="fouly-chat-msg-meta">{{ msg.author }} {{ msg.time | date: 'shortTime' }}</span>
-               <span class="fouly-chat-msg-text">{{ msg.msg }}</span>
-            </div>
+   <div class="fouly-chat">
+      <div class="fouly-chat-line" *ngFor="let msg of messages$ | async">
+         <div class="fouly-chat-msg">
+            <span class="fouly-chat-msg-meta">{{ msg.author }} {{ msg.time | date: 'shortTime' }}</span>
+            <span class="fouly-chat-msg-text">{{ msg.msg }}</span>
          </div>
       </div>
    </div>
+
    <ion-fab *ngIf="userScrolled$ | async" vertical="bottom" horizontal="end" slot="fixed">
       <ion-fab-button (click)="scrollToBottom()" size="small" color="primary">
          <ion-icon name="arrow-down-circle"></ion-icon>
       </ion-fab-button>
    </ion-fab>
+   <div class="background"></div>
 </ion-content>
 
 <ion-footer class="ion-no-border">
