@@ -60,9 +60,6 @@ export class SearchComponent implements OnInit {
     this.router.navigate(['/app/tabs/map/store-detail', placeId], {
       state: { placeId, sessionToken: this.sessionToken }
     });
-    // this.router.navigate(['app/tabs/map'], {
-    //   state: { placeId, sessionToken: this.sessionToken }
-    // });
   }
 
   ngOnInit(): void {

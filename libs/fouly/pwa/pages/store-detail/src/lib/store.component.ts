@@ -83,7 +83,12 @@ export class StoreComponent implements OnInit, OnDestroy {
   }
 
   gotoContribute() {
-    this.router.navigate(['contribute'], { relativeTo: this.route });
+    this.placeDetails$.pipe(take(1)).subscribe((placeDetails) => {
+      this.router.navigate(['contribute'], {
+        relativeTo: this.route,
+        state: { closed: !placeDetails[0].opening_hours?.open_now }
+      });
+    });
   }
 
   addRemoveToFavorite() {

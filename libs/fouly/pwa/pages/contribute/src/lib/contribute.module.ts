@@ -4,6 +4,8 @@ import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { TranslateModule } from '@ngx-translate/core';
 import { FoulyUiModule } from '@skare/fouly/shared/ui';
+import { ClosedComponent } from './closed/closed.component';
+import { ContributeGuard } from './contribute.guard';
 import { SurveyFormComponent } from './survey-form/survey-form.component';
 import { DelayComponent } from './surveys/delay/delay.component';
 import { InstallationComponent } from './surveys/installation/installation.component';
@@ -17,13 +19,29 @@ import { ThanksComponent } from './surveys/thanks/thanks.component';
     IonicModule,
     FoulyUiModule,
     RouterModule.forChild([
-      { path: '', pathMatch: 'full', component: SurveyFormComponent },
-      { path: ':placeId', pathMatch: 'full', component: SurveyFormComponent }
+      {
+        path: '',
+        pathMatch: 'full',
+        component: SurveyFormComponent,
+        canActivate: [ContributeGuard]
+      },
+      {
+        path: 'closed',
+        component: ClosedComponent,
+        canActivate: [ContributeGuard]
+      },
+      {
+        path: ':placeId',
+        pathMatch: 'full',
+        component: SurveyFormComponent,
+        canActivate: [ContributeGuard]
+      }
     ])
   ],
   declarations: [
     SurveyFormComponent,
     DelayComponent,
+    ClosedComponent,
     InstallationComponent,
     NumberComponent,
     ThanksComponent

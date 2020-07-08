@@ -59,6 +59,12 @@
       "thanks": {
         "title": "Merci pour votre contribution !",
         "return": "Retour"
+      },
+
+      "closed": {
+        "titleToolbar": "Fermé",
+        "title": "Présentement fermé",
+        "content": "Il est possible de contribuer que lorsque le commerce est ouvert. Merci pour votre intérêt !"
       }
     },
 

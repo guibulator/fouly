@@ -59,6 +59,12 @@
       "thanks": {
         "title": "Thanks for your contribution !",
         "return": "Return"
+      },
+
+      "closed": {
+        "titleToolbar": "Closed",
+        "title": "Currently closed",
+        "content": "Your contribution can only be made while the store is open. Thanks for your interest!"
       }
     },
 
