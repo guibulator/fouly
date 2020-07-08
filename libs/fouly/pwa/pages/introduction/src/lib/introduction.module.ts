@@ -5,6 +5,7 @@ import { IonicStorageModule } from '@ionic/storage';
 import { TranslateModule } from '@ngx-translate/core';
 import { FoulyUiModule } from '@skare/fouly/shared/ui';
 import { IntroductionRoutingModule } from './introduction-routing.module';
+import { IntroductionInnerHtmlComponent } from './introduction/introduction-inner-html.component';
 import { IntroductionComponentPage } from './introduction/introduction.component';
 @NgModule({
   imports: [
@@ -15,6 +16,6 @@ import { IntroductionComponentPage } from './introduction/introduction.component
     TranslateModule,
     FoulyUiModule
   ],
-  declarations: [IntroductionComponentPage]
+  declarations: [IntroductionComponentPage, IntroductionInnerHtmlComponent]
 })
 export class IntroductionModule {}

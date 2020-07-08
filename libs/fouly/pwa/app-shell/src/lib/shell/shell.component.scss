@@ -91,9 +91,3 @@ ion-menu.ios ion-item.selected ion-icon {
   margin-left: 10px;
   font-weight: 500;
 }
-
-//a valider pourquoi si on met cette class dans introduction.component.scss, le style ne s'applique pas. Notion d'isolation de style pas sur...
-.fouly-title-introduction {
-  color: #995bbe;
-  font-weight: bold;
-}

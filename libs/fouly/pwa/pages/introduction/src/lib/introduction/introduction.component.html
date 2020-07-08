@@ -1,7 +1,9 @@
 <ion-header>
    <ion-toolbar class="fouly-toolbar">
       <ion-buttons slot="end">
-         <ion-button color="secondary" (click)="startApp()"><span [innerHtml]="'page.introduction.tryFouly' | translate"></span></ion-button>
+         <ion-button color="secondary" (click)="startApp()"
+            ><fouly-intro-inner-html [html]="'page.introduction.tryFouly' | translate"></fouly-intro-inner-html
+         ></ion-button>
       </ion-buttons>
    </ion-toolbar>
 </ion-header>
@@ -11,34 +13,53 @@
       <ion-card class="ion-margin">
          <ion-img [src]="'assets/img/svg/undraw_social_distancing_2g0u.svg'" class="slide-image"></ion-img>
          <ion-card-header>
-            <ion-card-title> <h3 class="slide-title" [innerHtml]="'page.introduction.card1.title' | translate"></h3></ion-card-title>
+            <ion-card-title>
+               <h3 class="slide-title"><fouly-intro-inner-html [html]="'page.introduction.card1.title' | translate"></fouly-intro-inner-html></h3
+            ></ion-card-title>
          </ion-card-header>
-         <ion-card-content class="ion-text-justify fouly-title" [innerHtml]="'page.introduction.card1.text' | translate"> </ion-card-content>
+         <ion-card-content class="ion-text-justify fouly-title"
+            ><fouly-intro-inner-html [html]="'page.introduction.card1.text' | translate"></fouly-intro-inner-html>
+         </ion-card-content>
       </ion-card>
 
       <ion-card class="ion-margin">
-         <ion-img src="assets/img/svg/undraw_stand_out_1oag.svg" class="slide-image"></ion-img>
+         <ion-img [src]="'assets/img/svg/undraw_stand_out_1oag.svg'" class="slide-image"></ion-img>
          <ion-card-header>
-            <ion-card-title><h3 class="slide-title" [innerHtml]="'page.introduction.card2.title' | translate"></h3></ion-card-title>
+            <ion-card-title
+               ><h3 class="slide-title"><fouly-intro-inner-html [html]="'page.introduction.card2.title' | translate"></fouly-intro-inner-html></h3
+            ></ion-card-title>
          </ion-card-header>
-         <ion-card-content class="ion-text-justify" [innerHtml]="'page.introduction.card2.text' | translate"> </ion-card-content>
+         <ion-card-content class="ion-text-justify"
+            ><fouly-intro-inner-html [html]="'page.introduction.card2.text' | translate"></fouly-intro-inner-html>
+         </ion-card-content>
       </ion-card>
 
       <ion-card class="ion-margin">
          <ion-img [src]="'assets/img/svg/undraw_Map_light_3hjy.svg'" class="slide-image"></ion-img>
          <ion-card-header>
-            <ion-card-title><h3 class="slide-title" [innerHtml]="'page.introduction.card3.title' | translate"></h3></ion-card-title>
+            <ion-card-title
+               ><h3 class="slide-title">
+                  <fouly-intro-inner-html [html]="'page.introduction.card3.title' | translate"></fouly-intro-inner-html></h3
+            ></ion-card-title>
          </ion-card-header>
-         <ion-card-content class="ion-text-justify" [innerHtml]="'page.introduction.card3.text' | translate"> </ion-card-content>
+         <ion-card-content class="ion-text-justify"
+            ><fouly-intro-inner-html [html]="'page.introduction.card3.text' | translate"></fouly-intro-inner-html>
+         </ion-card-content>
       </ion-card>
 
       <ion-card class="ion-margin">
          <ion-img [src]="'assets/img/svg/undraw_navigator_a479.svg'" class="slide-image"></ion-img>
          <ion-card-header>
-            <ion-card-title><h3 class="slide-title" [innerHtml]="'page.introduction.card4.title' | translate"></h3></ion-card-title>
+            <ion-card-title
+               ><h3 class="slide-title"><fouly-intro-inner-html [html]="'page.introduction.card4.title' | translate"></fouly-intro-inner-html></h3
+            ></ion-card-title>
          </ion-card-header>
-         <ion-card-content class="ion-text-justify" [innerHtml]="'page.introduction.card4.text' | translate"> </ion-card-content>
-         <ion-button color="secondary" (click)="startApp()"><span [innerHtml]="'page.introduction.tryFouly' | translate"></span></ion-button>
+         <ion-card-content class="ion-text-justify">
+            <fouly-intro-inner-html [html]="'page.introduction.card4.text' | translate"></fouly-intro-inner-html
+         ></ion-card-content>
+         <ion-button color="tertiary" (click)="startApp()"
+            ><fouly-intro-inner-html [html]="'page.introduction.tryFouly' | translate"></fouly-intro-inner-html
+         ></ion-button>
       </ion-card>
    </fouly-content-centered>
 </ion-content>
