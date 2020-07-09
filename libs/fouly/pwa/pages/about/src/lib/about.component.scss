@@ -1,0 +1,18 @@
+.box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  ion-img {
+    width: 50%;
+  }
+}
+.avatar-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  ion-avatar {
+    height: 200px;
+    width: 200px;
+  }
+}

@@ -32,6 +32,11 @@ export class ShellComponent implements OnInit, OnDestroy {
       title: 'appshell.contactUs',
       url: '/contact',
       icon: 'mail'
+    },
+    {
+      title: 'appshell.aboutUs',
+      url: '/app/tabs/about',
+      icon: 'information-circle'
     }
   ];
 

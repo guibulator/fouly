@@ -19,12 +19,12 @@
             >{{ 'page.storeDetail.addFavorite' | translate }}</ion-icon
          ></ion-buttons
       >
+      <ion-progress-bar *ngIf="loading$ | async" color="primary" type="indeterminate"></ion-progress-bar>
    </ion-toolbar>
 </ion-header>
 
 <ion-content>
    <fouly-content-centered sizeLg="8">
-      <ng-container *ngTemplateOutlet="skeleton"></ng-container>
       <ng-container *ngIf="!(loading$ | async) && placeDetails$ | async as placeDetails">
          <ion-card class="card">
             <ion-img [src]="mainImage$ | async"></ion-img>
@@ -76,24 +76,3 @@
       </ng-container>
    </fouly-content-centered>
 </ion-content>
-
-<ng-template #skeleton>
-   <ion-list *ngIf="loading$ | async">
-      <ion-item>
-         <ion-avatar slot="start">
-            <ion-skeleton-text animated></ion-skeleton-text>
-         </ion-avatar>
-         <ion-label>
-            <h3>
-               <ion-skeleton-text animated style="width: 50%;"></ion-skeleton-text>
-            </h3>
-            <p>
-               <ion-skeleton-text animated style="width: 80%;"></ion-skeleton-text>
-            </p>
-            <p>
-               <ion-skeleton-text animated style="width: 60%;"></ion-skeleton-text>
-            </p>
-         </ion-label>
-      </ion-item>
-   </ion-list>
-</ng-template>

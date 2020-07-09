@@ -23,6 +23,12 @@ import { TabsComponent } from './tabs/tabs.component';
             path: 'contact',
             loadChildren: () =>
               import('@skare/fouly/pwa/pages/contact').then((module) => module.ContactModule)
+          },
+
+          {
+            path: 'about',
+            loadChildren: () =>
+              import('@skare/fouly/pwa/pages/about').then((module) => module.AboutModule)
           }
         ]
       }

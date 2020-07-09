@@ -29,7 +29,7 @@
 
    <ion-list *ngIf="favorites$ | async as favorites">
       <ion-list-header *ngIf="favorites.length > 0">{{ 'page.placeSearch.favorites' | translate }}</ion-list-header>
-      <ion-item *ngFor="let p of favorites">
+      <ion-item *ngFor="let p of favorites" (click)="onSelectPlace(p.placeId)">
          <ion-icon color="primary" slot="start" name="location-outline"></ion-icon>
          <ion-label
             ><h2>

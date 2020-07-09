@@ -68,7 +68,7 @@ export class IntroductionComponentPage {
     this.menu.enable(true);
     // ask the user if he wants to install the app
     if (this.pwaInstallDeferred) {
-      await this.showInstallAlert();
+      setTimeout(async () => await this.showInstallAlert(), 10000);
     }
   }
 }

@@ -5,6 +5,7 @@
     "language": "Language",
     "map": "Map",
     "contactUs": "Contact Us",
+    "aboutUs": "About us",
     "selectOne": "Select one",
     "accountTitle": "Account",
     "yourAccount": "Your account",
@@ -17,6 +18,22 @@
   },
 
   "page": {
+    "about": {
+      "title": "About us",
+      "aboutUs": {
+        "title": "Our mission",
+        "content": "Fouly is a young company that helps merchants to better serve their customers. We, as a partner of merchants, promote economic development while empowering merchants to implement secure, modern, data-driven business practices. "
+      },
+      "team": {
+        "title": "The Team",
+        "content": "Our team is made up of passionate professionals from different backgrounds, a young company that helps merchants to better serve their customers. As a merchant partner, we promote economic development while empowering merchants to implement secure, modern, data-driven business practices. ",
+        "mathieu": { "name": "Mathieu Guilbault", "role": "Founder" },
+        "arnaud": { "name": "Arnaud Jean", "role": "Founder" },
+        "fred": { "name": "Frédérick Roy", "role": "Founder" },
+        "marcoux": { "name": "Mathieu Marcoux", "role": "Founder" }
+      }
+    },
+
     "channel": {
       "title": "Discussions"
     },

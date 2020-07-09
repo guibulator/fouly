@@ -1,0 +1,50 @@
+<ion-header>
+   <ion-toolbar>
+      <ion-buttons slot="start">
+         <ion-back-button></ion-back-button>
+      </ion-buttons>
+      <ion-buttons slot="start">
+         <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title>{{ 'page.about.title' | translate }}</ion-title>
+   </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+   <fouly-content-centered class="ion-text-center">
+      <ion-card>
+         <ion-img [src]="'assets/img/svg/undraw_social_distancing_2g0u.svg'"></ion-img>
+         <ion-card-header>
+            <ion-card-title><ion-text color="primary" [innerHtml]="'page.about.aboutUs.title' | translate"></ion-text></ion-card-title>
+         </ion-card-header>
+         <ion-card-content class="ion-text-justify" [innerHtml]="'page.about.aboutUs.content' | translate"> </ion-card-content>
+      </ion-card>
+
+      <ion-card>
+         <ion-img [src]="'assets/img/svg/undraw_team.svg'"></ion-img>
+         <ion-card-header>
+            <ion-card-title><ion-text color="primary" [innerHtml]="'page.about.team.title' | translate"></ion-text></ion-card-title>
+         </ion-card-header>
+         <ion-card-content class="ion-text-justify" [innerHtml]="'page.about.team.content' | translate"> </ion-card-content>
+      </ion-card>
+
+      <ion-card *ngFor="let member of team">
+         <ion-card-header>
+            <div class="avatar-wrapper">
+               <ion-avatar>
+                  <ion-img [src]="member.picture"></ion-img>
+               </ion-avatar>
+            </div>
+            <ion-card-title class="ion-margin"><ion-text color="primary" [innerHtml]="member.name | translate"></ion-text></ion-card-title>
+            <ion-card-subtitle><ion-text color="secondary" [innerHtml]="member.role | translate"></ion-text></ion-card-subtitle>
+            <h1>
+               <a [href]="member.linkedIn" target="_blank"><ion-icon color="secondary" name="logo-linkedin"></ion-icon></a>
+            </h1>
+         </ion-card-header>
+      </ion-card>
+
+      <div class="box">
+         <ion-img [src]="'assets/img/svg/fouly-logo.svg'"></ion-img>
+      </div>
+   </fouly-content-centered>
+</ion-content>

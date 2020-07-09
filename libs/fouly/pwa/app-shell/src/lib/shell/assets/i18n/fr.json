@@ -5,6 +5,7 @@
     "language": "Langue",
     "map": "Carte",
     "contactUs": "Contactez nous",
+    "aboutUs": "À propos",
     "selectOne": "Choisir une langue",
     "accountTitle": "Compte",
     "yourAccount": "Votre compte",
@@ -17,6 +18,22 @@
   },
 
   "page": {
+    "about": {
+      "title": "À propos",
+      "aboutUs": {
+        "title": "Notre mission",
+        "content": "Fouly est une jeune entreprise qui aide les commerçants à mieux servir leur clientèle. En tant que partenaire des commerçants, nous promouvons le développement économique tout en donnant les moyens aux commerçants de mettre en place des pratiques d’affaires sécuritaires, modernes, basées sur les données. "
+      },
+      "team": {
+        "title": "Notre équipe",
+        "content": "Notre équipe est composée de professionnels passionnés, issus d’horizons différents, une jeune entreprise qui aide les commerçants à mieux servir leur clientèle. En tant que partenaire des commerçants, nous promouvons le développement économique tout en donnant les moyens aux commerçants de mettre en place des pratiques d’affaires sécuritaires, modernes, basées sur les données. ",
+        "mathieu": { "name": "Mathieu Guilbault", "role": "Fondateur" },
+        "arnaud": { "name": "Arnaud Jean", "role": "Fondateur" },
+        "fred": { "name": "Frédérick Roy", "role": "Fondateur" },
+        "marcoux": { "name": "Mathieu Marcoux", "role": "Fondateur" }
+      }
+    },
+
     "channel": {
       "title": "Discussions"
     },
