@@ -57,7 +57,7 @@ export class MailService {
 
   async sendMailForRegisterBusinessForm(
     cmd: RegisterBusinessMailCommand,
-    correlationId: string
+    correlationId?: string
   ): Promise<boolean> {
     this.logger.debug(`About to send email for business registration ${JSON.stringify(cmd)}`);
 
