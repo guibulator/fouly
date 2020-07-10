@@ -146,6 +146,10 @@
       "comments": "Comments",
       "owner": "Business owner?",
       "myFavorites": "My favorites",
+      "seeOnMap": "See on map",
+      "howIsCalculated": "How is this calculated ?",
+      "crowdIndicator": "Crowd indicator",
+      "enterprise": "Fouly enterprise",
       "proposeBtn": {
         "title": "Add/remove a measure"
       },

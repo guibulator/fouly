@@ -49,25 +49,45 @@
                </div>
             </ion-card-header>
             <ion-card-content class="content">
-               <ion-item>
-                  <fouly-affluence
-                     (contribute)="gotoContribute()"
-                     [crowdStatus]="crowdStatusTranslateTag"
-                     [crowdColor]="crowdColor"
-                     class="affluence"
-                  ></fouly-affluence>
+               <ion-item class="item" button (click)="gotoContribute()">
+                  <ion-ripple-effect type="bounded"></ion-ripple-effect>
+                  <ion-icon color="primary" size="md" name="body"></ion-icon>
+                  <ion-label>&nbsp;{{ 'sharedUI.affluence.contribute' | translate }}</ion-label>
                </ion-item>
+
+               <ion-item class="item">
+                  <ion-icon [color]="crowdColor" name="body" size="large" slot="end"></ion-icon>
+                  <ion-label>
+                     <h3>
+                        {{ 'page.storeDetail.crowdIndicator' | translate }}
+                        <ion-text [color]="crowdColor">{{ crowdStatusTranslateTag | translate }}</ion-text>
+                     </h3>
+
+                     <p>{{ 'page.storeDetail.howIsCalculated' | translate }}</p>
+                  </ion-label>
+               </ion-item>
+
                <ion-item class="item" button *ngIf="placeDetails[0]" (click)="gotoChat(placeDetails[0].name)">
                   <ion-icon color="secondary" name="chatbubbles" size="medium"></ion-icon>
                   <ion-label>&nbsp;{{ 'page.storeDetail.comments' | translate }}</ion-label>
                </ion-item>
-               <ion-item class="item" button *ngIf="placeDetails[0]" (click)="gotoOwner(placeDetails[0].name)">
-                  <ion-icon color="secondary" name="bulb" size="medium"></ion-icon>
-                  <ion-label>&nbsp;{{ 'page.storeDetail.owner' | translate }}</ion-label>
-               </ion-item>
+
                <ion-item class="item" button *ngIf="placeDetails[0]" (click)="gotoFavorites()">
                   <ion-icon color="secondary" name="star" size="medium"></ion-icon>
                   <ion-label>&nbsp;{{ 'page.storeDetail.myFavorites' | translate }}</ion-label>
+               </ion-item>
+
+               <ion-item class="item" button *ngIf="placeDetails[0]" (click)="gotoMap()">
+                  <ion-icon color="secondary" name="location" size="medium"></ion-icon>
+                  <ion-label>&nbsp;{{ 'page.storeDetail.seeOnMap' | translate }}</ion-label>
+               </ion-item>
+
+               <ion-item class="item" button *ngIf="placeDetails[0]" (click)="gotoOwner(placeDetails[0].name)">
+                  <ion-icon color="secondary" name="bulb" size="medium"></ion-icon>
+                  <ion-label
+                     ><h2>{{ 'page.storeDetail.enterprise' | translate }}</h2>
+                     <p>{{ 'page.storeDetail.owner' | translate }}</p></ion-label
+                  >
                </ion-item>
             </ion-card-content>
          </ion-card>

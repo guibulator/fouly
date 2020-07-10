@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NavController } from '@ionic/angular';
 import { PlaceDetailsResult } from '@skare/fouly/data';
 import { FavoriteStoreService, PlaceDetailsStoreService } from '@skare/fouly/pwa/core';
 import { combineLatest, Observable, of, Subscription } from 'rxjs';
@@ -17,12 +18,12 @@ export class StoreComponent implements OnInit, OnDestroy {
   subscriptions = new Subscription();
   crowdStatusTranslateTag: string;
   crowdColor: string;
-
   constructor(
     private placeDetailsStore: PlaceDetailsStoreService,
     private route: ActivatedRoute,
     private router: Router,
-    private favoriteStoreService: FavoriteStoreService
+    private favoriteStoreService: FavoriteStoreService,
+    private navigationController: NavController
   ) {
     this.favoriteStoreService.getAll().subscribe();
   }
@@ -81,7 +82,13 @@ export class StoreComponent implements OnInit, OnDestroy {
   gotoFavorites() {
     this.router.navigate(['my-places'], { relativeTo: this.route });
   }
-
+  gotoMap() {
+    this.placeDetails$.pipe(take(1)).subscribe((placeDetails) => {
+      this.router.navigate(['app/tabs/map/'], {
+        state: { placeId: placeDetails[0].place_id }
+      });
+    });
+  }
   gotoContribute() {
     this.placeDetails$.pipe(take(1)).subscribe((placeDetails) => {
       this.router.navigate(['contribute'], {

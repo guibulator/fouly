@@ -17,7 +17,7 @@ export class FavoritesComponent implements OnInit, OnDestroy {
     private router: Router,
     private activatedRoute: ActivatedRoute
   ) {}
-
+  // TODO: Get achalandage quote for each store
   ngOnInit(): void {
     this.favorites$ = this.favoriteStoreService.store$;
     this.subscriptions.add(this.favoriteStoreService.getAll().subscribe());

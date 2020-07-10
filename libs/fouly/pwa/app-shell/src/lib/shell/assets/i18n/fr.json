@@ -145,8 +145,12 @@
       "close": "FERMÉ",
       "openingHours": "Horaire",
       "comments": "Commentaires",
-      "owner": "Vous êtes propriétaires ?",
+      "owner": "Vous êtes gestionnaire du commerce ?",
       "myFavorites": "Mes favoris",
+      "seeOnMap": "Voir sur la map",
+      "howIsCalculated": "Comment est-ce calculé ?",
+      "crowdIndicator": "Indicateur de foule",
+      "enterprise": "Fouly entreprise",
       "proposeBtn": {
         "title": "Ajout/retrait d'une mesure"
       },

@@ -12,17 +12,19 @@ import { Component, OnInit } from '@angular/core';
       </ion-toolbar>
     </ion-header>
     <ion-content fullscreen>
-      <ion-card>
-        <ion-img [src]="'assets/img/svg/undraw_in_no_time_6igu.svg'"></ion-img>
-        <ion-card-header>
-          <ion-card-title class="ion-text-center">{{
-            'page.contribute.closed.title' | translate
-          }}</ion-card-title>
-        </ion-card-header>
-        <ion-card-content>
-          {{ 'page.contribute.closed.content' | translate }}
-        </ion-card-content>
-      </ion-card>
+      <fouly-content-centered>
+        <ion-card>
+          <ion-img [src]="'assets/img/svg/undraw_in_no_time_6igu.svg'"></ion-img>
+          <ion-card-header>
+            <ion-card-title class="ion-text-center">{{
+              'page.contribute.closed.title' | translate
+            }}</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            {{ 'page.contribute.closed.content' | translate }}
+          </ion-card-content>
+        </ion-card>
+      </fouly-content-centered>
     </ion-content>
   `
 })

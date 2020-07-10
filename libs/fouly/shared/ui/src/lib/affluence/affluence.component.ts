@@ -21,7 +21,6 @@ export class FoulyAffluenceComponent implements OnInit, AfterViewInit, OnDestroy
   @Input() crowdColor: string;
   @Output() contribute = new EventEmitter();
 
-  @ViewChild('affluence', { read: ElementRef }) affluence: ElementRef;
   @ViewChild('contribute', { read: ElementRef }) contributeChild: ElementRef;
   constructor() {}
 

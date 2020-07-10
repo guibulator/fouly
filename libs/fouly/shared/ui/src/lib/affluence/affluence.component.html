@@ -1,10 +1,5 @@
-<ion-segment color="primary">
-   <ion-segment-button c #affluence value="quote" layout="icon-start">
-      <ion-icon color="{{ crowdColor }}" size="large" name="ellipse"></ion-icon>
-      <ion-label>{{ crowdStatus | translate }}</ion-label>
-   </ion-segment-button>
-   <ion-segment-button #contribute value="contribute" layout="icon-start">
-      <ion-icon color="secondary" size="md" name="body"></ion-icon>
-      <ion-label>{{ 'sharedUI.affluence.contribute' | translate }}</ion-label>
-   </ion-segment-button>
-</ion-segment>
+<ion-button #contribute value="contribute" expand="block">
+   <ion-ripple-effect type="bounded"></ion-ripple-effect>
+   <ion-icon [color]="crowdColor" size="md" name="body"></ion-icon>
+   <ion-label>{{ 'sharedUI.affluence.contribute' | translate }}</ion-label>
+</ion-button>

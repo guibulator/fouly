@@ -11,6 +11,6 @@ export class MeasuresComponent implements OnInit {
   ngOnInit() {}
 
   proposeMeasure() {
-    this.toast.show(this.translate.instant('page.measures.na'));
+    this.toast.show(this.translate.instant('page.storeDetail.measures.na'));
   }
 }
