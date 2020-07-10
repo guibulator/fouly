@@ -126,8 +126,23 @@
     },
 
     "owner": {
-      "title": "Owners and managers",
-      "content": "Avec les nouvelles règles de distanciation sociale à mettre en place, les écueils rencontrés par les commerçants dans les mois à venir seront nombreux et à différents niveaux. Ces nouvelles règles imposent souvent des changements importants au niveau organisationnel pour les commerçants, en plus d’ajouter des contraintes à la clientèle, ce qui est toujours un défi à relever. Un de ces défis consiste à permettre à la clientèle d’être servie sans attente, de manière sécuritaire en respectant les règles de distanciation.  "
+      "title": "Fouly Entreprises",
+      "confirmSendLetter": "A postal letter will be sent to the following address",
+      "successRegistration": "Your free registration request to Fouly Entreprises has been sent successfully !",
+      "content": {
+        "point1": {
+          "title": "You own or manage this business ?",
+          "content": "Fouly has a Business version that allows you to manage your own business traffic, social distancing measures, respond to comments, send messages to subscribers and more. You can thus improve your customers' experience of your business. We also offer a paid version which allows you to give the correct time at all times to customers with automatic detection of entries and exits from your business, direct communication with subscribers, management of exclusive offers to your most loyal, the management delegation of Fouly's functions and more. "
+        },
+        "point2": {
+          "title": "Our business offer: Fouly for Entreprises",
+          "content": "To benefit from a Business account, simply register for free using an email address. You will then receive an email with instructions to finalize your registration. As soon as we receive your request, a postal letter will be sent to the business address, containing a unique 6-digit code. Once received, you can enter this code into our system and identify yourself. As soon as the code is entered, you will have access to the Fouly for Business platform."
+        },
+        "point3": {
+          "title": "Subscription",
+          "content": "Please enter your last name, first name and email address below."
+        }
+      }
     },
 
     "placeSearch": {
@@ -144,7 +159,7 @@
       "close": "CLOSE",
       "openingHours": "Opening hours",
       "comments": "Comments",
-      "owner": "Business owner?",
+      "owner": "You own or manage this business ",
       "myFavorites": "My favorites",
       "seeOnMap": "See on map",
       "howIsCalculated": "How is this calculated ?",
@@ -174,8 +189,14 @@
       "low": "Low",
       "medium": "Medium",
       "high": "High",
-      "contribute": "Share insight",
-      "contributeSubTitle": "Update crowd status"
+      "contribute": "Are you on premise?",
+      "contributeSubTitle": "Tell us what you see"
+    },
+    "contactForm": {
+      "firstName": "Enter your first name",
+      "lastName": "Enter your lastname",
+      "email": "Enter your email",
+      "register": "Register"
     }
   }
 }

@@ -126,9 +126,23 @@
     },
 
     "owner": {
-      "title": "Propriétaires/Gestionnaires",
-      "subtitle": "Vous êtes propriétaire, gestionnaire ou désirez soumettre l'idée aux propriétaires ?",
-      "content": "Avec les nouvelles règles de distanciation sociale à mettre en place, les écueils rencontrés par les commerçants dans les mois à venir seront nombreux et à différents niveaux. Ces nouvelles règles imposent souvent des changements importants au niveau organisationnel pour les commerçants, en plus d’ajouter des contraintes à la clientèle, ce qui est toujours un défi à relever. Un de ces défis consiste à permettre à la clientèle d’être servie sans attente, de manière sécuritaire en respectant les règles de distanciation.  "
+      "title": "Fouly Entreprises",
+      "confirmSendLetter": "Une lettre sera envoyé à l'addresse ci-dessous",
+      "successRegistration": "Votre demande d'inscription gratuite à Fouly Entreprises a été envoyé avec succès !",
+      "content": {
+        "point1": {
+          "title": "Vous êtes propriétaire ou gestionnaire de ce commerce ?",
+          "content": "Fouly dispose d'une version Entreprises qui vous permet de gérer vous-mêmes l'achalandage de votre commerce, les mesures de distanciation sociale, répondre aux commentaires, envoyer des messages aux abonnés et plus encore. Vous pouvez ainsi améliorer l'expérience de vos clients de votre commerce.  Nous proposons également une version payante qui permet de donner l'heure juste en tout temps aux clients avec de la détection automatique des entrées et sorties de votre commerce, la communication directe avec les abonnés, la gestion d'offres exclusives à vos clients les plus fidèles, la délégation de gestion des fonctions de Fouly et plus encore. "
+        },
+        "point2": {
+          "title": "Notre offre Fouly pour Entreprises",
+          "content": "Pour profiter d'un compte Entreprises, vous n'avez qu'à vous enregistrer gratuitement à l'aide d'une adresse courriel. Vous recevrez alors un courriel avec les instructions pour finaliser votre enregistrement. Dès que nous recevons votre demande, une lettre postale sera acheminée à l'adresse du commerce, contenant un code unique de 6 chiffres. Une fois reçu, vous pourrez saisir ce code dans notre système et ainsi vous identifier. Dès que le code sera saisi, vous aurez accès à la plateforme Fouly pour Entreprises. "
+        },
+        "point3": {
+          "title": "Inscription",
+          "content": "Veuillez saisir votre nom, prénom et adresse courriel ci-dessous."
+        }
+      }
     },
 
     "placeSearch": {
@@ -151,6 +165,7 @@
       "howIsCalculated": "Comment est-ce calculé ?",
       "crowdIndicator": "Indicateur d'achalandage",
       "enterprise": "Fouly entreprise",
+
       "proposeBtn": {
         "title": "Ajout/retrait d'une mesure"
       },
@@ -175,8 +190,14 @@
       "low": "Faible",
       "medium": "Moyen",
       "high": "Élevé",
-      "contribute": "Donnez votre avis",
-      "contributeSubTitle": "Mettre à jour l'achalandage actuel"
+      "contribute": "Vous êtes sur place ?",
+      "contributeSubTitle": "Dites-nous ce que vous voyez"
+    },
+    "contactForm": {
+      "firstName": "Entrez votre prénom",
+      "lastName": "Entrez votre nom",
+      "email": "Entrez votre courriel",
+      "register": "S'inscrire"
     }
   }
 }

@@ -1,6 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NavController } from '@ionic/angular';
 import { PlaceDetailsResult } from '@skare/fouly/data';
 import { FavoriteStoreService, PlaceDetailsStoreService } from '@skare/fouly/pwa/core';
 import { combineLatest, Observable, of, Subscription } from 'rxjs';
@@ -22,8 +21,7 @@ export class StoreComponent implements OnInit, OnDestroy {
     private placeDetailsStore: PlaceDetailsStoreService,
     private route: ActivatedRoute,
     private router: Router,
-    private favoriteStoreService: FavoriteStoreService,
-    private navigationController: NavController
+    private favoriteStoreService: FavoriteStoreService
   ) {
     this.favoriteStoreService.getAll().subscribe();
   }

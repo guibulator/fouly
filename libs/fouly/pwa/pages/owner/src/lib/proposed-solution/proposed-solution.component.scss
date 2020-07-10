@@ -1,0 +1,11 @@
+h1:not(.no-border) {
+  border-left: 0.75rem solid var(--ion-color-secondary);
+}
+.business-title {
+  font-weight: 900;
+  font-size: 1.7rem;
+}
+.lead {
+  font-weight: 600;
+  color: var(--ion-color-primary);
+}

@@ -2,9 +2,9 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ToastController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
+import { ContactService } from '@skare/fouly/pwa/core';
 import { from, Subscription } from 'rxjs';
-import { finalize, flatMap, retry, tap } from 'rxjs/operators';
-import { ContactService } from '../contact.service';
+import { finalize, flatMap, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'fouly-contact',
@@ -47,7 +47,6 @@ export class ContactComponent implements OnInit, OnDestroy {
     this.contactService
       .sendMail(formData)
       .pipe(
-        retry(3),
         flatMap(() =>
           from(
             this.toastController.create({

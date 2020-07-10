@@ -11,6 +11,7 @@ export class PlaceDetailsStoreService {
   private readonly _placeDetails = new BehaviorSubject<PlaceDetailsResult[]>([]);
   private readonly _loading = new BehaviorSubject<boolean>(false);
   readonly placeDetails$ = this._placeDetails.asObservable();
+  readonly firstPlaceDetail$ = this.placeDetails$.pipe(map((items) => items[0]));
   readonly loading$ = this._loading.asObservable();
   private readonly _placeApiKey$: Observable<string>;
   constructor(
@@ -26,7 +27,7 @@ export class PlaceDetailsStoreService {
       );
   }
 
-  loadPlaceId(placeId: string, asOfTime: Date, sessionToken?: string) {
+  loadPlaceId(placeId: string, asOfTime: Date = new Date(), sessionToken?: string) {
     const lngCode = this.translateService.store.currentLang;
     //TODO: handle failure, immutabilty for store, reuse already loaded item...
     this._loading.next(true);
