@@ -149,7 +149,7 @@
       "myFavorites": "Mes favoris",
       "seeOnMap": "Voir sur la map",
       "howIsCalculated": "Comment est-ce calculé ?",
-      "crowdIndicator": "Indicateur de foule",
+      "crowdIndicator": "Indicateur d'achalandage",
       "enterprise": "Fouly entreprise",
       "proposeBtn": {
         "title": "Ajout/retrait d'une mesure"
@@ -175,7 +175,8 @@
       "low": "Faible",
       "medium": "Moyen",
       "high": "Élevé",
-      "contribute": "Contribuer"
+      "contribute": "Donnez votre avis",
+      "contributeSubTitle": "Mettre à jour l'achalandage actuel"
     }
   }
 }

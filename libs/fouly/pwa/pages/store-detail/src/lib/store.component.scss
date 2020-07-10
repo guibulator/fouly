@@ -20,6 +20,9 @@ ion-card {
     &.content {
       padding: 0 0 2rem;
     }
+    ion-item:first-of-type {
+      border-bottom: 10px solid var(--ion-color-primary);
+    }
   }
   .affluence {
     width: 100%;

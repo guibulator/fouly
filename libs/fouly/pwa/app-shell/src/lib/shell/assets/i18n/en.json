@@ -174,7 +174,8 @@
       "low": "Low",
       "medium": "Medium",
       "high": "High",
-      "contribute": "Contribute"
+      "contribute": "Share insight",
+      "contributeSubTitle": "Update crowd status"
     }
   }
 }

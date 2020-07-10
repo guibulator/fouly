@@ -17,7 +17,7 @@ export class QuoteFromRetailService {
       } else {
         result = 'low';
       }
-    } else if (asOfTime.getDay() === 4 && asOfTime.getDay() === 5) {
+    } else if (asOfTime.getDay() === 4 || asOfTime.getDay() === 5) {
       //thursday, friday
       if (numberAsOfTime < 1000) {
         result = 'low';

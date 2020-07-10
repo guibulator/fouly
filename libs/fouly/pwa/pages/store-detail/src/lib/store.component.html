@@ -49,13 +49,7 @@
                </div>
             </ion-card-header>
             <ion-card-content class="content">
-               <ion-item class="item" button (click)="gotoContribute()">
-                  <ion-ripple-effect type="bounded"></ion-ripple-effect>
-                  <ion-icon color="primary" size="md" name="body"></ion-icon>
-                  <ion-label>&nbsp;{{ 'sharedUI.affluence.contribute' | translate }}</ion-label>
-               </ion-item>
-
-               <ion-item class="item">
+               <ion-item lines="none">
                   <ion-icon [color]="crowdColor" name="body" size="large" slot="end"></ion-icon>
                   <ion-label>
                      <h3>
@@ -64,6 +58,15 @@
                      </h3>
 
                      <p>{{ 'page.storeDetail.howIsCalculated' | translate }}</p>
+                  </ion-label>
+               </ion-item>
+
+               <ion-item class="item" button (click)="gotoContribute()">
+                  <ion-ripple-effect type="bounded"></ion-ripple-effect>
+                  <ion-icon color="primary" size="md" name="share-social"></ion-icon>
+                  <ion-label>
+                     <h2>&nbsp;{{ 'sharedUI.affluence.contribute' | translate }}</h2>
+                     <p>&nbsp;{{ 'sharedUI.affluence.contributeSubTitle' | translate }}</p>
                   </ion-label>
                </ion-item>
 
@@ -83,10 +86,10 @@
                </ion-item>
 
                <ion-item class="item" button *ngIf="placeDetails[0]" (click)="gotoOwner(placeDetails[0].name)">
-                  <ion-icon color="secondary" name="bulb" size="medium"></ion-icon>
-                  <ion-label
-                     ><h2>{{ 'page.storeDetail.enterprise' | translate }}</h2>
-                     <p>{{ 'page.storeDetail.owner' | translate }}</p></ion-label
+                  <ion-icon color="secondary" name="business" size="medium"></ion-icon>
+                  <ion-label>
+                     <h2>&nbsp;{{ 'page.storeDetail.enterprise' | translate }}</h2>
+                     <p>&nbsp;{{ 'page.storeDetail.owner' | translate }}</p></ion-label
                   >
                </ion-item>
             </ion-card-content>
