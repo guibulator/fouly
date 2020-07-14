@@ -1,0 +1,22 @@
+.code-wrapper {
+  display: flex;
+  flex-flow: row wrap;
+}
+.input {
+  margin: 0 5px;
+  line-height: 80px;
+  font-size: 50px;
+  color: var(--ion-color-secondary);
+  border-bottom: solid 4px var(--ion-color-primary);
+  outline: none;
+  transition: all 0.2s ease-in-out;
+}
+
+.button {
+  margin-top: 2rem;
+}
+
+.loose-focus {
+  position: relative;
+  left: -1000px;
+}

@@ -36,11 +36,11 @@ export class OwnerProposedSolutionComponent implements OnInit {
   private subscriptions = new Subscription();
   placeName: string;
   ngOnInit() {
-    this.placeName = this.activatedRoute.snapshot.params['placeName'];
+    this.placeName = this.activatedRoute.snapshot.parent.params['placeName'];
     this.placeDetail$ = this.placeDetailsStore.firstPlaceDetail$;
     this.loading$ = this.placeDetailsStore.loading$;
     // TODO: we only need place address, add support of fetching only needed fields if its becoming to costly
-    this.placeDetailsStore.loadPlaceId(this.activatedRoute.snapshot.params['placeId']);
+    this.placeDetailsStore.loadPlaceId(this.activatedRoute.snapshot.parent.params['placeId']);
     this.subscriptions.add(
       this.form.valueChanges.subscribe(() => {
         this.disabled = this.form.invalid;
@@ -66,7 +66,9 @@ export class OwnerProposedSolutionComponent implements OnInit {
           flatMap(() =>
             from(
               this.toastController.create({
-                message: this.translateService.instant('page.owner.successRegistration'),
+                message: this.translateService.instant(
+                  'page.owner.childRoute.solution.successRegistration'
+                ),
                 duration: 3000,
                 color: 'tertiary',
                 position: 'middle'

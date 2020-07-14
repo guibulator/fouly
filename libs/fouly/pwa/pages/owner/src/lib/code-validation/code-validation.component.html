@@ -1,0 +1,51 @@
+<ion-content fullscreen>
+   <fouly-content-centered class="ion-padding content">
+      <ion-card>
+         <ion-img [src]="'assets/img/svg/undraw_two_factor_authentication_namy.svg'"></ion-img>
+         <ion-card-header>
+            <ion-card-title>
+               <ion-label class="">
+                  <h1 class="ion-text-center">
+                     <ion-text color="primary">{{ 'page.owner.childRoute.codeValidation.h1' | translate }}</ion-text>
+                  </h1>
+                  <p [innerHtml]="'page.owner.childRoute.codeValidation.subtitle' | translate"></p>
+               </ion-label>
+            </ion-card-title>
+
+            <ion-card-subtitle> </ion-card-subtitle>
+         </ion-card-header>
+
+         <ion-card-content class=" ion-text-center">
+            <form novalidate (ngSubmit)="submit(codeForm.value)">
+               <div class="code-wrapper ">
+                  <ion-input
+                     *ngFor="let control of codeForm.controls; let i = index"
+                     #input
+                     maxlength="1"
+                     min="0"
+                     max="9"
+                     type="number"
+                     class="input"
+                     value=""
+                     clearOnEdit="true"
+                     (ionFocus)="onFocus(i)"
+                     (ionChange)="inputChange()"
+                     [formControl]="control"
+                  ></ion-input>
+               </div>
+
+               <ion-button
+                  class="button"
+                  [disabled]="isDisabled()"
+                  expand="block"
+                  type="submit"
+                  [innerHtml]="'page.owner.childRoute.codeValidation.buttonValidate' | translate"
+               ></ion-button>
+            </form>
+
+            <ion-input class="loose-focus" #hidden></ion-input>
+            <ion-label><h3 [innerHTML]="'page.owner.childRoute.codeValidation.pleaseNote' | translate"></h3></ion-label>
+         </ion-card-content>
+      </ion-card>
+   </fouly-content-centered>
+</ion-content>

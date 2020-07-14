@@ -126,21 +126,28 @@
     },
 
     "owner": {
-      "title": "Fouly Entreprises",
-      "confirmSendLetter": "Une lettre sera envoyé à l'addresse ci-dessous",
-      "successRegistration": "Votre demande d'inscription gratuite à Fouly Entreprises a été envoyé avec succès !",
-      "content": {
-        "point1": {
-          "title": "Vous êtes propriétaire ou gestionnaire de ce commerce ?",
-          "content": "Fouly dispose d'une version Entreprises qui vous permet de gérer vous-mêmes l'achalandage de votre commerce, les mesures de distanciation sociale, répondre aux commentaires, envoyer des messages aux abonnés et plus encore. Vous pouvez ainsi améliorer l'expérience de vos clients de votre commerce.  Nous proposons également une version payante qui permet de donner l'heure juste en tout temps aux clients avec de la détection automatique des entrées et sorties de votre commerce, la communication directe avec les abonnés, la gestion d'offres exclusives à vos clients les plus fidèles, la délégation de gestion des fonctions de Fouly et plus encore. "
+      "childRoute": {
+        "solution": {
+          "title": "Fouly Entreprises",
+          "confirmSendLetter": "Dès que nous recevons votre demande, une lettre postale sera acheminée à l'adresse postale du commerce contenant un code unique de 6 chiffres. Une fois le code reçu, vous pourrez saisir ce code dans notre système et ainsi vous identifier. Dès que le code sera validé, vous aurez accès à toutes les fonctionnalités de la plateforme Fouly Entreprise. ",
+          "successRegistration": "Votre demande d'inscription gratuite à Fouly Entreprises a été envoyé avec succès !",
+          "content": {
+            "point1": {
+              "title": "Vous êtes propriétaire ou gestionnaire de ce commerce ?",
+              "content": "Fouly Entreprises vous permet de gérer vous-même la mesure de l'achalandage de votre commerce, les mesures de distanciation sociale, de répondre aux commentaires, et d'envoyer des messages aux abonnés. Vous améliorez ainsi l'expérience de vos clients pour votre commerce. Inscrivez-vous, c'est gratuit !"
+            },
+            "point2": {
+              "title": "Inscription",
+              "content": "Veuillez saisir votre nom, prénom et adresse courriel ci-dessous."
+            }
+          }
         },
-        "point2": {
-          "title": "Notre offre Fouly pour Entreprises",
-          "content": "Pour profiter d'un compte Entreprises, vous n'avez qu'à vous enregistrer gratuitement à l'aide d'une adresse courriel. Vous recevrez alors un courriel avec les instructions pour finaliser votre enregistrement. Dès que nous recevons votre demande, une lettre postale sera acheminée à l'adresse du commerce, contenant un code unique de 6 chiffres. Une fois reçu, vous pourrez saisir ce code dans notre système et ainsi vous identifier. Dès que le code sera saisi, vous aurez accès à la plateforme Fouly pour Entreprises. "
-        },
-        "point3": {
-          "title": "Inscription",
-          "content": "Veuillez saisir votre nom, prénom et adresse courriel ci-dessous."
+        "codeValidation": {
+          "title": "Validation",
+          "h1": "Veuillez saisir le code de 6 chiffres que vous avez reçu par la poste.",
+          "subtitle": "Ce processus confirmera que vous avez droit d'agir en tant que gestionnaire du commerce.",
+          "buttonValidate": "Valider",
+          "pleaseNote": "Il est à noter que le code sera valide pour un délai de 3 semaines suivant l'enregistrement initial."
         }
       }
     },
@@ -159,7 +166,7 @@
       "close": "FERMÉ",
       "openingHours": "Horaire",
       "comments": "Commentaires",
-      "owner": "Vous êtes gestionnaire du commerce ?",
+      "owner": "Vous êtes le gestionnaire du commerce ?",
       "myFavorites": "Mes favoris",
       "seeOnMap": "Voir sur la map",
       "howIsCalculated": "Comment est-ce calculé ?",

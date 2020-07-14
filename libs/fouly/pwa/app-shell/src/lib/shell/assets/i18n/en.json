@@ -126,21 +126,28 @@
     },
 
     "owner": {
-      "title": "Fouly Entreprises",
-      "confirmSendLetter": "A postal letter will be sent to the following address",
-      "successRegistration": "Your free registration request to Fouly Entreprises has been sent successfully !",
-      "content": {
-        "point1": {
-          "title": "You own or manage this business ?",
-          "content": "Fouly has a Business version that allows you to manage your own business traffic, social distancing measures, respond to comments, send messages to subscribers and more. You can thus improve your customers' experience of your business. We also offer a paid version which allows you to give the correct time at all times to customers with automatic detection of entries and exits from your business, direct communication with subscribers, management of exclusive offers to your most loyal, the management delegation of Fouly's functions and more. "
+      "childRoute": {
+        "solution": {
+          "title": "Fouly Entreprises",
+          "confirmSendLetter": "As soon as we receive your request, a postal letter will be sent to the business postal address containing a unique 6-digit code. Once the code is received, you can enter this code into our system and thereby identify yourself As soon as the code is validated, you will have access to all the functionalities of the Fouly Entreprise platform. ",
+          "successRegistration": "Your free registration request to Fouly Entreprises has been successfully sent!",
+          "happy": {
+            "point1": {
+              "title": "Are you the owner or manager of this business?",
+              "content": "Fouly Entreprises allows you to manage your business traffic measurement, social distancing measures, respond to comments, and send messages to subscribers. This improves the experience of your customers for your business. Sign up, it's free! "
+            },
+            "point2": {
+              "title": "Registration",
+              "content": "Please enter your last name, first name and email address below."
+            }
+          }
         },
-        "point2": {
-          "title": "Our business offer: Fouly for Entreprises",
-          "content": "To benefit from a Business account, simply register for free using an email address. You will then receive an email with instructions to finalize your registration. As soon as we receive your request, a postal letter will be sent to the business address, containing a unique 6-digit code. Once received, you can enter this code into our system and identify yourself. As soon as the code is entered, you will have access to the Fouly for Business platform."
-        },
-        "point3": {
-          "title": "Subscription",
-          "content": "Please enter your last name, first name and email address below."
+        "codeValidation": {
+          "title": "Validation",
+          "h1": "Please enter the 6-digit code you received by mail.",
+          "subtitle": "This process will confirm that you have the right to act as a business manager.",
+          "buttonValidate": "Validate",
+          "pleaseNote": "Please note that the code will be valid for 3 weeks after initial registration."
         }
       }
     },

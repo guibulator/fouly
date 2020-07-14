@@ -5,6 +5,8 @@ import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { TranslateModule } from '@ngx-translate/core';
 import { FoulyUiModule } from '@skare/fouly/shared/ui';
+import { CodeValidationComponent } from './code-validation/code-validation.component';
+import { OwnerComponent } from './owner/owner.component';
 import { OwnerProposedSolutionComponent } from './proposed-solution/proposed-solution.component';
 @NgModule({
   imports: [
@@ -15,9 +17,30 @@ import { OwnerProposedSolutionComponent } from './proposed-solution/proposed-sol
     FoulyUiModule,
     TranslateModule,
     RouterModule.forChild([
-      { path: ':placeName', pathMatch: 'full', component: OwnerProposedSolutionComponent }
+      {
+        path: '',
+        component: OwnerComponent,
+        children: [
+          {
+            path: 'solution',
+            component: OwnerProposedSolutionComponent,
+            data: { title: 'page.owner.childRoute.solution.title' }
+          },
+          {
+            path: 'code-validation',
+            component: CodeValidationComponent,
+            data: { title: 'page.owner.childRoute.codeValidation.title' }
+          },
+          {
+            path: '',
+            component: OwnerProposedSolutionComponent,
+            data: { title: 'page.owner.childRoute.solution.title' }
+          }
+        ]
+      },
+      {}
     ])
   ],
-  declarations: [OwnerProposedSolutionComponent]
+  declarations: [OwnerProposedSolutionComponent, CodeValidationComponent, OwnerComponent]
 })
 export class OwnerModule {}

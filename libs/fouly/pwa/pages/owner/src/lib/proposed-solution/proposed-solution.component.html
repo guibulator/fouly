@@ -1,82 +1,60 @@
-<ion-header>
-   <ion-toolbar>
-      <ion-buttons slot="start">
-         <ion-back-button></ion-back-button>
-      </ion-buttons>
-      <ion-buttons slot="start">
-         <ion-menu-button></ion-menu-button>
-      </ion-buttons>
-      <ion-title>{{ 'page.owner.title' | translate }}</ion-title>
-      <ion-progress-bar *ngIf="loading$ | async" color="primary" type="indeterminate"></ion-progress-bar>
-   </ion-toolbar>
-</ion-header>
-
 <ion-content fullscreen>
    <fouly-content-centered class="ion-padding content">
       <h1 class="ion-text-center no-border business-title">
-         <ion-text color="primary">{{ placeName }}</ion-text>
+         <ion-text color="primary" [innerHtml]="(placeDetail$ | async)?.name"></ion-text>
       </h1>
       <p class="ion-text-center" [innerHtml]="(placeDetail$ | async)?.shortAddress"></p>
       <ion-img [src]="'assets/img/svg/undraw_finance_0bdk.svg'"></ion-img>
+      <ion-img [src]="'assets/img/svg/fouly-logo-entreprise.svg'"></ion-img>
       <div class="ion-padding">
          <h1 class="ion-padding">
-            {{ 'page.owner.content.point1.title' | translate }}
+            {{ 'page.owner.childRoute.solution.content.point1.title' | translate }}
          </h1>
-         <p class="ion-margin-top ion-text-justify">{{ 'page.owner.content.point1.content' | translate }}</p>
+         <p class="ion-margin-top ion-text-justify">{{ 'page.owner.childRoute.solution.content.point1.content' | translate }}</p>
       </div>
 
       <div class="ion-padding">
          <h1 class="ion-padding">
-            {{ 'page.owner.content.point2.title' | translate }}
+            {{ 'page.owner.childRoute.solution.content.point2.title' | translate }}
          </h1>
-         <p class="ion-margin-top ion-text-justify">{{ 'page.owner.content.point2.content' | translate }}</p>
+         <p class="ion-margin-top ion-text-justify">{{ 'page.owner.childRoute.solution.content.point2.content' | translate }}</p>
       </div>
-      <ion-img [src]="'assets/img/svg/fouly-logo-entreprise.svg'"></ion-img>
-      <div class="ion-padding">
-         <h1 class="ion-padding">
-            {{ 'page.owner.content.point3.title' | translate }}
-         </h1>
-         <p class="ion-margin-top ion-text-justify">{{ 'page.owner.content.point3.content' | translate }}</p>
-      </div>
-      <form novalidate [formGroup]="form" (ngSubmit)="submit(form.value)">
-         <ion-list lines="none">
-            <ion-item>
-               <ion-input
-                  [placeholder]="'sharedUI.contactForm.lastName' | translate"
-                  required
-                  type="text"
-                  autocomplete
-                  formControlName="lastName"
-               ></ion-input>
-            </ion-item>
-            <ion-item>
-               <ion-input
-                  [placeholder]="'sharedUI.contactForm.firstName' | translate"
-                  type="text"
-                  spellcheck
-                  required
-                  formControlName="firstName"
-               ></ion-input>
-            </ion-item>
-            <ion-item>
-               <ion-input
-                  [placeholder]="'sharedUI.contactForm.email' | translate"
-                  type="email"
-                  spellcheck
-                  formControlName="email"
-                  required
-               ></ion-input>
-            </ion-item>
-         </ion-list>
-         <div class="ion-padding">
-            <p>{{ 'page.owner.confirmSendLetter' | translate }}</p>
-            <p class="lead ion-text-center" [innerHTML]="(placeDetail$ | async)?.adr_address"></p>
-         </div>
-         <div class="ion-margin-bottom">
-            <ion-button color="secondary" expand="block" type="submit" [disabled]="disabled"
-               ><ion-icon slot="end" name="send-outline"></ion-icon>{{ 'sharedUI.contactForm.register' | translate }}</ion-button
-            >
-         </div>
-      </form>
+      <ng-container *ngTemplateOutlet="formTemplate; context: { $implicit: form }"></ng-container>
    </fouly-content-centered>
 </ion-content>
+<ng-template #formTemplate let-form>
+   <form novalidate [formGroup]="form" (ngSubmit)="submit(form.value)">
+      <ion-list lines="none">
+         <ion-item>
+            <ion-input
+               [placeholder]="'sharedUI.contactForm.lastName' | translate"
+               required
+               type="text"
+               autocomplete
+               formControlName="lastName"
+            ></ion-input>
+         </ion-item>
+         <ion-item>
+            <ion-input
+               [placeholder]="'sharedUI.contactForm.firstName' | translate"
+               type="text"
+               spellcheck
+               required
+               formControlName="firstName"
+            ></ion-input>
+         </ion-item>
+         <ion-item>
+            <ion-input [placeholder]="'sharedUI.contactForm.email' | translate" type="email" spellcheck formControlName="email" required></ion-input>
+         </ion-item>
+      </ion-list>
+      <div class="ion-padding">
+         <p>{{ 'page.owner.childRoute.solution.confirmSendLetter' | translate }}</p>
+         <p class="lead ion-text-center" [innerHTML]="(placeDetail$ | async)?.adr_address"></p>
+      </div>
+      <div class="ion-margin-bottom">
+         <ion-button color="secondary" expand="block" type="submit" [disabled]="disabled"
+            ><ion-icon slot="end" name="send-outline"></ion-icon>{{ 'sharedUI.contactForm.register' | translate }}</ion-button
+         >
+      </div>
+   </form>
+</ng-template>
