@@ -10,7 +10,6 @@ import { SurveyFormComponent } from './survey-form/survey-form.component';
 import { DelayComponent } from './surveys/delay/delay.component';
 import { InstallationComponent } from './surveys/installation/installation.component';
 import { NumberComponent } from './surveys/number/number.component';
-import { ThanksComponent } from './surveys/thanks/thanks.component';
 
 @NgModule({
   imports: [
@@ -43,8 +42,7 @@ import { ThanksComponent } from './surveys/thanks/thanks.component';
     DelayComponent,
     ClosedComponent,
     InstallationComponent,
-    NumberComponent,
-    ThanksComponent
+    NumberComponent
   ]
 })
 export class ContributeModule {}

@@ -73,10 +73,7 @@
         "more30": "More than 30 people"
       },
 
-      "thanks": {
-        "title": "Thanks for your contribution !",
-        "return": "Return"
-      },
+      "thanks": "Thanks for your contribution!",
 
       "closed": {
         "titleToolbar": "Closed",

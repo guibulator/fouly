@@ -73,10 +73,7 @@
         "more30": "Plus de 30 personnes"
       },
 
-      "thanks": {
-        "title": "Merci pour votre contribution !",
-        "return": "Retour"
-      },
+      "thanks": "Merci pour votre contribution !",
 
       "closed": {
         "titleToolbar": "Fermé",

@@ -4,11 +4,11 @@
       <ion-card-title class="ion-text-center">{{ 'page.contribute.installation.title' | translate }}</ion-card-title>
    </ion-card-header>
    <ion-card-content>
-      <ion-button (click)="clicked('good')" expand="full" color="secondary"
-         >{{ 'page.contribute.installation.adequate' | translate }} <ion-ripple-effect type="bounded"></ion-ripple-effect
-      ></ion-button>
       <ion-button (click)="clicked('notgood')" expand="full" color="secondary"
          >{{ 'page.contribute.installation.notAdequate' | translate }} <ion-ripple-effect type="unbounded"></ion-ripple-effect
+      ></ion-button>
+      <ion-button (click)="clicked('good')" expand="full" color="secondary"
+         >{{ 'page.contribute.installation.adequate' | translate }} <ion-ripple-effect type="bounded"></ion-ripple-effect
       ></ion-button>
    </ion-card-content>
 </ion-card>

@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { IonContent, IonSlides, NavController } from '@ionic/angular';
+import { IonContent, IonSlides, NavController, ToastController } from '@ionic/angular';
+import { TranslateService } from '@ngx-translate/core';
 import {
   ContributeCommand,
   ContributeGlobalAppreciation,
@@ -35,7 +36,9 @@ export class SurveyFormComponent implements OnInit, OnDestroy, AfterViewInit {
     private contributeService: ContributeStoreService,
     private userStoreService: UserStoreService,
     private activatedRoute: ActivatedRoute,
-    private localisationService: LocalisationStoreService
+    private localisationService: LocalisationStoreService,
+    private toastCtrl: ToastController,
+    private translateService: TranslateService
   ) {
     this.userContribution.placeId = this.activatedRoute.snapshot.params.placeId;
     this.userContribution.time = new Date();
@@ -95,6 +98,18 @@ export class SurveyFormComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   private slideNext() {
+    if (this.lastSlide) {
+      this.end();
+      from(
+        this.toastCtrl.create({
+          message: this.translateService.instant('page.contribute.thanks'),
+          duration: 2500,
+          color: 'secondary',
+          position: 'bottom'
+        })
+      ).subscribe((toast) => toast.present());
+      return;
+    }
     this.slides.slideNext();
     this.content.scrollToTop(0);
     this.progression = this.progression + this.stepValue;
