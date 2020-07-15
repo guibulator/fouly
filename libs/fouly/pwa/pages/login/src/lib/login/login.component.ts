@@ -1,5 +1,4 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook/ngx';
 import { NavController, Platform } from '@ionic/angular';
 import { UserResult } from '@skare/fouly/data';
@@ -11,18 +10,16 @@ import {
   SocialUser
 } from 'angularx-social-login';
 import { Subscription } from 'rxjs';
+import { flatMap, take } from 'rxjs/operators';
 
 @Component({
   selector: 'fouly-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  templateUrl: './login.component.html'
 })
 export class LoginComponent implements OnInit, OnDestroy {
   public userData: UserResult = null;
-  private userLoginFrom = '';
+  public userLoginFrom: string;
   public loggedIn = false;
-  public showUserNameInput = false;
-  public userName = new FormControl('');
   public canLogin = false;
   private readonly subscriptions = new Subscription();
   constructor(
@@ -34,64 +31,47 @@ export class LoginComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.subscriptions.add(
-      this.userStoreService.getAll().subscribe((users: UserResult[]) => {
+    this.authService.readyState
+      .pipe(flatMap(() => this.userStoreService.getAll().pipe(take(1))))
+      .subscribe((users: UserResult[]) => {
         const user = users && users.length > 0 && users[0];
-        this.loginUser(user);
-      })
-    );
+        user && this.updateUserData(user);
+      });
 
     this.subscriptions.add(
       this.authService.authState.subscribe((user: SocialUser) => {
-        const isUserWasLogued = this.loggedIn;
-        this.loginUser(user);
-        if (this.loggedIn && !isUserWasLogued) {
-          setTimeout(() => this.login(), 3000);
+        if (!!user && !this.userData) {
+          this.updateUserData(user);
+          setTimeout(() => this.saveUserAndQuit(), 3000);
+        } else {
+          // login didn't work
         }
       })
     );
-
-    this.userName.valueChanges.subscribe((val: string) => {
-      if (val.length > 0) {
-        this.canLogin = true;
-      }
-      if (this.userData) {
-        this.loginUser({ ...this.userData, name: val });
-      } else {
-        this.loginUser({ name: val });
-      }
-    });
   }
   ngOnDestroy() {
     this.subscriptions.unsubscribe();
   }
 
-  loginUser(user: any) {
-    if (user) {
-      this.userData = {
-        userId: user.userId ? user.userId : null,
-        providerId: user.providerId ? user.providerId : null,
-        email: user.email ? user.email : null,
-        firstName: user.first_name ? user.first_name : user.firstName ? user.firstName : null,
-        name: user.name ? user.name : null,
-        picture: user.picture ? user.picture : user.photoUrl ? user.photoUrl : null,
-        loginFrom: user.loginFrom
-          ? user.loginFrom
-          : user.provider
-          ? user.provider.toLowerCase()
-          : this.userLoginFrom
-      };
-      this.loggedIn = true;
-    }
+  private updateUserData(user: any) {
+    this.userData = {
+      userId: user?.userId,
+      providerId: user?.providerId,
+      email: user?.email,
+      firstName: user.first_name ? user.first_name : user.firstName ? user.firstName : null,
+      name: user?.name,
+      picture: user?.picture ?? user?.photoUrl,
+      loginFrom: user?.loginFrom ?? user?.provider ?? this.userLoginFrom
+    };
+    this.loggedIn = true;
   }
 
   loginWithFB() {
     this.userLoginFrom = 'facebook';
-    this.showUserNameInput = false;
     if (this.platform.is('cordova')) {
       this.facebook.login(['email', 'public_profile']).then((response: FacebookLoginResponse) => {
         this.facebook.api('me?fields-id,name,email,first_name', []).then((profile) => {
-          this.loginUser({ ...profile, firstName: profile['first_name'] });
+          this.updateUserData({ ...profile, firstName: profile['first_name'] });
         });
       });
     } else {
@@ -101,17 +81,12 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   loginWithGoogle(): void {
     this.userLoginFrom = 'google';
-    this.showUserNameInput = false;
     this.authService.signIn(GoogleLoginProvider.PROVIDER_ID);
   }
 
-  loginAnonymus(): void {
-    this.userLoginFrom = 'anonymous';
-    this.showUserNameInput = true;
-  }
-
-  login(): void {
+  private saveUserAndQuit(): void {
     this.userStoreService.createUpdateUser(this.userData).subscribe((user: UserResult) => {
+      this.userStoreService.clear();
       this.userStoreService.add(user);
       this.userData = { ...user };
       this.navController.back();
@@ -120,9 +95,14 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   async logout() {
     const id = this.userData?.userId;
-    this.userStoreService.remove(id);
-    if (this.userData.loginFrom !== 'anonymous' && this.loggedIn) {
-      await this.authService.signOut();
+    this.userStoreService.clear();
+    //this.userStoreService.remove(id);
+    if (this.loggedIn) {
+      try {
+        await this.authService.signOut(true);
+      } catch (ex) {
+        console.error(ex);
+      }
     }
     this.loggedIn = false;
     this.userData = null;

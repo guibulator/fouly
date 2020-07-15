@@ -109,7 +109,6 @@
       "title": "Login",
       "connectionFacebook": "Login with Facebook",
       "connectionGoogle": "Login with Google",
-      "anonymous": "Anonymous",
       "welcome": "Welcome",
       "login": "Login",
       "logout": "Logout"

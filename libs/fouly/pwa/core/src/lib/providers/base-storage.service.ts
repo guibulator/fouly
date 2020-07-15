@@ -17,6 +17,10 @@ export class BaseStorage<T> {
     private keyAccessor: (T) => string
   ) {}
 
+  clear() {
+    this.storage.set(this.storageKey, []);
+  }
+
   add(toAdd: T): void {
     // optimistic save
     this._store$.pipe(take(1)).subscribe((items) => {

@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 import { Facebook } from '@ionic-native/facebook/ngx';
 import { IonicModule } from '@ionic/angular';
 import { TranslateModule } from '@ngx-translate/core';
+import { FoulyUiModule } from '@skare/fouly/shared/ui';
 import {
   AuthServiceConfig,
   FacebookLoginProvider,
@@ -13,6 +14,7 @@ import {
   SocialLoginModule
 } from 'angularx-social-login';
 import { LoginComponent } from './login/login.component';
+import { ProfileComponent } from './profile/profile.component';
 
 const fbLoginOptions: LoginOpt = {
   scope: 'email',
@@ -42,7 +44,7 @@ export function provideConfig() {
   return config;
 }
 @NgModule({
-  declarations: [LoginComponent],
+  declarations: [LoginComponent, ProfileComponent],
   imports: [
     CommonModule,
     IonicModule,
@@ -50,11 +52,24 @@ export function provideConfig() {
     FormsModule,
     ReactiveFormsModule,
     TranslateModule,
+    FoulyUiModule,
     RouterModule.forChild([
       {
         path: '',
         pathMatch: 'full',
-        component: LoginComponent
+        redirectTo: 'login'
+      },
+      {
+        path: 'login',
+        pathMatch: '',
+        component: LoginComponent,
+        data: { title: 'page.identity.login.title' }
+      },
+      {
+        path: 'profile/:welcome',
+        pathMatch: '',
+        component: ProfileComponent,
+        data: { title: 'page.identity.profile.title' }
       }
     ])
   ],

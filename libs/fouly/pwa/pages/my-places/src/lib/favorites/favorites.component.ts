@@ -19,8 +19,17 @@ export class FavoritesComponent implements OnInit, OnDestroy {
   ) {}
   // TODO: Get achalandage quote for each store
   ngOnInit(): void {
+    // if user is logged in, check if there is favs in localstorage
+    // if yes, silently migrate them to database
+
+    // if user is not logged in, get/set favs from localstorage
     this.favorites$ = this.favoriteStoreService.store$;
-    this.subscriptions.add(this.favoriteStoreService.getAll().subscribe());
+    this.subscriptions.add(
+      this.favoriteStoreService.getAll().subscribe((favorites) => {
+        // We need to get all the contributions from every place_id
+        // It is also possible that the place_id changes so we need to update the cache
+      })
+    );
   }
   ngOnDestroy() {
     this.subscriptions.unsubscribe();

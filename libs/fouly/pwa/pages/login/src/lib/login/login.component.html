@@ -7,47 +7,63 @@
          <ion-menu-button></ion-menu-button>
       </ion-buttons>
       <ion-title>{{ 'page.login.title' | translate }}</ion-title>
+      <ion-progress-bar color="primary" type="indeterminate" *ngIf="userLoginFrom"></ion-progress-bar>
    </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
-   <div class="login-container">
-      <div class="login-options">
-         <button ion-button full class="fb btn" (click)="loginWithFB()">
-            <ion-icon class="icon" name="logo-facebook"></ion-icon>{{ 'page.login.connectionFacebook' | translate }}
-         </button>
-         <button ion-button full class="google btn" (click)="loginWithGoogle()">
-            <ion-icon class="icon" name="logo-google"></ion-icon>{{ 'page.login.connectionGoogle' | translate }}
-         </button>
-         <button ion-button full class="anonymus btn" (click)="loginAnonymus()">{{ 'page.login.anonymous' | translate }}</button>
-         <ion-input
-            *ngIf="showUserNameInput"
-            class="fouly-username"
-            spellcheck="false"
-            placeholder="Nom d'utilisateur"
-            color="primary"
-            type="text"
-            autofocus="on"
-            [formControl]="userName"
-         ></ion-input>
-      </div>
-      <ion-card *ngIf="loggedIn" class="profile">
-         <ion-card-header>
-            <ion-card-title
-               ><div class="profile-title">{{ 'page.login.welcome' | translate }}</div></ion-card-title
-            >
-            <ion-card-subtitle
-               ><div class="profile-name">{{ userData.name }}</div>
-            </ion-card-subtitle>
-         </ion-card-header>
-         <ion-card-content>
-            <ion-item>
-               <ion-img *ngIf="userData.picture" class="img-profile" [src]="userData.picture"></ion-img>
-               <ion-icon *ngIf="!userData.picture" class="img-profile" name="person"></ion-icon>
-            </ion-item>
-         </ion-card-content>
-      </ion-card>
-      <button *ngIf="canLogin" ion-button full class="login btn" (click)="login()">{{ 'page.login.login' | translate }}</button>
-      <button *ngIf="loggedIn" ion-button full class="logout btn" (click)="logout()">{{ 'page.login.logout' | translate }}</button>
-   </div>
+<ion-content>
+   <fouly-content-centered [sizeLg]="5">
+      <ng-container *ngIf="!loggedIn">
+         <ng-container *ngTemplateOutlet="notLoggedIn"></ng-container>
+      </ng-container>
+
+      <ng-container *ngIf="loggedIn">
+         <ng-container *ngTemplateOutlet="loggedInTpl"></ng-container>
+      </ng-container>
+   </fouly-content-centered>
 </ion-content>
+
+<ng-template #notLoggedIn>
+   <ion-card class="ion-text-center">
+      <ion-img [src]="'assets/img/svg/undraw_fingerprint_re_uf3f.svg'"></ion-img>
+      <!-- <ion-card-title
+         ><h4>{{ 'Voir a rajouter un texte pour inciter les gens a se connecter.Vous identifier permet de profiter pleinement des fonctionnalités de Fouly.' | translate }}</h4></ion-card-title
+      > -->
+      <ion-card-content class="ion-margin-top">
+         <ng-container *ngIf="!loggedIn">
+            <ion-button color="facebook" expand="block" (click)="loginWithFB()">
+               <ion-icon name="logo-facebook"></ion-icon>&nbsp;{{ 'page.login.connectionFacebook' | translate }}
+            </ion-button>
+            <ion-button color="google" expand="block" (click)="loginWithGoogle()">
+               <ion-icon name="logo-google"></ion-icon>&nbsp;{{ 'page.login.connectionGoogle' | translate }}
+            </ion-button>
+         </ng-container>
+      </ion-card-content>
+   </ion-card>
+</ng-template>
+
+<ng-template #loggedInTpl>
+   <ion-card class="ion-text-center">
+      <ion-card-header>
+         <h1 *ngIf="userLoginFrom">{{ 'page.login.welcome' | translate }}</h1>
+         <ion-card-title
+            ><h1>
+               <ion-text color="primary">{{ userData?.name }}</ion-text>
+            </h1></ion-card-title
+         >
+      </ion-card-header>
+      <ion-card-content>
+         <ion-item>
+            <ion-grid>
+               <ion-row class="ion-justify-content-center">
+                  <ion-col size="8">
+                     <ion-img *ngIf="userData?.picture" class="img-profile" [src]="userData.picture"></ion-img>
+                  </ion-col>
+               </ion-row>
+            </ion-grid>
+            <ion-img *ngIf="!userData?.picture" class="ion-padding" [src]="'assets/img/svg/undraw_profile_pic_ic5t.svg'"></ion-img>
+         </ion-item>
+         <ion-button color="danger" class="ion-margin-top" expand="block" (click)="logout()">{{ 'page.login.logout' | translate }}</ion-button>
+      </ion-card-content>
+   </ion-card>
+</ng-template>
