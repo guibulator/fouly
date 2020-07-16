@@ -18,6 +18,7 @@ export class PlaceDetailsController {
     @Query('languageCode') languageCode: string
   ) {
     //Storer les model chercher par des user dans fouly.  Stats importante.
+    // Idées. Pour tout ce qui est statistiques provenant de l'app web, utiliser les custom events de google. C'est gratuit et pratique.
     //Combien de fois le status est vue par un user.
     //On utilise le model souvent ?
     return this.placeDetailsService.getPlaceDetails(

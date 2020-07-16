@@ -32,48 +32,40 @@
                      </ion-select>
                   </ion-item>
                </ng-container>
+               <ion-item>
+                  <ion-icon slot="start" name="moon-outline"></ion-icon>
+                  <ion-label>
+                     {{ 'appshell.darkMode' | translate }}
+                  </ion-label>
+                  <ion-toggle [checked]="dark" (ionChange)="changeDarkTheme($event)"></ion-toggle>
+               </ion-item>
             </ion-list>
 
-            <ion-list *ngIf="loggedIn" lines="none">
+            <ion-list *ngIf="user$ | async as user" lines="none">
                <ion-list-header>
                   {{ 'appshell.accountTitle' | translate }}
                </ion-list-header>
 
                <ion-menu-toggle autoHide="false">
-                  <ion-item routerLink="/account" routerLinkActive="active" routerDirection="root" detail="false">
-                     <ion-icon slot="start" name="person"></ion-icon>
+                  <ion-item routerLink="/identity/profile" routerLinkActive="active" routerDirection="root" detail="false">
+                     <ion-avatar slot="start">
+                        <ion-img *ngIf="user.photoUrl" [src]="user.photoUrl"></ion-img>
+                        <ion-img *ngIf="!user.photoUrl" [src]="'assets/img/svg/undraw_profile_pic_ic5t.svg'"></ion-img>
+                     </ion-avatar>
                      <ion-label>
                         {{ 'appshell.yourAccount' | translate }}
                      </ion-label>
                   </ion-item>
                </ion-menu-toggle>
-
-               <ion-menu-toggle autoHide="false">
-                  <ion-item routerLink="/support" routerLinkActive="active" routerDirection="root" detail="false">
-                     <ion-icon slot="start" name="help"></ion-icon>
-                     <ion-label>
-                        {{ 'appshell.support' | translate }}
-                     </ion-label>
-                  </ion-item>
-               </ion-menu-toggle>
-
-               <ion-menu-toggle autoHide="false">
-                  <ion-item button (click)="logout()" detail="false">
-                     <ion-icon slot="start" name="log-out"></ion-icon>
-                     <ion-label>
-                        {{ 'appshell.logout' | translate }}
-                     </ion-label>
-                  </ion-item>
-               </ion-menu-toggle>
             </ion-list>
 
-            <ion-list *ngIf="!loggedIn" lines="none">
+            <ion-list *ngIf="!(user$ | async)" lines="none">
                <ion-list-header>
                   {{ 'appshell.accountTitle' | translate }}
                </ion-list-header>
 
                <ion-menu-toggle autoHide="false">
-                  <ion-item button (click)="gotoLink('/login')" detail="false">
+                  <ion-item button (click)="gotoLink('/identity')" detail="false">
                      <ion-icon slot="start" name="log-in"></ion-icon>
                      <ion-label>
                         {{ 'appshell.login' | translate }}

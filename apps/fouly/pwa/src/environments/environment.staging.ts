@@ -8,5 +8,9 @@ export const environment: Configuration = {
   apiUrl: apiUrl,
   logLevel: 'info',
   enableDebugTools: true,
-  version: '#{version}#'
+  version: '#{version}#',
+  authProvidersId: {
+    google: '316973135009-3sn6m7vc4313q36g4lnec9ttqmpo7l2s.apps.googleusercontent.com',
+    facebook: '250123776255481'
+  }
 };

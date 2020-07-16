@@ -6,6 +6,7 @@
     "map": "Carte",
     "contactUs": "Contactez nous",
     "aboutUs": "À propos",
+    "darkMode": "Mode sombre",
     "selectOne": "Choisir une langue",
     "accountTitle": "Compte",
     "yourAccount": "Votre compte",
@@ -105,14 +106,17 @@
       "tryFouly": "Essayer <span class='fouly-title-introduction'>Fouly</span>"
     },
 
-    "login": {
-      "title": "Connexion",
-      "connectionFacebook": "S'identifier avec Facebook",
-      "connectionGoogle": "S'identifier avec Google",
-      "anonymous": "Anonyme",
-      "welcome": "Bienvenue",
-      "login": "Connexion",
-      "logout": "Déconnexion"
+    "identity": {
+      "login": {
+        "title": "Connexion",
+        "connectionFacebook": "S'identifier avec Facebook",
+        "connectionGoogle": "S'identifier avec Google",
+        "login": "Connexion"
+      },
+      "profile": {
+        "title": "Votre profile",
+        "logout": "Déconnexion"
+      }
     },
 
     "myFavorites": {

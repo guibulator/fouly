@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { TranslateModule } from '@ngx-translate/core';
-import { FoulyAffluenceComponent } from './affluence/affluence.component';
 import { FoulyContentCenteredComponent } from './content-centered/content-centered.component';
 import { FoulyOpeningHoursModalDirective } from './opening-hours/opening-hours-modal.directive';
 import { FoulyOpeningHoursComponent } from './opening-hours/opening-hours.component';
@@ -10,16 +9,10 @@ import { FoulyOpeningHoursComponent } from './opening-hours/opening-hours.compon
 @NgModule({
   imports: [CommonModule, TranslateModule, IonicModule],
   declarations: [
-    FoulyAffluenceComponent,
     FoulyContentCenteredComponent,
     FoulyOpeningHoursComponent,
     FoulyOpeningHoursModalDirective
   ],
-  exports: [
-    FoulyAffluenceComponent,
-    FoulyContentCenteredComponent,
-    CommonModule,
-    FoulyOpeningHoursModalDirective
-  ]
+  exports: [FoulyContentCenteredComponent, CommonModule, FoulyOpeningHoursModalDirective]
 })
 export class FoulyUiModule {}

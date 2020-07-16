@@ -2,68 +2,45 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { Facebook } from '@ionic-native/facebook/ngx';
 import { IonicModule } from '@ionic/angular';
 import { TranslateModule } from '@ngx-translate/core';
-import {
-  AuthServiceConfig,
-  FacebookLoginProvider,
-  GoogleLoginProvider,
-  LoginOpt,
-  SocialLoginModule
-} from 'angularx-social-login';
+import { IsUserAuthenticatedGuard } from '@skare/fouly/pwa/core';
+import { FoulyUiModule } from '@skare/fouly/shared/ui';
+import { RedirectToProfileIfLoggedInGuard } from './guards/redirect-to-profile.guard';
 import { LoginComponent } from './login/login.component';
+import { ProfileComponent } from './profile/profile.component';
 
-const fbLoginOptions: LoginOpt = {
-  scope: 'email',
-  return_scopes: true,
-  enable_profile_selector: true
-};
-
-const googleLoginOptions: LoginOpt = {
-  scope: 'profile email'
-};
-
-const config = new AuthServiceConfig([
-  {
-    id: GoogleLoginProvider.PROVIDER_ID,
-    provider: new GoogleLoginProvider(
-      '316973135009-3sn6m7vc4313q36g4lnec9ttqmpo7l2s.apps.googleusercontent.com',
-      googleLoginOptions
-    )
-  },
-  {
-    id: FacebookLoginProvider.PROVIDER_ID,
-    provider: new FacebookLoginProvider('250123776255481', fbLoginOptions)
-  }
-]);
-
-export function provideConfig() {
-  return config;
-}
 @NgModule({
-  declarations: [LoginComponent],
+  declarations: [LoginComponent, ProfileComponent],
   imports: [
     CommonModule,
     IonicModule,
-    SocialLoginModule,
     FormsModule,
     ReactiveFormsModule,
     TranslateModule,
+    FoulyUiModule,
     RouterModule.forChild([
       {
         path: '',
         pathMatch: 'full',
-        component: LoginComponent
+        redirectTo: 'login'
+      },
+      {
+        path: 'login',
+        pathMatch: '',
+        component: LoginComponent,
+        canActivate: [RedirectToProfileIfLoggedInGuard],
+        data: { title: 'page.identity.login.title' }
+      },
+      {
+        path: 'profile',
+        pathMatch: '',
+        component: ProfileComponent,
+        canActivate: [IsUserAuthenticatedGuard],
+        data: { title: 'page.identity.profile.title' }
       }
     ])
   ],
-  providers: [
-    {
-      provide: AuthServiceConfig,
-      useFactory: provideConfig
-    },
-    Facebook
-  ]
+  providers: []
 })
 export class LoginModule {}

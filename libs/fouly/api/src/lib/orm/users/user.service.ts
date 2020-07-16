@@ -1,17 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { UserCommand } from '@skare/fouly/data';
+import { UserCommand, UserResult } from '@skare/fouly/data';
 import { Model } from 'mongoose';
 import { uuid } from 'uuidv4';
 import { User } from './user.schema';
 @Injectable()
 export class UserService {
   constructor(@InjectModel(User.name) private readonly userModel: Model<User>) {}
-  getUser(query: { userId?: string; email?: string }): Promise<User> {
+  getUser(query: { userId?: string; email?: string }): Promise<UserResult> {
     return this.userModel.find(query).exec()[0];
   }
 
-  async createUpdateUser(user: UserCommand) {
+  async createUpdateUser(user: UserCommand): Promise<UserResult> {
     if (!user.email) {
       user.email = uuid();
     }
