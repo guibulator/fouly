@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthenticationService } from '@skare/fouly/pwa/core';
 import { SocialUser } from 'angularx-social-login';
 import { Observable } from 'rxjs';
@@ -10,11 +11,14 @@ import { Observable } from 'rxjs';
 export class ProfileComponent implements OnInit {
   firstTimeRegister = true;
   user$: Observable<SocialUser>;
-  constructor(private authService: AuthenticationService) {
+  constructor(private authService: AuthenticationService, private router: Router) {
     this.user$ = this.authService.currentUser$;
   }
 
   ngOnInit() {}
 
-  logout() {}
+  logout() {
+    this.authService.logout();
+    this.router.navigateByUrl('/');
+  }
 }
