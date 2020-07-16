@@ -39,7 +39,7 @@ const routes: Routes = [];
             import('@skare/fouly/pwa/pages/contact').then((module) => module.ContactModule)
         },
         {
-          path: 'login',
+          path: 'identity',
           loadChildren: () =>
             import('@skare/fouly/pwa/pages/login').then((module) => module.LoginModule)
         },

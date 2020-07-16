@@ -7,4 +7,8 @@ export class Configuration {
   apiUrl: string;
   apiHost: string;
   version: string;
+  authProvidersId: {
+    google: string;
+    facebook: string;
+  };
 }

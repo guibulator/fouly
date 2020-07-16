@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { UserCommand, UserResult } from '@skare/fouly/data';
 import { Observable } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
 import { ConfigService } from '../modules/config/config.service';
 import { BaseStorage } from './base-storage.service';
 @Injectable({ providedIn: 'root' })
@@ -19,9 +20,12 @@ export class UserStoreService extends BaseStorage<UserResult> {
     this.apiEndPoint = this.configService.apiUrl;
   }
 
-  createUpdateUser(user: UserResult): Observable<any> {
+  /** Will also emit when observers observes store$ */
+  createUpdateUser(user: UserResult): Observable<UserResult> {
     const userCmd: UserCommand = { ...user };
-    return this.httpClient.post(`${this.apiEndPoint}/user/create`, userCmd);
+    const response$ = this.httpClient.post<UserResult>(`${this.apiEndPoint}/user/create`, userCmd);
+    this.clear();
+    return response$.pipe(tap((result) => this.add(result)));
   }
 
   getUserFromEmail(email: string): Observable<any> {
@@ -30,5 +34,14 @@ export class UserStoreService extends BaseStorage<UserResult> {
 
   getUserFromId(userId: string): Observable<any> {
     return this.httpClient.get(`${this.apiEndPoint}/user/getById/${userId}`);
+  }
+
+  /**
+   *
+   * @param email TODO: if an email is provided, get from remote location. Maybe user
+   * exists in the system.
+   */
+  getUserFromCache(email?: string) {
+    return this.getAll().pipe(map((users) => (users?.length > 0 ? users[0] : null)));
   }
 }

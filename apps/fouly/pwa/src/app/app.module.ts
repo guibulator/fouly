@@ -7,7 +7,7 @@ import { IonicStorageModule } from '@ionic/storage';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AppShellModule } from '@skare/fouly/pwa/app-shell';
-import { ConfigModule, CoreModule } from '@skare/fouly/pwa/core';
+import { ConfigModule, CoreModule, FoulyAuthModule } from '@skare/fouly/pwa/core';
 import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
 
@@ -32,6 +32,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production
     }),
+    FoulyAuthModule.forRoot(environment.authProvidersId),
     AppShellModule,
     ConfigModule.forRoot(environment),
     CoreModule

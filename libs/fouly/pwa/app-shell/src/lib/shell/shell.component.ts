@@ -5,8 +5,9 @@ import { SwUpdate } from '@angular/service-worker';
 import { MenuController, Platform, ToastController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 import { TranslateService } from '@ngx-translate/core';
-import { ConfigService, UserPreferenceService } from '@skare/fouly/pwa/core';
-import { Subscription } from 'rxjs';
+import { AuthenticationService, ConfigService, UserPreferenceService } from '@skare/fouly/pwa/core';
+import { SocialUser } from 'angularx-social-login';
+import { Observable, Subscription } from 'rxjs';
 import { filter, tap } from 'rxjs/operators';
 
 declare let gtag: Function;
@@ -17,6 +18,7 @@ declare let gtag: Function;
   encapsulation: ViewEncapsulation.None
 })
 export class ShellComponent implements OnInit, OnDestroy {
+  user$: Observable<SocialUser>;
   appPages = [
     {
       title: 'appshell.favorites',
@@ -56,7 +58,8 @@ export class ShellComponent implements OnInit, OnDestroy {
     private toastCtrl: ToastController,
     private readonly translate: TranslateService,
     private readonly config: ConfigService,
-    private readonly userPreference: UserPreferenceService
+    private readonly userPreference: UserPreferenceService,
+    private readonly authService: AuthenticationService
   ) {
     this.initializeApp();
 
@@ -72,6 +75,8 @@ export class ShellComponent implements OnInit, OnDestroy {
         )
         .subscribe()
     );
+
+    this.user$ = this.authService.currentUser$;
 
     this.version = this.config.version;
   }

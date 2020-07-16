@@ -7,63 +7,25 @@
          <ion-menu-button></ion-menu-button>
       </ion-buttons>
       <ion-title>{{ 'page.login.title' | translate }}</ion-title>
-      <ion-progress-bar color="primary" type="indeterminate" *ngIf="userLoginFrom"></ion-progress-bar>
+      <ion-progress-bar color="primary" type="indeterminate" *ngIf="loginIn$ | async"></ion-progress-bar>
    </ion-toolbar>
 </ion-header>
 
 <ion-content>
    <fouly-content-centered [sizeLg]="5">
-      <ng-container *ngIf="!loggedIn">
-         <ng-container *ngTemplateOutlet="notLoggedIn"></ng-container>
-      </ng-container>
-
-      <ng-container *ngIf="loggedIn">
-         <ng-container *ngTemplateOutlet="loggedInTpl"></ng-container>
-      </ng-container>
-   </fouly-content-centered>
-</ion-content>
-
-<ng-template #notLoggedIn>
-   <ion-card class="ion-text-center">
-      <ion-img [src]="'assets/img/svg/undraw_fingerprint_re_uf3f.svg'"></ion-img>
-      <!-- <ion-card-title
-         ><h4>{{ 'Voir a rajouter un texte pour inciter les gens a se connecter.Vous identifier permet de profiter pleinement des fonctionnalités de Fouly.' | translate }}</h4></ion-card-title
-      > -->
-      <ion-card-content class="ion-margin-top">
-         <ng-container *ngIf="!loggedIn">
-            <ion-button color="facebook" expand="block" (click)="loginWithFB()">
+      <ion-card class="ion-text-center">
+         <ion-img [src]="'assets/img/svg/undraw_fingerprint_re_uf3f.svg'"></ion-img>
+         <!-- <ion-card-title
+            ><h4>{{ 'Voir a rajouter un texte pour inciter les gens a se connecter.Vous identifier permet de profiter pleinement des fonctionnalités de Fouly.' | translate }}</h4></ion-card-title
+         > -->
+         <ion-card-content class="ion-margin-top">
+            <ion-button color="facebook" expand="block" (click)="loginWithFacebook()">
                <ion-icon name="logo-facebook"></ion-icon>&nbsp;{{ 'page.login.connectionFacebook' | translate }}
             </ion-button>
             <ion-button color="google" expand="block" (click)="loginWithGoogle()">
                <ion-icon name="logo-google"></ion-icon>&nbsp;{{ 'page.login.connectionGoogle' | translate }}
             </ion-button>
-         </ng-container>
-      </ion-card-content>
-   </ion-card>
-</ng-template>
-
-<ng-template #loggedInTpl>
-   <ion-card class="ion-text-center">
-      <ion-card-header>
-         <h1 *ngIf="userLoginFrom">{{ 'page.login.welcome' | translate }}</h1>
-         <ion-card-title
-            ><h1>
-               <ion-text color="primary">{{ userData?.name }}</ion-text>
-            </h1></ion-card-title
-         >
-      </ion-card-header>
-      <ion-card-content>
-         <ion-item>
-            <ion-grid>
-               <ion-row class="ion-justify-content-center">
-                  <ion-col size="8">
-                     <ion-img *ngIf="userData?.picture" class="img-profile" [src]="userData.picture"></ion-img>
-                  </ion-col>
-               </ion-row>
-            </ion-grid>
-            <ion-img *ngIf="!userData?.picture" class="ion-padding" [src]="'assets/img/svg/undraw_profile_pic_ic5t.svg'"></ion-img>
-         </ion-item>
-         <ion-button color="danger" class="ion-margin-top" expand="block" (click)="logout()">{{ 'page.login.logout' | translate }}</ion-button>
-      </ion-card-content>
-   </ion-card>
-</ng-template>
+         </ion-card-content>
+      </ion-card>
+   </fouly-content-centered>
+</ion-content>

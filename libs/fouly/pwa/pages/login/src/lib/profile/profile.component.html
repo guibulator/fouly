@@ -1,23 +1,38 @@
-<ion-card class="ion-text-center">
-   <ion-card-header>
-      <h1 *ngIf="firstTimeRegister">{{ 'page.profile.welcome' | translate }}</h1>
-      <ion-card-title
-         ><h1>
-            <ion-text color="primary">{{ user?.name }}</ion-text>
-         </h1></ion-card-title
-      >
-   </ion-card-header>
-   <ion-card-content>
-      <ion-item>
-         <ion-grid>
-            <ion-row class="ion-justify-content-center">
-               <ion-col size="8">
-                  <ion-img *ngIf="user?.picture" class="img-profile" [src]="user.picture"></ion-img>
-               </ion-col>
-            </ion-row>
-         </ion-grid>
-         <ion-img *ngIf="!user?.picture" class="ion-padding" [src]="'assets/img/svg/undraw_profile_pic_ic5t.svg'"></ion-img>
-      </ion-item>
-      <ion-button color="danger" class="ion-margin-top" expand="block" (click)="logout()">{{ 'page.login.logout' | translate }}</ion-button>
-   </ion-card-content>
-</ion-card>
+<ion-header>
+   <ion-toolbar>
+      <ion-buttons slot="start">
+         <ion-back-button></ion-back-button>
+      </ion-buttons>
+      <ion-buttons slot="start">
+         <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title>{{ 'page.login.title' | translate }}</ion-title>
+   </ion-toolbar>
+</ion-header>
+
+<ion-content>
+   <fouly-content-centered [sizeLg]="5">
+      <ion-card *ngIf="user$ | async as user" class="ion-text-center">
+         <ion-card-header>
+            <ion-card-title
+               ><h1>
+                  <ion-text color="primary">{{ user.name }}</ion-text>
+               </h1></ion-card-title
+            >
+         </ion-card-header>
+         <ion-card-content>
+            <ion-item>
+               <ion-grid>
+                  <ion-row class="ion-justify-content-center">
+                     <ion-col size="8">
+                        <ion-img *ngIf="user.photoUrl" class="img-profile" [src]="user.photoUrl"></ion-img>
+                     </ion-col>
+                  </ion-row>
+               </ion-grid>
+               <ion-img *ngIf="!user.photoUrl" class="ion-padding" [src]="'assets/img/svg/undraw_profile_pic_ic5t.svg'"></ion-img>
+            </ion-item>
+            <ion-button color="danger" class="ion-margin-top" expand="block" (click)="logout()">{{ 'page.login.logout' | translate }}</ion-button>
+         </ion-card-content>
+      </ion-card>
+   </fouly-content-centered>
+</ion-content>

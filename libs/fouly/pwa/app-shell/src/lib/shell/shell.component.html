@@ -34,7 +34,7 @@
                </ng-container>
             </ion-list>
 
-            <ion-list *ngIf="loggedIn" lines="none">
+            <ion-list *ngIf="user$ | async as user" lines="none">
                <ion-list-header>
                   {{ 'appshell.accountTitle' | translate }}
                </ion-list-header>
@@ -57,14 +57,14 @@
                   </ion-item>
                </ion-menu-toggle>
 
-               <ion-menu-toggle autoHide="false">
+               <!-- <ion-menu-toggle autoHide="false">
                   <ion-item button (click)="logout()" detail="false">
                      <ion-icon slot="start" name="log-out"></ion-icon>
                      <ion-label>
                         {{ 'appshell.logout' | translate }}
                      </ion-label>
                   </ion-item>
-               </ion-menu-toggle>
+               </ion-menu-toggle> -->
             </ion-list>
 
             <ion-list *ngIf="!loggedIn" lines="none">
@@ -73,7 +73,7 @@
                </ion-list-header>
 
                <ion-menu-toggle autoHide="false">
-                  <ion-item button (click)="gotoLink('/login')" detail="false">
+                  <ion-item button (click)="gotoLink('/identity')" detail="false">
                      <ion-icon slot="start" name="log-in"></ion-icon>
                      <ion-label>
                         {{ 'appshell.login' | translate }}

@@ -16,5 +16,9 @@ export const environment: Configuration = {
   apiUrl: apiUrl,
   logLevel: 'debug',
   enableDebugTools: true,
-  version: '0.0.1'
+  version: '0.0.1',
+  authProvidersId: {
+    google: '316973135009-3sn6m7vc4313q36g4lnec9ttqmpo7l2s.apps.googleusercontent.com',
+    facebook: '250123776255481'
+  }
 };
