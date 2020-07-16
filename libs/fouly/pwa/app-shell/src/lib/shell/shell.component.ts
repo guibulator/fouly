@@ -5,10 +5,15 @@ import { SwUpdate } from '@angular/service-worker';
 import { MenuController, Platform, ToastController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 import { TranslateService } from '@ngx-translate/core';
-import { AuthenticationService, ConfigService, UserPreferenceService } from '@skare/fouly/pwa/core';
+import {
+  AuthenticationService,
+  ConfigService,
+  UserPreference,
+  UserPreferenceService
+} from '@skare/fouly/pwa/core';
 import { SocialUser } from 'angularx-social-login';
 import { Observable, Subscription } from 'rxjs';
-import { filter, tap } from 'rxjs/operators';
+import { filter, flatMap, map, tap } from 'rxjs/operators';
 
 declare let gtag: Function;
 @Component({
@@ -19,6 +24,7 @@ declare let gtag: Function;
 })
 export class ShellComponent implements OnInit, OnDestroy {
   user$: Observable<SocialUser>;
+  userPreference$: Observable<UserPreference>;
   appPages = [
     {
       title: 'appshell.favorites',
@@ -42,8 +48,7 @@ export class ShellComponent implements OnInit, OnDestroy {
     }
   ];
 
-  loggedIn = false;
-  dark = false;
+  dark = true;
   languageForm: FormGroup;
   private subcribes = new Subscription();
   version: string;
@@ -77,7 +82,7 @@ export class ShellComponent implements OnInit, OnDestroy {
     );
 
     this.user$ = this.authService.currentUser$;
-
+    this.userPreference$ = this.userPreference.store$;
     this.version = this.config.version;
   }
 
@@ -85,9 +90,7 @@ export class ShellComponent implements OnInit, OnDestroy {
     this.subcribes.unsubscribe();
   }
 
-  async ngOnInit() {
-    const lang = await this.userPreference.GetLanguage();
-
+  ngOnInit() {
     this.subcribes.add(
       this.swUpdate.available.subscribe(async (res) => {
         const toast = await this.toastCtrl.create({
@@ -109,20 +112,27 @@ export class ShellComponent implements OnInit, OnDestroy {
           .then(() => window.location.reload());
       })
     );
-
-    this.languageForm = this.formBuilder.group({
-      language: lang
-    });
-
-    this.translate.setDefaultLang(lang);
-    this.translate.use(lang);
-
     this.subcribes.add(
-      this.languageForm.controls['language'].valueChanges.subscribe((value) => {
-        this.userPreference.SetLanguage(value);
-        this.translate.use(value);
-      })
+      this.userPreference$
+        .pipe(
+          tap((userPref) => {
+            this.languageForm = this.formBuilder.group({
+              language: userPref.language
+            });
+            this.translate.setDefaultLang(userPref.language);
+            this.translate.use(userPref.language);
+            this.dark = userPref.darkTheme;
+          }),
+          flatMap(() => this.languageForm.controls['language'].valueChanges),
+          map((lang) => {
+            this.userPreference.setLanguage(lang);
+            this.translate.use(lang);
+          })
+        )
+        .subscribe(() => {})
     );
+
+    this.subcribes.add();
   }
 
   initializeApp() {
@@ -137,5 +147,9 @@ export class ShellComponent implements OnInit, OnDestroy {
 
   gotoLink(url: string) {
     this.router.navigateByUrl(url);
+  }
+
+  changeDarkTheme(event) {
+    this.userPreference.setDarkTheme(event.detail.checked);
   }
 }

@@ -28,6 +28,12 @@ export class UserStoreService extends BaseStorage<UserResult> {
     return response$.pipe(tap((result) => this.add(result)));
   }
 
+  /**
+   * TODO: For now, all the getters are not used. We get the user from the authService so 
+   * maybe we don't need them.
+   * @param email 
+   
+   */
   getUserFromEmail(email: string): Observable<any> {
     return this.httpClient.get(`${this.apiEndPoint}/user/getByEmail/${email}`);
   }

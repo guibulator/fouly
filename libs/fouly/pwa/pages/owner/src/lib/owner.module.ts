@@ -24,20 +24,17 @@ import { OwnerProposedSolutionComponent } from './proposed-solution/proposed-sol
           {
             path: 'solution',
             component: OwnerProposedSolutionComponent,
-            data: { title: 'page.owner.childRoute.solution.title' },
-            outlet: 'temp'
+            data: { title: 'page.owner.childRoute.solution.title' }
           },
           {
             path: 'code-validation',
             component: CodeValidationComponent,
-            data: { title: 'page.owner.childRoute.codeValidation.title' },
-            outlet: 'temp'
+            data: { title: 'page.owner.childRoute.codeValidation.title' }
           },
           {
             path: '',
             component: OwnerProposedSolutionComponent,
-            data: { title: 'page.owner.childRoute.solution.title' },
-            outlet: 'temp'
+            data: { title: 'page.owner.childRoute.solution.title' }
           }
         ]
       },

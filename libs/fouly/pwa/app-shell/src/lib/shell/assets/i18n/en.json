@@ -6,6 +6,7 @@
     "map": "Map",
     "contactUs": "Contact Us",
     "aboutUs": "About us",
+    "darkMode": "Dark theme",
     "selectOne": "Select one",
     "accountTitle": "Account",
     "yourAccount": "Your account",
@@ -105,13 +106,18 @@
       "tryFouly": "Try <span class='fouly-title-introduction'>Fouly</span>"
     },
 
-    "login": {
-      "title": "Login",
-      "connectionFacebook": "Login with Facebook",
-      "connectionGoogle": "Login with Google",
-      "welcome": "Welcome",
-      "login": "Login",
-      "logout": "Logout"
+    "identity": {
+      "login": {
+        "title": "Login",
+        "connectionFacebook": "Login with Facebook",
+        "connectionGoogle": "Login with Google",
+
+        "login": "Login"
+      },
+      "profile": {
+        "title": "Your profile",
+        "logout": "Logout"
+      }
     },
 
     "myFavorites": {

@@ -1,41 +1,55 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
-import { map } from 'rxjs/operators';
-import { BaseStorage } from './base-storage.service';
+import { from, Observable, of, ReplaySubject } from 'rxjs';
+import { flatMap } from 'rxjs/operators';
 
-interface UserPreference {
+export interface UserPreference {
   language: string;
-  //darkTheme: boolean  // dark theme si il revient un jour :)
+  darkTheme: boolean; // dark them is back !
 }
 
 @Injectable({ providedIn: 'root' })
 export class UserPreferenceService {
-  private userStorage: BaseStorage<UserPreference>;
+  private readonly KEY = 'fouly_user_prefefence';
+  private _userPreference$ = new ReplaySubject<UserPreference>(1);
+  store$: Observable<UserPreference> = this._userPreference$.asObservable();
   constructor(private storage: Storage) {
-    this.userStorage = new BaseStorage<UserPreference>(
-      storage,
-      'fouly_user_prefefence',
-      (u) => null
-    );
-  }
-
-  public async GetLanguage(): Promise<string> {
-    const up = await this.userStorage
-      .getAll()
+    // This initialize with default or replay existing preference
+    from(this.storage.get(this.KEY))
       .pipe(
-        map(
-          (d) =>
-            (Array.isArray(d) ? d[0] : null) ?? {
-              language: navigator.language?.substr(0, 2) ?? 'fr'
-            }
-        )
+        flatMap((userPref) => {
+          if (userPref) {
+            this._userPreference$.next(userPref);
+            return of(null);
+          }
+          const prefDefault: UserPreference = {
+            language: navigator.language?.substr(0, 2) ?? 'fr',
+            darkTheme: false
+          };
+          this._userPreference$.next(prefDefault);
+
+          return from(this.storage.set(this.KEY, prefDefault));
+        })
       )
-      .toPromise();
-    return up.language;
+      .subscribe();
   }
 
-  public SetLanguage(lang: string) {
-    this.userStorage.remove(null);
-    this.userStorage.add({ language: lang });
+  setLanguage(lang: string) {
+    this.modifyPref('language', lang).subscribe();
+  }
+
+  setDarkTheme(isDark: boolean) {
+    this.modifyPref('darkTheme', isDark).subscribe();
+  }
+
+  private modifyPref(key: string, value: any) {
+    return from(this.storage.get(this.KEY)).pipe(
+      flatMap((userPref) => {
+        userPref = { ...userPref };
+        userPref[key] = value;
+        this._userPreference$.next(userPref);
+        return this.storage.set(this.KEY, userPref);
+      })
+    );
   }
 }

@@ -6,7 +6,7 @@
       <ion-buttons slot="start">
          <ion-menu-button></ion-menu-button>
       </ion-buttons>
-      <ion-title>{{ 'page.login.title' | translate }}</ion-title>
+      <ion-title>{{ 'page.identity.profile.title' | translate }}</ion-title>
    </ion-toolbar>
 </ion-header>
 
@@ -31,7 +31,9 @@
                </ion-grid>
                <ion-img *ngIf="!user.photoUrl" class="ion-padding" [src]="'assets/img/svg/undraw_profile_pic_ic5t.svg'"></ion-img>
             </ion-item>
-            <ion-button color="danger" class="ion-margin-top" expand="block" (click)="logout()">{{ 'page.login.logout' | translate }}</ion-button>
+            <ion-button color="danger" class="ion-margin-top" expand="block" (click)="logout()">{{
+               'page.identity.profile.logout' | translate
+            }}</ion-button>
          </ion-card-content>
       </ion-card>
    </fouly-content-centered>
