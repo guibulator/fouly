@@ -1,11 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FavoriteResult } from '@skare/fouly/data';
-import {
-  AuthenticationService,
-  FavoritesStoreService,
-  FavoriteStorageService
-} from '@skare/fouly/pwa/core';
+import { AuthenticationService, FavoritesStoreService } from '@skare/fouly/pwa/core';
 import { SocialUser } from 'angularx-social-login';
 import { Observable, Subscription } from 'rxjs';
 
@@ -25,7 +21,6 @@ export class FavoritesComponent implements OnInit, OnDestroy {
   user$: Observable<SocialUser>;
   private readonly subscriptions = new Subscription();
   constructor(
-    private favoriteStorageService: FavoriteStorageService,
     private favoriteStore: FavoritesStoreService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -42,14 +37,6 @@ export class FavoritesComponent implements OnInit, OnDestroy {
     //this.favorites$ = this.favoriteStorageService.store$;
 
     this.favorites$ = this.favoriteStore.store$;
-    // this.subscriptions.add(
-    //   this.favoriteStorageService.getAll().subscribe((favorites) => {
-    //     if (favorites.length === 4) {
-    //       // sync and store on server
-    //       this.favoriteStore.add();
-    //     }
-    //   })
-    // );
   }
   ngOnDestroy() {
     this.subscriptions.unsubscribe();
@@ -60,7 +47,7 @@ export class FavoritesComponent implements OnInit, OnDestroy {
   }
 
   onRemovePlace(placeId: string) {
-    this.favoriteStorageService.remove(placeId);
+    this.favoriteStore.remove(placeId).subscribe();
   }
 
   gotoContribute(placeId: string) {
