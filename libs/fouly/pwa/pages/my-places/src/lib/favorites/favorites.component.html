@@ -39,13 +39,13 @@
 
 <ng-template #infoSlide>
    <fouly-content-centered sizeLg="6">
-      <ion-card color="secondary" class="ion-text-center">
-         <ion-card-header>
-            <ion-img [src]="'assets/img/svg/undraw_map_1r69.svg'" class="empty-image"></ion-img>
-            <h2>
+      <ion-card class="ion-text-center">
+         <ion-img [src]="'assets/img/svg/undraw_map_1r69.svg'" class="empty-image"></ion-img>
+         <ion-card-title
+            ><h2>
                {{ 'page.myFavorites.favoriteShops' | translate }}
-            </h2>
-         </ion-card-header>
+            </h2></ion-card-title
+         >
          <ion-card-content class="ion-text-justify">
             {{ 'page.myFavorites.instruction' | translate }}
          </ion-card-content>
