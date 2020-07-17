@@ -4,7 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { PlaceDetailsResult } from '@skare/fouly/data';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { finalize, map, shareReplay } from 'rxjs/operators';
-import { ConfigService } from '../modules/config/config.service';
+import { ConfigService } from '../../modules/config/config.service';
 @Injectable({ providedIn: 'root' })
 export class PlaceDetailsStoreService {
   private readonly googlePhotoUrl = 'https://maps.googleapis.com/maps/api/place/photo?';

@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { RegisterBusinessMailCommand } from '@skare/fouly/data';
 import { retry } from 'rxjs/operators';
-import { ConfigService } from '../modules/config/config.service';
+import { ConfigService } from '../../modules/config/config.service';
 @Injectable({
   providedIn: 'root'
 })

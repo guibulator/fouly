@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { ChatMessageCommand, ChatMessageResult } from '@skare/fouly/data';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
-import { ConfigService } from '../modules/config/config.service';
+import { ConfigService } from '../../modules/config/config.service';
 
 @Injectable({ providedIn: 'root' })
 export class ChatStoreService {

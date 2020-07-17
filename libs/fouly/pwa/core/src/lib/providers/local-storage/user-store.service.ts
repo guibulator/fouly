@@ -5,7 +5,7 @@ import { Storage } from '@ionic/storage';
 import { UserCommand, UserResult } from '@skare/fouly/data';
 import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
-import { ConfigService } from '../modules/config/config.service';
+import { ConfigService } from '../../modules/config/config.service';
 import { BaseStorage } from './base-storage.service';
 @Injectable({ providedIn: 'root' })
 export class UserStoreService extends BaseStorage<UserResult> {
