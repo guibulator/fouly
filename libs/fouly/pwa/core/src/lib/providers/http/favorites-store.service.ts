@@ -7,6 +7,7 @@ import { BehaviorSubject, of } from 'rxjs';
 import { catchError, filter, flatMap, map, take } from 'rxjs/operators';
 import { AuthenticationService } from '../../modules/auth';
 import { ConfigService } from '../../modules/config/config.service';
+import { FavoriteStorageService } from '../local-storage/favorite-storage.service';
 /**
  *   // TODO: handle error in every http call. I want to come up with a base class
  *   to avoid repeating, optimistic, retry, failure, etc..
@@ -22,6 +23,7 @@ export class FavoritesStoreService {
     protected storage: Storage,
     private httpClient: HttpClient,
     private configService: ConfigService,
+    private favoriteLocalStorage: FavoriteStorageService,
     authService: AuthenticationService
   ) {
     this.apiEndPoint = this.configService.apiUrl;

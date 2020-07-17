@@ -9,7 +9,6 @@ export * from './lib/providers/http/favorites-store.service';
 export * from './lib/providers/http/localisation-store.service';
 export * from './lib/providers/http/place-details-store.service';
 export * from './lib/providers/http/user-store.service';
-export * from './lib/providers/local-storage/favorite-storage.service';
 export * from './lib/providers/local-storage/user-preference.service';
 export * from './lib/providers/toastService';
 export * from './lib/strategies/preloadingStrategy';
