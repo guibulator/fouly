@@ -32,9 +32,9 @@
          </ion-item-group>
       </ion-list>
    </ng-container>
-   <ng-container *ngIf="(favorites$ | async).length < 3 as favorites">
-      <ng-container *ngTemplateOutlet="infoSlide"></ng-container>
-   </ng-container>
+   <!-- <ng-container *ngIf="(favorites$ | async).length < 3 as favorites"> -->
+   <ng-container *ngTemplateOutlet="infoSlide"></ng-container>
+   <!-- </ng-container> -->
 </ion-content>
 
 <ng-template #infoSlide>

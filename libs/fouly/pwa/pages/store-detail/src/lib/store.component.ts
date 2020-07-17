@@ -1,7 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PlaceDetailsResult } from '@skare/fouly/data';
-import { FavoriteStorageService, PlaceDetailsStoreService } from '@skare/fouly/pwa/core';
+import {
+  AuthenticationService,
+  FavoritesStoreService,
+  PlaceDetailsStoreService
+} from '@skare/fouly/pwa/core';
 import { combineLatest, Observable, of, Subscription } from 'rxjs';
 import { filter, flatMap, map, take, tap } from 'rxjs/operators';
 
@@ -21,10 +25,9 @@ export class StoreComponent implements OnInit, OnDestroy {
     private placeDetailsStore: PlaceDetailsStoreService,
     private route: ActivatedRoute,
     private router: Router,
-    private favoriteStorageService: FavoriteStorageService
-  ) {
-    this.favoriteStorageService.getAll().subscribe();
-  }
+    private favoriteStoreService: FavoritesStoreService,
+    private authService: AuthenticationService
+  ) {}
 
   placeDetails$: Observable<PlaceDetailsResult[]>;
   loading$: Observable<boolean>;
@@ -54,7 +57,7 @@ export class StoreComponent implements OnInit, OnDestroy {
       this.route.snapshot.params['placeId'],
       new Date() //Todo : add support for choosing different time values
     );
-    this.isCurrentlyFavorite$ = this.favoriteStorageService.store$.pipe(
+    this.isCurrentlyFavorite$ = this.favoriteStoreService.store$.pipe(
       map((f) => !!f.find((fav) => fav.placeId === this.route.snapshot.params['placeId']))
     );
   }
@@ -106,21 +109,29 @@ export class StoreComponent implements OnInit, OnDestroy {
   }
 
   addRemoveToFavorite() {
-    combineLatest([this.placeDetails$.pipe(take(1)), this.isCurrentlyFavorite$])
-      .pipe(take(1))
-      .subscribe(([placeDetails, isCurrentlyFavorite]) => {
-        if (isCurrentlyFavorite) {
-          this.favoriteStorageService.remove(placeDetails[0].place_id);
-        } else {
-          return this.favoriteStorageService.add({
-            address: placeDetails[0].shortAddress,
-            placeId: placeDetails[0].place_id,
-            name: placeDetails[0].name,
-            lat: placeDetails[0].geometry.location.lat,
-            lng: placeDetails[0].geometry.location.lng
-          });
-        }
-      });
+    combineLatest([
+      this.placeDetails$.pipe(take(1)),
+      this.isCurrentlyFavorite$,
+      this.authService.currentUser$
+    ])
+      .pipe(
+        take(1),
+        flatMap(([placeDetails, isCurrentlyFavorite, user]) => {
+          if (isCurrentlyFavorite) {
+            return this.favoriteStoreService.remove(placeDetails[0].place_id);
+          } else {
+            return this.favoriteStoreService.add({
+              userId: user?.id,
+              address: placeDetails[0].shortAddress,
+              placeId: placeDetails[0].place_id,
+              name: placeDetails[0].name,
+              lat: placeDetails[0].geometry.location.lat,
+              lng: placeDetails[0].geometry.location.lng
+            });
+          }
+        })
+      )
+      .subscribe();
   }
 
   ngOnDestroy(): void {

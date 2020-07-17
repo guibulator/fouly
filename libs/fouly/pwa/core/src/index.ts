@@ -5,6 +5,7 @@ export * from './lib/modules/config';
 export * from './lib/providers/http/chat-store.service';
 export * from './lib/providers/http/contact.service';
 export * from './lib/providers/http/contribute.service';
+export * from './lib/providers/http/favorites-store.service';
 export * from './lib/providers/http/localisation-store.service';
 export * from './lib/providers/http/place-details-store.service';
 export * from './lib/providers/http/user-store.service';

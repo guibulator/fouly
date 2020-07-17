@@ -3,10 +3,10 @@ import { FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { IonContent } from '@ionic/angular';
 import * as signalR from '@microsoft/signalr';
-import { ChatMessageCommand, ChatMessageResult, UserResult } from '@skare/fouly/data';
-import { ChatStoreService, UserStoreService } from '@skare/fouly/pwa/core';
+import { ChatMessageCommand, ChatMessageResult } from '@skare/fouly/data';
+import { AuthenticationService, ChatStoreService } from '@skare/fouly/pwa/core';
 import { BehaviorSubject, fromEvent, Observable, Subscription } from 'rxjs';
-import { map, switchMap, tap } from 'rxjs/operators';
+import { filter, map, switchMap, take, tap } from 'rxjs/operators';
 import { uuid } from 'uuidv4';
 @Component({
   selector: 'fouly-channel',
@@ -25,7 +25,7 @@ export class ChannelComponent implements OnInit, OnDestroy, AfterViewInit {
   private hasBeendDestroyed = false;
   private messages: ChatMessageResult[] = [];
   private placeId: string;
-  private user: UserResult = null;
+
   private subscriptions = new Subscription();
   private correlationIds: string[] = [];
 
@@ -35,21 +35,15 @@ export class ChannelComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(
     private chatService: ChatStoreService,
     private route: ActivatedRoute,
-    private userStoreService: UserStoreService
+    private authService: AuthenticationService
   ) {}
 
   ngOnInit() {
     this.placeId = this.route.snapshot.params['placeId'];
     this.placeName = this.route.snapshot.params['placeName'];
 
-    this.subscriptions.add(
-      this.userStoreService.getAll().subscribe((users: UserResult[]) => {
-        this.user = users && users.length > 0 && users[0];
-      })
-    );
-
-    this.chatService.getConnectionSignalR().subscribe(async (info) => {
-      await this.start(info);
+    this.chatService.getConnectionSignalR().subscribe((info) => {
+      this.start(info);
     });
 
     this.chatService.getMsgHistory(this.placeId).subscribe((data: ChatMessageResult[]) => {
@@ -93,25 +87,32 @@ export class ChannelComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   sendMsg(newMsg: string) {
-    if (newMsg === null || newMsg === '' || newMsg.trim() === '') {
-      return;
-    }
+    this.authService.currentUser$
+      .pipe(
+        filter((user) => !!user),
+        take(1)
+      )
+      .subscribe((user) => {
+        if (newMsg === null || newMsg === '' || newMsg.trim() === '') {
+          return;
+        }
 
-    const myMsg = new ChatMessageCommand();
-    myMsg.correlationId = uuid();
-    myMsg.author = this.user ? this.user.name : 'Anonyme';
-    myMsg.msg = newMsg;
-    myMsg.time = new Date();
-    myMsg.placeId = this.placeId;
-    this.correlationIds.push(myMsg.correlationId);
-    this.chatService.postNewMsg(myMsg);
-    this.onNewMsgInChannel(myMsg, true);
-    this.userMsg.setValue('');
+        const myMsg = new ChatMessageCommand();
+        myMsg.correlationId = uuid();
+        myMsg.author = user.name;
+        myMsg.msg = newMsg;
+        myMsg.time = new Date();
+        myMsg.placeId = this.placeId;
+        this.correlationIds.push(myMsg.correlationId);
+        this.chatService.postNewMsg(myMsg);
+        this.onNewMsgInChannel(myMsg, true);
+        this.userMsg.setValue('');
+      });
   }
 
   onNewMsgInChannel(newMsg: ChatMessageResult, isLocal: boolean = false) {
     if (this.followTail) {
-      this.chatHistoryContent.scrollToBottom(500);
+      setTimeout(() => this.chatHistoryContent.scrollToBottom(500), 50);
     }
     // if matching correlation id message in list, this is user's own new message.
     if (!isLocal && newMsg.correlationId && this.correlationIds.indexOf(newMsg.correlationId) > -1)

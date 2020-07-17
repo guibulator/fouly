@@ -9,12 +9,12 @@ import {
   ContributeSpeed
 } from '@skare/fouly/data';
 import {
+  AuthenticationService,
   ContributeStoreService,
-  LocalisationStoreService,
-  UserStoreService
+  LocalisationStoreService
 } from '@skare/fouly/pwa/core';
 import { from, Subscription } from 'rxjs';
-import { delay, flatMap, retryWhen, take, tap } from 'rxjs/operators';
+import { delay, filter, flatMap, retryWhen, take, tap } from 'rxjs/operators';
 @Component({
   selector: 'fouly-survey-form',
   templateUrl: './survey-form.component.html',
@@ -34,7 +34,7 @@ export class SurveyFormComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(
     private navController: NavController,
     private contributeService: ContributeStoreService,
-    private userStoreService: UserStoreService,
+    private authService: AuthenticationService,
     private activatedRoute: ActivatedRoute,
     private localisationService: LocalisationStoreService,
     private toastCtrl: ToastController,
@@ -61,12 +61,12 @@ export class SurveyFormComponent implements OnInit, OnDestroy, AfterViewInit {
    * Fire and forget user contribution with 2 retry attempts
    */
   end() {
-    this.userStoreService
-      .getAll()
+    this.authService.currentUser$
+
       .pipe(
-        take(1),
-        flatMap((users) => {
-          if (users && users.length > 0) this.userContribution.userId = users[0].userId;
+        filter((user) => !!user),
+        flatMap((user) => {
+          this.userContribution.userId = user.id;
           return this.contributeService.contribute(this.userContribution);
         }),
         retryWhen((errors) =>
