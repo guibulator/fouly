@@ -27,7 +27,7 @@
    <fouly-content-centered sizeLg="8">
       <ng-container *ngIf="!(loading$ | async) && placeDetails$ | async as placeDetails">
          <ion-card class="card">
-            <ion-img [src]="mainImage$ | async"></ion-img>
+            <ion-img (ionError)="mainImageError()" [src]="mainImage$ | async"></ion-img>
             <ion-card-header class="fouly-header ion-text-center" [class.notGoogleImage]="notGoogleImage">
                <div class="wrapper">
                   <div class="website">
@@ -36,7 +36,7 @@
                      ></a>
                   </div>
                   <ng-container *ngIf="placeDetails[0]">
-                     <ion-card-title color="primary">
+                     <ion-card-title>
                         <h2 class="ion-text-center">{{ placeDetails[0].name }}</h2>
                      </ion-card-title>
 

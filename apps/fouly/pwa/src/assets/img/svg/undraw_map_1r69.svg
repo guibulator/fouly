@@ -44,12 +44,12 @@
      showgrid="false"
      inkscape:snap-global="false"
      inkscape:zoom="0.96489286"
-     inkscape:cx="489.31953"
-     inkscape:cy="231.52955"
+     inkscape:cx="372.27646"
+     inkscape:cy="237.28596"
      inkscape:window-x="1072"
      inkscape:window-y="476"
      inkscape:window-maximized="1"
-     inkscape:current-layer="g3463" />
+     inkscape:current-layer="g3513" />
   <title
      id="title2340">bookmarks</title>
   <g
@@ -84,7 +84,7 @@
        id="path3364"
        d="M -493.77765,-423.76152 V 80.328488 a 22.58,22.58 0 0 1 -7.96,17.23 22.6419,22.6419 0 0 1 -14.69,5.409992 h -204.65 a 22.58668,22.58668 0 0 1 -10.46,-2.54999 21.15539,21.15539 0 0 1 -2.2,-1.300002 22.66834,22.66834 0 0 1 -9.99,-18.79 V -423.76152 a 22.649,22.649 0 0 1 22.65,-22.65 h 30.63 v 3.93 a 18.65015,18.65015 0 0 0 18.65,18.65 h 104.08 a 18.65009,18.65009 0 0 0 18.65,-18.65 v -3.93 h 32.64 a 22.64264,22.64264 0 0 1 22.65,22.65 z"
        inkscape:connector-curvature="0"
-       style="fill:#000000;fill-opacity:0.68446601;stroke:#ff3985;stroke-opacity:1" />
+       style="fill:#000000;fill-opacity:0.68446601;stroke:#ff3985;stroke-opacity:1;stroke-width:4.9;stroke-miterlimit:4;stroke-dasharray:none" />
     <g
        id="g3487"
        transform="translate(332.98144,187.23181)"
@@ -244,31 +244,31 @@
          id="path3525-3"
          inkscape:connector-curvature="0" />
       <path
-         d="m -948.31819,-414.64659 a 2.9952917,10.491868 0 0 0 0,20.98075 h 141.1932 a 2.9952917,10.491868 0 0 0 0.098,-20.98075 q -0.049,-0.002 -0.098,0 z"
+         d="m -948.50483,-414.64659 a 2.8054536,10.491868 0 0 0 0,20.98075 h 132.24454 a 2.8054536,10.491868 0 0 0 0.0918,-20.98075 q -0.0459,-0.002 -0.0918,0 z"
          data-name="Path 40"
          id="bf8b9df3-8875-4369-b4ec-4c359de04021-2-5"
          inkscape:connector-curvature="0"
-         style="fill:#e6e6e6;stroke-width:1.49291837" />
+         style="fill:#e6e6e6;stroke-width:1.44483435" />
       <path
-         d="m -947.38288,-387.7417 a 2.9505464,3.7549941 0 0 0 0,7.50892 H -808.299 a 2.9505464,3.7549941 0 0 0 0.0965,-7.50892 q -0.0483,-7.2e-4 -0.0965,0 z"
+         d="m -947.78726,-387.7417 a 2.53923,3.7549941 0 0 0 0,7.50892 h 119.69511 a 2.53923,3.7549941 0 0 0 0.083,-7.50892 q -0.0416,-7.2e-4 -0.083,0 z"
          data-name="Path 40"
          id="bf8b9df3-8875-4369-b4ec-4c359de04021-2-9-2"
          inkscape:connector-curvature="0"
-         style="fill:#e6e6e6;stroke-width:0.88643306" />
+         style="fill:#e6e6e6;stroke-width:0.82232928;fill-opacity:0.53140098" />
     </g>
   </g>
   <path
-     d="m 194.85673,77.256056 a 2.9952917,10.491868 0 0 0 0,20.980834 h 141.19314 a 2.9952917,10.491868 0 0 0 0.0983,-20.980834 q -0.0492,-0.002 -0.0983,0 z"
+     d="m 194.37967,77.256056 a 2.5101664,10.491868 0 0 0 0,20.980834 H 312.7048 a 2.5101664,10.491868 0 0 0 0.0824,-20.980834 q -0.0412,-0.002 -0.0824,0 z"
      data-name="Path 40"
      id="bf8b9df3-8875-4369-b4ec-4c359de04021-2"
      inkscape:connector-curvature="0"
-     style="fill:#e6e6e6;stroke-width:1.49291837" />
+     style="fill:#e6e6e6;fill-opacity:0.99033813;stroke-width:1.36668289" />
   <path
      d="m 196.51019,104.16107 a 2.9356316,3.7549941 0 0 0 0,7.50898 h 138.38086 a 2.9356324,3.7549951 0 0 0 0.0963,-7.50898 q -0.0482,-7.2e-4 -0.0963,0 z"
      data-name="Path 40"
      id="bf8b9df3-8875-4369-b4ec-4c359de04021-2-9"
      inkscape:connector-curvature="0"
-     style="fill:#e6e6e6;stroke-width:0.88418978" />
+     style="fill:#e6e6e6;stroke-width:0.88418978;fill-opacity:0.58937198" />
   <path
      d="m 160.3648,122.27163 a 4.5540304,0.27383815 0 0 0 0,0.54759 h 214.66948 a 4.5540304,0.27383815 0 0 0 0.14947,-0.54759 q -0.0748,-6e-5 -0.14947,0 z"
      data-name="Path 40"

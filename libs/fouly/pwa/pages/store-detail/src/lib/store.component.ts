@@ -39,6 +39,8 @@ export class StoreComponent implements OnInit, OnDestroy {
         this.setCrowdStatus(details[0].storeCrowdResult.status);
 
         if (details[0]?.photos && details[0].photos.length > 0) {
+          // TODO: Pick a photo that is in landscape and not portrait. Some of them now are
+          // protrait and the ui is ugly...
           return this.placeDetailsStore.getPhotoUrl(details[0]?.photos[0]?.photo_reference);
         } else {
           this.notGoogleImage = true;
@@ -55,6 +57,13 @@ export class StoreComponent implements OnInit, OnDestroy {
     this.isCurrentlyFavorite$ = this.favoriteStoreService.store$.pipe(
       map((f) => !!f.find((fav) => fav.placeId === this.route.snapshot.params['placeId']))
     );
+  }
+
+  // todo: while testing, I got a 403 from requesting the image from google, investigate why.
+  // In the meantime, user the fouly image if it happens.
+  mainImageError() {
+    this.notGoogleImage = true;
+    this.mainImage$ = of('assets/img/svg/undraw_best_place_r685.svg');
   }
 
   setCrowdStatus(status: string): any {
