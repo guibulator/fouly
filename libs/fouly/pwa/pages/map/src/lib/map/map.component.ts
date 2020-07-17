@@ -5,7 +5,7 @@ import { GoogleMap } from '@angular/google-maps';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Platform } from '@ionic/angular';
 import {
-  FavoriteStoreService,
+  FavoriteStorageService,
   LocalisationStoreService,
   PlaceDetailsStoreService
 } from '@skare/fouly/pwa/core';
@@ -48,7 +48,7 @@ export class MapComponent implements OnInit, OnDestroy, AfterViewInit {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private placeDetailsStore: PlaceDetailsStoreService,
-    private favoriteStore: FavoriteStoreService
+    private favoriteStore: FavoriteStorageService
   ) {
     this.activatedRoute.queryParams.subscribe((params) => {
       const placeId = router?.getCurrentNavigation()?.extras?.state?.placeId;

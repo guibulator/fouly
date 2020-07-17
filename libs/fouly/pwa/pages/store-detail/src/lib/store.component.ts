@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PlaceDetailsResult } from '@skare/fouly/data';
-import { FavoriteStoreService, PlaceDetailsStoreService } from '@skare/fouly/pwa/core';
+import { FavoriteStorageService, PlaceDetailsStoreService } from '@skare/fouly/pwa/core';
 import { combineLatest, Observable, of, Subscription } from 'rxjs';
 import { filter, flatMap, map, take, tap } from 'rxjs/operators';
 
@@ -21,9 +21,9 @@ export class StoreComponent implements OnInit, OnDestroy {
     private placeDetailsStore: PlaceDetailsStoreService,
     private route: ActivatedRoute,
     private router: Router,
-    private favoriteStoreService: FavoriteStoreService
+    private favoriteStorageService: FavoriteStorageService
   ) {
-    this.favoriteStoreService.getAll().subscribe();
+    this.favoriteStorageService.getAll().subscribe();
   }
 
   placeDetails$: Observable<PlaceDetailsResult[]>;
@@ -54,7 +54,7 @@ export class StoreComponent implements OnInit, OnDestroy {
       this.route.snapshot.params['placeId'],
       new Date() //Todo : add support for choosing different time values
     );
-    this.isCurrentlyFavorite$ = this.favoriteStoreService.store$.pipe(
+    this.isCurrentlyFavorite$ = this.favoriteStorageService.store$.pipe(
       map((f) => !!f.find((fav) => fav.placeId === this.route.snapshot.params['placeId']))
     );
   }
@@ -110,9 +110,9 @@ export class StoreComponent implements OnInit, OnDestroy {
       .pipe(take(1))
       .subscribe(([placeDetails, isCurrentlyFavorite]) => {
         if (isCurrentlyFavorite) {
-          this.favoriteStoreService.remove(placeDetails[0].place_id);
+          this.favoriteStorageService.remove(placeDetails[0].place_id);
         } else {
-          return this.favoriteStoreService.add({
+          return this.favoriteStorageService.add({
             address: placeDetails[0].shortAddress,
             placeId: placeDetails[0].place_id,
             name: placeDetails[0].name,
