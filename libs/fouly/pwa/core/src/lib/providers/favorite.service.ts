@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import { FavoriteResult } from '@skare/fouly/data';
-import { BehaviorSubject, combineLatest, forkJoin, Observable, zip } from 'rxjs';
-import { flatMap, map, take } from 'rxjs/operators';
+import { BehaviorSubject, combineLatest } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { AuthenticationService } from '../modules/auth';
 import { FavoriteStoreService } from '../providers/http/favorite-store.service';
 @Injectable({ providedIn: 'root' })
@@ -32,15 +31,6 @@ export class FavoriteService {
    * Create a new set of favorites based on authenticated user
    */
   syncFavoritesFromLocalUser() {
-    return zip(this.authService.currentUser$, this.favoriteStore.store$.pipe(take(1))).pipe(
-      flatMap(([user, favorites]) => {
-        const saves: Observable<FavoriteResult>[] = [];
-        favorites.forEach((fav) => {
-          fav.userId = user.id;
-          saves.push(this.favoriteStore.add(fav));
-        });
-        return forkJoin(saves);
-      })
-    );
+    return this.favoriteStore.sync();
   }
 }

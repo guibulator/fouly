@@ -60,9 +60,8 @@ export class SurveyFormComponent implements OnInit, OnDestroy, AfterViewInit {
   /**
    * Fire and forget user contribution with 2 retry attempts
    */
-  end() {
+  endSurvey() {
     this.authService.currentUser$
-
       .pipe(
         filter((user) => !!user),
         flatMap((user) => {
@@ -99,7 +98,7 @@ export class SurveyFormComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private slideNext() {
     if (this.lastSlide) {
-      this.end();
+      this.endSurvey();
       from(
         this.toastCtrl.create({
           message: this.translateService.instant('page.contribute.thanks'),

@@ -118,6 +118,7 @@ export class StoreComponent implements OnInit, OnDestroy {
       this.favoriteService.favLimited$
     )
       .pipe(
+        take(1),
         flatMap(([placeDetails, isCurrentlyFavorite, user, favLimited]) => {
           if (isCurrentlyFavorite) {
             return this.favoriteStoreService.remove(placeDetails[0].place_id);

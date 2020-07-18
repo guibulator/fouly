@@ -25,13 +25,15 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loginIn$ = this.authService.loginIn$;
-    this.authService.currentUser$
-      .pipe(
-        filter((user) => !!user),
-        flatMap(() => this.afterSignupSyncService.sync()),
-        flatMap((user: any) => this.userStoreService.createUpdateUser(user))
-      )
-      .subscribe(() => this.router.navigateByUrl('identity/profile'));
+    this.subscriptions.add(
+      this.authService.currentUser$
+        .pipe(
+          filter((user) => !!user),
+          flatMap(() => this.afterSignupSyncService.sync()),
+          flatMap((user: any) => this.userStoreService.createUpdateUser(user))
+        )
+        .subscribe(() => this.router.navigateByUrl('identity/profile'))
+    );
   }
 
   loginWithGoogle() {

@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { FavoriteResult } from '@skare/fouly/data';
 import { BehaviorSubject, combineLatest, of, zip } from 'rxjs';
-import { catchError, flatMap, map, take } from 'rxjs/operators';
+import { catchError, flatMap, map, take, tap } from 'rxjs/operators';
 import { AuthenticationService } from '../../modules/auth';
 import { ConfigService } from '../../modules/config/config.service';
 import { UserPreferenceService } from '../local-storage/user-preference.service';
@@ -35,7 +35,7 @@ export class FavoriteStoreService {
   }
 
   add(favorite: FavoriteResult) {
-    // If no user, user temp user id
+    // If no user, use temp user id
     // optimistic save
     return zip(this.authService.currentUser$, this.userPrefService.store$).pipe(
       flatMap(([user, { userId }]) => {
@@ -75,6 +75,20 @@ export class FavoriteStoreService {
           catchError(() => of(null)) // todo just while we dont have a backend
         );
       })
+    );
+  }
+
+  /**
+   * Sync from login in and out. When logging out, we want to continue to work with user temp id
+   */
+  sync() {
+    return zip(this.authService.currentUser$, this._favorites$, this.userPrefService.store$).pipe(
+      take(1),
+      tap(([user, favorites, userPref]) => {
+        favorites.forEach((fav) => (fav.userId = user?.id ?? userPref.userId));
+        this._favorites$.next([...favorites]);
+      }),
+      flatMap(() => this.httpClient.post(`${this.apiEndPoint}/favorites/sync`, {}))
     );
   }
 }
