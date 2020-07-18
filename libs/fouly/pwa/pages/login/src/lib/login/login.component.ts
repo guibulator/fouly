@@ -1,7 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthenticationService, UserStoreService } from '@skare/fouly/pwa/core';
+import {
+  AfterSignupSyncService,
+  AuthenticationService,
+  UserStoreService
+} from '@skare/fouly/pwa/core';
 import { Observable, Subscription } from 'rxjs';
+import { filter, flatMap } from 'rxjs/operators';
 
 @Component({
   selector: 'fouly-login',
@@ -14,22 +19,19 @@ export class LoginComponent implements OnInit, OnDestroy {
     private authService: AuthenticationService,
     private userStoreService: UserStoreService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private afterSignupSyncService: AfterSignupSyncService
   ) {}
 
   ngOnInit(): void {
     this.loginIn$ = this.authService.loginIn$;
-    this.subscriptions.add(
-      this.authService.currentUser$.subscribe((user) => {
-        if (!user) {
-          console.log('no user');
-        } else {
-          console.log('user', user);
-          this.saveUserAndRedirect(user);
-          this.router.navigate(['profile'], { relativeTo: this.route });
-        }
-      })
-    );
+    this.authService.currentUser$
+      .pipe(
+        filter((user) => !!user),
+        flatMap(() => this.afterSignupSyncService.sync()),
+        flatMap((user: any) => this.userStoreService.createUpdateUser(user))
+      )
+      .subscribe(() => this.router.navigateByUrl('identity/profile'));
   }
 
   loginWithGoogle() {
@@ -38,12 +40,6 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   loginWithFacebook() {
     this.authService.loginWithFacebook();
-  }
-
-  private saveUserAndRedirect(user): void {
-    this.userStoreService
-      .createUpdateUser(user)
-      .subscribe(() => console.log('User stored in system!'));
   }
 
   logout() {

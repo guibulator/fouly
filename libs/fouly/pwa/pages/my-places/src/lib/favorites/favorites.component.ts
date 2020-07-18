@@ -1,9 +1,14 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FavoriteResult } from '@skare/fouly/data';
-import { AuthenticationService, FavoritesStoreService } from '@skare/fouly/pwa/core';
+import {
+  AuthenticationService,
+  FavoriteService,
+  FavoriteStoreService
+} from '@skare/fouly/pwa/core';
 import { SocialUser } from 'angularx-social-login';
-import { Observable, Subscription } from 'rxjs';
+import { BehaviorSubject, combineLatest, Observable, Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 /**
  * A user can store up to 3 favorites without being logged in.
@@ -19,24 +24,28 @@ import { Observable, Subscription } from 'rxjs';
 export class FavoritesComponent implements OnInit, OnDestroy {
   favorites$: Observable<FavoriteResult[]>;
   user$: Observable<SocialUser>;
+  favLimited$ = new BehaviorSubject(false); //Unauthenticated users can only save 3 favorites
+  showFavImage$: Observable<boolean>;
+
   private readonly subscriptions = new Subscription();
   constructor(
-    private favoriteStore: FavoritesStoreService,
+    private favoriteStore: FavoriteStoreService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    authService: AuthenticationService
+    private authService: AuthenticationService,
+    private favoriteService: FavoriteService
   ) {
     this.user$ = authService.currentUser$;
-  }
-  // TODO: Get achalandage quote for each store
-  ngOnInit(): void {
-    // if user is logged in, check if there is favs in localstorage
-    // if yes, silently migrate them to database
-
-    // if user is not logged in, get/set favs from localstorage
-    //this.favorites$ = this.favoriteStorageService.store$;
-
     this.favorites$ = this.favoriteStore.store$;
+    this.favLimited$ = this.favoriteService.favLimited$;
+  }
+  // TODO: Get achalandage quote for each store and add ion-refresher
+  ngOnInit(): void {
+    this.showFavImage$ = combineLatest([this.favoriteStore.store$, this.favLimited$]).pipe(
+      map(([favorites, favLimited]) => {
+        return favorites.length < 4 && !favLimited;
+      })
+    );
   }
   ngOnDestroy() {
     this.subscriptions.unsubscribe();

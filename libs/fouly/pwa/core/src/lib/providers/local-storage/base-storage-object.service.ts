@@ -17,19 +17,17 @@ export class BaseStorageObject<T> {
    */
   init(state?: T) {
     // This initialize with default or replay existing preference
-    from(this.storage.get(this.key))
-      .pipe(
-        flatMap((item) => {
-          if (item) {
-            this._store$.next(item);
-            return of(null);
-          }
+    return from(this.storage.get(this.key)).pipe(
+      flatMap((item) => {
+        if (item) {
+          this._store$.next(item);
+          return of(item);
+        }
 
-          state && this._store$.next(state);
-          return from(this.storage.set(this.key, state));
-        })
-      )
-      .subscribe();
+        state && this._store$.next(state);
+        return from(this.storage.set(this.key, state));
+      })
+    );
   }
 
   protected modifyPref(key: string, value: any) {

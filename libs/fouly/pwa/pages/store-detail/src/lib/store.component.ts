@@ -3,10 +3,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { PlaceDetailsResult } from '@skare/fouly/data';
 import {
   AuthenticationService,
-  FavoritesStoreService,
+  FavoriteService,
+  FavoriteStoreService,
   PlaceDetailsStoreService
 } from '@skare/fouly/pwa/core';
-import { combineLatest, Observable, of, Subscription } from 'rxjs';
+import { Observable, of, Subscription, zip } from 'rxjs';
 import { filter, flatMap, map, take, tap } from 'rxjs/operators';
 
 @Component({
@@ -25,7 +26,8 @@ export class StoreComponent implements OnInit, OnDestroy {
     private placeDetailsStore: PlaceDetailsStoreService,
     private route: ActivatedRoute,
     private router: Router,
-    private favoriteStoreService: FavoritesStoreService,
+    private favoriteStoreService: FavoriteStoreService,
+    private favoriteService: FavoriteService,
     private authService: AuthenticationService
   ) {}
 
@@ -109,17 +111,21 @@ export class StoreComponent implements OnInit, OnDestroy {
   }
 
   addRemoveToFavorite() {
-    combineLatest([
-      this.placeDetails$.pipe(take(1)),
+    zip(
+      this.placeDetails$,
       this.isCurrentlyFavorite$,
-      this.authService.currentUser$
-    ])
+      this.authService.currentUser$,
+      this.favoriteService.favLimited$
+    )
       .pipe(
-        take(1),
-        flatMap(([placeDetails, isCurrentlyFavorite, user]) => {
+        flatMap(([placeDetails, isCurrentlyFavorite, user, favLimited]) => {
           if (isCurrentlyFavorite) {
             return this.favoriteStoreService.remove(placeDetails[0].place_id);
           } else {
+            if (favLimited) {
+              this.gotoFavorites();
+              return of(null);
+            }
             return this.favoriteStoreService.add({
               userId: user?.id,
               address: placeDetails[0].shortAddress,

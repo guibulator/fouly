@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { IonSearchbar, NavController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { FavoriteResult, SearchResult } from '@skare/fouly/data';
-import { ConfigService, FavoritesStoreService } from '@skare/fouly/pwa/core';
+import { ConfigService, FavoriteStoreService } from '@skare/fouly/pwa/core';
 import { Observable, Subject, Subscription } from 'rxjs';
 import { distinctUntilChanged, filter, map, share, switchMap, tap } from 'rxjs/operators';
 import { uuid } from 'uuidv4';
@@ -32,7 +32,7 @@ export class SearchComponent implements OnInit {
     private httpClient: HttpClient,
     private configService: ConfigService,
     private activatedRoute: ActivatedRoute,
-    private favoriteStore: FavoritesStoreService,
+    private favoriteStore: FavoriteStoreService,
     private translate: TranslateService
   ) {
     this.activatedRoute.queryParams.subscribe((params) => {
