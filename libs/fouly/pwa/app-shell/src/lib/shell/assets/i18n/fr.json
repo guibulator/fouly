@@ -123,6 +123,7 @@
       "title": "Mes favoris",
       "remove": "Retirer",
       "favoriteShops": "Vos commerces favoris",
+      "signupMessage": "Pour pouvoir saugarder plus de 3 favoris, vous devez vous authentifier. Cela vous permettra de sauvegarder autant de favoris que vous voulez et plus encore !",
       "instruction": "Vous trouverez en un clin d'oeil les détails importants comme le délai d'attente et l'achalandage de vos commerces favoris. Pour ajouter un favoris, dirigez vous sur la map, sélectionner un commerce et cliquer sur l'étoile."
     },
 

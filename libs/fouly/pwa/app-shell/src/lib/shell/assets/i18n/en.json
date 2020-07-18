@@ -123,6 +123,7 @@
     "myFavorites": {
       "title": "My favorites",
       "remove": "Remove",
+      "signupMessage": "Sign up its free! This will allow you to bookmark more than 3 stores and unlock other features!",
       "favoriteShops": "Your favorite shops",
       "instruction": "You will find important details in the blink of an eye such as the waiting time and the traffic in your favorite businesses. To add a favorite, go to the map, select a business and click on the star."
     },
