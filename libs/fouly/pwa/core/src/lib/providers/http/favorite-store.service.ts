@@ -31,7 +31,7 @@ export class FavoriteStoreService {
   }
 
   private fetch() {
-    return this.httpClient.get<FavoriteResult[]>(`${this.apiEndPoint}/favorites`);
+    return this.httpClient.get<FavoriteResult[]>(`${this.apiEndPoint}/favorite`);
   }
 
   add(favorite: FavoriteResult) {
@@ -44,7 +44,7 @@ export class FavoriteStoreService {
           take(1),
           map((favorites) => this._favorites$.next([...favorites, favorite])),
           flatMap(() =>
-            this.httpClient.post<FavoriteResult>(`${this.apiEndPoint}/favorites`, favorite)
+            this.httpClient.post<FavoriteResult>(`${this.apiEndPoint}/favorite`, favorite)
           ),
           catchError(() => of(favorite)) // todo juste while we dont have a backend
         );
@@ -64,10 +64,9 @@ export class FavoriteStoreService {
         }
         return [...favorites];
       }),
-      flatMap((favorites) => {
-        this.httpClient.delete<FavoriteResult>(`${this.apiEndPoint}/favorites/${placeId}`);
-        return of(favorites);
-      }),
+      flatMap(() =>
+        this.httpClient.delete<FavoriteResult>(`${this.apiEndPoint}/favorite/${placeId}`)
+      ),
       catchError(() => of(null)) // todo just while we dont have a backend
     );
   }
@@ -82,7 +81,9 @@ export class FavoriteStoreService {
         favorites.forEach((fav) => (fav.userId = user?.id ?? userPref.userId));
         this._favorites$.next([...favorites]);
       }),
-      flatMap(() => this.httpClient.post(`${this.apiEndPoint}/favorites/sync`, {}))
+      flatMap(([user, _, userPref]) =>
+        this.httpClient.post(`${this.apiEndPoint}/favorite/sync?localUserId=${userPref.userId}`, {})
+      )
     );
   }
 }
