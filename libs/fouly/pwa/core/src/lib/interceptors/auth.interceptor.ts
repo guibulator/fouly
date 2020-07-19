@@ -1,7 +1,7 @@
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, zip } from 'rxjs';
-import { flatMap, map } from 'rxjs/operators';
+import { flatMap, map, take } from 'rxjs/operators';
 import { AuthenticationService } from '../modules/auth';
 import { UserPreferenceService } from '../providers/local-storage/user-preference.service';
 
@@ -28,6 +28,7 @@ export class AuthInterceptor implements HttpInterceptor {
 
   private addAuthenticationToken(request: HttpRequest<any>): Observable<HttpRequest<any>> {
     return zip(this.authService.currentUser$).pipe(
+      take(1),
       map(([user]) => {
         if (user?.authToken) {
           return request.clone({
@@ -41,6 +42,7 @@ export class AuthInterceptor implements HttpInterceptor {
 
   private addUserId(request: HttpRequest<any>): Observable<HttpRequest<any>> {
     return zip(this.authService.currentUser$, this.userPrefService.store$).pipe(
+      take(1),
       map(([user, pref]) =>
         request.clone({
           headers: request.headers.set(this.USER_HEADER, user?.id ?? pref.userId)

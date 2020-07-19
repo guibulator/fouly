@@ -17,7 +17,7 @@ export class Error500Interceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       retry(1),
       catchError((error: HttpErrorResponse) => {
-        //this.router.navigateByUrl('error');
+        this.router.navigateByUrl('error');
         return throwError(error);
       })
     );
