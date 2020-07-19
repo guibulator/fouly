@@ -1,17 +1,29 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { FavoriteCommand } from '@skare/fouly/data';
+import { FavoriteCommand, FavoriteResult } from '@skare/fouly/data';
 import { Model } from 'mongoose';
+import { PlaceDetailsService } from '../../services/placeDetails.service';
 import { PlaceIdMapperService } from '../placeIdMapper/place-id-mapper.service';
 import { Favorite } from './favorite.schema';
 @Injectable()
 export class FavoriteService {
   constructor(
     private placeIdMapperervice: PlaceIdMapperService,
+    private placeDetailsService: PlaceDetailsService,
     @InjectModel(Favorite.name) private readonly favoriteModel: Model<Favorite>
   ) {}
-  async getFavorites(userId: string) {
-    return this.favoriteModel.find({ userId: userId }).exec();
+  async getFavorites(userId: string): FavoriteResult {
+    const favs = await this.favoriteModel.find({ userId: userId }).exec();
+    // TODO: The favorite model in bd has only 2 fields (userId and placeId)
+    // Get the place details with contribution to return all the information the fav needs
+    // TODO Front-End. For the My-Places route, get the storeCrowd and display it
+    // placeId: string;
+    // storeCrowdResult?: StoreCrowdResult;
+    // userId?: string;
+    // name?: string;
+    // address?: string;
+    // lat?: number;
+    // lng?: number;
   }
 
   async add(cmd: FavoriteCommand) {

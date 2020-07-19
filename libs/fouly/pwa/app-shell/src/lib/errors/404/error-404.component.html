@@ -16,6 +16,6 @@
    </ion-card-title>
    <ion-card-content>
       <p>{{ 'appshell.error404.cardContent' | translate }}</p>
-      <ion-button expand="block" color="primary">{{ 'appshell.error404.gotoHome' | translate }}</ion-button>
+      <ion-button [routerLink]="['/']" expand="block" color="primary">{{ 'appshell.error404.gotoHome' | translate }}</ion-button>
    </ion-card-content>
 </ion-content>
