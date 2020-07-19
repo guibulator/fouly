@@ -1,0 +1,23 @@
+<ion-header>
+   <ion-toolbar>
+      <ion-buttons slot="start">
+         <ion-back-button></ion-back-button>
+      </ion-buttons>
+      <ion-buttons slot="start">
+         <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title>{{ 'appshell.error500.title' | translate }}</ion-title>
+   </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding ion-text-center">
+   <ion-img [src]="'assets/img/svg/undraw_server_down_s4lk.svg'"></ion-img>
+   <ion-card-title>
+      <h4>{{ 'appshell.error500.cardTitle' | translate }}</h4>
+   </ion-card-title>
+   <ion-card-content>
+      <p>{{ 'appshell.error500.cardContent' | translate }}</p>
+      <ion-button [routerLink]="['/']" expand="block" color="primary" class="ion-margin-top">{{
+         'appshell.error500.gotoHome' | translate
+      }}</ion-button>
+   </ion-card-content>
+</ion-content>

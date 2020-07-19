@@ -25,13 +25,13 @@ export class FavoriteStoreService {
   ) {
     this.apiEndPoint = this.configService.apiUrl;
     // automatically fetch favorites when there is a connected user
-    combineLatest([this.authService.currentUser$, this.userPrefService.store$])
-      .pipe(flatMap(([user, { userId }]) => this.fetch(user?.id ?? userId)))
+    combineLatest([this.authService.currentUser$])
+      .pipe(flatMap(() => this.fetch()))
       .subscribe((favorites) => this._favorites$.next(favorites ?? []));
   }
 
-  private fetch(userId: string) {
-    return this.httpClient.get<FavoriteResult[]>(`${this.apiEndPoint}/favorites?userId=${userId}`);
+  private fetch() {
+    return this.httpClient.get<FavoriteResult[]>(`${this.apiEndPoint}/favorites`);
   }
 
   add(favorite: FavoriteResult) {
@@ -54,27 +54,21 @@ export class FavoriteStoreService {
 
   remove(placeId: string) {
     // optimistic remove
-    return zip(this.authService.currentUser$, this.userPrefService.store$).pipe(
-      flatMap(([user, { userId }]) => {
-        return this._favorites$.pipe(
-          take(1),
-          map((favorites) => {
-            const idx = favorites.findIndex((f) => f.placeId === placeId);
-            if (idx > -1) {
-              favorites.splice(idx, 1);
-              this._favorites$.next([...favorites]);
-            }
-            return [...favorites];
-          }),
-          flatMap((favorites) => {
-            this.httpClient.delete<FavoriteResult>(
-              `${this.apiEndPoint}/favorites/${placeId}?userId=${user?.id ?? userId}`
-            );
-            return of(favorites);
-          }),
-          catchError(() => of(null)) // todo just while we dont have a backend
-        );
-      })
+    return this._favorites$.pipe(
+      take(1),
+      map((favorites) => {
+        const idx = favorites.findIndex((f) => f.placeId === placeId);
+        if (idx > -1) {
+          favorites.splice(idx, 1);
+          this._favorites$.next([...favorites]);
+        }
+        return [...favorites];
+      }),
+      flatMap((favorites) => {
+        this.httpClient.delete<FavoriteResult>(`${this.apiEndPoint}/favorites/${placeId}`);
+        return of(favorites);
+      }),
+      catchError(() => of(null)) // todo just while we dont have a backend
     );
   }
 

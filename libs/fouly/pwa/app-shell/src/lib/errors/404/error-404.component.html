@@ -1,0 +1,21 @@
+<ion-header>
+   <ion-toolbar>
+      <ion-buttons slot="start">
+         <ion-back-button></ion-back-button>
+      </ion-buttons>
+      <ion-buttons slot="start">
+         <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title>{{ 'appshell.error404.title' | translate }}</ion-title>
+   </ion-toolbar>
+</ion-header>
+<ion-content fullscren class="ion-padding ion-text-center">
+   <ion-img [src]="'assets/img/svg/undraw_page_not_found_su7k.svg'"></ion-img>
+   <ion-card-title>
+      <h4>{{ 'appshell.error404.cardTitle' | translate }}</h4>
+   </ion-card-title>
+   <ion-card-content>
+      <p>{{ 'appshell.error404.cardContent' | translate }}</p>
+      <ion-button expand="block" color="primary">{{ 'appshell.error404.gotoHome' | translate }}</ion-button>
+   </ion-card-content>
+</ion-content>
