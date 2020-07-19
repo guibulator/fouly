@@ -5,6 +5,7 @@ export * from './lib/interceptors/error-500.interceptor copy';
 export * from './lib/modules/auth';
 export * from './lib/modules/config';
 export * from './lib/providers/after-signup-sync.service';
+export * from './lib/providers/error-handler.service';
 export * from './lib/providers/favorite.service';
 export * from './lib/providers/http/chat-store.service';
 export * from './lib/providers/http/contact.service';

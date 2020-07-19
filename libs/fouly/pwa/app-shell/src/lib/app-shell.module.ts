@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { NgModule } from '@angular/core';
+import { ErrorHandler, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { TranslateModule } from '@ngx-translate/core';
-import { AuthInterceptor, Error500Interceptor } from '@skare/fouly/pwa/core';
+import { AuthInterceptor, Error500Interceptor, GlobalErrorHandler } from '@skare/fouly/pwa/core';
 import { SocialLoginModule } from 'angularx-social-login';
 import { ShellRoutingModule } from './app-shell-routing.module';
 import { Error404Component } from './errors/404/error-404.component';
@@ -24,7 +24,8 @@ import { ShellComponent } from './shell/shell.component';
   exports: [ShellComponent],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: Error500Interceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: Error500Interceptor, multi: true },
+    { provide: ErrorHandler, useClass: GlobalErrorHandler }
   ]
 })
 export class AppShellModule {}
