@@ -1,5 +1,5 @@
 import { Logger, Module } from '@nestjs/common';
-import { ContributeModule } from '../orm/contribute/contribute.module';
+import { ContributeModule } from '../modules/contribute/contribute.module';
 import { FoulyCrowdModelService } from './crowdStatus/foulyCrowdModel.service';
 import { QuoteFromFeedbackService } from './crowdStatus/quoteFromFeedback.service';
 import { StoreCrowdService } from './crowdStatus/storeCrowd.service';

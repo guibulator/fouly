@@ -3,10 +3,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import {
   AfterSignupSyncService,
   AuthenticationService,
+  UserPreferenceService,
   UserStoreService
 } from '@skare/fouly/pwa/core';
-import { Observable, Subscription } from 'rxjs';
-import { filter, flatMap } from 'rxjs/operators';
+import { combineLatest, Observable, Subscription } from 'rxjs';
+import { filter, flatMap, map } from 'rxjs/operators';
 
 @Component({
   selector: 'fouly-login',
@@ -17,6 +18,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   private readonly subscriptions = new Subscription();
   constructor(
     private authService: AuthenticationService,
+    private userPrefService: UserPreferenceService,
     private userStoreService: UserStoreService,
     private router: Router,
     private route: ActivatedRoute,
@@ -25,14 +27,15 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loginIn$ = this.authService.loginIn$;
+    this.userPrefService.init();
     this.subscriptions.add(
-      this.authService.currentUser$
+      combineLatest([this.authService.currentUser$, this.userPrefService.store$])
         .pipe(
-          filter((user) => !!user),
-          flatMap(() => this.afterSignupSyncService.sync()),
-          flatMap((user: any) => this.userStoreService.createUpdateUser(user))
+          filter(([user, pref]) => !!user),
+          flatMap((source) => this.afterSignupSyncService.sync().pipe(map(() => source))),
+          flatMap(([user, { language }]) => this.userStoreService.createUpdateUser(user, language))
         )
-        .subscribe(() => this.router.navigateByUrl('identity/profile'))
+        .subscribe(() => this.router.navigate(['/identity/profile']))
     );
   }
 

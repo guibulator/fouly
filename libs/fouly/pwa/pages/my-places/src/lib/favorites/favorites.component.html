@@ -10,7 +10,10 @@
    </ion-toolbar>
 </ion-header>
 
-<ion-content fullscreen>
+<ion-content>
+   <ion-refresher class="refresher" slot="fixed" (ionRefresh)="refresh($event)">
+      <ion-refresher-content></ion-refresher-content>
+   </ion-refresher>
    <ng-container *ngIf="favorites$ | async as favorites">
       <ion-list>
          <ion-item-group>

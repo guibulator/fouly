@@ -1,7 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { StoreCrowdCommand, StoreCrowdResult, StoreType } from '@skare/fouly/data';
-import { Contribute } from '../../orm/contribute/contribute.schema';
-import { ContributeService } from '../../orm/contribute/contribute.service';
+import { Contribute } from '../../modules/contribute/contribute.schema';
+import { ContributeService } from '../../modules/contribute/contribute.service';
 import { CityDetailService } from '../rapid-api/cityDetail.service';
 import { WeatherService } from '../rapid-api/weather.service';
 import { FoulyCrowdModelService } from './foulyCrowdModel.service';

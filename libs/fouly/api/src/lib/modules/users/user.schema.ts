@@ -8,22 +8,22 @@ export class User extends Document {
   userId: string;
 
   @Prop()
-  providerId: string;
-
-  @Prop()
-  name: string;
+  provider: string;
 
   @Prop()
   firstName: string;
 
   @Prop()
+  lastName: string;
+
+  @Prop()
   email: string;
 
   @Prop()
-  picture: string;
+  photoUrl: string;
 
   @Prop()
-  loginFrom: string;
+  lang: string;
 
   static fromCmd(cmd: UserCommand) {
     return cmd; // for now work with command like dto

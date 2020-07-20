@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Contribute } from '../../orm/contribute/contribute.schema';
+import { Contribute } from '../../modules/contribute/contribute.schema';
 
 const similarHoursDelay = 0.5;
 const similarTimeDaysDelay = 30;

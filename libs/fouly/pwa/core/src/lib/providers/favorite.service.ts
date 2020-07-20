@@ -27,6 +27,10 @@ export class FavoriteService {
       .subscribe();
   }
 
+  refresh() {
+    return this.favoriteStore.fetch();
+  }
+
   /**
    * Create a new set of favorites based on authenticated user
    */
