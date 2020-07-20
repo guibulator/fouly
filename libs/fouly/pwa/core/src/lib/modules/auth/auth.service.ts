@@ -30,6 +30,7 @@ export class AuthenticationService {
     authService.authState
       .pipe(
         map((socialUser) => {
+          //console.log(socialUser);  //for debug purpose
           this._currentUser$.next(socialUser);
           return socialUser;
         })

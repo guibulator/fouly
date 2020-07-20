@@ -2,28 +2,53 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { FavoriteCommand, FavoriteResult } from '@skare/fouly/data';
 import { Model } from 'mongoose';
+import { uuid } from 'uuidv4';
 import { PlaceDetailsService } from '../../services/placeDetails.service';
 import { PlaceIdMapperService } from '../placeIdMapper/place-id-mapper.service';
+import { UserService } from '../users/user.service';
 import { Favorite } from './favorite.schema';
+
 @Injectable()
 export class FavoriteService {
   constructor(
     private placeIdMapperervice: PlaceIdMapperService,
     private placeDetailsService: PlaceDetailsService,
+    private userService: UserService,
     @InjectModel(Favorite.name) private readonly favoriteModel: Model<Favorite>
   ) {}
-  async getFavorites(userId: string): FavoriteResult {
+  async getFavorites(userId: string): Promise<FavoriteResult[]> {
+    //const user = this.userService.getUser({ userId: userId }); //pour aller chercher la langue de user si elle est stocker dans User. sinon dans les preferences???
+
     const favs = await this.favoriteModel.find({ userId: userId }).exec();
-    // TODO: The favorite model in bd has only 2 fields (userId and placeId)
-    // Get the place details with contribution to return all the information the fav needs
-    // TODO Front-End. For the My-Places route, get the storeCrowd and display it
-    // placeId: string;
-    // storeCrowdResult?: StoreCrowdResult;
-    // userId?: string;
-    // name?: string;
-    // address?: string;
-    // lat?: number;
-    // lng?: number;
+
+    if (!Array.isArray(favs)) return null;
+
+    const favResults: FavoriteResult[] = [];
+
+    for (let favIndex = 0; favIndex < favs.length; favIndex++) {
+      if (favs[favIndex].placeId) {
+        const result = await this.placeDetailsService.getPlaceDetails(
+          favs[favIndex].placeId,
+          uuid(),
+          new Date(),
+          null //fournir la langue du user
+        );
+
+        //TODO MAPPER
+        if (result) {
+          favResults.push({
+            placeId: result.place_id,
+            address: result.adr_address,
+            lat: result.geometry?.location.lat,
+            lng: result.geometry?.location.lng,
+            name: result.name,
+            userId: userId
+          });
+        }
+      }
+    }
+
+    return favResults;
   }
 
   async add(cmd: FavoriteCommand) {
