@@ -24,7 +24,7 @@ export class UserStoreService {
       ...socialUser,
       lang,
       userId: socialUser.id,
-      providerId: socialUser.provider
+      provider: socialUser.provider
     };
     return this.httpClient.post<UserResult>(`${this.apiEndPoint}/user`, userCmd);
   }
