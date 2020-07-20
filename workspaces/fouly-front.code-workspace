@@ -1,0 +1,19 @@
+{
+  "folders": [
+    {
+      "path": "../libs/data"
+    },
+    {
+      "path": "../libs/api"
+    },
+    {
+      "path": "../libs/fouly/pwa"
+    }
+  ],
+  "settings": {
+    "git.ignoreLimitWarning": true,
+    "breadcrumbs.enabled": true,
+    "vsicons.presets.angular": true,
+    "debug.internalConsoleOptions": "neverOpen"
+  }
+}

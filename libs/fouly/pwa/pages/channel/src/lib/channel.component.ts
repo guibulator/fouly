@@ -5,6 +5,7 @@ import { IonContent } from '@ionic/angular';
 import * as signalR from '@microsoft/signalr';
 import { ChatMessageCommand, ChatMessageResult } from '@skare/fouly/data';
 import { AuthenticationService, ChatStoreService } from '@skare/fouly/pwa/core';
+import { SocialUser } from 'angularx-social-login';
 import { BehaviorSubject, fromEvent, Observable, Subscription } from 'rxjs';
 import { filter, map, switchMap, take, tap } from 'rxjs/operators';
 import { uuid } from 'uuidv4';
@@ -16,11 +17,12 @@ import { uuid } from 'uuidv4';
 export class ChannelComponent implements OnInit, OnDestroy, AfterViewInit {
   userScrolled$: Observable<boolean>;
   followTail = true;
-  public ready: Boolean = false;
-  public userMsg = new FormControl('');
-  public messages$ = new BehaviorSubject<ChatMessageResult[]>([]);
-  public connection: signalR.HubConnection;
-  public placeName: string;
+  ready: Boolean = false;
+  user$: Observable<SocialUser>;
+  messages$ = new BehaviorSubject<ChatMessageResult[]>([]);
+  userMsg = new FormControl('');
+  connection: signalR.HubConnection;
+  placeName: string;
 
   private hasBeendDestroyed = false;
   private messages: ChatMessageResult[] = [];
@@ -41,7 +43,7 @@ export class ChannelComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnInit() {
     this.placeId = this.route.snapshot.params['placeId'];
     this.placeName = this.route.snapshot.params['placeName'];
-
+    this.user$ = this.authService.currentUser$;
     this.chatService.getConnectionSignalR().subscribe((info) => {
       this.start(info);
     });
@@ -90,24 +92,39 @@ export class ChannelComponent implements OnInit, OnDestroy, AfterViewInit {
     this.authService.currentUser$
       .pipe(
         filter((user) => !!user),
-        take(1)
-      )
-      .subscribe((user) => {
-        if (newMsg === null || newMsg === '' || newMsg.trim() === '') {
-          return;
-        }
+        take(1),
+        map((user) => {
+          if (newMsg === null || newMsg === '' || newMsg.trim() === '') {
+            return;
+          }
 
-        const myMsg = new ChatMessageCommand();
-        myMsg.correlationId = uuid();
-        myMsg.author = user.name;
-        myMsg.msg = newMsg;
-        myMsg.time = new Date();
-        myMsg.placeId = this.placeId;
-        this.correlationIds.push(myMsg.correlationId);
-        this.chatService.postNewMsg(myMsg);
-        this.onNewMsgInChannel(myMsg, true);
-        this.userMsg.setValue('');
-      });
+          const myMsg: ChatMessageCommand = {
+            correlationId: uuid(),
+            author: user.name,
+            msg: newMsg,
+            time: new Date(),
+            placeId: this.placeId,
+            userId: user.id
+          };
+
+          this.correlationIds.push(myMsg.correlationId);
+          this.chatService.postNewMsg(myMsg);
+
+          // optimistic save for new mesage
+          this.onNewMsgInChannel(
+            {
+              author: myMsg.author,
+              msg: myMsg.msg,
+              time: myMsg.time,
+              userId: myMsg.userId,
+              placeId: myMsg.placeId
+            },
+            true
+          );
+          this.userMsg.setValue('');
+        })
+      )
+      .subscribe();
   }
 
   onNewMsgInChannel(newMsg: ChatMessageResult, isLocal: boolean = false) {

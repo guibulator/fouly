@@ -40,7 +40,6 @@ export class PlaceDetailsStoreService {
   }
 
   getPhotoUrl(photoReferenceId: string, maxWidth = 800, maxHeight = 800) {
-    console.log('getphotourl');
     return this._placeApiKey$.pipe(
       map(
         (key) =>

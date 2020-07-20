@@ -12,13 +12,16 @@ export class Chat extends Document {
   author: string;
   @Prop()
   time: Date;
+  @Prop()
+  userId: string;
 
   static fromCmd(cmd: ChatMessageCommand) {
     return {
       placeId: cmd.placeId,
       msg: cmd.msg,
       author: cmd.author,
-      time: cmd.time
+      time: cmd.time,
+      userId: cmd.userId
     };
   }
 }
