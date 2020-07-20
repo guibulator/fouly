@@ -23,7 +23,7 @@ export class ChatStoreService {
   postNewMsg(msgToSave: ChatMessageCommand) {
     this._loading.next(true);
     return this.httpClient
-      .post(`${this.apiEndPoint}/chat/postNewMsg`, msgToSave)
+      .post(`${this.apiEndPoint}/chat`, msgToSave)
       .pipe(finalize(() => this._loading.next(false)))
       .subscribe();
   }

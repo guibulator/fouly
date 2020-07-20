@@ -48,7 +48,9 @@
     },
 
     "channel": {
-      "title": "Discussions"
+      "title": "Discussions",
+      "input": "Partagez votre expérience",
+      "authenticateBtn": "Identifiez-vous pour contribuer"
     },
 
     "contact": {
@@ -59,7 +61,7 @@
       "commentPlaceHolder": "Entrez vos commentaires, suggestions ou idées.",
       "emailPlaceHolder": "Courriel (optionnel)",
       "instruction": "Entrez votre commentaire ci-dessous",
-      "thanks": "Commentaire envoyé avec succès, merci !",
+      "thanks": "Merci pour le commentaire. Ils sont tous analysés pour vous offrir un meilleur Fouly !",
       "send": "Envoyer",
       "findUsSocial": "Retrouvez-nous sur les réseaux sociaux pour communiquer avec nous et rester en contact !"
     },

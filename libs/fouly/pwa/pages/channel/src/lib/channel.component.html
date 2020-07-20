@@ -15,40 +15,52 @@
 </ion-header>
 
 <ion-content class="fouly-content" fullscreen #chatHistoryContent [scrollEvents]="true">
-   <div class="fouly-chat">
-      <div class="fouly-chat-line" *ngFor="let msg of messages$ | async">
-         <div class="fouly-chat-msg">
-            <span class="fouly-chat-msg-meta">{{ msg.author }} {{ msg.time | date: 'shortTime' }}</span>
-            <span class="fouly-chat-msg-text">{{ msg.msg }}</span>
+   <ng-container *ngIf="ready">
+      <ng-container *ngIf="user$ | async as user">
+         <div class="fouly-chat">
+            <div class="fouly-chat-line" *ngFor="let msg of messages$ | async">
+               <div class="fouly-chat-msg" [class.from-me]="msg.userId === user.userId">
+                  <span class="fouly-chat-msg-meta">{{ msg.author }} {{ msg.time | date: 'shortTime' }}</span>
+                  <span class="fouly-chat-msg-text">{{ msg.msg }}</span>
+               </div>
+            </div>
          </div>
-      </div>
-   </div>
 
-   <ion-fab *ngIf="userScrolled$ | async" vertical="bottom" horizontal="end" slot="fixed">
-      <ion-fab-button (click)="scrollToBottom()" size="small" color="primary">
-         <ion-icon name="arrow-down-circle"></ion-icon>
-      </ion-fab-button>
-   </ion-fab>
-   <div class="background"></div>
+         <ion-fab *ngIf="userScrolled$ | async" vertical="bottom" horizontal="end" slot="fixed">
+            <ion-fab-button (click)="scrollToBottom()" size="small" color="primary">
+               <ion-icon name="arrow-down-circle"></ion-icon>
+            </ion-fab-button>
+         </ion-fab>
+         <div class="background"></div>
+      </ng-container>
+   </ng-container>
 </ion-content>
 
 <ion-footer class="ion-no-border">
    <ion-toolbar>
-      <ion-item>
-         <ion-input
-            (keyup.enter)="sendMsg(userMsg.value)"
-            class="fouly-input"
-            spellcheck="true"
-            placeholder="Partagez votre expérience"
-            color="primary"
-            type="text"
-            autofocus="on"
-            [formControl]="userMsg"
-         ></ion-input>
+      <ion-item [hidden]="!(user$ | async)?.provider">
+         <ng-container *ngIf="user$ | async as user">
+            <ng-container>
+               <ion-input
+                  *ngIf="user.provider"
+                  (keyup.enter)="sendMsg(userMsg.value)"
+                  class="fouly-input"
+                  spellcheck="true"
+                  [placeholder]="'page.channel.input' | translate"
+                  color="primary"
+                  type="text"
+                  autofocus="on"
+                  [formControl]="userMsg"
+               ></ion-input>
+            </ng-container>
+         </ng-container>
 
-         <ion-icon color="primary" #sendBtn slot="end" name="arrow-forward-circle"></ion-icon>
-
-         <!-- <ion-icon *ngIf="userMsg.value === ''" color="primary" slot="end" name="mic-circle-sharp"></ion-icon> -->
+         <ion-icon [hidden]="!(user$ | async)?.provider" color="primary" #sendBtn slot="end" name="arrow-forward-circle"></ion-icon>
       </ion-item>
+      <ng-container *ngIf="user$ | async as user">
+         <ion-button routerLink="/identity/login" routerDi *ngIf="!user.provider" expand="block">{{
+            'page.channel.authenticateBtn' | translate
+         }}</ion-button>
+      </ng-container>
    </ion-toolbar>
 </ion-footer>

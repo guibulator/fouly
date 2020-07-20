@@ -12,7 +12,7 @@ export class ChatController {
     return this.chatService.getMsgHistory(params.placeId);
   }
 
-  @Post('postNewMsg')
+  @Post()
   async postNewMsg(@Body() msgToSave: ChatMessageCommand) {
     await this.chatService.postNewMsg(msgToSave);
     this.chatService.sendSignalRMessage(msgToSave); // do not wait this call

@@ -3,10 +3,14 @@ import { FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { IonContent } from '@ionic/angular';
 import * as signalR from '@microsoft/signalr';
-import { ChatMessageCommand, ChatMessageResult } from '@skare/fouly/data';
-import { AuthenticationService, ChatStoreService } from '@skare/fouly/pwa/core';
-import { BehaviorSubject, fromEvent, Observable, Subscription } from 'rxjs';
-import { filter, map, switchMap, take, tap } from 'rxjs/operators';
+import { ChatMessageCommand, ChatMessageResult, UserResult } from '@skare/fouly/data';
+import {
+  AuthenticationService,
+  ChatStoreService,
+  UserPreferenceService
+} from '@skare/fouly/pwa/core';
+import { BehaviorSubject, combineLatest, fromEvent, Observable, Subscription } from 'rxjs';
+import { delay, filter, map, switchMap, take, tap } from 'rxjs/operators';
 import { uuid } from 'uuidv4';
 @Component({
   selector: 'fouly-channel',
@@ -16,11 +20,12 @@ import { uuid } from 'uuidv4';
 export class ChannelComponent implements OnInit, OnDestroy, AfterViewInit {
   userScrolled$: Observable<boolean>;
   followTail = true;
-  public ready: Boolean = false;
-  public userMsg = new FormControl('');
-  public messages$ = new BehaviorSubject<ChatMessageResult[]>([]);
-  public connection: signalR.HubConnection;
-  public placeName: string;
+  ready: Boolean = false;
+  user$: Observable<Partial<UserResult>>;
+  messages$ = new BehaviorSubject<ChatMessageResult[]>([]);
+  userMsg = new FormControl('');
+  connection: signalR.HubConnection;
+  placeName: string;
 
   private hasBeendDestroyed = false;
   private messages: ChatMessageResult[] = [];
@@ -35,25 +40,36 @@ export class ChannelComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(
     private chatService: ChatStoreService,
     private route: ActivatedRoute,
+    private userPrefService: UserPreferenceService,
     private authService: AuthenticationService
   ) {}
 
   ngOnInit() {
     this.placeId = this.route.snapshot.params['placeId'];
     this.placeName = this.route.snapshot.params['placeName'];
-
+    this.user$ = combineLatest([this.authService.currentUser$, this.userPrefService.store$]).pipe(
+      map(([user, pref]) => {
+        return user ? { ...user, userId: user.id } : { ...user, userId: pref.userId };
+      })
+    );
     this.chatService.getConnectionSignalR().subscribe((info) => {
       this.start(info);
     });
 
-    this.chatService.getMsgHistory(this.placeId).subscribe((data: ChatMessageResult[]) => {
-      this.messages = data;
-      this.messages$.next([...data]);
-      setTimeout(() => {
-        this.scrollToBottom();
-        this.ready = true;
-      }, 500);
-    });
+    this.chatService
+      .getMsgHistory(this.placeId)
+      .pipe(
+        delay(1500),
+        map((data) => {
+          this.messages = data;
+          this.messages$.next([...data]);
+          setTimeout(() => {
+            this.scrollToBottom();
+            this.ready = true;
+          }, 500);
+        })
+      )
+      .subscribe();
   }
 
   ngAfterViewInit(): void {
@@ -90,24 +106,39 @@ export class ChannelComponent implements OnInit, OnDestroy, AfterViewInit {
     this.authService.currentUser$
       .pipe(
         filter((user) => !!user),
-        take(1)
-      )
-      .subscribe((user) => {
-        if (newMsg === null || newMsg === '' || newMsg.trim() === '') {
-          return;
-        }
+        take(1),
+        map((user) => {
+          if (newMsg === null || newMsg === '' || newMsg.trim() === '') {
+            return;
+          }
 
-        const myMsg = new ChatMessageCommand();
-        myMsg.correlationId = uuid();
-        myMsg.author = user.name;
-        myMsg.msg = newMsg;
-        myMsg.time = new Date();
-        myMsg.placeId = this.placeId;
-        this.correlationIds.push(myMsg.correlationId);
-        this.chatService.postNewMsg(myMsg);
-        this.onNewMsgInChannel(myMsg, true);
-        this.userMsg.setValue('');
-      });
+          const myMsg: ChatMessageCommand = {
+            correlationId: uuid(),
+            author: user.name,
+            msg: newMsg,
+            time: new Date(),
+            placeId: this.placeId,
+            userId: user.id
+          };
+
+          this.correlationIds.push(myMsg.correlationId);
+          this.chatService.postNewMsg(myMsg);
+
+          // optimistic save for new mesage
+          this.onNewMsgInChannel(
+            {
+              author: myMsg.author,
+              msg: myMsg.msg,
+              time: myMsg.time,
+              userId: myMsg.userId,
+              placeId: myMsg.placeId
+            },
+            true
+          );
+          this.userMsg.setValue('');
+        })
+      )
+      .subscribe();
   }
 
   onNewMsgInChannel(newMsg: ChatMessageResult, isLocal: boolean = false) {
