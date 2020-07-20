@@ -42,7 +42,8 @@ export class FavoriteService {
             lat: result.geometry?.location.lat,
             lng: result.geometry?.location.lng,
             name: result.name,
-            userId: userId
+            userId: userId,
+            storeCrowdResult: result.storeCrowdResult
           });
         }
       }
