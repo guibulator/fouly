@@ -107,7 +107,6 @@ export class MapComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnInit(): void {
     this.centerMe();
-    this.subscription.add(this.favoriteStore.getAll().subscribe());
   }
 
   ngAfterViewInit() {

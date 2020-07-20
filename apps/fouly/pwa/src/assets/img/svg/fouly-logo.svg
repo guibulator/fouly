@@ -11,8 +11,8 @@
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="210mm"
-   height="125mm"
-   viewBox="0 0 210 125"
+   height="81mm"
+   viewBox="0 0 210 81"
    version="1.1"
    id="svg8"
    inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)"
@@ -36,16 +36,16 @@
     </linearGradient>
     <inkscape:perspective
        id="perspective863"
-       inkscape:persp3d-origin="155.08184 : 64.604166 : 1"
+       inkscape:persp3d-origin="155.08184 : 64.604168 : 1"
        inkscape:vp_z="260.08184 : 114.10417 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_y="0 : 999.99999 : 0"
        inkscape:vp_x="50.081844 : 114.10417 : 1"
        sodipodi:type="inkscape:persp3d" />
     <linearGradient
        gradientUnits="userSpaceOnUse"
-       y2="312.80836"
+       y2="312.80835"
        x2="223.59961"
-       y1="312.80836"
+       y1="312.80835"
        x1="123.46289"
        id="linearGradient921"
        xlink:href="#linearGradient919"
@@ -59,14 +59,14 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.7071068"
-     inkscape:cx="547.0253"
+     inkscape:cx="311.55875"
      inkscape:cy="-154.60691"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1-2"
      showgrid="false"
-     inkscape:window-width="2560"
-     inkscape:window-height="1377"
-     inkscape:window-x="1072"
+     inkscape:window-width="1920"
+     inkscape:window-height="1137"
+     inkscape:window-x="3632"
      inkscape:window-y="476"
      inkscape:window-maximized="1" />
   <metadata
@@ -85,7 +85,7 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(0,-172)">
+     transform="translate(0,-216)">
     <g
        id="g983"
        transform="matrix(0.26458333,0,0,0.26458333,-8.4722852,22.861548)">
@@ -95,23 +95,23 @@
         <flowRoot
            xml:space="preserve"
            id="flowRoot1624"
-           style="font-style:normal;font-weight:normal;font-size:40.00000015px;line-height:1.25;font-family:Modak;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;-inkscape-font-specification:'Modak, Normal';font-stretch:normal;font-variant:normal;text-anchor:start;text-align:start;writing-mode:lr;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:1.25;font-family:Modak;-inkscape-font-specification:'Modak, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none"
            transform="matrix(1.2987075,0,0,1.2987075,116.91957,583.6611)"><flowRegion
              id="flowRegion1626"
-             style="-inkscape-font-specification:'Modak, Normal';font-family:Modak;font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal;font-size:40.00000015px;text-anchor:start;text-align:start;writing-mode:lr;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;fill:#ffffff;fill-opacity:1;"><rect
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;font-family:Modak;-inkscape-font-specification:'Modak, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1"><rect
                id="rect1628"
                width="87.14286"
                height="44.285713"
                x="-794.28571"
                y="482.44095"
-               style="-inkscape-font-specification:'Modak, Normal';font-family:Modak;font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal;font-size:40.00000015px;text-anchor:start;text-align:start;writing-mode:lr;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;fill:#ffffff;fill-opacity:1;" /></flowRegion><flowPara
+               style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;font-family:Modak;-inkscape-font-specification:'Modak, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1" /></flowRegion><flowPara
              id="flowPara1630">2m</flowPara></flowRoot>        <g
            id="layer1-2"
            inkscape:label="Layer 1"
            transform="matrix(4.9085008,0,0,4.9085008,-116.76892,1019.3831)">
           <g
              aria-label="ouly"
-             transform="matrix(1.8218289,0,0,1.8218289,-120.52985,-595.76969)"
+             transform="matrix(1.8218289,0,0,1.8218289,-122.77491,-571.82234)"
              style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:1.25;font-family:Modak;-inkscape-font-specification:'Modak, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:2.08399391;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.97340423"
              id="flowRoot815">
             <path
@@ -135,16 +135,10 @@
                id="path3185"
                inkscape:connector-curvature="0" />
           </g>
-          <circle
-             r="23.434523"
-             cy="50.181545"
-             cx="58.775295"
-             id="path890"
-             style="fill:#ffffff;fill-opacity:1;stroke-width:0.26458332" />
           <path
              inkscape:connector-curvature="0"
              id="flowRoot879"
-             d="m 79.116999,-60.049143 c -12.45314,0 -18.67927,1.289822 -18.67927,3.869731 v 42.736728 c 0,2.748171 1.20087,4.8659807 3.60314,6.3522247 2.18135,1.374086 4.77703,2.06124 7.78677,2.06124 3.03734,0 5.60515,-0.378484 7.70369,-1.135631 2.12614,-0.757148 3.82408,-1.696647 5.09425,-2.818343 V -19.625243 c -0.74554,-0.02814 -1.54574,-0.04266 -2.40172,-0.04266 -0.85597,0 -1.62946,-0.04176 -2.31977,-0.125737 -0.6627,-0.0842 -0.99368,-0.351126 -0.99368,-0.799804 0,-0.280441 0.11033,-0.532764 0.33123,-0.757103 h 20.29504 c 1.684341,-2.131233 2.526361,-5.104034 2.526361,-8.917821 0,-3.05664 -0.70496,-5.804119 -2.113191,-8.243821 h -18.3065 c -0.0552,-0.05606 -0.0831,-0.168841 -0.0831,-0.336989 v -0.29431 c 0,-0.897354 0.52493,-1.345675 1.57419,-1.345675 h 14.3306 c 5.550071,0 8.325761,-3.211634 8.325761,-9.633375 0,-1.458211 -0.19386,-3.098361 -0.58051,-4.921127 -0.38657,-1.850808 -0.98004,-3.519128 -1.7808,-5.005378 z"
+             d="m 76.871935,-36.101794 c -12.45314,0 -18.67927,1.289822 -18.67927,3.869731 v 42.736728 c 0,2.748171 1.20087,4.865981 3.60314,6.352225 2.18135,1.374086 4.77703,2.06124 7.78677,2.06124 3.03734,0 5.60515,-0.378484 7.70369,-1.135631 2.12614,-0.757148 3.82408,-1.696647 5.09425,-2.818343 V 4.322106 c -0.74554,-0.02814 -1.54574,-0.04266 -2.40172,-0.04266 -0.85597,0 -1.62946,-0.04176 -2.31977,-0.125737 -0.6627,-0.0842 -0.99368,-0.351126 -0.99368,-0.799804 0,-0.280441 0.11033,-0.532764 0.33123,-0.757103 h 20.29504 c 1.684341,-2.13123295 2.526361,-5.104034 2.526361,-8.917821 0,-3.05664 -0.70496,-5.804119 -2.113191,-8.243821 h -18.3065 c -0.0552,-0.05606 -0.0831,-0.168841 -0.0831,-0.336989 v -0.29431 c 0,-0.897354 0.52493,-1.345675 1.57419,-1.345675 h 14.3306 c 5.550075,0 8.325765,-3.211634 8.325765,-9.633375 0,-1.458211 -0.19386,-3.098361 -0.58051,-4.921127 -0.38657,-1.850808 -0.98004,-3.519128 -1.7808,-5.005378 z"
              style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:1.25;font-family:Modak;-inkscape-font-specification:'Modak, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#ff3985;fill-opacity:0.9372549;stroke:#000000;stroke-width:2.13708043;stroke-opacity:1" />
         </g>
       </g>

@@ -15,7 +15,19 @@
     "login": "S'identifier",
     "documentation": "Documentation",
     "introduction": "Revoir l'introduction",
-    "version": "Version: "
+    "version": "Version: ",
+    "error404": {
+      "title": "Oups !",
+      "cardTitle": "Cette resource n'existe pas",
+      "cardContent": "La resource que vous vouliez atteindre n'existe pas.",
+      "gotoHome": "Retour page d'accueil"
+    },
+    "error500": {
+      "title": "Oups !",
+      "cardTitle": "Une erreur est survenue",
+      "cardContent": "Une erreur de notre côté nous empêche de vous livrer le contenu demandé. Un rapport nous a été envoyé et nous travaillerons à fixer le problème le plus rapidement possible. ",
+      "gotoHome": "Retour page d'accueil"
+    }
   },
 
   "page": {
@@ -123,6 +135,7 @@
       "title": "Mes favoris",
       "remove": "Retirer",
       "favoriteShops": "Vos commerces favoris",
+      "signupMessage": "Pour pouvoir saugarder plus de 3 favoris, vous devez vous authentifier. Cela vous permettra de sauvegarder autant de favoris que vous voulez et plus encore !",
       "instruction": "Vous trouverez en un clin d'oeil les détails importants comme le délai d'attente et l'achalandage de vos commerces favoris. Pour ajouter un favoris, dirigez vous sur la map, sélectionner un commerce et cliquer sur l'étoile."
     },
 
@@ -162,7 +175,6 @@
     "storeDetail": {
       "title": "Détails",
       "addFavorite": "Ajouter au favoris",
-      "websitePlace": "Site web du commerçant",
       "open": "OUVERT",
       "close": "FERMÉ",
       "openingHours": "Horaire",

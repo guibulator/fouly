@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ShowIntroductionGuard, WithDelayPreloadingStrategy } from '@skare/fouly/pwa/core';
+import { Error404Component } from './errors/404/error-404.component';
+import { Error500Component } from './errors/500/error-500.component';
 const routes: Routes = [];
 
 @NgModule({
@@ -12,11 +14,6 @@ const routes: Routes = [];
           redirectTo: '/introduction',
           pathMatch: 'full'
         },
-        // {
-        //   path: 'support',
-        //   loadChildren: () =>
-        //     import('@skare/fouly/pwa/pages/support').then((module) => module.SupportModule)
-        // },
         {
           path: 'app',
           loadChildren: () =>
@@ -53,7 +50,9 @@ const routes: Routes = [];
           loadChildren: () =>
             import('@skare/fouly/pwa/pages/contribute').then((module) => module.ContributeModule)
         },
-        { path: '**', redirectTo: '' }
+        { path: 'error', component: Error500Component },
+
+        { path: '**', component: Error404Component }
       ],
       {
         initialNavigation: 'enabled',

@@ -1,7 +1,11 @@
+import { StoreCrowdResult } from './store-crowd.result';
+
 export class FavoriteResult {
   placeId: string;
-  name: string;
-  address: string;
-  lat: number;
-  lng: number;
+  storeCrowdResult?: StoreCrowdResult;
+  userId?: string;
+  name?: string;
+  address?: string;
+  lat?: number;
+  lng?: number;
 }

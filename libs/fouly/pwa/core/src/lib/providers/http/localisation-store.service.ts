@@ -6,7 +6,7 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { GeolocationResult } from '@skare/fouly/data';
 import { from, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { ConfigService } from '../modules/config';
+import { ConfigService } from '../../modules/config';
 @Injectable({ providedIn: 'root' })
 export class LocalisationStoreService {
   constructor(

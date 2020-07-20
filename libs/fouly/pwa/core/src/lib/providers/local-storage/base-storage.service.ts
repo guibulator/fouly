@@ -1,7 +1,7 @@
 /// <reference types="googlemaps" />
 import { Storage } from '@ionic/storage';
 import { BehaviorSubject, from, Observable } from 'rxjs';
-import { finalize, shareReplay, take, tap } from 'rxjs/operators';
+import { finalize, map, shareReplay, take, tap } from 'rxjs/operators';
 /**
  * Provides a set a basic functionnality to add/remove/fetch anything from storage
  */
@@ -21,22 +21,28 @@ export class BaseStorage<T> {
     this.storage.set(this.storageKey, []);
   }
 
-  add(toAdd: T): void {
+  add(toAdd: T) {
     // optimistic save
-    this._store$.pipe(take(1)).subscribe((items) => {
-      items = [...this._store$.getValue(), toAdd]; // keep structure immutable
-      this._store$.next(items);
-      this.storage.set(this.storageKey, items);
-    });
+    return this._store$.pipe(
+      take(1),
+      map((items) => {
+        items = [...this._store$.getValue(), toAdd]; // keep structure immutable
+        this._store$.next(items);
+        this.storage.set(this.storageKey, items);
+      })
+    );
   }
 
-  remove(id: string): void {
+  remove(id: string) {
     // optimistic save
-    this._store$.pipe(take(1)).subscribe((items) => {
-      items = items.filter((p) => (this.keyAccessor ? this.keyAccessor(p) !== id : true));
-      this._store$.next([...items]); // keep structure immutable
-      this.storage.set(this.storageKey, items);
-    });
+    return this._store$.pipe(
+      take(1),
+      map((items) => {
+        items = items.filter((p) => (this.keyAccessor ? this.keyAccessor(p) !== id : true));
+        this._store$.next([...items]); // keep structure immutable
+        this.storage.set(this.storageKey, items);
+      })
+    );
   }
 
   getAll(): Observable<T[]> {
