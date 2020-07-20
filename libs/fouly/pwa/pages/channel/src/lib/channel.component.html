@@ -37,17 +37,21 @@
 <ion-footer class="ion-no-border">
    <ion-toolbar>
       <ion-item>
-         <ion-input
-            (keyup.enter)="sendMsg(userMsg.value)"
-            class="fouly-input"
-            spellcheck="true"
-            placeholder="Partagez votre expérience"
-            color="primary"
-            type="text"
-            autofocus="on"
-            [formControl]="userMsg"
-         ></ion-input>
-
+         <ng-container *ngIf="user$ | async">
+            <ion-input
+               (keyup.enter)="sendMsg(userMsg.value)"
+               class="fouly-input"
+               spellcheck="true"
+               [placeholder]="'page.channel.placeholder' | translate"
+               color="primary"
+               type="text"
+               autofocus="on"
+               [formControl]="userMsg"
+            ></ion-input>
+         </ng-container>
+         <ng-container *ngIf="!(user$ | async)">
+            <ion-button expand="block">Identifiez-vous pour contribuer</ion-button>
+         </ng-container>
          <ion-icon color="primary" #sendBtn slot="end" name="arrow-forward-circle"></ion-icon>
 
          <!-- <ion-icon *ngIf="userMsg.value === ''" color="primary" slot="end" name="mic-circle-sharp"></ion-icon> -->
