@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { UserCommand, UserResult } from '@skare/fouly/data';
+import { SocialUser } from 'angularx-social-login';
 import { Observable } from 'rxjs';
 import { ConfigService } from '../../modules/config/config.service';
 
@@ -18,8 +19,13 @@ export class UserStoreService {
     this.apiEndPoint = this.configService.apiUrl;
   }
 
-  createUpdateUser(user: UserResult): Observable<UserResult> {
-    const userCmd: UserCommand = { ...user };
-    return this.httpClient.post<UserResult>(`${this.apiEndPoint}/user/create`, userCmd);
+  createUpdateUser(socialUser: SocialUser, lang: string): Observable<UserResult> {
+    const userCmd: UserCommand = {
+      ...socialUser,
+      lang,
+      userId: socialUser.id,
+      providerId: socialUser.provider
+    };
+    return this.httpClient.post<UserResult>(`${this.apiEndPoint}/user`, userCmd);
   }
 }
