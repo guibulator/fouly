@@ -1,8 +1,17 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { FavoriteResult } from '@skare/fouly/data';
-import { BehaviorSubject, combineLatest, of, zip } from 'rxjs';
-import { catchError, flatMap, map, take, tap } from 'rxjs/operators';
+import { BehaviorSubject, of, timer, zip } from 'rxjs';
+import {
+  catchError,
+  debounce,
+  distinctUntilChanged,
+  flatMap,
+  map,
+  switchMap,
+  take,
+  tap
+} from 'rxjs/operators';
 import { AuthenticationService } from '../../modules/auth';
 import { ConfigService } from '../../modules/config/config.service';
 import { UserPreferenceService } from '../local-storage/user-preference.service';
@@ -25,8 +34,12 @@ export class FavoriteStoreService {
   ) {
     this.apiEndPoint = this.configService.apiUrl;
     // automatically fetch favorites when there is a connected user
-    combineLatest([this.authService.currentUser$])
-      .pipe(flatMap(() => this.fetch()))
+    this.authService.currentUser$
+      .pipe(
+        debounce(() => timer(1000)),
+        distinctUntilChanged(),
+        switchMap(() => this.fetch())
+      )
       .subscribe((favorites) => this._favorites$.next(favorites ?? []));
   }
 
