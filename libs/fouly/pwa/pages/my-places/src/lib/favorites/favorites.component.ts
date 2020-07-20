@@ -8,7 +8,7 @@ import {
 } from '@skare/fouly/pwa/core';
 import { SocialUser } from 'angularx-social-login';
 import { BehaviorSubject, combineLatest, Observable, Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 
 /**
  * A user can store up to 3 favorites without being logged in.
@@ -61,5 +61,12 @@ export class FavoritesComponent implements OnInit, OnDestroy {
 
   gotoContribute(placeId: string) {
     this.router.navigate(['contribute', placeId], { relativeTo: this.activatedRoute });
+  }
+
+  refresh(event) {
+    this.favoriteService
+      .refresh()
+      .pipe(tap(() => event.target.complete()))
+      .subscribe();
   }
 }

@@ -40,11 +40,13 @@ export class FavoriteStoreService {
         distinctUntilChanged(),
         switchMap(() => this.fetch())
       )
-      .subscribe((favorites) => this._favorites$.next(favorites ?? []));
+      .subscribe();
   }
 
-  private fetch() {
-    return this.httpClient.get<FavoriteResult[]>(`${this.apiEndPoint}/favorite`);
+  fetch() {
+    return this.httpClient
+      .get<FavoriteResult[]>(`${this.apiEndPoint}/favorite`)
+      .pipe(tap((favs) => this._favorites$.next(favs ?? [])));
   }
 
   add(favorite: FavoriteResult) {
