@@ -15,12 +15,14 @@ export class FavoriteController {
 
   @Post()
   async addFavorite(@Body() cmd: FavoriteCommand) {
-    return await this.favoriteService.add(cmd);
+    return await this.favoriteService.add(cmd).then(() => true);
   }
 
   @Post('sync')
   async syncFromLocalUser(@Query() query, @Headers('uuser-id') newUserId: string) {
-    return await this.favoriteService.syncFromLocalUser(query.localUserId, newUserId);
+    return await this.favoriteService
+      .syncFromLocalUser(query.localUserId, newUserId)
+      .then(() => true);
   }
 
   @Delete(':placeId')

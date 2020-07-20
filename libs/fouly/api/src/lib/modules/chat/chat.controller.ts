@@ -16,6 +16,7 @@ export class ChatController {
   async postNewMsg(@Body() msgToSave: ChatMessageCommand) {
     await this.chatService.postNewMsg(msgToSave);
     this.chatService.sendSignalRMessage(msgToSave); // do not wait this call
+    return true;
   }
 
   @Get('signalR/infoConnection')
