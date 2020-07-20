@@ -48,7 +48,9 @@
     },
 
     "channel": {
-      "title": "Discussions"
+      "title": "Discussions",
+      "input": "Partagez votre expérience",
+      "authenticateBtn": "Identifiez-vous pour contribuer"
     },
 
     "contact": {

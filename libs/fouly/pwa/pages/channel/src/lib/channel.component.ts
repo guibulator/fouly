@@ -3,11 +3,14 @@ import { FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { IonContent } from '@ionic/angular';
 import * as signalR from '@microsoft/signalr';
-import { ChatMessageCommand, ChatMessageResult } from '@skare/fouly/data';
-import { AuthenticationService, ChatStoreService } from '@skare/fouly/pwa/core';
-import { SocialUser } from 'angularx-social-login';
-import { BehaviorSubject, fromEvent, Observable, Subscription } from 'rxjs';
-import { filter, map, switchMap, take, tap } from 'rxjs/operators';
+import { ChatMessageCommand, ChatMessageResult, UserResult } from '@skare/fouly/data';
+import {
+  AuthenticationService,
+  ChatStoreService,
+  UserPreferenceService
+} from '@skare/fouly/pwa/core';
+import { BehaviorSubject, combineLatest, fromEvent, Observable, Subscription } from 'rxjs';
+import { delay, filter, map, switchMap, take, tap } from 'rxjs/operators';
 import { uuid } from 'uuidv4';
 @Component({
   selector: 'fouly-channel',
@@ -18,7 +21,7 @@ export class ChannelComponent implements OnInit, OnDestroy, AfterViewInit {
   userScrolled$: Observable<boolean>;
   followTail = true;
   ready: Boolean = false;
-  user$: Observable<SocialUser>;
+  user$: Observable<Partial<UserResult>>;
   messages$ = new BehaviorSubject<ChatMessageResult[]>([]);
   userMsg = new FormControl('');
   connection: signalR.HubConnection;
@@ -37,25 +40,36 @@ export class ChannelComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(
     private chatService: ChatStoreService,
     private route: ActivatedRoute,
+    private userPrefService: UserPreferenceService,
     private authService: AuthenticationService
   ) {}
 
   ngOnInit() {
     this.placeId = this.route.snapshot.params['placeId'];
     this.placeName = this.route.snapshot.params['placeName'];
-    this.user$ = this.authService.currentUser$;
+    this.user$ = combineLatest([this.authService.currentUser$, this.userPrefService.store$]).pipe(
+      map(([user, pref]) => {
+        return user ? { ...user, userId: user.id } : { ...user, userId: pref.userId };
+      })
+    );
     this.chatService.getConnectionSignalR().subscribe((info) => {
       this.start(info);
     });
 
-    this.chatService.getMsgHistory(this.placeId).subscribe((data: ChatMessageResult[]) => {
-      this.messages = data;
-      this.messages$.next([...data]);
-      setTimeout(() => {
-        this.scrollToBottom();
-        this.ready = true;
-      }, 500);
-    });
+    this.chatService
+      .getMsgHistory(this.placeId)
+      .pipe(
+        delay(1500),
+        map((data) => {
+          this.messages = data;
+          this.messages$.next([...data]);
+          setTimeout(() => {
+            this.scrollToBottom();
+            this.ready = true;
+          }, 500);
+        })
+      )
+      .subscribe();
   }
 
   ngAfterViewInit(): void {

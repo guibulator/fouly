@@ -15,7 +15,19 @@
     "login": "Login",
     "documentation": "Documentation",
     "introduction": "Review the introduction",
-    "version": "Version: "
+    "version": "Version: ",
+    "error404": {
+      "title": "Oops!",
+      "cardTitle": "This resource does not exist",
+      "cardContent": "The resource you wanted to reach does not exist.",
+      "gotoHome": "Back to home page"
+    },
+    "error500": {
+      "title": "Oops!",
+      "cardTitle": "An error has occurred",
+      "cardContent": "An error on our side is preventing us from delivering the requested content to you. A report has been sent to us and we will work to fix it as soon as possible.",
+      "gotoHome": "Back to home page"
+    }
   },
 
   "page": {
@@ -36,7 +48,9 @@
     },
 
     "channel": {
-      "title": "Discussions"
+      "title": "Discussions",
+      "input": "Share your experience",
+      "authenticateBtn": "Identity yourself to contribute"
     },
 
     "contact": {
