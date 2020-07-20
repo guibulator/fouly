@@ -11,9 +11,10 @@
 </ion-header>
 
 <ion-content>
-   <ion-refresher class="refresher" slot="fixed" (ionRefresh)="refresh($event)">
+   <!-- TODO: disable for now, not displaying correctly on my phone
+      <ion-refresher class="refresher" slot="fixed" (ionRefresh)="refresh($event)">
       <ion-refresher-content></ion-refresher-content>
-   </ion-refresher>
+   </ion-refresher> -->
    <ng-container *ngIf="favorites$ | async as favorites">
       <ion-list>
          <ion-item-group>
@@ -64,7 +65,7 @@
          <h1>{{ 'page.myFavorites.signupMessage' | translate }}</h1>
       </ion-card-title>
       <ion-card-content>
-         <ion-button color="primary" expand="block">{{ 'appshell.login' | translate }}</ion-button>
+         <ion-button routerLink="/identity/login" color="primary" expand="block">{{ 'appshell.login' | translate }}</ion-button>
       </ion-card-content>
    </ion-card>
 </ng-template>
