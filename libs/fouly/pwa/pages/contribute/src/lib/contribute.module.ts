@@ -34,6 +34,11 @@ import { NumberComponent } from './surveys/number/number.component';
         pathMatch: 'full',
         component: SurveyFormComponent,
         canActivate: [ContributeGuard]
+      },
+      {
+        path: ':storeType',
+        component: SurveyFormComponent,
+        canActivate: [ContributeGuard]
       }
     ])
   ],

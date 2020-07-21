@@ -37,7 +37,8 @@ export class Contribute extends Document {
       userId: cmd.userId,
       lat: cmd.lat,
       lng: cmd.lng,
-      time: cmd.time
+      time: cmd.time,
+      storeType: cmd.storeType
     };
   }
 }

@@ -21,18 +21,20 @@ export class StoreCrowdService {
   //Todo : Persist or cache crowd status for reuse
   //Todo : Define CrowdStatus enum values;
   async getStoreCrowdStatus(storeCrowdCmd: StoreCrowdCommand): Promise<StoreCrowdResult> {
+    const currentStoreType = this.getStoreType(storeCrowdCmd.placeDetail);
+
+    const result: StoreCrowdResult = {
+      asOfTime: storeCrowdCmd.asOfTime,
+      storeType: currentStoreType,
+      status: 'N/A'
+    };
+
     if (storeCrowdCmd.placeDetail.business_status !== 'OPERATIONAL') {
-      return {
-        asOfTime: storeCrowdCmd.asOfTime,
-        status: 'closed'
-      };
+      return { ...result, status: 'closed' };
     }
 
     if (!this.isBusinessOpen(storeCrowdCmd.placeDetail.opening_hours, storeCrowdCmd.asOfTime)) {
-      return {
-        asOfTime: storeCrowdCmd.asOfTime,
-        status: 'closed'
-      };
+      return { ...result, status: 'closed' };
     }
 
     // Todo : Try get status from cache
@@ -53,14 +55,11 @@ export class StoreCrowdService {
       storeCrowdCmd.asOfTime
     );
     if (statusFromFeedback) {
-      return {
-        asOfTime: storeCrowdCmd.asOfTime,
-        status: statusFromFeedback
-      };
+      return { ...result, status: statusFromFeedback };
     }
 
     //Get status from similar store type contributions
-    const currentStoreType = this.getStoreType(storeCrowdCmd.placeDetail);
+
     const statusFromOtherStoreTypeFeedback: Contribute[] = await this.contributeService.findFromType(
       {
         storeType: currentStoreType
@@ -71,10 +70,7 @@ export class StoreCrowdService {
       storeCrowdCmd.asOfTime
     );
     if (statusFromOtherTypeFeedback) {
-      return {
-        asOfTime: storeCrowdCmd.asOfTime,
-        status: statusFromOtherTypeFeedback
-      };
+      return { ...result, status: statusFromOtherTypeFeedback };
     }
 
     //Get status from fouly custom model
@@ -97,10 +93,7 @@ export class StoreCrowdService {
       storeCrowdCmd.asOfTime
     );
 
-    return {
-      asOfTime: storeCrowdCmd.asOfTime,
-      status: foulyModelStatus
-    };
+    return { ...result, status: foulyModelStatus };
   }
 
   getStoreType(placeDetail: any): StoreType {
@@ -119,7 +112,7 @@ export class StoreCrowdService {
       return 'pharmacy';
     } else if (isTypeOf(types, 'home_goods_store')) {
       return 'retail';
-    } else if (isTypeOf(types, 'restaurant')) {
+    } else if (isTypeOf(types, 'restaurant') || isTypeOf(types, 'cafe')) {
       return 'restaurant';
     } else if (isTypeOf(types, 'liquor_store')) {
       return 'liquor_store';

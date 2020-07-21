@@ -22,6 +22,8 @@ export class StoreComponent implements OnInit, OnDestroy {
   subscriptions = new Subscription();
   crowdStatusTranslateTag: string;
   crowdColor: string;
+  storeType: string;
+
   constructor(
     private placeDetailsStore: PlaceDetailsStoreService,
     private route: ActivatedRoute,
@@ -42,6 +44,7 @@ export class StoreComponent implements OnInit, OnDestroy {
       filter((details) => details && details.length > 0),
       flatMap((details) => {
         this.setCrowdStatus(details[0].storeCrowdResult.status);
+        this.storeType = details[0].storeCrowdResult.storeType;
 
         if (details[0]?.photos && details[0].photos.length > 0) {
           // TODO: Pick a photo that is in landscape and not portrait. Some of them now are
@@ -103,9 +106,13 @@ export class StoreComponent implements OnInit, OnDestroy {
   }
   gotoContribute() {
     this.placeDetails$.pipe(take(1)).subscribe((placeDetails) => {
-      this.router.navigate(['contribute'], {
+      const storeType = placeDetails[0].storeCrowdResult.storeType;
+      this.router.navigate(['contribute', storeType], {
         relativeTo: this.route,
-        state: { closed: !placeDetails[0].opening_hours?.open_now }
+        state: {
+          closed: !placeDetails[0].opening_hours?.open_now,
+          storeType: placeDetails[0].storeCrowdResult.storeType
+        }
       });
     });
   }

@@ -32,7 +32,7 @@ import { StoreComponent } from './store.component';
         data: { prefetch: true }
       },
       {
-        path: 'contribute',
+        path: 'contribute/:storeType',
         loadChildren: () =>
           import('@skare/fouly/pwa/pages/contribute').then((module) => module.ContributeModule)
       }
