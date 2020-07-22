@@ -11,7 +11,7 @@ export class UserService {
     return this.userModel.findOne(query).exec();
   }
 
-  async createUpdateUser(user: UserCommand): Promise<UserResult> {
+  async createUpdateUser(user: UserCommand, language: string): Promise<UserResult> {
     const query = {
       userId: user.userId
     };
@@ -22,7 +22,7 @@ export class UserService {
       firstName: user.firstName,
       email: user.email,
       photoUrl: user.photoUrl,
-      lang: user.lang
+      lang: language
     };
 
     const userCreated = await this.userModel

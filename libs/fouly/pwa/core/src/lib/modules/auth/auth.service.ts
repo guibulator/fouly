@@ -7,7 +7,7 @@ import {
   GoogleLoginProvider,
   SocialUser
 } from 'angularx-social-login';
-import { BehaviorSubject, combineLatest, from, Observable, ReplaySubject, zip } from 'rxjs';
+import { combineLatest, from, Observable, ReplaySubject, zip } from 'rxjs';
 import { debounceTime, filter, finalize, flatMap, tap } from 'rxjs/operators';
 import { AuthProvidersConfig, AUTH_PROVIDERS_CONFIG } from '.';
 import { UserPreferenceService } from '../../providers/local-storage/user-preference.service';
@@ -19,7 +19,7 @@ import { UserPreferenceService } from '../../providers/local-storage/user-prefer
  */
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
-  private _loginIn$ = new BehaviorSubject(false);
+  private _loginIn$ = new ReplaySubject(1);
   private _currentUser$ = new ReplaySubject<SocialUser>(1);
   currentUser$: Observable<SocialUser> = this._currentUser$.asObservable();
   loginIn$ = this._loginIn$.asObservable();
