@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { TranslateModule } from '@ngx-translate/core';
 import { FoulyContentCenteredComponent } from './content-centered/content-centered.component';
-import { FoulyCrowdIconDirective } from './directives/fouly-crowd-icon.directive';
+import { FoulyCrowdStatusDirective } from './directives/fouly-crowd-status.directive';
 import { FoulyOpeningHoursModalDirective } from './opening-hours/opening-hours-modal.directive';
 import { FoulyOpeningHoursComponent } from './opening-hours/opening-hours.component';
 
@@ -13,13 +13,13 @@ import { FoulyOpeningHoursComponent } from './opening-hours/opening-hours.compon
     FoulyContentCenteredComponent,
     FoulyOpeningHoursComponent,
     FoulyOpeningHoursModalDirective,
-    FoulyCrowdIconDirective
+    FoulyCrowdStatusDirective
   ],
   exports: [
     FoulyContentCenteredComponent,
     CommonModule,
     FoulyOpeningHoursModalDirective,
-    FoulyCrowdIconDirective
+    FoulyCrowdStatusDirective
   ]
 })
 export class FoulyUiModule {}

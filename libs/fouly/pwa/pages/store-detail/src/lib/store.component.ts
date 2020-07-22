@@ -71,16 +71,8 @@ export class StoreComponent implements OnInit, OnDestroy {
     this.mainImage$ = of('assets/img/svg/undraw_best_place_r685.svg');
   }
 
-  setCrowdStatus(status: string): any {
+  private setCrowdStatus(status: string): any {
     this.crowdStatusTranslateTag = `sharedUI.affluence.${status}`;
-
-    if (status === 'low') {
-      this.crowdColor = 'success';
-    } else if (status === 'medium') {
-      this.crowdColor = 'warning';
-    } else if (status === 'high') {
-      this.crowdColor = 'danger';
-    }
   }
 
   gotoChat(placeName: string) {

@@ -54,7 +54,7 @@
             </ion-card-header>
             <ion-card-content class="content">
                <ion-item lines="none">
-                  <ion-icon [color]="crowdColor" name="body" size="large" slot="end"></ion-icon>
+                  <ion-icon [foulyCrowdStatus]="placeDetails.storeCrowdResult?.status" name="body" size="large" slot="end"></ion-icon>
                   <ion-label>
                      <h3>
                         {{ 'page.storeDetail.crowdIndicator' | translate }}
