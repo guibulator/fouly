@@ -80,6 +80,8 @@ export class QuoteFromFeedbackService {
     return this.getStatusFromContributionTag(mostOftenTag);
   }
 
+  //Geo spacial query : 	{ $and:[ { "lat": { $gt : 45.52} } , { "lat": { $lt : 45.53} },{ "lng": { $gt : -73.45} } , { "lat": { $lt : -73.42} } ] }
+
   getTagFromContribute(contribution: Contribute): string {
     if (!contribution) {
       return null;
