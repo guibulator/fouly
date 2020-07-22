@@ -2,12 +2,12 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FavoriteResult } from '@skare/fouly/data';
 import {
-  AuthenticationService,
   FavoriteService,
-  FavoriteStoreService
+  FavoriteStoreService,
+  UserPreferenceService
 } from '@skare/fouly/pwa/core';
 import { SocialUser } from 'angularx-social-login';
-import { BehaviorSubject, combineLatest, Observable, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 
 /**
@@ -23,27 +23,31 @@ import { map, tap } from 'rxjs/operators';
 })
 export class FavoritesComponent implements OnInit, OnDestroy {
   favorites$: Observable<FavoriteResult[]>;
+  favLoading$: Observable<boolean>;
   user$: Observable<SocialUser>;
   favLimited$ = new BehaviorSubject(false); //Unauthenticated users can only save 3 favorites
   showFavImage$: Observable<boolean>;
-
+  lastKnownFavs$: Observable<number[]>;
   private readonly subscriptions = new Subscription();
   constructor(
     private favoriteStore: FavoriteStoreService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private authService: AuthenticationService,
-    private favoriteService: FavoriteService
+    private favoriteService: FavoriteService,
+    private userPrefService: UserPreferenceService
   ) {
-    this.user$ = authService.currentUser$;
     this.favorites$ = this.favoriteStore.store$;
+    this.favLoading$ = this.favoriteStore.loading$;
     this.favLimited$ = this.favoriteService.favLimited$;
+    this.lastKnownFavs$ = this.userPrefService.store$.pipe(
+      map((pref) => Array(pref.numberOfFavorites).fill(0))
+    );
   }
   // TODO: Get achalandage quote for each store and add ion-refresher
   ngOnInit(): void {
-    this.showFavImage$ = combineLatest([this.favoriteStore.store$, this.favLimited$]).pipe(
-      map(([favorites, favLimited]) => {
-        return favorites.length < 4 && !favLimited;
+    this.showFavImage$ = this.userPrefService.store$.pipe(
+      map((userPref) => {
+        return userPref.numberOfFavorites === 0;
       })
     );
   }

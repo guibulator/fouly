@@ -19,7 +19,7 @@ import { UserPreferenceService } from '../../providers/local-storage/user-prefer
  */
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
-  private _loginIn$ = new ReplaySubject(1);
+  private _loginIn$ = new ReplaySubject<boolean>(1);
   private _currentUser$ = new ReplaySubject<SocialUser>(1);
   currentUser$: Observable<SocialUser> = this._currentUser$.asObservable();
   loginIn$ = this._loginIn$.asObservable();

@@ -1,10 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { FavoriteResult } from '@skare/fouly/data';
-import { BehaviorSubject, of, ReplaySubject, zip } from 'rxjs';
+import { of, ReplaySubject, zip } from 'rxjs';
 import {
   catchError,
   distinctUntilChanged,
+  finalize,
   flatMap,
   map,
   switchMap,
@@ -22,7 +23,7 @@ import { UserPreferenceService } from '../local-storage/user-preference.service'
 export class FavoriteStoreService {
   private readonly apiEndPoint: string;
   private readonly _favorites$ = new ReplaySubject<FavoriteResult[]>(1);
-  private readonly _loading$ = new BehaviorSubject<boolean>(false);
+  private readonly _loading$ = new ReplaySubject<boolean>(1);
   store$ = this._favorites$.asObservable();
   loading$ = this._loading$.asObservable();
   constructor(
@@ -42,14 +43,25 @@ export class FavoriteStoreService {
   }
 
   fetch() {
-    return this.httpClient
-      .get<FavoriteResult[]>(`${this.apiEndPoint}/favorite`)
-      .pipe(tap((favs) => this._favorites$.next(favs ?? [])));
+    this._loading$.next(true);
+    return this.httpClient.get<FavoriteResult[]>(`${this.apiEndPoint}/favorite`).pipe(
+      tap((favs) => this._favorites$.next(favs ?? [])),
+      tap((favs) => this.userPrefService.setNumberOfFavorites(favs.length)),
+      finalize(() => this._loading$.next(false))
+    );
   }
 
   add(favorite: FavoriteResult) {
     // If no user, use temp user id
     // optimistic save
+    this.userPrefService.store$
+      .pipe(
+        take(1),
+        tap(({ numberOfFavorites }) =>
+          this.userPrefService.setNumberOfFavorites(numberOfFavorites++)
+        )
+      )
+      .subscribe();
     return zip(this.authService.currentUser$, this.userPrefService.store$).pipe(
       flatMap(([user, { userId }]) => {
         favorite.userId = user?.id ?? userId;
@@ -66,6 +78,14 @@ export class FavoriteStoreService {
   }
 
   remove(placeId: string) {
+    this.userPrefService.store$
+      .pipe(
+        take(1),
+        tap(({ numberOfFavorites }) =>
+          this.userPrefService.setNumberOfFavorites(numberOfFavorites--)
+        )
+      )
+      .subscribe();
     // optimistic remove
     return this._favorites$.pipe(
       take(1),
