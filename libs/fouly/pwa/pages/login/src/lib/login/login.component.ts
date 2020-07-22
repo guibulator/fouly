@@ -40,11 +40,11 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   loginWithGoogle() {
-    this.authService.loginWithGoogle();
+    this.authService.loginWithGoogle().subscribe();
   }
 
   loginWithFacebook() {
-    this.authService.loginWithFacebook();
+    this.authService.loginWithFacebook().subscribe();
   }
 
   logout() {

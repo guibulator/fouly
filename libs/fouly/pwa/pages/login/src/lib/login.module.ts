@@ -4,7 +4,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { TranslateModule } from '@ngx-translate/core';
-import { IsUserAuthenticatedGuard } from '@skare/fouly/pwa/core';
 import { FoulyUiModule } from '@skare/fouly/shared/ui';
 import { RedirectToProfileIfLoggedInGuard } from './guards/redirect-to-profile.guard';
 import { LoginComponent } from './login/login.component';
@@ -36,7 +35,7 @@ import { ProfileComponent } from './profile/profile.component';
         path: 'profile',
         pathMatch: '',
         component: ProfileComponent,
-        canActivate: [IsUserAuthenticatedGuard],
+        // canActivate: [IsUserAuthenticatedGuard],
         data: { title: 'page.identity.profile.title' }
       }
     ])

@@ -15,7 +15,7 @@ import {
 } from 'angularx-social-login';
 import { AuthServiceConfigItem } from 'angularx-social-login/auth.service';
 
-const AUTH_PROVIDERS_CONFIG = new InjectionToken<Partial<AuthProvidersConfig>>(
+export const AUTH_PROVIDERS_CONFIG = new InjectionToken<Partial<AuthProvidersConfig>>(
   'AuthProvidersConfig'
 );
 

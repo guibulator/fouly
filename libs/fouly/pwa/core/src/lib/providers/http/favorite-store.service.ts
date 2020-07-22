@@ -1,10 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { FavoriteResult } from '@skare/fouly/data';
-import { BehaviorSubject, of, timer, zip } from 'rxjs';
+import { BehaviorSubject, of, ReplaySubject, zip } from 'rxjs';
 import {
   catchError,
-  debounce,
   distinctUntilChanged,
   flatMap,
   map,
@@ -22,7 +21,7 @@ import { UserPreferenceService } from '../local-storage/user-preference.service'
 @Injectable({ providedIn: 'root' })
 export class FavoriteStoreService {
   private readonly apiEndPoint: string;
-  private readonly _favorites$ = new BehaviorSubject<FavoriteResult[]>([]);
+  private readonly _favorites$ = new ReplaySubject<FavoriteResult[]>(1);
   private readonly _loading$ = new BehaviorSubject<boolean>(false);
   store$ = this._favorites$.asObservable();
   loading$ = this._loading$.asObservable();
@@ -36,7 +35,6 @@ export class FavoriteStoreService {
     // automatically fetch favorites when there is a connected user
     this.authService.currentUser$
       .pipe(
-        debounce(() => timer(1000)),
         distinctUntilChanged(),
         switchMap(() => this.fetch())
       )
