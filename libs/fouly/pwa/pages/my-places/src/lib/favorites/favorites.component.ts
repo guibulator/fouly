@@ -7,7 +7,7 @@ import {
   UserPreferenceService
 } from '@skare/fouly/pwa/core';
 import { SocialUser } from 'angularx-social-login';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 
 /**
@@ -25,7 +25,7 @@ export class FavoritesComponent implements OnInit, OnDestroy {
   favorites$: Observable<FavoriteResult[]>;
   favLoading$: Observable<boolean>;
   user$: Observable<SocialUser>;
-  favLimited$ = new BehaviorSubject(false); //Unauthenticated users can only save 3 favorites
+  favLimited$: Observable<boolean>; //Unauthenticated users can only save 3 favorites
   showFavImage$: Observable<boolean>;
   lastKnownFavs$: Observable<number[]>;
   private readonly subscriptions = new Subscription();
