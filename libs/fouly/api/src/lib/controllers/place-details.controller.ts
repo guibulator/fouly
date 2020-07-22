@@ -10,7 +10,7 @@ export class PlaceDetailsController {
     private configService: ConfigService
   ) {}
 
-  @Get(':placeId')
+  @Get('place-id/:placeId')
   async getPlaceDetails(
     @Param() params,
     @Query('sessionToken') sessionToken: string,

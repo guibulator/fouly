@@ -31,7 +31,7 @@ export class PlaceDetailsStoreService {
     this._loading.next(true);
     this.httpClient
       .get<PlaceDetailsResult>(
-        `${this.configService.apiUrl}/place-details/${placeId}?asOfTime=${asOfTime}&sessionToken=${sessionToken}`
+        `${this.configService.apiUrl}/place-details/place-id/${placeId}?asOfTime=${asOfTime}&sessionToken=${sessionToken}`
       )
       .pipe(finalize(() => this._loading.next(false)))
       .subscribe((response) => this._placeDetails.next(response));
