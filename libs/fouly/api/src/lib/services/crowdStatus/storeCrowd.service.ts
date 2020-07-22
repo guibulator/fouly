@@ -54,17 +54,18 @@ export class StoreCrowdService {
       listOfFeedback,
       storeCrowdCmd.asOfTime
     );
+
     if (statusFromFeedback) {
       return { ...result, status: statusFromFeedback };
     }
 
     //Get status from similar store type contributions
-
     const statusFromOtherStoreTypeFeedback: Contribute[] = await this.contributeService.findFromType(
       {
         storeType: currentStoreType
       }
     );
+
     const statusFromOtherTypeFeedback = this.quoteFromFeedbackService.getStatusFromSimilarTimeFeedback(
       statusFromOtherStoreTypeFeedback,
       storeCrowdCmd.asOfTime
@@ -73,7 +74,7 @@ export class StoreCrowdService {
       return { ...result, status: statusFromOtherTypeFeedback };
     }
 
-    //Get status from fouly custom model
+    // Get status from fouly custom model
     // const countryName = this.getNodeValue(storeCrowdCmd.placeDetail.adr_address, 'country-name');
     // const countryIsoCode = this.getCountryIsoCode(countryName);
     // const city = this.getNodeValue(storeCrowdCmd.placeDetail.adr_address, 'locality');
