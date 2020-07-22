@@ -18,6 +18,7 @@ import { filter, flatMap, map, take, tap } from 'rxjs/operators';
 export class StoreComponent implements OnInit, OnDestroy {
   isCurrentlyFavorite$: Observable<boolean>;
   mainImage$: Observable<string>;
+  placeDetails$: Observable<PlaceDetailsResult>;
   notGoogleImage = false;
   subscriptions = new Subscription();
   crowdStatusTranslateTag: string;
@@ -31,22 +32,21 @@ export class StoreComponent implements OnInit, OnDestroy {
     private authService: AuthenticationService
   ) {}
 
-  placeDetails$: Observable<PlaceDetailsResult[]>;
   loading$: Observable<boolean>;
 
   ngOnInit() {
     this.loading$ = this.placeDetailsStore.loading$;
-    this.placeDetails$ = this.placeDetailsStore.placeDetails$;
+    this.placeDetails$ = this.placeDetailsStore.store$;
 
     this.mainImage$ = this.placeDetails$.pipe(
-      filter((details) => details && details.length > 0),
+      filter((details) => !!details),
       flatMap((details) => {
-        this.setCrowdStatus(details[0].storeCrowdResult.status);
+        this.setCrowdStatus(details.storeCrowdResult.status);
 
-        if (details[0]?.photos && details[0].photos.length > 0) {
+        if (details.photos?.length > 0) {
           // TODO: Pick a photo that is in landscape and not portrait. Some of them now are
           // protrait and the ui is ugly...
-          return this.placeDetailsStore.getPhotoUrl(details[0]?.photos[0]?.photo_reference);
+          return this.placeDetailsStore.getPhotoUrl(details?.photos[0]?.photo_reference);
         } else {
           this.notGoogleImage = true;
           return of('assets/img/svg/undraw_best_place_r685.svg');
@@ -97,7 +97,7 @@ export class StoreComponent implements OnInit, OnDestroy {
   gotoMap() {
     this.placeDetails$.pipe(take(1)).subscribe((placeDetails) => {
       this.router.navigate(['app/tabs/map/'], {
-        state: { placeId: placeDetails[0].place_id }
+        state: { placeId: placeDetails?.place_id }
       });
     });
   }
@@ -105,7 +105,7 @@ export class StoreComponent implements OnInit, OnDestroy {
     this.placeDetails$.pipe(take(1)).subscribe((placeDetails) => {
       this.router.navigate(['contribute'], {
         relativeTo: this.route,
-        state: { closed: !placeDetails[0].opening_hours?.open_now }
+        state: { closed: !placeDetails?.opening_hours?.open_now }
       });
     });
   }
@@ -121,7 +121,7 @@ export class StoreComponent implements OnInit, OnDestroy {
         take(1),
         flatMap(([placeDetails, isCurrentlyFavorite, user, favLimited]) => {
           if (isCurrentlyFavorite) {
-            return this.favoriteStoreService.remove(placeDetails[0].place_id);
+            return this.favoriteStoreService.remove(placeDetails.place_id);
           } else {
             if (favLimited) {
               this.gotoFavorites();
@@ -129,11 +129,11 @@ export class StoreComponent implements OnInit, OnDestroy {
             }
             return this.favoriteStoreService.add({
               userId: user?.id,
-              address: placeDetails[0].shortAddress,
-              placeId: placeDetails[0].place_id,
-              name: placeDetails[0].name,
-              lat: placeDetails[0].geometry.location.lat,
-              lng: placeDetails[0].geometry.location.lng
+              address: placeDetails.shortAddress,
+              placeId: placeDetails.place_id,
+              name: placeDetails.name,
+              lat: placeDetails.geometry.location.lat,
+              lng: placeDetails.geometry.location.lng
             });
           }
         })

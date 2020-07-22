@@ -9,7 +9,6 @@ export class FavoriteController {
 
   @Get()
   async get(@Headers('user-id') userId: string, @Req() req) {
-    console.log(req);
     return await this.favoriteService.getFavorites(userId);
   }
 

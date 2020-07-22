@@ -37,7 +37,7 @@ export class OwnerProposedSolutionComponent implements OnInit {
   placeName: string;
   ngOnInit() {
     this.placeName = this.activatedRoute.snapshot.parent.params['placeName'];
-    this.placeDetail$ = this.placeDetailsStore.firstPlaceDetail$;
+    this.placeDetail$ = this.placeDetailsStore.store$;
     this.loading$ = this.placeDetailsStore.loading$;
     // TODO: we only need place address, add support of fetching only needed fields if its becoming to costly
     this.placeDetailsStore.loadPlaceId(this.activatedRoute.snapshot.parent.params['placeId']);

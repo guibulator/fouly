@@ -59,14 +59,14 @@ export class MapComponent implements OnInit, OnDestroy, AfterViewInit {
 
     // Every time a place details is loaded, we add a marker and center the map
     this.subscription.add(
-      this.placeDetailsStore.placeDetails$.subscribe((place) => {
+      this.placeDetailsStore.store$.subscribe((place) => {
         // For now there is always only one place in the store
-        const geometry = place.length > 0 && place[0].geometry;
+        const geometry = place?.geometry;
         if (geometry)
           this.addPlaceMarker(
-            place[0].geometry.location.lat,
-            place[0].geometry.location.lng,
-            place[0].place_id,
+            place.geometry.location.lat,
+            place.geometry.location.lng,
+            place.place_id,
             this.urlIcon.store
           );
       })

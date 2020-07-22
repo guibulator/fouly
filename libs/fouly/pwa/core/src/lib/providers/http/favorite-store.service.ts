@@ -54,14 +54,7 @@ export class FavoriteStoreService {
   add(favorite: FavoriteResult) {
     // If no user, use temp user id
     // optimistic save
-    this.userPrefService.store$
-      .pipe(
-        take(1),
-        tap(({ numberOfFavorites }) =>
-          this.userPrefService.setNumberOfFavorites(numberOfFavorites++)
-        )
-      )
-      .subscribe();
+
     return zip(this.authService.currentUser$, this.userPrefService.store$).pipe(
       flatMap(([user, { userId }]) => {
         favorite.userId = user?.id ?? userId;
@@ -78,14 +71,6 @@ export class FavoriteStoreService {
   }
 
   remove(placeId: string) {
-    this.userPrefService.store$
-      .pipe(
-        take(1),
-        tap(({ numberOfFavorites }) =>
-          this.userPrefService.setNumberOfFavorites(numberOfFavorites--)
-        )
-      )
-      .subscribe();
     // optimistic remove
     return this._favorites$.pipe(
       take(1),

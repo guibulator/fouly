@@ -38,7 +38,7 @@ export class FavoriteService {
         if (result) {
           favResults.push({
             placeId: result.place_id,
-            address: result.adr_address,
+            address: result.shortAddress,
             lat: result.geometry?.location.lat,
             lng: result.geometry?.location.lng,
             name: result.name,
