@@ -11,10 +11,10 @@
 </ion-header>
 
 <ion-content>
-   <!-- TODO: disable for now, not displaying correctly on my phone
-      <ion-refresher class="refresher" slot="fixed" (ionRefresh)="refresh($event)">
+   <!-- <ion-refresher class="refresher" slot="fixed" (ionRefresh)="refresh($event)">
       <ion-refresher-content></ion-refresher-content>
    </ion-refresher> -->
+   <ng-container *ngIf="favLoading$ | async"><ng-container *ngTemplateOutlet="skeleton"></ng-container></ng-container>
    <ng-container *ngIf="favorites$ | async as favorites">
       <ion-list>
          <ion-item-group>
@@ -26,7 +26,13 @@
                      <p class="ion-text-wrap" [innerHtml]="p.address"></p>
                   </ion-label>
                   <ion-note slot="end" color="tertiary"
-                     ><ion-icon class="fouly-icon-list" color="warning" size="large" name="body"></ion-icon
+                     ><ion-icon
+                        [foulyCrowdStatus]="p.storeCrowdResult?.status"
+                        class="fouly-icon-list"
+                        color="warning"
+                        size="large"
+                        name="body"
+                     ></ion-icon
                   ></ion-note>
                </ion-item>
                <ion-item-options side="end">
@@ -68,4 +74,27 @@
          <ion-button routerLink="/identity/login" color="primary" expand="block">{{ 'appshell.login' | translate }}</ion-button>
       </ion-card-content>
    </ion-card>
+</ng-template>
+
+<ng-template #skeleton>
+   <ng-container *ngIf="lastKnownFavs$ | async as favEmptyArray">
+      <ion-list>
+         <ion-item *ngFor="let i of favEmptyArray">
+            <ion-avatar slot="start">
+               <ion-skeleton-text animated></ion-skeleton-text>
+            </ion-avatar>
+            <ion-avatar slot="end">
+               <ion-skeleton-text animated></ion-skeleton-text>
+            </ion-avatar>
+            <ion-label>
+               <h2>
+                  <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+               </h2>
+               <p>
+                  <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+               </p>
+            </ion-label>
+         </ion-item>
+      </ion-list>
+   </ng-container>
 </ng-template>

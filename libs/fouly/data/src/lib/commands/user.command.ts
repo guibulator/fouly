@@ -5,5 +5,4 @@ export class UserCommand {
   lastName: string;
   photoUrl: string;
   email: string;
-  lang: string;
 }

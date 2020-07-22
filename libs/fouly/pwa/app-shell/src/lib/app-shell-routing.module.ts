@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { ShowIntroductionGuard, WithDelayPreloadingStrategy } from '@skare/fouly/pwa/core';
 import { Error404Component } from './errors/404/error-404.component';
 import { Error500Component } from './errors/500/error-500.component';
+import { RedirectToMyPlaceGuard } from './guards/redirect-to-my-place.guard';
 const routes: Routes = [];
 
 @NgModule({
@@ -24,7 +25,7 @@ const routes: Routes = [];
         },
         {
           path: 'introduction',
-          canActivate: [ShowIntroductionGuard],
+          canActivate: [RedirectToMyPlaceGuard, ShowIntroductionGuard],
           loadChildren: () =>
             import('@skare/fouly/pwa/pages/introduction').then(
               (module) => module.IntroductionModule
@@ -56,7 +57,7 @@ const routes: Routes = [];
       ],
       {
         initialNavigation: 'enabled',
-        enableTracing: true,
+        enableTracing: false,
         preloadingStrategy: WithDelayPreloadingStrategy
       }
     )

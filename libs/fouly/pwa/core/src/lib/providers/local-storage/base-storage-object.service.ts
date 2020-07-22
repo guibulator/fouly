@@ -21,7 +21,7 @@ export class BaseStorageObject<T> {
       flatMap((item) => {
         if (item) {
           this._store$.next(item);
-          return of(item);
+          return of({ ...item });
         }
 
         state && this._store$.next(state);

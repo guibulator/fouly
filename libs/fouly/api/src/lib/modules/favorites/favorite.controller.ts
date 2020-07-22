@@ -9,7 +9,6 @@ export class FavoriteController {
 
   @Get()
   async get(@Headers('user-id') userId: string, @Req() req) {
-    console.log(req);
     return await this.favoriteService.getFavorites(userId);
   }
 
@@ -19,7 +18,7 @@ export class FavoriteController {
   }
 
   @Post('sync')
-  async syncFromLocalUser(@Query() query, @Headers('uuser-id') newUserId: string) {
+  async syncFromLocalUser(@Query() query, @Headers('user-id') newUserId: string) {
     return await this.favoriteService
       .syncFromLocalUser(query.localUserId, newUserId)
       .then(() => true);

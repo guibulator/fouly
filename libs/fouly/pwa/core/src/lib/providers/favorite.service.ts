@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, combineLatest } from 'rxjs';
+import { combineLatest, ReplaySubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AuthenticationService } from '../modules/auth';
 import { FavoriteStoreService } from '../providers/http/favorite-store.service';
@@ -9,18 +9,20 @@ export class FavoriteService {
   /**
    * Emits true when user can no longer save favorites
    */
-  favLimited$ = new BehaviorSubject(false);
+  private _favLimited$ = new ReplaySubject<boolean>(1);
+  favLimited$ = this._favLimited$.asObservable();
 
   constructor(
     private authService: AuthenticationService,
     private favoriteStore: FavoriteStoreService
   ) {
+    this._favLimited$.next(false);
     combineLatest([this.authService.currentUser$, this.favoriteStore.store$])
       .pipe(
         map(([user, favorites]) => {
           if (!user) {
-            if (favorites.length > this.UNAUTH_LIMIT) this.favLimited$.next(true);
-            else this.favLimited$.next(false);
+            if (favorites.length > this.UNAUTH_LIMIT) this._favLimited$.next(true);
+            else this._favLimited$.next(false);
           }
         })
       )

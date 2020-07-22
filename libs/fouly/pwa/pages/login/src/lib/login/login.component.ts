@@ -6,7 +6,7 @@ import {
   UserPreferenceService,
   UserStoreService
 } from '@skare/fouly/pwa/core';
-import { combineLatest, Observable, Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { filter, flatMap, map } from 'rxjs/operators';
 
 @Component({
@@ -29,22 +29,22 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.loginIn$ = this.authService.loginIn$;
     this.userPrefService.init();
     this.subscriptions.add(
-      combineLatest([this.authService.currentUser$, this.userPrefService.store$])
+      this.authService.currentUser$
         .pipe(
-          filter(([user, pref]) => !!user),
+          filter((user) => !!user),
           flatMap((source) => this.afterSignupSyncService.sync().pipe(map(() => source))),
-          flatMap(([user, { language }]) => this.userStoreService.createUpdateUser(user, language))
+          flatMap((user) => this.userStoreService.createUpdateUser(user))
         )
         .subscribe(() => this.router.navigate(['/identity/profile']))
     );
   }
 
   loginWithGoogle() {
-    this.authService.loginWithGoogle();
+    this.authService.loginWithGoogle().subscribe();
   }
 
   loginWithFacebook() {
-    this.authService.loginWithFacebook();
+    this.authService.loginWithFacebook().subscribe();
   }
 
   logout() {
