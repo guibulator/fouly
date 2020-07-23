@@ -9,6 +9,7 @@ import { UserPreferenceService } from '../providers/local-storage/user-preferenc
 export class AuthInterceptor implements HttpInterceptor {
   private AUTH_HEADER = 'Authorization';
   private USER_HEADER = 'User-Id';
+  private USER_LANG_HEADER = 'User-lang';
   constructor(
     private authService: AuthenticationService,
     private userPrefService: UserPreferenceService
@@ -45,7 +46,9 @@ export class AuthInterceptor implements HttpInterceptor {
       take(1),
       map(([user, pref]) =>
         request.clone({
-          headers: request.headers.set(this.USER_HEADER, user?.id ?? pref.userId)
+          headers: request.headers
+            .set(this.USER_HEADER, user?.id ?? pref.userId)
+            .set(this.USER_LANG_HEADER, pref.language)
         })
       )
     );

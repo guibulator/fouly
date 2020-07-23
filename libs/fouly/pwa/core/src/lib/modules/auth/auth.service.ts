@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { Facebook } from '@ionic-native/facebook/ngx';
 import { Platform } from '@ionic/angular';
 import {
@@ -7,32 +7,40 @@ import {
   GoogleLoginProvider,
   SocialUser
 } from 'angularx-social-login';
-import { BehaviorSubject, from, of } from 'rxjs';
-import { catchError, flatMap, map, mapTo, tap } from 'rxjs/operators';
+import { combineLatest, from, Observable, ReplaySubject, zip } from 'rxjs';
+import { debounceTime, filter, finalize, flatMap, tap } from 'rxjs/operators';
+import { AuthProvidersConfig, AUTH_PROVIDERS_CONFIG } from '.';
+import { UserPreferenceService } from '../../providers/local-storage/user-preference.service';
 
 /** Only aware of social login. No caching and user store. Will be handled by the userStore.
  * Simply subscribe to the public property currentUser$ and use login* method if not authenticated.
  * when currentUser$ emits null, the user has logged out. Upon initialisation, the service will
- * get the user from the local cookies(Note: cookie error on localhost, can't get user because of that)
+ * get the user from the local cookies
  */
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
-  private _currentUser$ = new BehaviorSubject<SocialUser>(null);
-  private _loginIn$ = new BehaviorSubject(false);
-  currentUser$ = this._currentUser$.asObservable();
+  private _loginIn$ = new ReplaySubject<boolean>(1);
+  private _currentUser$ = new ReplaySubject<SocialUser>(1);
+  currentUser$: Observable<SocialUser> = this._currentUser$.asObservable();
   loginIn$ = this._loginIn$.asObservable();
 
   constructor(
     private authService: AuthService,
     private platform: Platform,
-    private facebook: Facebook
+    private facebook: Facebook,
+    private userPref: UserPreferenceService,
+    @Inject(AUTH_PROVIDERS_CONFIG) private config: AuthProvidersConfig
   ) {
-    authService.authState
+    // Wait that all config are registered
+    // sometimes a null is emitted but the user is almost instantly emitted after
+    combineLatest([this.authService.readyState, this.authService.authState])
       .pipe(
-        map((socialUser) => {
-          //console.log(socialUser);  //for debug purpose
-          this._currentUser$.next(socialUser);
-          return socialUser;
+        filter(([configs]) => configs?.length === Object.keys(this.config).length),
+        debounceTime(200),
+        tap(([_, user]) => {
+          //  console.log('READY_STATE" user is ', user); //debug purpose
+          this._currentUser$.next(user);
+          return user;
         })
       )
       .subscribe();
@@ -41,30 +49,31 @@ export class AuthenticationService {
   loginWithFacebook() {
     this._loginIn$.next(true);
     if (this.platform.is('cordova')) {
-      from(this.facebook.login(['email', 'public_profile']))
+      return from(this.facebook.login(['email', 'public_profile']))
         .pipe(flatMap(() => this.facebook.api('me?fields-id,name,email,first_name', [])))
         .pipe(
           tap((profile) =>
             this._currentUser$.next({ ...profile, firstName: profile['first_name'] })
-          )
-        )
-        .subscribe();
+          ),
+          finalize(() => this._loginIn$.next(false))
+        );
     } else {
-      this.authService.signIn(FacebookLoginProvider.PROVIDER_ID);
+      return zip(
+        from(this.authService.signIn(FacebookLoginProvider.PROVIDER_ID)),
+        this.userPref.initialized$
+      ).pipe(finalize(() => this._loginIn$.next(false)));
     }
   }
 
   loginWithGoogle() {
-    this.authService.signIn(GoogleLoginProvider.PROVIDER_ID);
+    this._loginIn$.next(true);
+    return zip(
+      from(this.authService.signIn(GoogleLoginProvider.PROVIDER_ID)),
+      this.userPref.initialized$
+    ).pipe(finalize(() => this._loginIn$.next(false)));
   }
 
   logout() {
-    from(this.authService.signOut()).pipe(
-      mapTo(true),
-      catchError((e) => {
-        console.error(e);
-        return of(false);
-      })
-    );
+    this.authService.signOut();
   }
 }

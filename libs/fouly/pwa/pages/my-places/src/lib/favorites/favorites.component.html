@@ -11,26 +11,26 @@
 </ion-header>
 
 <ion-content>
-   <!-- TODO: disable for now, not displaying correctly on my phone
-      <ion-refresher class="refresher" slot="fixed" (ionRefresh)="refresh($event)">
-      <ion-refresher-content></ion-refresher-content>
-   </ion-refresher> -->
+   <ion-refresher class="refresher" slot="fixed" (ionRefresh)="refresh($event)">
+      <ion-refresher-content pullingIcon="chevron-down-circle-outline"> </ion-refresher-content>
+   </ion-refresher>
+   <ng-container *ngIf="favLoading$ | async"><ng-container *ngTemplateOutlet="skeleton"></ng-container></ng-container>
    <ng-container *ngIf="favorites$ | async as favorites">
       <ion-list>
          <ion-item-group>
-            <ion-item-sliding *ngFor="let p of favorites">
-               <ion-item routerLink="/app/tabs/map/store-detail/{{ p.placeId }}">
+            <ion-item-sliding *ngFor="let fav of favorites">
+               <ion-item routerLink="/app/tabs/map/store-detail/{{ fav.placeId }}">
                   <ion-icon class="fouly-icon-list" color="primary" name="star"></ion-icon>
                   <ion-label
-                     ><h2 class="ion-text-wrap" [innerHTML]="p.name"></h2>
-                     <p class="ion-text-wrap" [innerHtml]="p.address"></p>
+                     ><h2 class="ion-text-wrap" [innerHTML]="fav.name"></h2>
+                     <p class="ion-text-wrap" [innerHtml]="fav.address"></p>
                   </ion-label>
                   <ion-note slot="end" color="tertiary"
-                     ><ion-icon class="fouly-icon-list" color="warning" size="large" name="body"></ion-icon
+                     ><ion-icon [foulyCrowdStatus]="fav.storeCrowdResult?.status" class="fouly-icon-list" size="large" name="body"></ion-icon
                   ></ion-note>
                </ion-item>
                <ion-item-options side="end">
-                  <ion-item-option (click)="onRemovePlace(p.placeId)">{{ 'page.myFavorites.remove' | translate }}</ion-item-option>
+                  <ion-item-option (click)="onRemovePlace(fav.placeId)">{{ 'page.myFavorites.remove' | translate }}</ion-item-option>
                </ion-item-options>
             </ion-item-sliding>
          </ion-item-group>
@@ -68,4 +68,27 @@
          <ion-button routerLink="/identity/login" color="primary" expand="block">{{ 'appshell.login' | translate }}</ion-button>
       </ion-card-content>
    </ion-card>
+</ng-template>
+
+<ng-template #skeleton>
+   <ng-container *ngIf="lastKnownFavs$ | async as favEmptyArray">
+      <ion-list>
+         <ion-item *ngFor="let i of favEmptyArray">
+            <ion-avatar slot="start">
+               <ion-skeleton-text animated></ion-skeleton-text>
+            </ion-avatar>
+            <ion-avatar slot="end">
+               <ion-skeleton-text animated></ion-skeleton-text>
+            </ion-avatar>
+            <ion-label>
+               <h2>
+                  <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+               </h2>
+               <p>
+                  <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+               </p>
+            </ion-label>
+         </ion-item>
+      </ion-list>
+   </ng-container>
 </ng-template>

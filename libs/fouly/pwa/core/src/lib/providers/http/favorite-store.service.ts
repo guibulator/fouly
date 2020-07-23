@@ -1,11 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { FavoriteResult } from '@skare/fouly/data';
-import { BehaviorSubject, of, timer, zip } from 'rxjs';
+import { of, ReplaySubject, zip } from 'rxjs';
 import {
   catchError,
-  debounce,
   distinctUntilChanged,
+  finalize,
   flatMap,
   map,
   switchMap,
@@ -22,8 +22,8 @@ import { UserPreferenceService } from '../local-storage/user-preference.service'
 @Injectable({ providedIn: 'root' })
 export class FavoriteStoreService {
   private readonly apiEndPoint: string;
-  private readonly _favorites$ = new BehaviorSubject<FavoriteResult[]>([]);
-  private readonly _loading$ = new BehaviorSubject<boolean>(false);
+  private readonly _favorites$ = new ReplaySubject<FavoriteResult[]>(1);
+  private readonly _loading$ = new ReplaySubject<boolean>(1);
   store$ = this._favorites$.asObservable();
   loading$ = this._loading$.asObservable();
   constructor(
@@ -36,7 +36,6 @@ export class FavoriteStoreService {
     // automatically fetch favorites when there is a connected user
     this.authService.currentUser$
       .pipe(
-        debounce(() => timer(1000)),
         distinctUntilChanged(),
         switchMap(() => this.fetch())
       )
@@ -44,14 +43,18 @@ export class FavoriteStoreService {
   }
 
   fetch() {
-    return this.httpClient
-      .get<FavoriteResult[]>(`${this.apiEndPoint}/favorite`)
-      .pipe(tap((favs) => this._favorites$.next(favs ?? [])));
+    this._loading$.next(true);
+    return this.httpClient.get<FavoriteResult[]>(`${this.apiEndPoint}/favorite`).pipe(
+      tap((favs) => this._favorites$.next(favs ?? [])),
+      tap((favs) => this.userPrefService.setNumberOfFavorites(favs.length)),
+      finalize(() => this._loading$.next(false))
+    );
   }
 
   add(favorite: FavoriteResult) {
     // If no user, use temp user id
     // optimistic save
+    this.updateLocalFav({ by: 1 });
     return zip(this.authService.currentUser$, this.userPrefService.store$).pipe(
       flatMap(([user, { userId }]) => {
         favorite.userId = user?.id ?? userId;
@@ -68,6 +71,7 @@ export class FavoriteStoreService {
   }
 
   remove(placeId: string) {
+    this.updateLocalFav({ by: -1 });
     // optimistic remove
     return this._favorites$.pipe(
       take(1),
@@ -100,5 +104,16 @@ export class FavoriteStoreService {
         this.httpClient.post(`${this.apiEndPoint}/favorite/sync?localUserId=${userPref.userId}`, {})
       )
     );
+  }
+
+  private updateLocalFav(opts: { by: number }) {
+    this.userPrefService.store$
+      .pipe(
+        take(1),
+        tap(({ numberOfFavorites }) =>
+          this.userPrefService.setNumberOfFavorites(numberOfFavorites + opts.by, false)
+        )
+      )
+      .subscribe();
   }
 }

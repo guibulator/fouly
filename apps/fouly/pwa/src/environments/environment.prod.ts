@@ -10,7 +10,7 @@ export const environment: Configuration = {
   enableDebugTools: true,
   version: '#{version}#',
   authProvidersId: {
-    google: '316973135009-3sn6m7vc4313q36g4lnec9ttqmpo7l2s.apps.googleusercontent.com',
+    google: '564951534226-h6dqiafbuq8b38adi8h5uos8u0mq69dl.apps.googleusercontent.com',
     facebook: '250123776255481'
   }
 };

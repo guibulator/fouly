@@ -19,10 +19,9 @@ export class UserStoreService {
     this.apiEndPoint = this.configService.apiUrl;
   }
 
-  createUpdateUser(socialUser: SocialUser, lang: string): Observable<UserResult> {
+  createUpdateUser(socialUser: SocialUser): Observable<UserResult> {
     const userCmd: UserCommand = {
       ...socialUser,
-      lang,
       userId: socialUser.id,
       provider: socialUser.provider
     };

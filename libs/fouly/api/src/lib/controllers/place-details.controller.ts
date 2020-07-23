@@ -1,5 +1,5 @@
 /// <reference types="googlemaps" />
-import { Controller, Get, Param, Query } from '@nestjs/common';
+import { Controller, Get, Headers, Param, Query } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { PlaceDetailsService } from '../services/placeDetails.service';
 
@@ -10,12 +10,12 @@ export class PlaceDetailsController {
     private configService: ConfigService
   ) {}
 
-  @Get('info/:placeId')
+  @Get('place-id/:placeId')
   async getPlaceDetails(
     @Param() params,
     @Query('sessionToken') sessionToken: string,
     @Query('asOfTime') asOfTime: string,
-    @Query('languageCode') languageCode: string
+    @Headers('user-lang') language: string
   ) {
     //Storer les model chercher par des user dans fouly.  Stats importante.
     // Idées. Pour tout ce qui est statistiques provenant de l'app web, utiliser les custom events de google. C'est gratuit et pratique.
@@ -25,7 +25,7 @@ export class PlaceDetailsController {
       params.placeId,
       sessionToken,
       new Date(asOfTime),
-      languageCode
+      language
     );
   }
 
@@ -46,7 +46,7 @@ export class PlaceDetailsController {
    * hit google once(per user). An optimization would be to cache the image once in our database and serve it with caching.
    * We can also have a dedicated key for the place-details API. right now we are using only 1 api key.
    */
-  @Get('placePhoto')
+  @Get('key/place-photo')
   async getImageApiKey() {
     return { key: this.configService.get<string>('FOULY-GOOGLEMAPS-API-KEY') };
   }

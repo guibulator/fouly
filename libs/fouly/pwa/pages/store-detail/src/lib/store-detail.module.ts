@@ -29,7 +29,7 @@ import { StoreComponent } from './store.component';
         path: 'my-places',
         loadChildren: () =>
           import('@skare/fouly/pwa/pages/my-places').then((module) => module.MyPlacesModule),
-        data: { prefetch: true }
+        data: { delay: 2000 }
       },
       {
         path: 'contribute/:storeType',
