@@ -54,7 +54,7 @@ export class FavoriteStoreService {
   add(favorite: FavoriteResult) {
     // If no user, use temp user id
     // optimistic save
-
+    this.updateLocalFav({ by: 1 });
     return zip(this.authService.currentUser$, this.userPrefService.store$).pipe(
       flatMap(([user, { userId }]) => {
         favorite.userId = user?.id ?? userId;
@@ -71,6 +71,7 @@ export class FavoriteStoreService {
   }
 
   remove(placeId: string) {
+    this.updateLocalFav({ by: -1 });
     // optimistic remove
     return this._favorites$.pipe(
       take(1),
@@ -103,5 +104,16 @@ export class FavoriteStoreService {
         this.httpClient.post(`${this.apiEndPoint}/favorite/sync?localUserId=${userPref.userId}`, {})
       )
     );
+  }
+
+  private updateLocalFav(opts: { by: number }) {
+    this.userPrefService.store$
+      .pipe(
+        take(1),
+        tap(({ numberOfFavorites }) =>
+          this.userPrefService.setNumberOfFavorites(numberOfFavorites + opts.by, false)
+        )
+      )
+      .subscribe();
   }
 }

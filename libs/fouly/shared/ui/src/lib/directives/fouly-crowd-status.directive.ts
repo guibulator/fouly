@@ -3,7 +3,7 @@ import { Directive, HostBinding, Input, OnChanges } from '@angular/core';
 @Directive({ selector: '[foulyCrowdStatus]' })
 export class FoulyCrowdStatusDirective implements OnChanges {
   @Input('foulyCrowdStatus') status: string;
-  @HostBinding('attr.color') color: string;
+  @HostBinding('style.color') color: string;
   constructor() {}
 
   ngOnChanges() {
@@ -12,11 +12,13 @@ export class FoulyCrowdStatusDirective implements OnChanges {
 
   private getColorFromStatus(status: string) {
     if (status === 'low') {
-      return 'success';
+      return 'green';
     } else if (status === 'medium') {
-      return 'warning';
+      return 'yellow';
     } else if (status === 'high') {
-      return 'danger';
+      return 'red';
+    } else {
+      return 'white';
     }
   }
 }

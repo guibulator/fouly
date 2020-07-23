@@ -40,7 +40,7 @@ export class UserPreferenceService extends BaseStorageObject<UserPreference> {
     this.modifyPref('userId', userId).subscribe();
   }
 
-  setNumberOfFavorites(count: number) {
-    this.modifyPref('numberOfFavorites', count).subscribe();
+  setNumberOfFavorites(count: number, emit = true) {
+    this.modifyPref('numberOfFavorites', count, emit).subscribe();
   }
 }

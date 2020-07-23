@@ -125,7 +125,8 @@ export class StoreComponent implements OnInit, OnDestroy {
               placeId: placeDetails.place_id,
               name: placeDetails.name,
               lat: placeDetails.geometry.location.lat,
-              lng: placeDetails.geometry.location.lng
+              lng: placeDetails.geometry.location.lng,
+              storeCrowdResult: placeDetails.storeCrowdResult
             });
           }
         })

@@ -30,12 +30,12 @@ export class BaseStorageObject<T> {
     );
   }
 
-  protected modifyPref(key: string, value: any) {
+  protected modifyPref(key: string, value: any, emit = true) {
     return from(this.storage.get(this.key)).pipe(
       flatMap((item: any) => {
         item = { ...item };
         item[key] = value;
-        this._store$.next(item);
+        if (emit) this._store$.next(item);
         return this.storage.set(this.key, item);
       })
     );
