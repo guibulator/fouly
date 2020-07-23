@@ -1,7 +1,7 @@
 /// <reference types="googlemaps" />
 import { Storage } from '@ionic/storage';
 import { from, Observable, of, ReplaySubject } from 'rxjs';
-import { flatMap } from 'rxjs/operators';
+import { flatMap, tap } from 'rxjs/operators';
 /**
  * Provides a set a basic functionnality for object storage.
  */
@@ -23,9 +23,7 @@ export class BaseStorageObject<T> {
           this._store$.next(item);
           return of({ ...item });
         }
-
-        state && this._store$.next(state);
-        return from(this.storage.set(this.key, state));
+        return from(this.storage.set(this.key, state)).pipe(tap(() => this._store$.next(state)));
       })
     );
   }
