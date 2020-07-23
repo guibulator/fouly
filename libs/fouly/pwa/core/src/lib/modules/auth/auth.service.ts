@@ -38,7 +38,7 @@ export class AuthenticationService {
         filter(([configs]) => configs?.length === Object.keys(this.config).length),
         debounceTime(200),
         tap(([_, user]) => {
-          console.log('READY_STATE" user is ', user);
+          //  console.log('READY_STATE" user is ', user); //debug purpose
           this._currentUser$.next(user);
           return user;
         })
