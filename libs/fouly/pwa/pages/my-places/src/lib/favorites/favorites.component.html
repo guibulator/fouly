@@ -12,7 +12,7 @@
 
 <ion-content>
    <ion-refresher class="refresher" slot="fixed" (ionRefresh)="refresh($event)">
-      <ion-refresher-content></ion-refresher-content>
+      <ion-refresher-content pullingIcon="chevron-down-circle-outline"> </ion-refresher-content>
    </ion-refresher>
    <ng-container *ngIf="favLoading$ | async"><ng-container *ngTemplateOutlet="skeleton"></ng-container></ng-container>
    <ng-container *ngIf="favorites$ | async as favorites">
