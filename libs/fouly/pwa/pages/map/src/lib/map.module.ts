@@ -20,7 +20,8 @@ import { MapComponent } from './map/map.component';
       {
         path: 'store-detail/:placeId',
         loadChildren: () =>
-          import('@skare/fouly/pwa/pages/store-detail').then((module) => module.StoreDetailModule)
+          import('@skare/fouly/pwa/pages/store-detail').then((module) => module.StoreDetailModule),
+        data: { delay: 5000 }
       },
       {
         path: 'place-search',

@@ -3,7 +3,7 @@
   "index": "/index.html",
   "assetGroups": [
     {
-      "name": "app-1",
+      "name": "fouly-app",
       "installMode": "prefetch",
       "resources": {
         "files": [
