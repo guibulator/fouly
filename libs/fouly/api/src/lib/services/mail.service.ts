@@ -96,8 +96,14 @@ export class MailService {
 
   private async sendMail(message: any) {
     try {
+      // this.logger.verbose(message);
+      // this.logger.verbose(this.sendGridUrl);
+      // this.logger.verbose(this.sendGridKey);
       const answer = await axios.post(this.sendGridUrl, message);
-      this.logger.verbose(answer);
+      this.logger.verbose(answer.status);
+      if (answer.status !== 202) {
+        this.logger.error('An error when sending a email: ', answer.data);
+      }
     } catch (err) {
       this.logger.error('There was an error calling axios.post', err);
       throw new BadRequestException();

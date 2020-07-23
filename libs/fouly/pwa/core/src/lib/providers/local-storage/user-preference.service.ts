@@ -10,6 +10,7 @@ export interface UserPreference {
   darkTheme: boolean; // dark them is back !
   userId: string;
   numberOfFavorites: number;
+  firstTimeUser: boolean;
 }
 
 @Injectable({ providedIn: 'root' })
@@ -22,7 +23,8 @@ export class UserPreferenceService extends BaseStorageObject<UserPreference> {
       language: navigator.language?.substr(0, 2) ?? 'fr',
       darkTheme: false,
       userId: `localuser-${uuid()}`,
-      numberOfFavorites: 0
+      numberOfFavorites: 0,
+      firstTimeUser: true
     })
       .pipe(finalize(() => this._init$.next(true)))
       .subscribe();
@@ -42,5 +44,9 @@ export class UserPreferenceService extends BaseStorageObject<UserPreference> {
 
   setNumberOfFavorites(count: number, emit = true) {
     this.modifyPref('numberOfFavorites', count, emit).subscribe();
+  }
+
+  setFirstTimeUser(value: boolean) {
+    this.modifyPref('firstTimeUser', value).subscribe();
   }
 }
