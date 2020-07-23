@@ -22,7 +22,6 @@ export class QuoteFromFeedbackService {
     }
 
     //Todo : add getStatusFromSimilarStoreTypeFeedback(...);
-
     return status;
   }
 

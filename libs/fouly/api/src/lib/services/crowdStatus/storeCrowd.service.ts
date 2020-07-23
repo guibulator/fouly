@@ -157,6 +157,22 @@ export class StoreCrowdService {
     return targetNode?.textContent;
   }
 
+  getDateTimeFromGoogleFormat(asOfTime: Date, dateFromGoogle: any): Date {
+    const googleTime = dateFromGoogle.time;
+    const googleWeekDay = dateFromGoogle.day;
+
+    const hours = Math.floor(Number(googleTime) / 100);
+    const minutes = Number(googleTime) - hours * 100;
+
+    const resultDateTime = new Date(asOfTime);
+    const dateDiff = googleWeekDay - resultDateTime.getDay();
+    if (dateDiff !== 0) {
+      resultDateTime.setDate(resultDateTime.getDate() + dateDiff);
+    }
+    resultDateTime.setHours(hours, minutes);
+    return resultDateTime;
+  }
+
   isBusinessOpen(openningHours: any, asOfTime: Date): boolean {
     if (!openningHours) {
       return true; //Todo : define how to handle no oppenning hours
@@ -170,19 +186,30 @@ export class StoreCrowdService {
       }
     }
 
-    const dayIndex = asOfTime.getDay();
-    const openScheduleForThatDay = openningHours.periods[dayIndex];
+    const dayRef = asOfTime.getDay();
+    const openScheduleForThatDay = openningHours.periods.find((x: any) => x.open.day === dayRef);
+    const openDateTime = this.getDateTimeFromGoogleFormat(asOfTime, openScheduleForThatDay.open);
+    const closeDateTime = this.getDateTimeFromGoogleFormat(asOfTime, openScheduleForThatDay.close);
 
-    const numberAsOfTime = asOfTime.getHours() * 100 + asOfTime.getMinutes();
+    //For business like bars, manage usecase that working hours that should be use was yesterday...
+    const openScheduleForLastDay = openningHours.periods.find(
+      (x: any) => x.open.day === dayRef - 1
+    );
+    const closeLastDateTime = this.getDateTimeFromGoogleFormat(
+      asOfTime,
+      openScheduleForLastDay.close
+    );
+    if (asOfTime < closeLastDateTime) {
+      //business still open on yesterday openningHours
+      return true;
+    } else {
+      if (asOfTime < openDateTime) {
+        return false;
+      }
 
-    const openTime = openScheduleForThatDay.open.time;
-    if (numberAsOfTime < Number(openTime)) {
-      return false;
-    }
-
-    const closeTime = openScheduleForThatDay.close.time;
-    if (numberAsOfTime > Number(closeTime)) {
-      return false;
+      if (asOfTime > closeDateTime) {
+        return false;
+      }
     }
 
     return true;
