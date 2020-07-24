@@ -1,24 +1,38 @@
-import { Directive, HostBinding, Input, OnChanges } from '@angular/core';
+import { Directive, HostBinding, Input, OnChanges, OnDestroy } from '@angular/core';
+import { UserPreferenceService } from '@skare/fouly/pwa/core';
+import { Subscription } from 'rxjs';
+import { map, take } from 'rxjs/operators';
 
 @Directive({ selector: '[foulyCrowdStatus]' })
-export class FoulyCrowdStatusDirective implements OnChanges {
+export class FoulyCrowdStatusDirective implements OnChanges, OnDestroy {
   @Input('foulyCrowdStatus') status: string;
   @HostBinding('style.color') color: string;
-  constructor() {}
+  private subscription = new Subscription();
+  constructor(private userPrefService: UserPreferenceService) {
+    this.subscription.add(this.userPrefService.store$.subscribe(() => this.ngOnChanges()));
+  }
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
 
   ngOnChanges() {
-    this.color = this.getColorFromStatus(this.status);
+    this.getColorFromStatus(this.status).subscribe((color) => (this.color = color));
   }
 
   private getColorFromStatus(status: string) {
-    if (status === 'low') {
-      return 'green';
-    } else if (status === 'medium') {
-      return 'yellow';
-    } else if (status === 'high') {
-      return 'red';
-    } else {
-      return 'white';
-    }
+    return this.userPrefService.store$.pipe(
+      take(1),
+      map(({ darkTheme }) => {
+        if (status === 'low') {
+          return 'green';
+        } else if (status === 'medium') {
+          return 'yellow';
+        } else if (status === 'high') {
+          return 'red';
+        } else {
+          return darkTheme ? 'white' : 'black';
+        }
+      })
+    );
   }
 }

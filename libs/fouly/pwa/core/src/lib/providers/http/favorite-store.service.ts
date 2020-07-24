@@ -41,6 +41,9 @@ export class FavoriteStoreService {
       )
       .subscribe();
   }
+  clear() {
+    this._favorites$.next([]);
+  }
 
   fetch() {
     this._loading$.next(true);
@@ -56,6 +59,7 @@ export class FavoriteStoreService {
     // optimistic save
     this.updateLocalFav({ by: 1 });
     return zip(this.authService.currentUser$, this.userPrefService.store$).pipe(
+      take(1),
       flatMap(([user, { userId }]) => {
         favorite.userId = user?.id ?? userId;
         return this._favorites$.pipe(
@@ -86,7 +90,7 @@ export class FavoriteStoreService {
       flatMap(() =>
         this.httpClient.delete<FavoriteResult>(`${this.apiEndPoint}/favorite/${placeId}`)
       ),
-      catchError(() => of(null)) // todo just while we dont have a backend
+      catchError(() => of(null))
     );
   }
 
@@ -96,13 +100,21 @@ export class FavoriteStoreService {
   sync() {
     return zip(this.authService.currentUser$, this._favorites$, this.userPrefService.store$).pipe(
       take(1),
-      tap(([user, favorites, userPref]) => {
+      flatMap(([user, favs, userPref]) =>
+        zip(
+          of(user),
+          of(favs),
+          of(userPref),
+          this.httpClient.post(
+            `${this.apiEndPoint}/favorite/sync?localUserId=${userPref.userId}`,
+            {}
+          )
+        )
+      ),
+      tap(([user, favorites, userPref, _]) => {
         favorites.forEach((fav) => (fav.userId = user?.id ?? userPref.userId));
         this._favorites$.next([...favorites]);
-      }),
-      flatMap(([user, _, userPref]) =>
-        this.httpClient.post(`${this.apiEndPoint}/favorite/sync?localUserId=${userPref.userId}`, {})
-      )
+      })
     );
   }
 
@@ -111,7 +123,7 @@ export class FavoriteStoreService {
       .pipe(
         take(1),
         tap(({ numberOfFavorites }) =>
-          this.userPrefService.setNumberOfFavorites(numberOfFavorites + opts.by, false)
+          this.userPrefService.setNumberOfFavorites(numberOfFavorites + opts.by)
         )
       )
       .subscribe();

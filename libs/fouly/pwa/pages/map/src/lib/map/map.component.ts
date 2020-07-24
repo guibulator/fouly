@@ -1,6 +1,6 @@
 //todo: Add script loading of google api before this component is instantiated (needed to work with Google-Map component)
 //todo: add map style to match fouly style
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { GoogleMap } from '@angular/google-maps';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Platform } from '@ionic/angular';
@@ -10,15 +10,16 @@ import {
   PlaceDetailsStoreService
 } from '@skare/fouly/pwa/core';
 import { BehaviorSubject, from, Subscription } from 'rxjs';
-import { finalize, take } from 'rxjs/operators';
+import { finalize } from 'rxjs/operators';
 import { lightStyle } from './map-style';
 @Component({
   selector: 'fouly-map',
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.scss']
 })
-export class MapComponent implements OnInit, OnDestroy, AfterViewInit {
+export class MapComponent implements OnInit, OnDestroy {
   loading$ = new BehaviorSubject(false);
+
   //TODO: have our own icons
   private readonly urlIcon = {
     me: 'https://fr.seaicons.com/wp-content/uploads/2016/03/Map-Marker-Marker-Inside-Pink-icon.png',
@@ -50,12 +51,14 @@ export class MapComponent implements OnInit, OnDestroy, AfterViewInit {
     private placeDetailsStore: PlaceDetailsStoreService,
     private favoriteStore: FavoriteStoreService
   ) {
-    this.activatedRoute.queryParams.subscribe((params) => {
-      const placeId = router?.getCurrentNavigation()?.extras?.state?.placeId;
-      if (!placeId) return;
-      const sessionToken = router?.getCurrentNavigation()?.extras?.state?.sessionToken;
-      this.placeDetailsStore.loadPlaceId(placeId, new Date(), sessionToken);
-    });
+    this.subscription.add(
+      this.activatedRoute.queryParams.subscribe((params) => {
+        const placeId = router?.getCurrentNavigation()?.extras?.state?.placeId;
+        if (!placeId) return;
+        const sessionToken = router?.getCurrentNavigation()?.extras?.state?.sessionToken;
+        this.placeDetailsStore.loadPlaceId(placeId, new Date(), sessionToken);
+      })
+    );
 
     // Every time a place details is loaded, we add a marker and center the map
     this.subscription.add(
@@ -75,10 +78,18 @@ export class MapComponent implements OnInit, OnDestroy, AfterViewInit {
     this.subscription.add(
       this.favoriteStore.store$.subscribe((favorites) => {
         favorites.forEach((fav) => {
-          this.addPlaceMarker(fav.lat, fav.lng, fav.placeId, this.urlIcon.favorite);
+          this.addPlaceMarker(fav.lat, fav.lng, fav.placeId, this.urlIcon.favorite, false);
         });
       })
     );
+  }
+
+  ngOnInit(): void {
+    this.centerMe();
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
   mapClick(event: google.maps.MouseEvent & { placeId: string }) {
@@ -105,18 +116,6 @@ export class MapComponent implements OnInit, OnDestroy, AfterViewInit {
       .subscribe();
   }
 
-  ngOnInit(): void {
-    this.centerMe();
-  }
-
-  ngAfterViewInit() {
-    this.map.tilesloaded.pipe(take(1)).subscribe(() => {});
-  }
-
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
-  }
-
   centerMe() {
     this.localisationStore.getPosition().subscribe((data) => {
       if (!data) return;
@@ -139,10 +138,18 @@ export class MapComponent implements OnInit, OnDestroy, AfterViewInit {
 
       this.center = new google.maps.LatLng(this.positionLatLng.lat(), this.positionLatLng.lng());
       this.markers = [...this.markers, this.markerYou];
+      this.zoom = this.map.getZoom() - 2;
+      setTimeout(() => (this.zoom = this.zoom + 2), 500);
     });
   }
 
-  private addPlaceMarker(lat: number, lng: number, placeId: string, iconUrl: string) {
+  private addPlaceMarker(
+    lat: number,
+    lng: number,
+    placeId: string,
+    iconUrl: string,
+    center = true
+  ) {
     this.markers = this.markers.filter(
       (p) => p.getPosition().lat() !== lat && p.getPosition().lng() !== lng
     );
@@ -150,17 +157,18 @@ export class MapComponent implements OnInit, OnDestroy, AfterViewInit {
       position: { lat, lng },
       icon: {
         url: iconUrl,
-        size: new google.maps.Size(100, 100),
+        size: new google.maps.Size(40, 40),
         origin: new google.maps.Point(0, 0),
         anchor: new google.maps.Point(20, 70),
-        scaledSize: new google.maps.Size(45, 45)
+        scaledSize: new google.maps.Size(40, 40)
       },
       title: placeId,
       place: { placeId: placeId, location: { lat, lng } },
       clickable: true
     });
     this.markers.push(markerPlace);
-
-    this.center = new google.maps.LatLng({ lat, lng });
+    if (center) {
+      this.center = new google.maps.LatLng({ lat, lng });
+    }
   }
 }

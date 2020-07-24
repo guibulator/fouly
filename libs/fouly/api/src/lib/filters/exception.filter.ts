@@ -4,11 +4,13 @@ import { Logger } from '../azureLogger';
 @Catch()
 export class AllExceptionsFilter implements ExceptionFilter {
   constructor(private logger: Logger) {}
-  catch(exception: unknown, host: ArgumentsHost) {
+  catch(exception: any, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse();
     const request = ctx.getRequest();
-    this.logger.error('An exception occured -> ' + exception.toString());
+    this.logger.error(
+      'An exception occured -> ' + exception.stack ?? exception.message ?? exception.toString()
+    );
     const status =
       exception instanceof HttpException ? exception.getStatus() : HttpStatus.INTERNAL_SERVER_ERROR;
 

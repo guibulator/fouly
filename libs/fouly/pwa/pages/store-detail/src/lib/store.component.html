@@ -37,7 +37,9 @@
                         ></a>
                      </div>
                      <ion-card-title>
-                        <h3 class="ion-text-center">{{ placeDetails.name }}</h3>
+                        <h3 class="store-name ion-text-center">
+                           <ion-text color="primary">{{ placeDetails.name }}</ion-text>
+                        </h3>
                      </ion-card-title>
 
                      <p class="ion-text-center" [innerHtml]="placeDetails.shortAddress"></p>
@@ -60,8 +62,7 @@
                         {{ 'page.storeDetail.crowdIndicator' | translate }}
                         <ion-text [color]="crowdColor">{{ crowdStatusTranslateTag | translate }}</ion-text>
                      </h3>
-
-                     <p>{{ 'page.storeDetail.howIsCalculated' | translate }}</p>
+                     <!-- TODO: Ajouter modale et explication <p>{{ 'page.storeDetail.howIsCalculated' | translate }}</p> -->
                   </ion-label>
                </ion-item>
 

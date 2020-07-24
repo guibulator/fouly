@@ -73,7 +73,7 @@ export class StoreComponent implements OnInit, OnDestroy {
   }
 
   private setCrowdStatus(status: string): any {
-    this.crowdStatusTranslateTag = `sharedUI.affluence.${status}`;
+    this.crowdStatusTranslateTag = status ? `sharedUI.affluence.${status}` : 'N/A';
   }
 
   gotoChat(placeName: string) {
