@@ -107,11 +107,15 @@ export class StoreCrowdService {
 
     const types: string[] = placeDetail.types;
 
-    if (isTypeOf(types, 'supermarket') || isTypeOf(types, 'food')) {
+    if (
+      isTypeOf(types, 'supermarket') ||
+      isTypeOf(types, 'food') ||
+      isTypeOf(types, 'grocery_supermarket')
+    ) {
       return 'supermarket';
     } else if (isTypeOf(types, 'pharmacy')) {
       return 'pharmacy';
-    } else if (isTypeOf(types, 'home_goods_store')) {
+    } else if (isTypeOf(types, 'home_goods_store') || isTypeOf(types, 'departement_store')) {
       return 'retail';
     } else if (isTypeOf(types, 'restaurant') || isTypeOf(types, 'cafe')) {
       return 'restaurant';
@@ -121,7 +125,7 @@ export class StoreCrowdService {
       return 'hardware_store';
     } else if (isTypeOf(types, 'electronic_store')) {
       return 'electronic_store';
-    } else if (isTypeOf(types, 'furniture_store')) {
+    } else {
       return 'furniture_store';
     }
   }
