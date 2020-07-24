@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FavoriteResult } from '@skare/fouly/data';
 import {
@@ -7,8 +7,8 @@ import {
   UserPreferenceService
 } from '@skare/fouly/pwa/core';
 import { SocialUser } from 'angularx-social-login';
-import { Observable, Subscription } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { finalize, map, tap } from 'rxjs/operators';
 
 /**
  * A user can store up to 3 favorites without being logged in.
@@ -21,14 +21,14 @@ import { map, tap } from 'rxjs/operators';
   templateUrl: './favorites.component.html',
   styleUrls: ['./favorites.component.scss']
 })
-export class FavoritesComponent implements OnInit, OnDestroy {
+export class FavoritesComponent implements OnInit {
   favorites$: Observable<FavoriteResult[]>;
   favLoading$: Observable<boolean>;
   user$: Observable<SocialUser>;
   favLimited$: Observable<boolean>; //Unauthenticated users can only save 3 favorites
   showFavImage$: Observable<boolean>;
   lastKnownFavs$: Observable<number[]>;
-  private readonly subscriptions = new Subscription();
+  favRefreshing$ = new BehaviorSubject(false);
   constructor(
     private favoriteStore: FavoriteStoreService,
     private router: Router,
@@ -51,9 +51,6 @@ export class FavoritesComponent implements OnInit, OnDestroy {
       })
     );
   }
-  ngOnDestroy() {
-    this.subscriptions.unsubscribe();
-  }
 
   onSelectPlace(placeId: string) {
     this.router.navigate(['/app/tabs/map/store-detail', placeId]);
@@ -68,9 +65,13 @@ export class FavoritesComponent implements OnInit, OnDestroy {
   }
 
   refresh(event) {
+    this.favRefreshing$.next(true);
     this.favoriteService
       .refresh()
-      .pipe(tap(() => event.target.complete()))
+      .pipe(
+        tap(() => event.target.complete()),
+        finalize(() => this.favRefreshing$.next(false))
+      )
       .subscribe();
   }
 }

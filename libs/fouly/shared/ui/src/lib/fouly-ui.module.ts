@@ -2,13 +2,13 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { TranslateModule } from '@ngx-translate/core';
+import { CoreModule } from '@skare/fouly/pwa/core';
 import { FoulyContentCenteredComponent } from './content-centered/content-centered.component';
 import { FoulyCrowdStatusDirective } from './directives/fouly-crowd-status.directive';
 import { FoulyOpeningHoursModalDirective } from './opening-hours/opening-hours-modal.directive';
 import { FoulyOpeningHoursComponent } from './opening-hours/opening-hours.component';
-
 @NgModule({
-  imports: [CommonModule, TranslateModule, IonicModule],
+  imports: [CommonModule, TranslateModule, IonicModule, CoreModule],
   declarations: [
     FoulyContentCenteredComponent,
     FoulyOpeningHoursComponent,
