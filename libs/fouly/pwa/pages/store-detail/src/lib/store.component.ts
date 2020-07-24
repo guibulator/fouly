@@ -96,7 +96,7 @@ export class StoreComponent implements OnInit, OnDestroy {
   }
   gotoContribute() {
     this.placeDetails$.pipe(take(1)).subscribe((placeDetails) => {
-      const storeType = placeDetails[0].storeCrowdResult.storeType;
+      const storeType = placeDetails.storeCrowdResult.storeType;
       this.router.navigate(['contribute', storeType], {
         relativeTo: this.route,
         state: { closed: !placeDetails?.opening_hours?.open_now }
