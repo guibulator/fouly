@@ -37,7 +37,9 @@
                         ></a>
                      </div>
                      <ion-card-title>
-                        <h3 class="ion-text-center">{{ placeDetails.name }}</h3>
+                        <h3 class="store-name ion-text-center">
+                           <ion-text color="primary">{{ placeDetails.name }}</ion-text>
+                        </h3>
                      </ion-card-title>
 
                      <p class="ion-text-center" [innerHtml]="placeDetails.shortAddress"></p>
