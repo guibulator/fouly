@@ -1,6 +1,6 @@
 //todo: Add script loading of google api before this component is instantiated (needed to work with Google-Map component)
 //todo: add map style to match fouly style
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { GoogleMap } from '@angular/google-maps';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Platform } from '@ionic/angular';
@@ -17,7 +17,7 @@ import { lightStyle } from './map-style';
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.scss']
 })
-export class MapComponent implements OnInit, OnDestroy, AfterViewInit {
+export class MapComponent implements OnInit, OnDestroy {
   loading$ = new BehaviorSubject(false);
 
   //TODO: have our own icons
@@ -88,18 +88,8 @@ export class MapComponent implements OnInit, OnDestroy, AfterViewInit {
     this.centerMe();
   }
 
-  ngAfterViewInit() {
-    this.map.tilesloaded.pipe().subscribe(() => {
-      console.log('tiles loaded');
-    });
-  }
-
   ngOnDestroy() {
     this.subscription.unsubscribe();
-  }
-
-  ionViewDidEnter() {
-    setTimeout(() => this.map.panBy(5, 5), 500);
   }
 
   mapClick(event: google.maps.MouseEvent & { placeId: string }) {

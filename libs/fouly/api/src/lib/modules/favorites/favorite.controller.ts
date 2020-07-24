@@ -19,9 +19,7 @@ export class FavoriteController {
 
   @Post('sync')
   async syncFromLocalUser(@Query() query, @Headers('user-id') newUserId: string) {
-    return await this.favoriteService
-      .syncFromLocalUser(query.localUserId, newUserId)
-      .then(() => true);
+    return await this.favoriteService.syncFromLocalUser(query.localUserId, newUserId);
   }
 
   @Delete(':placeId')

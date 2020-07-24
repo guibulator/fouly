@@ -54,8 +54,8 @@ export class FavoriteService {
 
   async add(cmd: FavoriteCommand) {
     //TODO: Changer la logique pour le internal placeId, on le crée une fois au query du commerce placeDetails. On retourne dans placeDetailsResult le foulyPlaceId et on travaille avec ça seulement. Ca va éviter de toujours faire le check pour chaque création
-    const foulyPlaceId = await this.placeIdMapperervice.findIdAndUpdateFromPlaceId(cmd.placeId);
-    const favorite = new this.favoriteModel({ ...cmd, foulyPlaceId });
+    //const foulyPlaceId = await this.placeIdMapperervice.findIdAndUpdateFromPlaceId(cmd.placeId);
+    const favorite = new this.favoriteModel({ ...cmd });
     await favorite.save();
   }
 
@@ -66,11 +66,16 @@ export class FavoriteService {
    */
   async syncFromLocalUser(localUserId: string, newUserId: string) {
     // take all the favorites from localuser and copy them with the new userid
+    // if already sync, do nothing
+    const hasOneAtLeast = await this.favoriteModel.findOne({ userId: newUserId }).exec();
+    if (hasOneAtLeast) {
+      return true;
+    }
     const favorites = await this.favoriteModel.find({ userId: localUserId }).exec();
     favorites.forEach(async (fav) => {
-      fav.userId = newUserId;
-      await this.add(fav);
+      await this.add({ placeId: fav.placeId, userId: newUserId });
     });
+    return true;
   }
 
   async deleteFavorite(placeId: string, userId: string) {
