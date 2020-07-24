@@ -107,11 +107,7 @@ export class StoreCrowdService {
 
     const types: string[] = placeDetail.types;
 
-    if (
-      isTypeOf(types, 'supermarket') ||
-      isTypeOf(types, 'food') ||
-      isTypeOf(types, 'grocery_supermarket')
-    ) {
+    if (isTypeOf(types, 'supermarket') || isTypeOf(types, 'grocery_supermarket')) {
       return 'supermarket';
     } else if (isTypeOf(types, 'pharmacy')) {
       return 'pharmacy';
