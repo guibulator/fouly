@@ -21,18 +21,20 @@ export class StoreCrowdService {
   //Todo : Persist or cache crowd status for reuse
   //Todo : Define CrowdStatus enum values;
   async getStoreCrowdStatus(storeCrowdCmd: StoreCrowdCommand): Promise<StoreCrowdResult> {
+    const currentStoreType = this.getStoreType(storeCrowdCmd.placeDetail);
+
+    const result: StoreCrowdResult = {
+      asOfTime: storeCrowdCmd.asOfTime,
+      storeType: currentStoreType,
+      status: 'N/A'
+    };
+
     if (storeCrowdCmd.placeDetail.business_status !== 'OPERATIONAL') {
-      return {
-        asOfTime: storeCrowdCmd.asOfTime,
-        status: 'closed'
-      };
+      return { ...result, status: 'closed' };
     }
 
     if (!this.isBusinessOpen(storeCrowdCmd.placeDetail.opening_hours, storeCrowdCmd.asOfTime)) {
-      return {
-        asOfTime: storeCrowdCmd.asOfTime,
-        status: 'closed'
-      };
+      return { ...result, status: 'closed' };
     }
 
     // Todo : Try get status from cache
@@ -52,32 +54,27 @@ export class StoreCrowdService {
       listOfFeedback,
       storeCrowdCmd.asOfTime
     );
+
     if (statusFromFeedback) {
-      return {
-        asOfTime: storeCrowdCmd.asOfTime,
-        status: statusFromFeedback
-      };
+      return { ...result, status: statusFromFeedback };
     }
 
     //Get status from similar store type contributions
-    const currentStoreType = this.getStoreType(storeCrowdCmd.placeDetail);
     const statusFromOtherStoreTypeFeedback: Contribute[] = await this.contributeService.findFromType(
       {
         storeType: currentStoreType
       }
     );
+
     const statusFromOtherTypeFeedback = this.quoteFromFeedbackService.getStatusFromSimilarTimeFeedback(
       statusFromOtherStoreTypeFeedback,
       storeCrowdCmd.asOfTime
     );
     if (statusFromOtherTypeFeedback) {
-      return {
-        asOfTime: storeCrowdCmd.asOfTime,
-        status: statusFromOtherTypeFeedback
-      };
+      return { ...result, status: statusFromOtherTypeFeedback };
     }
 
-    //Get status from fouly custom model
+    // Get status from fouly custom model
     // const countryName = this.getNodeValue(storeCrowdCmd.placeDetail.adr_address, 'country-name');
     // const countryIsoCode = this.getCountryIsoCode(countryName);
     // const city = this.getNodeValue(storeCrowdCmd.placeDetail.adr_address, 'locality');
@@ -97,10 +94,7 @@ export class StoreCrowdService {
       storeCrowdCmd.asOfTime
     );
 
-    return {
-      asOfTime: storeCrowdCmd.asOfTime,
-      status: foulyModelStatus
-    };
+    return { ...result, status: foulyModelStatus };
   }
 
   getStoreType(placeDetail: any): StoreType {
@@ -113,13 +107,13 @@ export class StoreCrowdService {
 
     const types: string[] = placeDetail.types;
 
-    if (isTypeOf(types, 'supermarket') || isTypeOf(types, 'food')) {
+    if (isTypeOf(types, 'supermarket') || isTypeOf(types, 'grocery_supermarket')) {
       return 'supermarket';
     } else if (isTypeOf(types, 'pharmacy')) {
       return 'pharmacy';
-    } else if (isTypeOf(types, 'home_goods_store')) {
+    } else if (isTypeOf(types, 'home_goods_store') || isTypeOf(types, 'departement_store')) {
       return 'retail';
-    } else if (isTypeOf(types, 'restaurant')) {
+    } else if (isTypeOf(types, 'restaurant') || isTypeOf(types, 'cafe')) {
       return 'restaurant';
     } else if (isTypeOf(types, 'liquor_store')) {
       return 'liquor_store';
@@ -127,7 +121,7 @@ export class StoreCrowdService {
       return 'hardware_store';
     } else if (isTypeOf(types, 'electronic_store')) {
       return 'electronic_store';
-    } else if (isTypeOf(types, 'furniture_store')) {
+    } else {
       return 'furniture_store';
     }
   }
@@ -163,6 +157,22 @@ export class StoreCrowdService {
     return targetNode?.textContent;
   }
 
+  getDateTimeFromGoogleFormat(asOfTime: Date, dateFromGoogle: any): Date {
+    const googleTime = dateFromGoogle.time;
+    const googleWeekDay = dateFromGoogle.day;
+
+    const hours = Math.floor(Number(googleTime) / 100);
+    const minutes = Number(googleTime) - hours * 100;
+
+    const resultDateTime = new Date(asOfTime);
+    const dateDiff = googleWeekDay - resultDateTime.getDay();
+    if (dateDiff !== 0) {
+      resultDateTime.setDate(resultDateTime.getDate() + dateDiff);
+    }
+    resultDateTime.setHours(hours, minutes);
+    return resultDateTime;
+  }
+
   isBusinessOpen(openningHours: any, asOfTime: Date): boolean {
     if (!openningHours) {
       return true; //Todo : define how to handle no oppenning hours
@@ -176,19 +186,30 @@ export class StoreCrowdService {
       }
     }
 
-    const dayIndex = asOfTime.getDay();
-    const openScheduleForThatDay = openningHours.periods[dayIndex];
+    const dayRef = asOfTime.getDay();
+    const openScheduleForThatDay = openningHours.periods.find((x: any) => x.open.day === dayRef);
+    const openDateTime = this.getDateTimeFromGoogleFormat(asOfTime, openScheduleForThatDay.open);
+    const closeDateTime = this.getDateTimeFromGoogleFormat(asOfTime, openScheduleForThatDay.close);
 
-    const numberAsOfTime = asOfTime.getHours() * 100 + asOfTime.getMinutes();
+    //For business like bars, manage usecase that working hours that should be use was yesterday...
+    const openScheduleForLastDay = openningHours.periods.find(
+      (x: any) => x.open.day === dayRef - 1
+    );
+    const closeLastDateTime = this.getDateTimeFromGoogleFormat(
+      asOfTime,
+      openScheduleForLastDay.close
+    );
+    if (asOfTime < closeLastDateTime) {
+      //business still open on yesterday openningHours
+      return true;
+    } else {
+      if (asOfTime < openDateTime) {
+        return false;
+      }
 
-    const openTime = openScheduleForThatDay.open.time;
-    if (numberAsOfTime < Number(openTime)) {
-      return false;
-    }
-
-    const closeTime = openScheduleForThatDay.close.time;
-    if (numberAsOfTime > Number(closeTime)) {
-      return false;
+      if (asOfTime > closeDateTime) {
+        return false;
+      }
     }
 
     return true;

@@ -32,7 +32,7 @@ import { StoreComponent } from './store.component';
         data: { delay: 2000 }
       },
       {
-        path: 'contribute',
+        path: 'contribute/:storeType',
         loadChildren: () =>
           import('@skare/fouly/pwa/pages/contribute').then((module) => module.ContributeModule)
       }

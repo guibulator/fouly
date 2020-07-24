@@ -41,6 +41,7 @@ export class SurveyFormComponent implements OnInit, OnDestroy, AfterViewInit {
     private translateService: TranslateService
   ) {
     this.userContribution.placeId = this.activatedRoute.snapshot.params.placeId;
+    this.userContribution.storeType = this.activatedRoute.snapshot.params.storeType;
     this.userContribution.time = new Date();
   }
 

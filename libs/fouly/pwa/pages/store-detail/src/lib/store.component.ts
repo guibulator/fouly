@@ -23,6 +23,7 @@ export class StoreComponent implements OnInit, OnDestroy {
   subscriptions = new Subscription();
   crowdStatusTranslateTag: string;
   crowdColor: string;
+
   constructor(
     private placeDetailsStore: PlaceDetailsStoreService,
     private route: ActivatedRoute,
@@ -95,7 +96,8 @@ export class StoreComponent implements OnInit, OnDestroy {
   }
   gotoContribute() {
     this.placeDetails$.pipe(take(1)).subscribe((placeDetails) => {
-      this.router.navigate(['contribute'], {
+      const storeType = placeDetails.storeCrowdResult.storeType;
+      this.router.navigate(['contribute', storeType], {
         relativeTo: this.route,
         state: { closed: !placeDetails?.opening_hours?.open_now }
       });
