@@ -195,6 +195,8 @@ export class StoreCrowdService {
     const openScheduleForLastDay = openningHours.periods.find(
       (x: any) => x.open.day === dayRef - 1
     );
+    // TODO: validate this fix. Fix an issue where not all days have a schedule
+    if (!openScheduleForLastDay) return true;
     const closeLastDateTime = this.getDateTimeFromGoogleFormat(
       asOfTime,
       openScheduleForLastDay.close
