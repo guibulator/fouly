@@ -1,34 +1,34 @@
 //todo: Add script loading of google api before this component is instantiated (needed to work with Google-Map component)
 //todo: add map style to match fouly style
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { GoogleMap } from '@angular/google-maps';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Platform } from '@ionic/angular';
 import {
   FavoriteStoreService,
   LocalisationStoreService,
-  PlaceDetailsStoreService
+  PlaceDetailsStoreService,
+  UserPreferenceService
 } from '@skare/fouly/pwa/core';
 import { BehaviorSubject, from, Subscription } from 'rxjs';
-import { finalize } from 'rxjs/operators';
-import { lightStyle } from './map-style';
+import { finalize, tap } from 'rxjs/operators';
+import { darkStyle, lightStyle } from './map-style';
 @Component({
   selector: 'fouly-map',
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.scss']
 })
-export class MapComponent implements OnInit, OnDestroy {
+export class MapComponent implements OnInit, OnDestroy, AfterViewInit {
   loading$ = new BehaviorSubject(false);
 
   //TODO: have our own icons
   private readonly urlIcon = {
-    me: 'https://fr.seaicons.com/wp-content/uploads/2016/03/Map-Marker-Marker-Inside-Pink-icon.png',
-    favorite: 'https://cdn3.iconfinder.com/data/icons/location-map/512/pin_marker_star-512.png',
+    me: './assets/img/map/marker_me.png',
+    favorite: './assets/img/map/marker_favorite.png',
     store:
       'https://cdn1.iconfinder.com/data/icons/Map-Markers-Icons-Demo-PNG/256/Map-Marker-Marker-Outside-Pink.png'
   };
   private subscription = new Subscription();
-  private placeIdToFocus: string;
   private markerYou: google.maps.Marker;
   @ViewChild(GoogleMap, { static: false }) private map: GoogleMap;
   positionLatLng: google.maps.LatLng;
@@ -49,29 +49,15 @@ export class MapComponent implements OnInit, OnDestroy {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private placeDetailsStore: PlaceDetailsStoreService,
-    private favoriteStore: FavoriteStoreService
+    private favoriteStore: FavoriteStoreService,
+    private userPrefService: UserPreferenceService
   ) {
     this.subscription.add(
       this.activatedRoute.queryParams.subscribe((params) => {
-        const placeId = router?.getCurrentNavigation()?.extras?.state?.placeId;
-        if (!placeId) return;
+        const foulyPlaceId = router?.getCurrentNavigation()?.extras?.state?.foulyPlaceId;
+        if (!foulyPlaceId) return;
         const sessionToken = router?.getCurrentNavigation()?.extras?.state?.sessionToken;
-        this.placeDetailsStore.loadPlaceId(placeId, new Date(), sessionToken);
-      })
-    );
-
-    // Every time a place details is loaded, we add a marker and center the map
-    this.subscription.add(
-      this.placeDetailsStore.store$.subscribe((place) => {
-        // For now there is always only one place in the store
-        const geometry = place?.geometry;
-        if (geometry)
-          this.addPlaceMarker(
-            place.geometry.location.lat,
-            place.geometry.location.lng,
-            place.place_id,
-            this.urlIcon.store
-          );
+        this.placeDetailsStore.loadPlaceId(foulyPlaceId, new Date(), sessionToken);
       })
     );
 
@@ -81,6 +67,18 @@ export class MapComponent implements OnInit, OnDestroy {
           this.addPlaceMarker(fav.lat, fav.lng, fav.placeId, this.urlIcon.favorite, false);
         });
       })
+    );
+  }
+  ngAfterViewInit(): void {
+    this.subscription.add(
+      this.userPrefService.store$
+        .pipe(
+          tap(({ darkTheme }) => {
+            this.mapOptions.styles = darkTheme ? darkStyle : lightStyle;
+            this.map.options = this.mapOptions;
+          })
+        )
+        .subscribe()
     );
   }
 
@@ -101,7 +99,17 @@ export class MapComponent implements OnInit, OnDestroy {
   }
 
   private openStoreDetails(placeId: string) {
-    this.router.navigate(['store-detail', placeId], { relativeTo: this.activatedRoute });
+    // get foulyplace id and navigate to store-detail
+    this.placeDetailsStore
+      .getFoulyPlaceId(placeId)
+      .pipe(
+        tap((result) =>
+          this.router.navigate(['store-detail', result.foulyPlaceId], {
+            relativeTo: this.activatedRoute
+          })
+        )
+      )
+      .subscribe();
   }
 
   onSearchFocus(e) {
@@ -129,10 +137,10 @@ export class MapComponent implements OnInit, OnDestroy {
         label: '',
         icon: {
           url: this.urlIcon.me,
-          size: new google.maps.Size(100, 100),
+          size: new google.maps.Size(40, 40),
           origin: new google.maps.Point(0, 0),
-          anchor: new google.maps.Point(17, 34),
-          scaledSize: new google.maps.Size(45, 45)
+          anchor: new google.maps.Point(20, 70),
+          scaledSize: new google.maps.Size(30, 40)
         }
       });
 
@@ -160,7 +168,7 @@ export class MapComponent implements OnInit, OnDestroy {
         size: new google.maps.Size(40, 40),
         origin: new google.maps.Point(0, 0),
         anchor: new google.maps.Point(20, 70),
-        scaledSize: new google.maps.Size(40, 40)
+        scaledSize: new google.maps.Size(30, 40)
       },
       title: placeId,
       place: { placeId: placeId, location: { lat, lng } },

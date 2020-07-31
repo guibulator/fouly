@@ -5,7 +5,7 @@ import { Document } from 'mongoose';
 @Schema()
 export class Favorite extends Document {
   @Prop()
-  placeId: string;
+  foulyPlaceId: string;
 
   @Prop()
   userId: string;

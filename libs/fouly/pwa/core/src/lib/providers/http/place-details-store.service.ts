@@ -26,15 +26,23 @@ export class PlaceDetailsStoreService {
       );
   }
 
-  loadPlaceId(placeId: string, asOfTime: Date = new Date(), sessionToken?: string) {
+  loadPlaceId(foulyPlaceId: string, asOfTime: Date = new Date(), sessionToken?: string) {
     //TODO: handle failure, immutabilty for store, reuse already loaded item...
     this._loading.next(true);
     this.httpClient
       .get<PlaceDetailsResult>(
-        `${this.configService.apiUrl}/place-details/place-id/${placeId}?asOfTime=${asOfTime}&sessionToken=${sessionToken}`
+        `${this.configService.apiUrl}/place-details/fouly-place-id/${foulyPlaceId}?asOfTime=${asOfTime}&sessionToken=${sessionToken}`
       )
       .pipe(finalize(() => this._loading.next(false)))
       .subscribe((response) => this._placeDetails.next(response));
+  }
+
+  getFoulyPlaceId(placeId: string) {
+    // this is a post because the system might create a mapping entry
+    return this.httpClient.post<{ foulyPlaceId: string }>(
+      `${this.configService.apiUrl}/place-id-mapper/?place-id=${placeId}`,
+      {}
+    );
   }
 
   getPhotoUrl(photoReferenceId: string, maxWidth = 800, maxHeight = 800) {

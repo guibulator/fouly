@@ -1,4 +1,4 @@
 export class FavoriteCommand {
-  placeId: string;
+  foulyPlaceId: string;
   userId: string;
 }

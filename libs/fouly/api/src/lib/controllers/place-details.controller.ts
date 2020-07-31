@@ -10,7 +10,7 @@ export class PlaceDetailsController {
     private configService: ConfigService
   ) {}
 
-  @Get('place-id/:placeId')
+  @Get('fouly-place-id/:foulyPlaceId')
   async getPlaceDetails(
     @Param() params,
     @Query('sessionToken') sessionToken: string,
@@ -22,7 +22,7 @@ export class PlaceDetailsController {
     //Combien de fois le status est vue par un user.
     //On utilise le model souvent ?
     return this.placeDetailsService.getPlaceDetails(
-      params.placeId,
+      params.foulyPlaceId,
       sessionToken,
       new Date(asOfTime),
       language

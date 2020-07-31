@@ -7,9 +7,9 @@ import { ChatService } from './chat.service';
 export class ChatController {
   constructor(private chatService: ChatService, private configService: ConfigService) {}
 
-  @Get('history/:placeId')
+  @Get('history/:foulyPlaceId')
   async getMsgHistory(@Param() params) {
-    return this.chatService.getMsgHistory(params.placeId);
+    return this.chatService.getMsgHistory(params.foulyPlaceId);
   }
 
   @Post()

@@ -5,4 +5,5 @@ export interface PlaceDetailsResult extends Place {
   shortAddress: string;
   isGoodTimeToGo?: boolean;
   storeCrowdResult: StoreCrowdResult;
+  foulyPlaceId: string;
 }

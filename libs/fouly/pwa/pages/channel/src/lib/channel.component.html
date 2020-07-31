@@ -25,15 +25,14 @@
                </div>
             </div>
          </div>
-
-         <ion-fab *ngIf="userScrolled$ | async" vertical="bottom" horizontal="end" slot="fixed">
-            <ion-fab-button (click)="scrollToBottom()" size="small" color="primary">
-               <ion-icon name="arrow-down-circle"></ion-icon>
-            </ion-fab-button>
-         </ion-fab>
-         <div class="background"></div>
-      </ng-container>
-   </ng-container>
+      </ng-container></ng-container
+   >
+   <ion-fab *ngIf="userScrolled$ | async" vertical="bottom" horizontal="end" slot="fixed">
+      <ion-fab-button (click)="scrollToBottom()" size="small" color="primary">
+         <ion-icon name="arrow-down-circle"></ion-icon>
+      </ion-fab-button>
+   </ion-fab>
+   <div class="background"></div>
 </ion-content>
 
 <ion-footer class="ion-no-border">

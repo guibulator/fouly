@@ -3,6 +3,6 @@ export class ChatMessageResult {
   author: string;
   userId: string;
   time: Date;
-  placeId: string;
+  foulyPlaceId: string;
   correlationId?: string;
 }

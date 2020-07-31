@@ -3,26 +3,32 @@ import { PlaceAutocompleteType } from '@googlemaps/google-maps-services-js/dist/
 import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { PlaceDetailsResult, SearchResult } from '@skare/fouly/data';
+import { PlaceIdMapperService } from '../modules/placeIdMapper/place-id-mapper.service';
 import { StoreCrowdService } from './crowdStatus/storeCrowd.service';
 @Injectable()
 export class PlaceDetailsService {
   private client: Client;
   private apiKeyEnv = 'FOULY-GOOGLEMAPS-API-KEY';
   private readonly logger = new Logger(PlaceDetailsService.name);
-  constructor(private configService: ConfigService, private storeCrowdService: StoreCrowdService) {
+  constructor(
+    private configService: ConfigService,
+    private storeCrowdService: StoreCrowdService,
+    private placeIdMapperService: PlaceIdMapperService
+  ) {
     this.client = new Client();
   }
 
   async getPlaceDetails(
-    placeId: string,
+    foulyPlaceId: string,
     sessionToken: string,
     asOfTime: Date,
     languageCode?: string
   ): Promise<PlaceDetailsResult> {
+    const placeId = await this.placeIdMapperService.getPlaceId(foulyPlaceId);
     const promise = this.client.placeDetails({
       params: {
         key: this.configService.get<string>(this.apiKeyEnv),
-        place_id: placeId,
+        place_id: placeId.placeId,
         sessiontoken: sessionToken,
         language: languageCode ? Language[languageCode] : Language.fr,
         fields: [
@@ -55,10 +61,10 @@ export class PlaceDetailsService {
         asOfTime: asOfTime
       });
 
-      return { ...placeDetail, storeCrowdResult: crowdResult };
+      return { ...placeDetail, storeCrowdResult: crowdResult, foulyPlaceId };
     }
     throw Error(
-      `Could not get details of ${placeId}. The error is ${details?.data?.error_message}`
+      `Could not get details of ${placeId} with foulyPlaceId ${foulyPlaceId}. The error is ${details?.data?.error_message}`
     );
   }
 

@@ -2,7 +2,7 @@ import { Client } from '@googlemaps/google-maps-services-js';
 import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 
-/** This service is not exposed outside of this module. Use the PlaceIdMapperService isntead. */
+/** This service is not exposed outside of this module. Use the PlaceIdMapperService instead. */
 @Injectable()
 export class GooglePlaceIdService {
   private client: Client;

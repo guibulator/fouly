@@ -71,7 +71,7 @@ export class MailService {
         {
           type: 'text/plain',
           value: `correlationId=${correlationId} 
-                  https://fouly.ca/app/tabs/map/store-detail/${cmd.placeId}
+                  https://fouly.ca/app/tabs/map/store-detail/${cmd.foulyPlaceId}
         `
         }
       ]

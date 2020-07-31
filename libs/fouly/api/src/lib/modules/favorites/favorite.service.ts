@@ -5,20 +5,16 @@ import { Model } from 'mongoose';
 import { uuid } from 'uuidv4';
 import { PlaceDetailsService } from '../../services/placeDetails.service';
 import { PlaceIdMapperService } from '../placeIdMapper/place-id-mapper.service';
-import { UserService } from '../users/user.service';
 import { Favorite } from './favorite.schema';
 
 @Injectable()
 export class FavoriteService {
   constructor(
-    private placeIdMapperervice: PlaceIdMapperService,
     private placeDetailsService: PlaceDetailsService,
-    private userService: UserService,
+    private placeIdMapperService: PlaceIdMapperService,
     @InjectModel(Favorite.name) private readonly favoriteModel: Model<Favorite>
   ) {}
-  async getFavorites(userId: string): Promise<FavoriteResult[]> {
-    //const user = this.userService.getUser({ userId: userId }); //pour aller chercher la langue de user si elle est stocker dans User. sinon dans les preferences???
-
+  async getFavorites(userId: string, userLang: string): Promise<FavoriteResult[]> {
     const favs = await this.favoriteModel.find({ userId: userId }).exec();
 
     if (!Array.isArray(favs)) return null;
@@ -26,17 +22,18 @@ export class FavoriteService {
     const favResults: FavoriteResult[] = [];
 
     for (let favIndex = 0; favIndex < favs.length; favIndex++) {
-      if (favs[favIndex].placeId) {
+      if (favs[favIndex].foulyPlaceId) {
         const result = await this.placeDetailsService.getPlaceDetails(
-          favs[favIndex].placeId,
+          favs[favIndex].foulyPlaceId,
           uuid(),
           new Date(),
-          null //fournir la langue du user
+          userLang //fournir la langue du user
         );
 
         //TODO MAPPER
         if (result) {
           favResults.push({
+            foulyPlaceId: result.foulyPlaceId,
             placeId: result.place_id,
             address: result.shortAddress,
             lat: result.geometry?.location.lat,
@@ -53,8 +50,6 @@ export class FavoriteService {
   }
 
   async add(cmd: FavoriteCommand) {
-    //TODO: Changer la logique pour le internal placeId, on le crée une fois au query du commerce placeDetails. On retourne dans placeDetailsResult le foulyPlaceId et on travaille avec ça seulement. Ca va éviter de toujours faire le check pour chaque création
-    //const foulyPlaceId = await this.placeIdMapperervice.findIdAndUpdateFromPlaceId(cmd.placeId);
     const favorite = new this.favoriteModel({ ...cmd });
     await favorite.save();
   }
@@ -73,12 +68,12 @@ export class FavoriteService {
     }
     const favorites = await this.favoriteModel.find({ userId: localUserId }).exec();
     favorites.forEach(async (fav) => {
-      await this.add({ placeId: fav.placeId, userId: newUserId });
+      await this.add({ foulyPlaceId: fav.foulyPlaceId, userId: newUserId });
     });
     return true;
   }
 
-  async deleteFavorite(placeId: string, userId: string) {
-    return await this.favoriteModel.deleteOne({ placeId, userId }).exec();
+  async deleteFavorite(foulyPlaceId: string, userId: string) {
+    return await this.favoriteModel.deleteOne({ foulyPlaceId, userId }).exec();
   }
 }

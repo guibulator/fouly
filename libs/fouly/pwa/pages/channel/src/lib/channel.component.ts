@@ -7,6 +7,7 @@ import { ChatMessageCommand, ChatMessageResult, UserResult } from '@skare/fouly/
 import {
   AuthenticationService,
   ChatStoreService,
+  PlaceDetailsStoreService,
   UserPreferenceService
 } from '@skare/fouly/pwa/core';
 import { BehaviorSubject, combineLatest, fromEvent, Observable, Subscription } from 'rxjs';
@@ -29,7 +30,7 @@ export class ChannelComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private hasBeendDestroyed = false;
   private messages: ChatMessageResult[] = [];
-  private placeId: string;
+  private foulyPlaceId: string;
 
   private subscriptions = new Subscription();
   private correlationIds: string[] = [];
@@ -41,11 +42,12 @@ export class ChannelComponent implements OnInit, OnDestroy, AfterViewInit {
     private chatService: ChatStoreService,
     private route: ActivatedRoute,
     private userPrefService: UserPreferenceService,
-    private authService: AuthenticationService
+    private authService: AuthenticationService,
+    private placeDetailsStoreService: PlaceDetailsStoreService
   ) {}
 
   ngOnInit() {
-    this.placeId = this.route.snapshot.params['placeId'];
+    this.foulyPlaceId = this.route.snapshot.params['foulyPlaceId'];
     this.placeName = this.route.snapshot.params['placeName'];
     this.user$ = combineLatest([this.authService.currentUser$, this.userPrefService.store$]).pipe(
       map(([user, pref]) => {
@@ -57,7 +59,7 @@ export class ChannelComponent implements OnInit, OnDestroy, AfterViewInit {
     });
 
     this.chatService
-      .getMsgHistory(this.placeId)
+      .getMsgHistory(this.foulyPlaceId)
       .pipe(
         delay(1500),
         map((data) => {
@@ -117,7 +119,7 @@ export class ChannelComponent implements OnInit, OnDestroy, AfterViewInit {
             author: user.name,
             msg: newMsg,
             time: new Date(),
-            placeId: this.placeId,
+            foulyPlaceId: this.foulyPlaceId,
             userId: user.id
           };
 
@@ -131,7 +133,7 @@ export class ChannelComponent implements OnInit, OnDestroy, AfterViewInit {
               msg: myMsg.msg,
               time: myMsg.time,
               userId: myMsg.userId,
-              placeId: myMsg.placeId
+              foulyPlaceId: myMsg.foulyPlaceId
             },
             true
           );
@@ -165,13 +167,13 @@ export class ChannelComponent implements OnInit, OnDestroy, AfterViewInit {
         .withAutomaticReconnect()
         .build();
 
-      this.connection.on('onNewMsg', (data) => {
-        if (data && data.placeId === this.placeId) {
+      this.connection.on('onNewMsg', (data: ChatMessageCommand) => {
+        if (data && data.foulyPlaceId === this.foulyPlaceId) {
           const newMsg = new ChatMessageResult();
           newMsg.author = data.author;
           newMsg.msg = data.msg;
           newMsg.time = data.time;
-          newMsg.placeId = data.placeId;
+          newMsg.foulyPlaceId = data.foulyPlaceId;
           newMsg.correlationId = data.correlationId;
           this.onNewMsgInChannel(newMsg);
         }

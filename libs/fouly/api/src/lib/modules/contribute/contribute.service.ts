@@ -19,10 +19,11 @@ export class ContributeService {
     // is:
     //    1. logged in -> Bigger weight factor
     //    2. with gps coordinates ->Bigger weight (we trust more an authenticated user that is near the business while contributing)
-    this.logger.log(`Received a contribution from user ${cmd.userId} for placeId ${cmd.placeId}`);
-    const foulyPlaceId = await this.idMapper.findIdAndUpdateFromPlaceId(cmd.placeId);
+    this.logger.log(
+      `Received a contribution from user ${cmd.userId} for placeId ${cmd.foulyPlaceId}`
+    );
+
     const data = Contribute.fromCmd(cmd);
-    data.placeId = foulyPlaceId;
     const createdContribution = new this.contributeModel(data);
     await createdContribution.save();
     return true;

@@ -40,7 +40,7 @@ export class OwnerProposedSolutionComponent implements OnInit {
     this.placeDetail$ = this.placeDetailsStore.store$;
     this.loading$ = this.placeDetailsStore.loading$;
     // TODO: we only need place address, add support of fetching only needed fields if its becoming to costly
-    this.placeDetailsStore.loadPlaceId(this.activatedRoute.snapshot.parent.params['placeId']);
+    this.placeDetailsStore.loadPlaceId(this.activatedRoute.snapshot.parent.params['foulyPlaceId']);
     this.subscriptions.add(
       this.form.valueChanges.subscribe(() => {
         this.disabled = this.form.invalid;
@@ -53,7 +53,7 @@ export class OwnerProposedSolutionComponent implements OnInit {
     this.placeDetail$.pipe(take(1)).subscribe((placeDetail) => {
       const cmd: RegisterBusinessMailCommand = {
         businessName: this.placeName,
-        placeId: placeDetail.place_id,
+        foulyPlaceId: placeDetail.foulyPlaceId,
         registeredAddress: placeDetail.adr_address,
         email: formValue.email,
         lastName: formValue.lastName,

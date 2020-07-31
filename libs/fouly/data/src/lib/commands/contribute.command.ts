@@ -5,7 +5,7 @@ export class ContributeCommand {
   speed: ContributeSpeed;
   queueLength: ContributeQueueLength;
   globalApreciation: ContributeGlobalAppreciation;
-  placeId: string;
+  foulyPlaceId: string;
   userId?: string;
   lat?: number;
   lng: number;

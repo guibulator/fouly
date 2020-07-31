@@ -5,7 +5,7 @@ import { Document } from 'mongoose';
 @Schema()
 export class Contribute extends Document {
   @Prop()
-  placeId: string;
+  foulyPlaceId: string;
 
   //Todo : add storeType value in db
   @Prop()
@@ -31,7 +31,7 @@ export class Contribute extends Document {
 
   static fromCmd(cmd: ContributeCommand) {
     return {
-      placeId: cmd.placeId,
+      foulyPlaceId: cmd.foulyPlaceId,
       queueLength: cmd.queueLength,
       speed: cmd.speed,
       userId: cmd.userId,

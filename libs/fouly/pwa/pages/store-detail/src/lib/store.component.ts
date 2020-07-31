@@ -55,13 +55,15 @@ export class StoreComponent implements OnInit, OnDestroy {
       }),
       tap((url) => console.log(url))
     );
-
+    // If we have a sessionToken, reuse (its related to a search & pricing)
+    const sessionToken = this.router.getCurrentNavigation()?.extras?.state?.sessionToken;
     this.placeDetailsStore.loadPlaceId(
-      this.route.snapshot.params['placeId'],
-      new Date() //Todo : add support for choosing different time values
+      this.route.snapshot.params['foulyPlaceId'],
+      new Date(), //Todo : add support for choosing different time values
+      sessionToken
     );
     this.isCurrentlyFavorite$ = this.favoriteStoreService.store$.pipe(
-      map((f) => !!f.find((fav) => fav.placeId === this.route.snapshot.params['placeId']))
+      map((f) => !!f.find((fav) => fav.foulyPlaceId === this.route.snapshot.params['foulyPlaceId']))
     );
   }
 
@@ -80,7 +82,7 @@ export class StoreComponent implements OnInit, OnDestroy {
     this.router.navigate(['chat', placeName], { relativeTo: this.route });
   }
 
-  gotoOwner(placeName: string) {
+  gotoOwner() {
     this.router.navigate(['owner-enroll'], { relativeTo: this.route });
   }
 
@@ -90,7 +92,7 @@ export class StoreComponent implements OnInit, OnDestroy {
   gotoMap() {
     this.placeDetails$.pipe(take(1)).subscribe((placeDetails) => {
       this.router.navigate(['app/tabs/map/'], {
-        state: { placeId: placeDetails?.place_id }
+        state: { foulyPlaceId: placeDetails?.foulyPlaceId }
       });
     });
   }
@@ -115,7 +117,7 @@ export class StoreComponent implements OnInit, OnDestroy {
         take(1),
         flatMap(([placeDetails, isCurrentlyFavorite, user, favLimited]) => {
           if (isCurrentlyFavorite) {
-            return this.favoriteStoreService.remove(placeDetails.place_id);
+            return this.favoriteStoreService.remove(placeDetails.foulyPlaceId);
           } else {
             if (favLimited) {
               this.gotoFavorites();
@@ -125,6 +127,7 @@ export class StoreComponent implements OnInit, OnDestroy {
               userId: user?.id,
               address: placeDetails.shortAddress,
               placeId: placeDetails.place_id,
+              foulyPlaceId: placeDetails.foulyPlaceId,
               name: placeDetails.name,
               lat: placeDetails.geometry.location.lat,
               lng: placeDetails.geometry.location.lng,
