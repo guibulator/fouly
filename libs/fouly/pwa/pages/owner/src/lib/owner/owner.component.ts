@@ -1,19 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'fouly-owner',
   templateUrl: 'owner.component.html'
 })
-export class OwnerComponent implements OnInit {
+export class OwnerComponent {
   title: string;
-  constructor(private activatedRoute: ActivatedRoute, router: Router) {
+  constructor(private activatedRoute: ActivatedRoute) {
     activatedRoute.url.subscribe(() => {
-      this.title = activatedRoute.snapshot.firstChild.data.title;
+      this.title = this.activatedRoute.snapshot.firstChild.data.title;
     });
-  }
-
-  ngOnInit() {
-    console.log(this.activatedRoute);
   }
 }

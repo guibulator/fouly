@@ -2,7 +2,7 @@ export class RegisterBusinessMailCommand {
   email: string;
   firstName: string;
   lastName: string;
-  placeId: string;
+  foulyPlaceId: string;
   businessName: string;
   registeredAddress: string;
 }
