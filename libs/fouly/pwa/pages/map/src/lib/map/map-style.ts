@@ -3,7 +3,7 @@ export const darkStyle: google.maps.MapTypeStyle[] = [
     elementType: 'geometry',
     stylers: [
       {
-        color: '#242f3e'
+        color: '#222428'
       }
     ]
   },
@@ -19,7 +19,7 @@ export const darkStyle: google.maps.MapTypeStyle[] = [
     elementType: 'labels.text.stroke',
     stylers: [
       {
-        color: '#242f3e'
+        color: '#222428'
       }
     ]
   },
@@ -145,8 +145,7 @@ export const darkStyle: google.maps.MapTypeStyle[] = [
     elementType: 'geometry',
     stylers: [
       {
-        color: '#4c8dff',
-        weight: 0.1
+        color: '#50c8ff'
       }
     ]
   },
