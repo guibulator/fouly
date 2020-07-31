@@ -57,11 +57,11 @@ export class StoreComponent implements OnInit, OnDestroy {
     );
 
     this.placeDetailsStore.loadPlaceId(
-      this.route.snapshot.params['placeId'],
+      this.route.snapshot.params['foulyPlaceId'],
       new Date() //Todo : add support for choosing different time values
     );
     this.isCurrentlyFavorite$ = this.favoriteStoreService.store$.pipe(
-      map((f) => !!f.find((fav) => fav.placeId === this.route.snapshot.params['placeId']))
+      map((f) => !!f.find((fav) => fav.foulyPlaceId === this.route.snapshot.params['foulyPlaceId']))
     );
   }
 
@@ -90,7 +90,7 @@ export class StoreComponent implements OnInit, OnDestroy {
   gotoMap() {
     this.placeDetails$.pipe(take(1)).subscribe((placeDetails) => {
       this.router.navigate(['app/tabs/map/'], {
-        state: { placeId: placeDetails?.place_id }
+        state: { foulyPlaceId: placeDetails?.foulyPlaceId }
       });
     });
   }

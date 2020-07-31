@@ -10,7 +10,7 @@ import {
   PlaceDetailsStoreService
 } from '@skare/fouly/pwa/core';
 import { BehaviorSubject, from, Subscription } from 'rxjs';
-import { finalize } from 'rxjs/operators';
+import { finalize, tap } from 'rxjs/operators';
 import { lightStyle } from './map-style';
 @Component({
   selector: 'fouly-map',
@@ -53,10 +53,10 @@ export class MapComponent implements OnInit, OnDestroy {
   ) {
     this.subscription.add(
       this.activatedRoute.queryParams.subscribe((params) => {
-        const placeId = router?.getCurrentNavigation()?.extras?.state?.placeId;
-        if (!placeId) return;
+        const foulyPlaceId = router?.getCurrentNavigation()?.extras?.state?.foulyPlaceId;
+        if (!foulyPlaceId) return;
         const sessionToken = router?.getCurrentNavigation()?.extras?.state?.sessionToken;
-        this.placeDetailsStore.loadPlaceId(placeId, new Date(), sessionToken);
+        this.placeDetailsStore.loadPlaceId(foulyPlaceId, new Date(), sessionToken);
       })
     );
 
@@ -101,7 +101,17 @@ export class MapComponent implements OnInit, OnDestroy {
   }
 
   private openStoreDetails(placeId: string) {
-    this.router.navigate(['store-detail', placeId], { relativeTo: this.activatedRoute });
+    // get foulyplace id and navigate to store-detail
+    this.placeDetailsStore
+      .getFoulyPlaceId(placeId)
+      .pipe(
+        tap((result) =>
+          this.router.navigate(['store-detail', result.foulyPlaceId], {
+            relativeTo: this.activatedRoute
+          })
+        )
+      )
+      .subscribe();
   }
 
   onSearchFocus(e) {

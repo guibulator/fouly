@@ -19,15 +19,16 @@ export class PlaceDetailsService {
   }
 
   async getPlaceDetails(
-    placeId: string,
+    foulyPlaceId: string,
     sessionToken: string,
     asOfTime: Date,
     languageCode?: string
   ): Promise<PlaceDetailsResult> {
+    const placeId = await this.placeIdMapperService.getPlaceId(foulyPlaceId);
     const promise = this.client.placeDetails({
       params: {
         key: this.configService.get<string>(this.apiKeyEnv),
-        place_id: placeId,
+        place_id: placeId.placeId,
         sessiontoken: sessionToken,
         language: languageCode ? Language[languageCode] : Language.fr,
         fields: [
@@ -59,11 +60,11 @@ export class PlaceDetailsService {
         placeDetail: placeDetail,
         asOfTime: asOfTime
       });
-      const foulyPlaceId = await this.placeIdMapperService.findIdAndUpdateFromPlaceId(placeId);
+
       return { ...placeDetail, storeCrowdResult: crowdResult, foulyPlaceId };
     }
     throw Error(
-      `Could not get details of ${placeId}. The error is ${details?.data?.error_message}`
+      `Could not get details of ${placeId} with foulyPlaceId ${foulyPlaceId}. The error is ${details?.data?.error_message}`
     );
   }
 

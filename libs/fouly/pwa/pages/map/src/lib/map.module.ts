@@ -18,7 +18,7 @@ import { MapComponent } from './map/map.component';
         component: MapComponent
       },
       {
-        path: 'store-detail/:placeId',
+        path: 'store-detail/:foulyPlaceId',
         loadChildren: () =>
           import('@skare/fouly/pwa/pages/store-detail').then((module) => module.StoreDetailModule),
         data: { delay: 5000 }

@@ -23,9 +23,8 @@ export class FavoriteService {
 
     for (let favIndex = 0; favIndex < favs.length; favIndex++) {
       if (favs[favIndex].foulyPlaceId) {
-        const placeIdMap = await this.placeIdMapperService.getPlaceId(favs[favIndex].foulyPlaceId);
         const result = await this.placeDetailsService.getPlaceDetails(
-          placeIdMap.placeId,
+          favs[favIndex].foulyPlaceId,
           uuid(),
           new Date(),
           userLang //fournir la langue du user
