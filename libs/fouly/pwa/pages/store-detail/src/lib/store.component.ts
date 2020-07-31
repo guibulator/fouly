@@ -55,10 +55,12 @@ export class StoreComponent implements OnInit, OnDestroy {
       }),
       tap((url) => console.log(url))
     );
-
+    // If we have a sessionToken, reuse (its related to a search & pricing)
+    const sessionToken = this.router.getCurrentNavigation()?.extras?.state?.sessionToken;
     this.placeDetailsStore.loadPlaceId(
       this.route.snapshot.params['foulyPlaceId'],
-      new Date() //Todo : add support for choosing different time values
+      new Date(), //Todo : add support for choosing different time values
+      sessionToken
     );
     this.isCurrentlyFavorite$ = this.favoriteStoreService.store$.pipe(
       map((f) => !!f.find((fav) => fav.foulyPlaceId === this.route.snapshot.params['foulyPlaceId']))

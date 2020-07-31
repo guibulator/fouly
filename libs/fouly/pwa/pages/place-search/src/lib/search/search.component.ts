@@ -5,7 +5,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { IonSearchbar, NavController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { FavoriteResult, SearchResult } from '@skare/fouly/data';
-import { ConfigService, FavoriteStoreService } from '@skare/fouly/pwa/core';
+import {
+  ConfigService,
+  FavoriteStoreService,
+  PlaceDetailsStoreService
+} from '@skare/fouly/pwa/core';
 import { Observable, Subject, Subscription } from 'rxjs';
 import { distinctUntilChanged, filter, map, share, switchMap, tap } from 'rxjs/operators';
 import { uuid } from 'uuidv4';
@@ -33,7 +37,8 @@ export class SearchComponent implements OnInit {
     private configService: ConfigService,
     private activatedRoute: ActivatedRoute,
     private favoriteStore: FavoriteStoreService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private placeDetailsService: PlaceDetailsStoreService
   ) {
     this.activatedRoute.queryParams.subscribe((params) => {
       this.latLng = {
@@ -57,9 +62,16 @@ export class SearchComponent implements OnInit {
   }
 
   onSelectPlace(placeId: string) {
-    this.router.navigate(['/app/tabs/map/store-detail', placeId], {
-      state: { placeId, sessionToken: this.sessionToken }
-    });
+    this.placeDetailsService
+      .getFoulyPlaceId(placeId)
+      .pipe(
+        tap((placeIdMapper) =>
+          this.router.navigate(['/app/tabs/map/store-detail', placeIdMapper.foulyPlaceId], {
+            state: { foulyPlaceId: placeIdMapper.foulyPlaceId, sessionToken: this.sessionToken }
+          })
+        )
+      )
+      .subscribe();
   }
 
   ngOnInit(): void {
