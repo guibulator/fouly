@@ -40,7 +40,7 @@ export class FavoritesComponent implements OnInit {
     this.favLoading$ = this.favoriteStore.loading$;
     this.favLimited$ = this.favoriteService.favLimited$;
     this.lastKnownFavs$ = this.userPrefService.store$.pipe(
-      map((pref) => Array(pref.numberOfFavorites).fill(0))
+      map((pref) => Array(pref.numberOfFavorites > 0 ? pref.numberOfFavorites : 0).fill(0))
     );
   }
   // TODO: Get achalandage quote for each store and add ion-refresher

@@ -74,13 +74,13 @@ export class FavoriteStoreService {
     );
   }
 
-  remove(placeId: string) {
+  remove(foulyPlaceId: string) {
     this.updateLocalFav({ by: -1 });
     // optimistic remove
     return this._favorites$.pipe(
       take(1),
       map((favorites) => {
-        const idx = favorites.findIndex((f) => f.placeId === placeId);
+        const idx = favorites.findIndex((f) => f.foulyPlaceId === foulyPlaceId);
         if (idx > -1) {
           favorites.splice(idx, 1);
           this._favorites$.next([...favorites]);
@@ -88,7 +88,7 @@ export class FavoriteStoreService {
         return [...favorites];
       }),
       flatMap(() =>
-        this.httpClient.delete<FavoriteResult>(`${this.apiEndPoint}/favorite/${placeId}`)
+        this.httpClient.delete<FavoriteResult>(`${this.apiEndPoint}/favorite/${foulyPlaceId}`)
       ),
       catchError(() => of(null))
     );

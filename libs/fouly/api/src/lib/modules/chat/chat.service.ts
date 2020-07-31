@@ -23,13 +23,11 @@ export class ChatService {
 
   async getMsgHistory(placeId: string): Promise<ChatMessageResult[]> {
     const foulyPlaceId = await this.idMapper.findIdAndUpdateFromPlaceId(placeId);
-    return await this.chatModel.find({ placeId: foulyPlaceId }).exec();
+    return await this.chatModel.find({ foulyPlaceId: foulyPlaceId }).exec();
   }
 
   async postNewMsg(cmd: ChatMessageCommand) {
-    const foulyPlaceId = await this.idMapper.findIdAndUpdateFromPlaceId(cmd.placeId);
     const data = Chat.fromCmd(cmd);
-    data.placeId = foulyPlaceId;
     const chat = new this.chatModel(data);
     await chat.save();
   }

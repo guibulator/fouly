@@ -80,7 +80,7 @@ export class StoreComponent implements OnInit, OnDestroy {
     this.router.navigate(['chat', placeName], { relativeTo: this.route });
   }
 
-  gotoOwner(placeName: string) {
+  gotoOwner() {
     this.router.navigate(['owner-enroll'], { relativeTo: this.route });
   }
 
@@ -115,7 +115,7 @@ export class StoreComponent implements OnInit, OnDestroy {
         take(1),
         flatMap(([placeDetails, isCurrentlyFavorite, user, favLimited]) => {
           if (isCurrentlyFavorite) {
-            return this.favoriteStoreService.remove(placeDetails.place_id);
+            return this.favoriteStoreService.remove(placeDetails.foulyPlaceId);
           } else {
             if (favLimited) {
               this.gotoFavorites();
@@ -125,6 +125,7 @@ export class StoreComponent implements OnInit, OnDestroy {
               userId: user?.id,
               address: placeDetails.shortAddress,
               placeId: placeDetails.place_id,
+              foulyPlaceId: placeDetails.foulyPlaceId,
               name: placeDetails.name,
               lat: placeDetails.geometry.location.lat,
               lng: placeDetails.geometry.location.lng,

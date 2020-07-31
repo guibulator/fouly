@@ -14,9 +14,7 @@ export class PlaceIdMapperService {
 
   /**
    * Given a placeId that might change overtime, returns the associated internal id if it exists.
-   * Note. This operation is not atomic since mutiple requests can map to the same placeId if they were
-   * executed simultanously so updating a placeId should thus update all mapping at the same time.
-   * Most of the time, there will be only one placeId mapping but it is not guaranteed.
+   * Note.
    * @param placeId
    * @param internalPlaceId If not specified, a new id might be created if no matching a currentId from placeId. It is important
    * to provide this value if there is an already existing entity that maps to a placeId.
@@ -32,12 +30,12 @@ export class PlaceIdMapperService {
         internalId = existing._id.toHexString();
       }
     }
-    // Update all matching placeId
+
     const refreshedPlaceId = await this.placeIdService.getFreshPlaceId(placeId);
     if (refreshedPlaceId !== placeId || !internalId) {
-      await this.placeIdMapperModel.updateMany(
+      await this.placeIdMapperModel.findOneAndUpdate(
         { placeId: placeId },
-        { placeId: refreshedPlaceId },
+        { placeId: refreshedPlaceId, $push: { oldPlaceIds: placeId } },
         { upsert: true }
       );
       this.logger.verbose(`Updated placeId ${placeId} with new ${refreshedPlaceId}`);
@@ -51,5 +49,13 @@ export class PlaceIdMapperService {
     }
 
     return internalId;
+  }
+
+  /**
+   * Given a fouly place id, returns the most recent validated google placeId
+   * @param foulyPlaceId
+   */
+  async getPlaceId(foulyPlaceId: string) {
+    return await this.placeIdMapperModel.findOne({ _id: foulyPlaceId }).exec();
   }
 }

@@ -5,7 +5,7 @@ import { Document } from 'mongoose';
 @Schema()
 export class Chat extends Document {
   @Prop()
-  placeId: string;
+  foulyPlaceId: string;
   @Prop()
   msg: string;
   @Prop()
@@ -17,7 +17,7 @@ export class Chat extends Document {
 
   static fromCmd(cmd: ChatMessageCommand) {
     return {
-      placeId: cmd.placeId,
+      foulyPlaceId: cmd.foulyPlaceId,
       msg: cmd.msg,
       author: cmd.author,
       time: cmd.time,

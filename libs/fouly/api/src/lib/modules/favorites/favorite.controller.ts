@@ -8,8 +8,12 @@ export class FavoriteController {
   constructor(private favoriteService: FavoriteService) {}
 
   @Get()
-  async get(@Headers('user-id') userId: string, @Req() req) {
-    return await this.favoriteService.getFavorites(userId);
+  async get(
+    @Headers('user-id') userId: string,
+    @Headers('user-lang') userLang: string,
+    @Req() req
+  ) {
+    return await this.favoriteService.getFavorites(userId, userLang);
   }
 
   @Post()
@@ -22,8 +26,8 @@ export class FavoriteController {
     return await this.favoriteService.syncFromLocalUser(query.localUserId, newUserId);
   }
 
-  @Delete(':placeId')
+  @Delete(':foulyPlaceId')
   async deleteFavorite(@Param() params, @Headers('user-id') userId: string) {
-    return await this.favoriteService.deleteFavorite(params.placeId, userId);
+    return await this.favoriteService.deleteFavorite(params.foulyPlaceId, userId).then(() => true);
   }
 }

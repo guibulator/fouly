@@ -3,13 +3,18 @@ import { PlaceAutocompleteType } from '@googlemaps/google-maps-services-js/dist/
 import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { PlaceDetailsResult, SearchResult } from '@skare/fouly/data';
+import { PlaceIdMapperService } from '../modules/placeIdMapper/place-id-mapper.service';
 import { StoreCrowdService } from './crowdStatus/storeCrowd.service';
 @Injectable()
 export class PlaceDetailsService {
   private client: Client;
   private apiKeyEnv = 'FOULY-GOOGLEMAPS-API-KEY';
   private readonly logger = new Logger(PlaceDetailsService.name);
-  constructor(private configService: ConfigService, private storeCrowdService: StoreCrowdService) {
+  constructor(
+    private configService: ConfigService,
+    private storeCrowdService: StoreCrowdService,
+    private placeIdMapperService: PlaceIdMapperService
+  ) {
     this.client = new Client();
   }
 
@@ -54,8 +59,8 @@ export class PlaceDetailsService {
         placeDetail: placeDetail,
         asOfTime: asOfTime
       });
-
-      return { ...placeDetail, storeCrowdResult: crowdResult };
+      const foulyPlaceId = await this.placeIdMapperService.findIdAndUpdateFromPlaceId(placeId);
+      return { ...placeDetail, storeCrowdResult: crowdResult, foulyPlaceId };
     }
     throw Error(
       `Could not get details of ${placeId}. The error is ${details?.data?.error_message}`
