@@ -26,7 +26,7 @@ export class FoulyCrowdStatusDirective implements OnChanges, OnDestroy {
         if (status === 'low') {
           return 'green';
         } else if (status === 'medium') {
-          return 'yellow';
+          return 'orange';
         } else if (status === 'high') {
           return 'red';
         } else {
