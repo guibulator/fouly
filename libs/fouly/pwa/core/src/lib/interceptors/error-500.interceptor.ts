@@ -17,7 +17,12 @@ export class Error500Interceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       retry(1),
       catchError((error: HttpErrorResponse) => {
-        this.router.navigateByUrl('error');
+        console.log(request);
+        // in some cases, initiator of the request will handle the error itself.
+        // TODO: Make this configurable i.e. ignore500Redirect.registerUrl('.../api/geo')
+        if (!request.url.endsWith('api/geo')) {
+          this.router.navigateByUrl('error');
+        }
         return throwError(error);
       })
     );

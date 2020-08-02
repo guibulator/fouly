@@ -1,7 +1,7 @@
 export * from './lib/core.module';
 export * from './lib/guards/show-introduction.guard';
 export * from './lib/interceptors/auth.interceptor';
-export * from './lib/interceptors/error-500.interceptor copy';
+export * from './lib/interceptors/error-500.interceptor';
 export * from './lib/modules/auth';
 export * from './lib/modules/config';
 export * from './lib/providers/after-signup-sync.service';
