@@ -23,6 +23,8 @@ export class FavoriteService {
           if (!user) {
             if (favorites.length > this.UNAUTH_LIMIT) this._favLimited$.next(true);
             else this._favLimited$.next(false);
+          } else {
+            this._favLimited$.next(false);
           }
         })
       )
